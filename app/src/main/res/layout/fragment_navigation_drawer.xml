@@ -1,0 +1,29 @@
+<!-- see http://codetheory.in/android-navigation-drawer/ -->
+<RelativeLayout
+    android:layout_width="320dp"
+    android:layout_height="match_parent"
+    android:id="@+id/drawerPane"
+    android:layout_gravity="start"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/profileBox"
+        android:scaleType="fitXY"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:src="@drawable/title_banner_png"
+        android:layout_marginTop="0dp"/>
+
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_below="@id/profileBox"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#cccc"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        tools:context="com.thinc_easy.schoolmanager.NavigationDrawerFragment" />
+
+</RelativeLayout>
+

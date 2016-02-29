@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/list_2LineAvatarIcon_tile_height"
+    android:background="@drawable/custom_bg"
+    android:clickable="true" >
+
+    <Button
+        android:id="@+id/avatar"
+        style="@style/List2LineAvatarIconAvatarStyle"
+        android:text="Dummy Text" />
+
+    <LinearLayout
+        style="@style/List2LineAvatarIconLinLayoutStyle">
+
+        <TextView
+            android:id="@+id/text"
+            style="@style/List2LineAvatarIconTextStyle"
+            android:text="Dummy Text"/>
+
+        <TextView
+            android:id="@+id/textSec"
+            style="@style/List2LineAvatarIconSecTextStyle"
+            android:text="Dummy Text"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/touchTarget"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/list_2LineAvatarIcon_text_paddingRight" />
+
+    <ImageButton
+        android:id="@+id/icon"
+        style="@style/List2LineAvatarIconIconStyle"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_done_black_24dp" />
+
+
+</RelativeLayout>

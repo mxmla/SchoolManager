@@ -1,0 +1,354 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+    </style>
+    
+    <style name="ToolBarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+    </style>
+
+    <style name="ActivityRootViewTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    
+    
+    <style name="TextStyle">
+        <item name="android:textColor">#000000</item>
+        <item name="android:alpha">0.87</item>
+    </style>
+    
+    <style name="SecondaryTextStyle">
+        <item name="android:textColor">#000000</item>
+        <item name="android:alpha">0.54</item>
+    </style>
+    
+    <style name="HintTextStyle">
+        <item name="android:textColor">#000000</item>
+        <item name="android:alpha">0.26</item>
+    </style>
+    
+    <style name="DividersStyle">
+        <item name="android:background">#000000</item>
+        <item name="android:alpha">0.12</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginLeft">@dimen/card_margin</item>
+        <item name="android:layout_marginRight">@dimen/card_margin</item>
+        <item name="android:layout_marginTop">@dimen/card_margin</item>
+        <item name="android:layout_marginBottom">@dimen/card_margin</item>
+    </style>
+
+
+    <style name="TextStyleDarkBg">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:alpha">1</item>
+    </style>
+
+    <style name="SecondaryTextStyleDarkBg">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:alpha">0.7</item>
+    </style>
+
+    <style name="HintTextStyleDarkBg">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:alpha">0.3</item>
+    </style>
+
+    <style name="DividersStyleDarkBg">
+        <item name="android:background">#FFFFFF</item>
+        <item name="android:alpha">0.12</item>
+    </style>
+
+    <style name="List2LineAvatarIconTextStyle">
+        <item name="android:textSize">@dimen/list_2LineAvatarIcon_text_size</item>
+        <item name="android:textColor">@color/Text</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="List2LineAvatarIconSecTextStyle">
+        <item name="android:textSize">@dimen/list_2LineAvatarIcon_sec_text_size</item>
+        <item name="android:textColor">@color/SecondaryText</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="List2LineAvatarIconLinLayoutStyle">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">@dimen/list_2LineAvatarIcon_text_paddingLeft</item>
+        <item name="android:layout_marginRight">@dimen/list_2LineAvatarIcon_text_paddingRight</item>
+    </style>
+
+    <style name="List2LineAvatarIconAvatarStyle">
+        <item name="android:layout_width">@dimen/avatar_height_width</item>
+        <item name="android:layout_height">@dimen/avatar_height_width</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">@dimen/list_2LineAvatarIcon_left_avatar_padding</item>
+    </style>
+
+    <style name="List2LineAvatarIconIconStyle">
+        <item name="android:layout_width">@dimen/list_2LineAvatarIcon_icon_height_width</item>
+        <item name="android:layout_height">@dimen/list_2LineAvatarIcon_icon_height_width</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:layout_marginRight">@dimen/list_2LineAvatarIcon_right_icon_padding</item>
+    </style>
+
+    <style name="List1LineAvatarIconTextStyle">
+        <item name="android:textSize">@dimen/list_1LineAvatarIcon_text_size</item>
+        <item name="android:textColor">@color/Text</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">@dimen/list_1LineAvatarIcon_text_paddingLeft</item>
+        <item name="android:layout_marginRight">@dimen/list_1LineAvatarIcon_text_paddingRight</item>
+    </style>
+
+    <style name="List1LineAvatarIconAvatarStyle">
+        <item name="android:layout_width">@dimen/avatar_height_width</item>
+        <item name="android:layout_height">@dimen/avatar_height_width</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">@dimen/list_1LineAvatarIcon_left_avatar_padding</item>
+    </style>
+
+    <style name="List1LineAvatarIconIconStyle">
+        <item name="android:layout_width">@dimen/list_1LineAvatarIcon_icon_height_width</item>
+        <item name="android:layout_height">@dimen/list_1LineAvatarIcon_icon_height_width</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:layout_marginRight">@dimen/list_1LineAvatarIcon_right_icon_padding</item>
+    </style>
+
+    <style name="ListAvatarWithTextTextStyle">
+        <item name="android:textSize">@dimen/list_avatarWithText_text_size</item>
+        <item name="android:textColor">@color/Text</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">@dimen/list_avatarWithText_text_paddingLeft</item>
+        <item name="android:layout_marginRight">@dimen/list_avatarWithText_text_paddingRight</item>
+    </style>
+
+    <style name="ListAvatarWithTextAvatarStyle">
+        <item name="android:layout_width">@dimen/avatar_height_width</item>
+        <item name="android:layout_height">@dimen/avatar_height_width</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">@dimen/list_avatarWithText_left_avatar_padding</item>
+    </style>
+
+    <!-- Use Roboto Medium!!! -->
+    <style name="NavigationDrawerListItemTextStyle">
+        <item name="android:textSize">@dimen/navigation_drawer_text_size</item>
+        <item name="android:textColor">@color/Text</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">@dimen/navigation_drawer_text_margin_left</item>
+        <item name="android:layout_marginRight">@dimen/navigation_drawer_side_padding</item>
+    </style>
+
+    <!-- Use Roboto Medium!!! -->
+    <style name="NavigationDrawerSubheaderTextStyle">
+        <item name="android:textSize">@dimen/navigation_drawer_text_size</item>
+        <item name="android:textColor">@color/SecondaryText</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">@dimen/navigation_drawer_side_padding</item>
+        <item name="android:layout_marginRight">@dimen/navigation_drawer_side_padding</item>
+    </style>
+
+    <style name="NavigationDrawerDividerStyle" parent="DividersStyle">
+        <item name="android:paddingTop">@dimen/navigation_drawer_divider_vertical_padding</item>
+        <item name="android:paddingBottom">@dimen/navigation_drawer_divider_vertical_padding</item>
+    </style>
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/white</item>
+    </style>
+
+    <style name="ExtendedToolbarTitleStyle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:layout_height">72dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingLeft">72dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textColor">@color/TextDarkBg</item>
+    </style>
+    
+    <!-- Card Stream -->
+    <style name="CardStream">
+        <item name="android:paddingBottom">@dimen/card_stream_bottom_padding</item>
+        <item name="android:divider">@null</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+ 
+    <!-- Main card -->
+    <!-- IMPORTANT: Set "xmlns:custom="http://schemas.android.com/apk/res-auto" when using this card! -->
+    <style name="Card">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/card_margin</item>
+        <item name="android:layout_marginBottom">@dimen/card_margin</item>
+        <item name="android:layout_marginLeft">@dimen/card_margin</item>
+        <item name="android:layout_marginRight">@dimen/card_margin</item>
+    </style>
+ 
+    <style name="CardContentArea" parent="AppTheme">
+        <item name="android:paddingBottom">@dimen/card_padding</item>
+    </style>
+ 
+    <style name="CardActionArea">
+        <item name="android:background">@color/card_action_bg</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingBottom">@dimen/card_action_margin</item>
+    </style>
+ 
+    <style name="CardElement">
+        <item name="android:paddingLeft">@dimen/card_padding</item>
+        <item name="android:paddingRight">@dimen/card_padding</item>
+    </style>
+ 
+    <!-- Content of main card -->
+    <style name="CardTitleBase" parent="@style/CardElement">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/card_padding</item>
+        <item name="android:paddingBottom">@dimen/card_padding</item>
+        <item name="android:textSize">@dimen/card_content_title</item>
+        <item name="android:textColor">@color/Text</item>
+    </style>
+
+    <style name="CardTitle" parent="@style/CardTitleBase">
+    </style>
+
+    <style name="CardSubtitleBase" parent="@style/CardElement">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">@dimen/card_padding</item>
+        <item name="android:textSize">@dimen/card_content_title</item>
+        <item name="android:textColor">@color/SecondaryText</item>
+    </style>
+ 
+    <style name="CardContentBase" parent="@style/CardElement">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">@dimen/card_padding</item>
+        <item name="android:textSize">@dimen/card_content_text</item>
+        <item name="android:textColor">@color/Text</item>
+    </style>
+ 
+    <style name="CardContent" parent="@style/CardContentBase">
+    </style>
+
+    <style name="CardContentText">
+        <item name="android:textSize">@dimen/card_content_text</item>
+        <item name="android:textColor">@color/Text</item>
+    </style>
+ 
+    <!-- Action Area Items -->
+    <style name="CardAction">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/card_action_padding</item>
+        <item name="android:drawablePadding">@dimen/card_action_padding</item>
+    </style>
+ 
+    <style name="CardActionNeutral" parent="@style/CardAction">
+        <item name="android:background">@drawable/card_action_bg</item>
+        <item name="android:drawableStart">@drawable/card_action_icon_neutral</item>
+        <item name="android:textColor">@drawable/card_action_text</item>
+    </style>
+ 
+    <style name="CardActionNegative" parent="@style/CardAction">
+        <item name="android:background">@drawable/card_action_bg_negative</item>
+        <item name="android:drawableStart">@drawable/card_action_icon_negative</item>
+        <item name="android:textColor">@drawable/card_action_text_negative</item>
+    </style>
+ 
+    <style name="CardActionPositive" parent="@style/CardAction">
+        <item name="android:background">@drawable/card_action_bg_positive</item>
+        <item name="android:drawableStart">@drawable/card_action_icon_positive</item>
+        <item name="android:textColor">@drawable/card_action_text_positive</item>
+    </style>
+
+
+    <style name="TomorrowLessonsCardFields">
+        <item name="android:layout_width">@dimen/subject_circle_medium</item>
+        <item name="android:layout_height">@dimen/subject_circle_medium</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_weight">0</item>
+    </style>
+ 
+    <!-- Card Action Progress -->
+    <style name="CardProgressLayout" parent="@style/CardAction">
+        <item name="android:layout_marginLeft">@dimen/card_action_margin</item>
+        <item name="android:layout_marginRight">@dimen/card_action_margin</item>
+        <item name="android:paddingLeft">@dimen/card_action_padding</item>
+        <item name="android:paddingRight">@dimen/card_action_padding</item>
+        <item name="android:background">#EEE</item>
+    </style>
+ 
+    <style name="CardProgressText" parent="@style/CardAction">
+        <item name="android:textColor">#77000000</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:paddingLeft">0dp</item>
+    </style>
+
+
+    <style name="IntroductiveText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/SecondaryText</item>
+        <item name="android:textSize">@dimen/text_size_title</item>
+        <item name="android:padding">@dimen/card_padding</item>
+    </style>
+
+    <style name="RadioGroup">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/card_padding</item>
+        <item name="android:layout_marginLeft">@dimen/card_padding</item>
+        <item name="android:layout_marginRight">@dimen/card_padding</item>
+    </style>
+
+    <style name="RadioButtonText">
+        <item name="android:textColor">@color/Text</item>
+        <item name="android:textSize">@dimen/card_content_text</item>
+    </style>
+
+    <style name="RadioButton" parent="@style/RadioButtonText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="CheckBoxText">
+        <item name="android:textColor">@color/Text</item>
+        <item name="android:textSize">@dimen/card_content_text</item>
+    </style>
+
+    <style name="CheckBox" parent="@style/CheckBoxText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+</resources>

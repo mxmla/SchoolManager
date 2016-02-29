@@ -1,0 +1,391 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	xmlns:custom="http://schemas.android.com/apk/res-auto"
+	android:background="@color/BackgroundColor"
+	tools:context="com.thinc_easy.schoolmanager.NewTimetableFragment"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent" >
+
+	<ScrollView
+		android:id="@+id/ScrollView1"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_alignParentTop="true" >
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical" >
+
+			<android.support.v7.widget.CardView
+				style="@style/Card"
+				custom:cardElevation="2dp"
+				custom:cardUseCompatPadding="true"
+				custom:cardBackgroundColor="@color/color_timetable_dark" >
+				<LinearLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical" >
+
+					<TextView
+						android:id="@+id/tvD1"
+						style="@style/CardTitle"
+						android:text="@string/new_timetable_choose_subjects_header"
+						android:textColor="@color/TextDarkBg" />
+
+					<TextView
+						android:id="@+id/tvD1.1"
+						style="@style/CardContent"
+						android:text="@string/new_timetable_choose_subjects_text"
+						android:textColor="@color/TextDarkBg" />
+				</LinearLayout>
+			</android.support.v7.widget.CardView>
+
+			<android.support.v7.widget.CardView
+				style="@style/Card"
+				custom:cardElevation="2dp"
+				custom:cardUseCompatPadding="true" >
+				<LinearLayout
+					android:id="@+id/card_science_subjects"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical" >
+
+					<TextView
+						android:id="@+id/tvD2"
+						style="@style/CardTitle"
+						android:text="@string/ScienceSubjects" />
+
+					<LinearLayout
+						style="@style/CardContent"
+						android:orientation="vertical" >
+
+						<CheckBox
+							android:id="@+id/checkBox01"
+							style="@style/CardContentText"
+							android:layout_width="fill_parent"
+							android:layout_height="48dp"
+							android:text="@string/SubjectMathematics" />
+
+						<View
+							android:layout_width="fill_parent"
+							android:layout_height="1dp"
+							android:background="@color/card_line_color" />
+
+						<CheckBox
+							android:id="@+id/checkBox02"
+							style="@style/CardContentText"
+							android:layout_width="fill_parent"
+							android:layout_height="48dp"
+							android:text="@string/SubjectPhysics" />
+
+						<View
+							android:layout_width="fill_parent"
+							android:layout_height="1dp"
+							android:background="@color/card_line_color" />
+
+						<CheckBox
+							android:id="@+id/checkBox03"
+							style="@style/CardContentText"
+							android:layout_width="fill_parent"
+							android:layout_height="48dp"
+							android:text="@string/SubjectChemistry" />
+
+						<View
+							android:layout_width="fill_parent"
+							android:layout_height="1dp"
+							android:background="@color/card_line_color" />
+
+						<CheckBox
+							android:id="@+id/checkBox04"
+							style="@style/CardContentText"
+							android:layout_width="fill_parent"
+							android:layout_height="48dp"
+							android:text="@string/SubjectBiology" />
+
+						<View
+							android:layout_width="fill_parent"
+							android:layout_height="1dp"
+							android:background="@color/card_line_color" />
+
+						<CheckBox
+							android:id="@+id/checkBox05"
+							style="@style/CardContentText"
+							android:layout_width="fill_parent"
+							android:layout_height="48dp"
+							android:text="@string/SubjectNWjg5u6" />
+
+					</LinearLayout>
+				</LinearLayout>
+			</android.support.v7.widget.CardView>
+
+			<android.support.v7.widget.CardView
+				style="@style/Card"
+				custom:cardElevation="2dp"
+				custom:cardUseCompatPadding="true" >
+				<LinearLayout
+					android:id="@+id/card_linguistic_subjects"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical" >
+
+					<TextView
+						android:id="@+id/tvD3"
+						style="@style/CardTitle"
+						android:text="@string/LinguisticSubjects" />
+
+					<LinearLayout
+						style="@style/CardContent"
+						android:orientation="vertical" >
+
+						<CheckBox
+							android:id="@+id/checkBox06"
+							style="@style/CardContentText"
+							android:layout_width="fill_parent"
+							android:layout_height="48dp"
+							android:text="@string/SubjectGerman"
+							 />
+
+						<View
+							android:layout_width="fill_parent"
+							android:layout_height="1dp"
+							android:background="@color/card_line_color" />
+
+						<CheckBox
+							android:id="@+id/checkBox07"
+							style="@style/CardContentText"
+							android:layout_width="fill_parent"
+							android:layout_height="48dp"
+							android:text="@string/SubjectEnglish"
+							 />
+
+						<View
+							android:layout_width="fill_parent"
+							android:layout_height="1dp"
+							android:background="@color/card_line_color" />
+
+						<CheckBox
+							android:id="@+id/checkBox08"
+							style="@style/CardContentText"
+							android:layout_width="fill_parent"
+							android:layout_height="48dp"
+							android:text="@string/SubjectSpanish"
+							 />
+
+						<View
+							android:layout_width="fill_parent"
+							android:layout_height="1dp"
+							android:background="@color/card_line_color" />
+
+						<CheckBox
+							android:id="@+id/checkBox09"
+							style="@style/CardContentText"
+							android:layout_width="fill_parent"
+							android:layout_height="48dp"
+							android:text="@string/SubjectFrench"
+							 />
+
+						<View
+							android:layout_width="fill_parent"
+							android:layout_height="1dp"
+							android:background="@color/card_line_color" />
+
+						<CheckBox
+							android:id="@+id/checkBox10"
+							style="@style/CardContentText"
+							android:layout_width="fill_parent"
+							android:layout_height="48dp"
+							android:text="@string/SubjectLatin"
+							 />
+
+						<View
+							android:layout_width="fill_parent"
+							android:layout_height="1dp"
+							android:background="@color/card_line_color" />
+
+						<CheckBox
+							android:id="@+id/checkBox11"
+							style="@style/CardContentText"
+							android:layout_width="fill_parent"
+							android:layout_height="48dp"
+							android:text="@string/SubjectGreek"
+							 />
+
+					</LinearLayout>
+				</LinearLayout>
+			</android.support.v7.widget.CardView>
+
+			<android.support.v7.widget.CardView
+				style="@style/Card"
+				custom:cardElevation="2dp"
+				custom:cardUseCompatPadding="true" >
+				<LinearLayout
+					android:id="@+id/card_social_subjects"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical" >
+
+					<TextView
+						android:id="@+id/tvD4"
+						style="@style/CardTitle"
+						android:text="@string/SocialSubjects" />
+
+					<LinearLayout
+						style="@style/CardContent"
+						android:orientation="vertical" >
+
+						<CheckBox
+							android:id="@+id/checkBox12"
+							android:layout_width="fill_parent"
+							android:layout_height="48dp"
+							android:text="@string/SubjectHistory"
+							style="@style/CardContentText" />
+
+						<View
+							android:layout_width="fill_parent"
+							android:layout_height="1dp"
+							android:background="@color/card_line_color" />
+
+						<CheckBox
+							android:id="@+id/checkBox13"
+							android:layout_width="fill_parent"
+							android:layout_height="48dp"
+							android:text="@string/SubjectGeography"
+							style="@style/CardContentText" />
+
+						<View
+							android:layout_width="fill_parent"
+							android:layout_height="1dp"
+							android:background="@color/card_line_color" />
+
+						<CheckBox
+							android:id="@+id/checkBox14"
+							android:layout_width="fill_parent"
+							android:layout_height="48dp"
+							android:text="@string/SubjectPoliticsAndEconomics"
+							style="@style/CardContentText" />
+
+						<View
+							android:layout_width="fill_parent"
+							android:layout_height="1dp"
+							android:background="@color/card_line_color" />
+
+						<CheckBox
+							android:id="@+id/checkBox15"
+							android:layout_width="fill_parent"
+							android:layout_height="48dp"
+							android:text="@string/SubjectReligion"
+							style="@style/CardContentText" />
+
+					</LinearLayout>
+				</LinearLayout>
+			</android.support.v7.widget.CardView>
+
+			<android.support.v7.widget.CardView
+				style="@style/Card"
+				custom:cardElevation="2dp"
+				custom:cardUseCompatPadding="true" >
+				<LinearLayout
+					android:id="@+id/card_musical_and_artistic_subjects"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical" >
+
+					<TextView
+						android:id="@+id/tvD5"
+						style="@style/CardTitle"
+						android:text="@string/MusicalAndArtisticSubjects" />
+
+					<LinearLayout
+						style="@style/CardContent"
+						android:orientation="vertical" >
+
+						<CheckBox
+							android:id="@+id/checkBox16"
+							android:layout_width="fill_parent"
+							android:layout_height="48dp"
+							android:text="@string/SubjectMusic"
+							style="@style/CardContentText" />
+
+						<View
+							android:layout_width="fill_parent"
+							android:layout_height="1dp"
+							android:background="@color/card_line_color" />
+
+						<CheckBox
+							android:id="@+id/checkBox17"
+							android:layout_width="fill_parent"
+							android:layout_height="48dp"
+							android:text="@string/SubjectArt"
+							style="@style/CardContentText" />
+
+					</LinearLayout>
+				</LinearLayout>
+			</android.support.v7.widget.CardView>
+
+			<android.support.v7.widget.CardView
+				style="@style/Card"
+				custom:cardElevation="2dp"
+				custom:cardUseCompatPadding="true" >
+
+				<LinearLayout
+					android:id="@+id/card_other_subjects"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical" >
+
+					<TextView
+						android:id="@+id/tvD6"
+						style="@style/CardTitle"
+						android:text="@string/OtherSubjects" />
+
+					<LinearLayout
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:orientation="vertical"
+						style="@style/CardContent">
+
+						<CheckBox
+							android:id="@+id/checkBox18"
+							android:layout_width="fill_parent"
+							android:layout_height="48dp"
+							android:text="@string/SubjectPhysicalEducation"
+							style="@style/CardContentText" />
+
+						<View
+							android:layout_width="fill_parent"
+							android:layout_height="1dp"
+							android:background="@color/card_line_color" />
+
+						<CheckBox
+							android:id="@+id/checkBox19"
+							android:layout_width="fill_parent"
+							android:layout_height="48dp"
+							android:text="@string/SubjectSeminar"
+							style="@style/CardContentText" />
+
+					</LinearLayout>
+				</LinearLayout>
+			</android.support.v7.widget.CardView>
+
+
+			<Button
+				android:id="@+id/confirm"
+				android:layout_width="wrap_content"
+				android:minWidth="@dimen/button_min_width"
+				android:layout_height="@dimen/button_height"
+				android:layout_margin="@dimen/card_margin"
+				android:layout_gravity="center_horizontal"
+				android:onClick="ButtonClick"
+				android:text="@string/Next"
+				android:textColor="@color/color_timetable" />
+		</LinearLayout>
+
+	</ScrollView>
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/appbar_dropshadow_height"
+		android:background="@drawable/toolbar_dropshadow"
+		android:layout_alignParentTop="true" />
+</RelativeLayout>

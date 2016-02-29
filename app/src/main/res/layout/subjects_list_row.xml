@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/list_avatarWithText_tile_height"
+    android:background="@drawable/custom_bg"
+    android:clickable="true" >
+
+    <ImageView
+        android:id="@+id/listIcon"
+        style="@style/ListAvatarWithTextAvatarStyle" />
+
+    <TextView
+        android:id="@+id/listText"
+        style="@style/ListAvatarWithTextTextStyle"
+        android:text="Dummy Text"/>
+
+</RelativeLayout>

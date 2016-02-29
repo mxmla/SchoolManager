@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:title="@string/pref_title_timetable_settings"
+        android:key="pref_key_timetable_settings" >
+        <PreferenceScreen
+            android:title="@string/pref_title_periods"
+            android:summary="@string/pref_title_periods_summary"
+            android:key="pref_key_periods_settings">
+
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period1_start"
+                android:key="pref_key_period1_start"
+                android:summary="@string/pref_period1_start_summary"
+                android:defaultValue="07:55"/>
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period1_end"
+                android:key="pref_key_period1_end"
+                android:summary="@string/pref_period1_end_summary"
+                android:defaultValue="08:40"/>
+
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period2_start"
+                android:key="pref_key_period2_start"
+                android:summary="@string/pref_period2_start_summary"
+                android:defaultValue="08:40"/>
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period2_end"
+                android:key="pref_key_period2_end"
+                android:summary="@string/pref_period2_end_summary"
+                android:defaultValue="09:25"/>
+
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period3_start"
+                android:key="pref_key_period3_start"
+                android:summary="@string/pref_period3_start_summary"
+                android:defaultValue="09:45"/>
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period3_end"
+                android:key="pref_key_period3_end"
+                android:summary="@string/pref_period3_end_summary"
+                android:defaultValue="10:30"/>
+
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period4_start"
+                android:key="pref_key_period4_start"
+                android:summary="@string/pref_period4_start_summary"
+                android:defaultValue="10:35"/>
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period4_end"
+                android:key="pref_key_period4_end"
+                android:summary="@string/pref_period4_end_summary"
+                android:defaultValue="11:20"/>
+
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period5_start"
+                android:key="pref_key_period5_start"
+                android:summary="@string/pref_period5_start_summary"
+                android:defaultValue="11:40"/>
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period5_end"
+                android:key="pref_key_period5_end"
+                android:summary="@string/pref_period5_end_summary"
+                android:defaultValue="12:25"/>
+
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period6_start"
+                android:key="pref_key_period6_start"
+                android:summary="@string/pref_period6_start_summary"
+                android:defaultValue="12:25"/>
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period6_end"
+                android:key="pref_key_period6_end"
+                android:summary="@string/pref_period6_end_summary"
+                android:defaultValue="13:10"/>
+
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period7_start"
+                android:key="pref_key_period7_start"
+                android:summary="@string/pref_period7_start_summary"
+                android:defaultValue="13:45"/>
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period7_end"
+                android:key="pref_key_period7_end"
+                android:summary="@string/pref_period7_end_summary"
+                android:defaultValue="14:30"/>
+
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period8_start"
+                android:key="pref_key_period8_start"
+                android:summary="@string/pref_period8_start_summary"
+                android:defaultValue="14:30"/>
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period8_end"
+                android:key="pref_key_period8_end"
+                android:summary="@string/pref_period8_end_summary"
+                android:defaultValue="15:15"/>
+
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period9_start"
+                android:key="pref_key_period9_start"
+                android:summary="@string/pref_period9_start_summary"
+                android:defaultValue="15:15"/>
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period9_end"
+                android:key="pref_key_period9_end"
+                android:summary="@string/pref_period9_end_summary"
+                android:defaultValue="16:00"/>
+
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period10_start"
+                android:key="pref_key_period10_start"
+                android:summary="@string/pref_period10_start_summary"
+                android:defaultValue="16:00"/>
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period10_end"
+                android:key="pref_key_period10_end"
+                android:summary="@string/pref_period10_end_summary"
+                android:defaultValue="16:45"/>
+
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period11_start"
+                android:key="pref_key_period11_start"
+                android:summary="@string/pref_period11_start_summary"
+                android:defaultValue="16:45"/>
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period11_end"
+                android:key="pref_key_period11_end"
+                android:summary="@string/pref_period11_end_summary"
+                android:defaultValue="17:30"/>
+
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period12_start"
+                android:key="pref_key_period12_start"
+                android:summary="@string/pref_period12_start_summary"
+                android:defaultValue="17:30"/>
+            <com.thinc_easy.schoolmanager.TimePreference
+                android:title="@string/pref_period12_end"
+                android:key="pref_key_period12_end"
+                android:summary="@string/pref_period12_end_summary"
+                android:defaultValue="18:15"/>
+
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_title_notifications"
+        android:key="pref_key_notification_settings" >
+
+        <Preference
+            android:title="@string/pref_notification_lesson_start"
+            android:summary="@string/pref_notification_lesson_start_description" >
+
+            <intent android:action="com.thinc_easy.schoolmanager.NOTIFICATIONSETTINGSACTIVITY" >
+                <extra android:name="caller" android:value="settings" />
+            </intent>
+        </Preference>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

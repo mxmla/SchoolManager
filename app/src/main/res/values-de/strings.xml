@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SchoolManager</string>
+
+    <string name="title_activity_new_timetable">Neuer Stundenplan</string>
+    <string name="title_activity_edit_subject">Fach bearbeiten</string>
+    <string name="title_activity_timetable">Stundenplan</string>
+    <string name="title_activity_dialog_color_chooser">Dialog ColorChooser</string>
+    <string name="title_activity_main">Home</string>
+    <string name="title_activity_preferences">Einstellungen</string>
+    <string name="title_activity_subjects_list">SubjectsListActivity</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_homework">Hausaufgaben</string>
+
+    <string-array name="activity_titles">
+        <item>Home</item>
+        <item>Stundenplan</item>
+        <item>Hausaufgaben</item>
+        <item>Einstellungen</item>
+    </string-array>
+    <string-array name="SubjectNames">
+        <item>Mathematik</item>
+        <item>Physik</item>
+        <item>Chemie</item>
+        <item>Biologie</item>
+        <item>Naturwissenschaften (Jg. 5&amp;6)</item>
+        <item>Deutsch</item>
+        <item>Englisch</item>
+        <item>Spanisch</item>
+        <item>Französisch</item>
+        <item>Latein</item>
+        <item>Griechisch</item>
+        <item>Geschichte</item>
+        <item>Erdkunde</item>
+        <item>Politik und Wirtschaft</item>
+        <item>Religion</item>
+        <item>Musik</item>
+        <item>Kunst</item>
+        <item>Sport</item>
+        <item>Seminarfach</item>
+    </string-array>
+    <string-array name="SubjectAbbreviations">
+        <item>Ma</item>
+        <item>Ph</item>
+        <item>Ch</item>
+        <item>Bio</item>
+        <item>NW</item>
+        <item>De</item>
+        <item>En</item>
+        <item>Spa</item>
+        <item>Fr</item>
+        <item>La</item>
+        <item>Gri</item>
+        <item>Ge</item>
+        <item>Ek</item>
+        <item>P/W</item>
+        <item>Re</item>
+        <item>Mu</item>
+        <item>Ku</item>
+        <item>Spo</item>
+        <item>SFA</item>
+    </string-array>
+    <string-array name="DayAbbreviations">
+        <item>Mo</item>
+        <item>Di</item>
+        <item>Mi</item>
+        <item>Do</item>
+        <item>Fr</item>
+    </string-array>
+    <string-array name="DayNames">
+        <item>Montag</item>
+        <item>Dienstag</item>
+        <item>Mittwoch</item>
+        <item>Donnerstag</item>
+        <item>Freitag</item>
+        <item>Samstag</item>
+        <item>Sonntag</item>
+    </string-array>
+    <string-array name="PeriodNumbers">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+    <string-array name="date_spinner_weeks">
+        <item>In 1 Woche</item>
+        <item>In 2 Wochen</item>
+        <item>In 3 Wochen</item>
+        <item>In 4 Wochen</item>
+        <item>In 5 Wochen</item>
+        <item>In 6 Wochen</item>
+        <item>In 7 Wochen</item>
+        <item>In 8 Wochen</item>
+        <item>In 9 Wochen</item>
+        <item>In 10 Wochen</item>
+    </string-array>
+
+    <string name="action_settings">Einstellungen</string>
+    <string name="welcome">Herzlich Willkommen!</string>
+    <string name="newTimetable">Neuer Stundenplan</string>
+    <string name="SelectSubjects">Bitte wählen Sie Ihre Fächer aus!</string>
+    <string name="SubjectMathematics">Mathematik</string>
+    <string name="SubjectPhysics">Physik</string>
+    <string name="SubjectChemistry">Chemie</string>
+    <string name="SubjectBiology">Biologie</string>
+    <string name="SubjectNWjg5u6">Naturwissenschaften (Jg. 5&amp;6)</string>
+    <string name="SubjectGerman">Deutsch</string>
+    <string name="SubjectEnglish">Englisch</string>
+    <string name="SubjectSpanish">Spanisch</string>
+    <string name="SubjectFrench">Französisch</string>
+    <string name="SubjectLatin">Latein</string>
+    <string name="SubjectGreek">Griechisch</string>
+    <string name="SubjectHistory">Geschichte</string>
+    <string name="SubjectGeography">Erdkunde</string>
+    <string name="SubjectPoliticsAndEconomics">Politik</string>
+    <string name="SubjectReligion">Religion</string>
+    <string name="SubjectPhysicalEducation">Sport</string>
+    <string name="SubjectSeminar">Seminarfach</string>
+    <string name="ScienceSubjects">Naturwissenschaftliche Fächer</string>
+    <string name="LinguisticSubjects">Sprachliche Fächer</string>
+    <string name="SocialSubjects">Sozialwissenschaftliche Fächer</string>
+    <string name="OtherSubjects">Sonstige Fächer</string>
+    <string name="Next">Weiter</string>
+
+    <string name="Teacher">Lehrer</string>
+    <string name="Name">Name</string>
+    <string name="NameAbbrev">Kürzel</string>
+    <string name="Time">Zeit</string>
+    <string name="Day">Tag</string>
+    <string name="Period">Stunde</string>
+    <string name="DoublePeriod">Doppelstunde</string>
+    <string name="DoublePeriod0102">1.-2.</string>
+    <string name="DoublePeriod0304">3.-4.</string>
+    <string name="DoublePeriod0506">5.-6.</string>
+    <string name="DoublePeriod0708">7.-8.</string>
+    <string name="DoublePeriod0910">9.-10.</string>
+    <string name="DoublePeriod1112">11.-12.</string>
+    <string name="HintNameTeacherAbbrev">Kürzel des Lehrers</string>
+    <string name="HintNameTeacher">Name des Lehrers</string>
+    <string name="PeriodNr1">Stunde 1</string>
+    <string name="PeriodNr2">Stunde 2</string>
+    <string name="PeriodNr3">Stunde 3</string>
+    <string name="PeriodNr4">Stunde 4</string>
+    <string name="PeriodNr5">Stunde 5</string>
+    <string name="AddLessons">Weitere Stunden</string>
+    <string name="Room">Raum</string>
+    <string name="HintRoom">Unterrichtsraum</string>
+    <string name="Place">Ort</string>
+    <string name="NoSubjects">Sie haben bisher noch keine Fächer erstellt.</string>
+    <string name="menu_delete">Löschen</string>
+    <string name="Subjects">Fächer</string>
+    <string name="ToastSelectAtLeast1Subject">Wähle mindestens 1 Fach</string>
+    <string name="Color">Farbe</string>
+    <string name="own_subjects_title">Eigene Fächer?</string>
+    <string name="own_subjects">Du kannst nun zusätzlich eigene Fächer erstellen. \nBei diesen kannst du auch den Namen bearbeiten. \n\nMöchtest du das tun?</string>
+    <string name="yes">ja</string>
+    <string name="no">nein</string>
+    <string name="colors">Farben</string>
+    <string name="background">Hintergrund</string>
+    <string name="text">Text</string>
+    <string name="general">Allgemein</string>
+    <string name="hint_name_subject">Name des Fachs</string>
+    <string name="hint_name_subject_abbrev">Kürzel des Fachs</string>
+    <string name="another_one_qm">Noch eins?</string>
+    <string name="another_own_subject">Möchtest du noch ein eigenes Fach erstellen?</string>
+    <string name="done_em">Fertig!</string>
+    <string name="new_tt_done_body">Dein Stundenplan ist jetzt fertiggestellt.</string>
+    <string name="Timetable">Stundenplan</string>
+    <string name="OK">OK</string>
+    <string name="Cancel">Abbrechen</string>
+    <string name="subject">Fach</string>
+    <string name="period">Stunde</string>
+    <string name="edit">Bearbeiten</string>
+    <string name="save">Speichern</string>
+    <string name="drawer_open">Navigation Drawer öffnen</string>
+    <string name="drawer_close">Navigation Drawer schließen</string>
+    <string name="preferences">Einstellungen</string>
+    <string name="action_new_timetable">Neuer Stundenplan</string>
+    <string name="MusicalAndArtisticSubjects">Musisch-künstlerische Fächer</string>
+    <string name="SubjectMusic">Musik</string>
+    <string name="SubjectArt">Kunst</string>
+    <string name="NowSubject">Jetzt läuft</string>
+    <string name="NextSubject">Nächstes Fach</string>
+    <string name="TomorrowSubjects">Fächer morgen</string>
+    <string name="title_fragment_lesson">Stunde</string>
+    <string name="title_fragment_subject">Fach</string>
+    <string name="title_fragment_edit_subject">Fach bearbeiten</string>
+    <string name="title_fragment_timetable">Stundenplan</string>
+    <string name="action_subjects_list">Liste der Fächer</string>
+    <string name="new_timetable_choose_subjects_header">Fächer wählen</string>
+    <string name="new_timetable_choose_subjects_text">Bitte wähle die Fächer aus, die du dem Stundenplan hinzufügen möchtest.\nIm nächsten Schritt kannst du diesen Fächern Informationen hinzufügen (z.B. Name des Lehrers).\n\nWenn du auch Fächer hast, die hier nicht aufgelistet sind, kannst du diese später hinzufügen.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="card_create_tt_title">Stundenplan erstellen</string>
+    <string name="card_create_tt_content">Du wirst nun durch die einfachen Schritte zum Erstellen des Stundenplans geführt.</string>
+    <string name="card_create_tt_button">Stundenplan erstellen</string>
+    <string name="advertisement">Werbung</string>
+    <string name="card_share_app_title">Sag es deinen Freunden!</string>
+    <string name="card_share_app_content">Empfehle den SchoolManager deinen Freunden.\nDu kannst ihnen eine personalisierte Nachricht mit dem Link zum Store-Eintrag dieser App schicken!</string>
+    <string name="card_share_app_no_button">Jetzt nicht</string>
+    <string name="card_share_app_yes_button">Los gehts!</string>
+    <string name="share_app_title">Teilen</string>
+    <string name="share_app_default_share_text">Hi! Probier mal diese App aus! Sie hilft dir, deinen Schultag zu organisieren.\nHier ist der Link:</string>
+    <string name="share">Teilen</string>
+    <string name="send_to">Senden an...</string>
+    <string name="thank_you_smiley">Danke :)</string>
+    <string name="share_app_fragment_fill_in_your_message">Gib nun deine persönliche Nachricht ein.\nSie wird zusammen mit dem unten stehenden Link verschickt.</string>
+
+
+    <string name="pref_period1_start">1. Stunde Anfang</string>
+    <string name="pref_period1_end">1. Stunde Ende</string>
+    <string name="pref_period2_start">2. Stunde Anfang</string>
+    <string name="pref_period2_end">2. Stunde Ende</string>
+    <string name="pref_period3_start">3. Stunde Anfang</string>
+    <string name="pref_period3_end">3. Stunde Ende</string>
+    <string name="pref_period4_start">4. Stunde Anfang</string>
+    <string name="pref_period4_end">4. Stunde Ende</string>
+    <string name="pref_period5_start">5. Stunde Anfang</string>
+    <string name="pref_period5_end">5. Stunde Ende</string>
+    <string name="pref_period6_start">6. Stunde Anfang</string>
+    <string name="pref_period6_end">6. Stunde Ende</string>
+    <string name="pref_period7_start">7. Stunde Anfang</string>
+    <string name="pref_period7_end">7. Stunde Ende</string>
+    <string name="pref_period8_start">8. Stunde Anfang</string>
+    <string name="pref_period8_end">8. Stunde Ende</string>
+    <string name="pref_period9_start">9. Stunde Anfang</string>
+    <string name="pref_period9_end">9. Stunde Ende</string>
+    <string name="pref_period10_start">10. Stunde Anfang</string>
+    <string name="pref_period10_end">10. Stunde Ende</string>
+    <string name="pref_period11_start">11. Stunde Anfang</string>
+    <string name="pref_period11_end">11. Stunde Ende</string>
+    <string name="pref_period12_start">12. Stunde Anfang</string>
+    <string name="pref_period12_end">12. Stunde Ende</string>
+    <string name="pref_period1_start_summary">Lege fest, wann die 1. Stunde beginnt.</string>
+    <string name="pref_period2_start_summary">Lege fest, wann die 2. Stunde beginnt.</string>
+    <string name="pref_period3_start_summary">Lege fest, wann die 3. Stunde beginnt.</string>
+    <string name="pref_period4_start_summary">Lege fest, wann die 4. Stunde beginnt.</string>
+    <string name="pref_period5_start_summary">Lege fest, wann die 5. Stunde beginnt.</string>
+    <string name="pref_period6_start_summary">Lege fest, wann die 6. Stunde beginnt.</string>
+    <string name="pref_period7_start_summary">Lege fest, wann die 7. Stunde beginnt.</string>
+    <string name="pref_period8_start_summary">Lege fest, wann die 8. Stunde beginnt.</string>
+    <string name="pref_period9_start_summary">Lege fest, wann die 9. Stunde beginnt.</string>
+    <string name="pref_period10_start_summary">Lege fest, wann die 10. Stunde beginnt.</string>
+    <string name="pref_period11_start_summary">Lege fest, wann die 11. Stunde beginnt.</string>
+    <string name="pref_period12_start_summary">Lege fest, wann die 12. Stunde beginnt.</string>
+    <string name="pref_period1_end_summary">Lege fest, wann die 1. Stunde endet.</string>
+    <string name="pref_period2_end_summary">Lege fest, wann die 2. Stunde endet.</string>
+    <string name="pref_period3_end_summary">Lege fest, wann die 3. Stunde endet.</string>
+    <string name="pref_period4_end_summary">Lege fest, wann die 4. Stunde endet.</string>
+    <string name="pref_period5_end_summary">Lege fest, wann die 5. Stunde endet.</string>
+    <string name="pref_period6_end_summary">Lege fest, wann die 6. Stunde endet.</string>
+    <string name="pref_period7_end_summary">Lege fest, wann die 7. Stunde endet.</string>
+    <string name="pref_period8_end_summary">Lege fest, wann die 8. Stunde endet.</string>
+    <string name="pref_period9_end_summary">Lege fest, wann die 9. Stunde endet.</string>
+    <string name="pref_period10_end_summary">Lege fest, wann die 10. Stunde endet.</string>
+    <string name="pref_period11_end_summary">Lege fest, wann die 11. Stunde endet.</string>
+    <string name="pref_period12_end_summary">Lege fest, wann die 12. Stunde endet.</string>
+    <string name="pref_title_periods">Stunden</string>
+    <string name="homework_title">Titel</string>
+    <string name="homework_description">Beschreibung</string>
+    <string name="homework_deadline">Fertig bis:</string>
+    <string name="homework_subject">Fach:</string>
+    <string name="homework">Hausaufgabe</string>
+    <string name="next_lesson">Nächste Stunde</string>
+    <string name="homework_status">Status:</string>
+    <string name="date_formatter_local">dd.MM.yy</string>
+    <string name="homework_status_done">ERLEDIGT</string>
+    <string name="homework_status_pending">AUSSTEHEND</string>
+    <string name="card_homework_title">Hausaufgaben</string>
+    <string name="card_homework_view_all_button">Alle ansehen</string>
+    <string name="card_homework_due_tomorrow">Zu morgen:</string>
+    <string name="fab_homework_text">Hausaufgabe</string>
+    <string name="card_homework_tomorrow_title">Hausaufgaben morgen</string>
+    <string name="title_activity_dialog_edit_homework">DialogEditHomework</string>
+    <string name="title_fragment_homework_pending">Ausstehend</string>
+    <string name="title_fragment_homework_done">Erledigt</string>
+    <string name="delete">Löschen</string>
+    <string name="snackbar_homework_deleted">Aufgabe gelöscht</string>
+    <string name="snackbar_homework_deleted_action">Rückgängig</string>
+    <string name="snackbar_homework_deleted_restored">Aufgabe wiederhergestellt</string>
+    <string name="action_delete_subject">Fach löschen</string>
+    <string name="dialog_delete_subject_confirm_title"> - Fach löschen?</string>
+    <string name="dialog_delete_subject_confirm_yes_button">Ja</string>
+    <string name="dialog_delete_subject_confirm_no_button">Nein</string>
+    <string name="action_add_subject">Fach hinzufügen</string>
+    <string name="pref_title_notifications">Benachrichtigungen</string>
+    <string name="pref_notification_lesson_start">Beginn einer Stunde</string>
+    <string name="pref_notification_lesson_start_description">Wähle, ob und wann du benachrichtigt werden möchtest.</string>
+    <string name="pref_title_timetable_settings">Stundenplan</string>
+    <string name="pref_notification_settings_text">Wann möchtest du benachrichtigt werden, bevor eine Unterrichts-Stunde startet?</string>
+    <string name="pref_notification_settings_never">Nie</string>
+    <string name="pref_notification_settings_minutes_before">Minuten vorher</string>
+    <string name="pref_notification_settings_wait_for_previous_to_end">Ende der vorherigen Stunde abwarten</string>
+    <string name="pref_notification_settings_only_when_changing_rooms">Nur bei Raumwechsel</string>
+    <string name="pref_title_periods_summary">Stelle die Start- und End-Zeiten der Stunden ein.</string>
+</resources>

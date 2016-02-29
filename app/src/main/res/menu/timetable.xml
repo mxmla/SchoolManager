@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.sa_test2.TimetableActivity" >
+
+    <item
+        android:id="@+id/action_subjects_list"
+        android:icon="@drawable/ic_list_white_48dp"
+        android:title="@string/action_subjects_list"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_new_timetable"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="@string/action_new_timetable"/>
+    <item
+        android:id="@+id/action_add_subject"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="@string/action_add_subject"/>
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="@string/action_settings"/>
+
+</menu>

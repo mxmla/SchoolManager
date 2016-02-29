@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.thinc_easy.schoolmanager.NotificationSettingsFragment">
+
+    <TextView
+        android:id="@+id/introText"
+        android:text="@string/pref_notification_settings_text"
+        style="@style/IntroductiveText"
+        android:gravity="top|start"/>
+    
+    <RadioGroup
+        android:id="@+id/rg1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/card_padding"
+        android:paddingRight="@dimen/card_padding"
+        android:paddingBottom="@dimen/card_padding"
+        android:layout_marginLeft="@dimen/card_padding"
+        android:layout_below="@id/introText">
+        <RadioButton
+            android:id="@+id/rb1"
+            style="@style/RadioButton"
+            android:text="@string/pref_notification_settings_never"/>
+        <RadioButton
+            android:id="@+id/rb2"
+            style="@style/RadioButton" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:padding="@dimen/card_padding"
+        android:layout_marginLeft="44dp"
+        android:layout_alignBottom="@id/rg1">
+        <EditText
+            android:id="@+id/et1"
+            android:inputType="number"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:text="5"/>
+        <TextView
+            android:id="@+id/tv1"
+            style="@style/RadioButtonText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pref_notification_settings_minutes_before"/>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:padding="@dimen/card_padding"
+        android:layout_below="@id/ll1" >
+        <CheckBox
+            android:id="@+id/cb1"
+            style="@style/CheckBox"
+            android:text="@string/pref_notification_settings_wait_for_previous_to_end"/>
+        <CheckBox
+            android:id="@+id/cb2"
+            style="@style/CheckBox"
+            android:text="@string/pref_notification_settings_only_when_changing_rooms" />
+    </LinearLayout>
+</RelativeLayout>

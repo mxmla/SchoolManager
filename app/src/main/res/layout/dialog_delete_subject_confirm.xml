@@ -1,0 +1,62 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="${packageName}.${activityClass}">
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/card_padding"
+            android:layout_marginRight="@dimen/card_padding"
+            android:layout_marginTop="@dimen/card_padding"
+            android:layout_marginBottom="@dimen/card_padding"
+            android:textSize="@dimen/text_size_title"
+            android:textColor="@color/Text" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/Dividers" />
+
+        <LinearLayout
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/card_padding"
+            android:layout_marginRight="@dimen/card_padding"
+            android:layout_marginTop="@dimen/card_padding"
+            android:layout_marginBottom="@dimen/card_padding">
+
+            <Button
+                android:id="@+id/buttonYes"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="@string/dialog_delete_subject_confirm_yes_button" />
+
+            <Button
+                android:id="@+id/buttonNo"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="@string/dialog_delete_subject_confirm_no_button" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

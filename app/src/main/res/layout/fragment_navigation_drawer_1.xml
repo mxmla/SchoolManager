@@ -1,0 +1,31 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/navigation_drawer_width"
+    android:layout_height="match_parent"
+    android:background="#FFF"
+    tools:context="com.thinc_easy.schoolmanager.NavigationDrawerFragment1">
+
+    <ImageView
+        android:id="@+id/profileBox"
+        android:scaleType="fitXY"
+        android:layout_width="match_parent"
+        android:layout_height="158dp"
+        android:src="@drawable/title_banner_png"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"/>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_below="@id/profileBox"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/Dividers" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/drawerList"
+        android:layout_below="@id/divider"
+        android:paddingTop="@dimen/list_avatarWithText_listPadding_topAndBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

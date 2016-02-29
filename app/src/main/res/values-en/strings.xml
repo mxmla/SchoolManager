@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SchoolManager</string>
+
+    <string name="title_activity_dialog_color_chooser">Dialog ColorChooser</string>
+    <string name="title_activity_edit_subject">Edit subject</string>
+    <string name="title_activity_main">Home</string>
+    <string name="title_activity_new_timetable">New Timetable</string>
+    <string name="title_activity_preferences">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_subjects_list">SubjectsListActivity</string>
+    <string name="title_activity_timetable">Timetable</string>
+    <string name="title_activity_homework">Homework</string>
+
+    <string-array name="activity_titles">
+        <item>Home</item>
+        <item>Timetable</item>
+        <item>Homework</item>
+        <item>Settings</item>
+    </string-array>
+    <string-array name="SubjectNames">
+        <item>Mathematics</item>
+        <item>Physics</item>
+        <item>Chemistry</item>
+        <item>Biology</item>
+        <item>Sciences (Combined)</item>
+        <item>German</item>
+        <item>English</item>
+        <item>Spanish</item>
+        <item>French</item>
+        <item>Latin</item>
+        <item>Greek</item>
+        <item>History</item>
+        <item>Geography</item>
+        <item>Politics</item>
+        <item>Religion</item>
+        <item>Music</item>
+        <item>Art</item>
+        <item>Sport (PE)</item>
+        <item>Project Course</item>
+    </string-array>
+    <string-array name="SubjectAbbreviations">
+        <item>Ma</item>
+        <item>Ph</item>
+        <item>Ch</item>
+        <item>Bio</item>
+        <item>Sc</item>
+        <item>Ge</item>
+        <item>En</item>
+        <item>Spa</item>
+        <item>Fr</item>
+        <item>La</item>
+        <item>Gre</item>
+        <item>Hi</item>
+        <item>Geo</item>
+        <item>Po</item>
+        <item>Re</item>
+        <item>Mu</item>
+        <item>Art</item>
+        <item>Sp</item>
+        <item>Pro</item>
+    </string-array>
+    <string-array name="DayAbbreviations">
+        <item>Mo</item>
+        <item>Tu</item>
+        <item>We</item>
+        <item>Th</item>
+        <item>Fr</item>
+    </string-array>
+    <string-array name="DayNames">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
+    <string-array name="PeriodNumbers">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+    <string-array name="date_spinner_weeks">
+        <item>In 1 week</item>
+        <item>In 2 weeks</item>
+        <item>In 3 weeks</item>
+        <item>In 4 weeks</item>
+        <item>In 5 weeks</item>
+        <item>In 6 weeks</item>
+        <item>In 7 weeks</item>
+        <item>In 8 weeks</item>
+        <item>In 9 weeks</item>
+        <item>In 10 weeks</item>
+    </string-array>
+
+    <string name="Cancel">Cancel</string>
+    <string name="Color">Color</string>
+    <string name="Day">Day</string>
+    <string name="DoublePeriod">Double period</string>
+    <string name="DoublePeriod0102">1.-2.</string>
+    <string name="HintNameTeacher">The teacher\'s name</string>
+    <string name="HintNameTeacherAbbrev">The teacher\'s shorthand symbol</string>
+    <string name="HintRoom">Classroom</string>
+    <string name="LinguisticSubjects">Linguistic subjects</string>
+    <string name="MusicalAndArtisticSubjects">Music and Arts</string>
+    <string name="Name">Name</string>
+    <string name="NameAbbrev">Abbrev.</string>
+    <string name="Next">Next</string>
+    <string name="NextSubject">Next subject</string>
+    <string name="NoSubjects">You have not created any subjects yet.</string>
+    <string name="NowSubject">Now</string>
+    <string name="OK">OK</string>
+    <string name="OtherSubjects">Other subjects</string>
+    <string name="Period">Period</string>
+    <string name="PeriodNr1">Period 1</string>
+    <string name="PeriodNr2">Period 2</string>
+    <string name="PeriodNr3">Period 3</string>
+    <string name="PeriodNr4">Period 4</string>
+    <string name="PeriodNr5">Period 5</string>
+    <string name="Place">Place</string>
+    <string name="Room">Room</string>
+    <string name="ScienceSubjects">Science subjects</string>
+    <string name="SelectSubjects">Please select your subjects.</string>
+    <string name="SocialSubjects">Social subjects</string>
+    <string name="SubjectArt">Art</string>
+    <string name="SubjectBiology">Biology</string>
+    <string name="SubjectChemistry">Chemistry</string>
+    <string name="SubjectEnglish">English</string>
+    <string name="SubjectFrench">French</string>
+    <string name="SubjectGeography">Geography</string>
+    <string name="SubjectGerman">German</string>
+    <string name="SubjectGreek">Greek</string>
+    <string name="SubjectHistory">History</string>
+    <string name="SubjectLatin">Latin</string>
+    <string name="SubjectMathematics">Mathematics</string>
+    <string name="SubjectMusic">Music</string>
+    <string name="SubjectNWjg5u6">Sciences (combined)</string>
+    <string name="SubjectPhysicalEducation">Sport (PE)</string>
+    <string name="SubjectPhysics">Physics</string>
+    <string name="SubjectPoliticsAndEconomics">Politics</string>
+    <string name="SubjectReligion">Religion</string>
+    <string name="SubjectSeminar">Project course</string>
+    <string name="SubjectSpanish">Spanish</string>
+    <string name="Subjects">Subjects</string>
+    <string name="Teacher">Teacher</string>
+    <string name="Time">Time</string>
+    <string name="Timetable">Timetable</string>
+    <string name="ToastSelectAtLeast1Subject">Select at least 1 subject.</string>
+    <string name="TomorrowSubjects">Subjects tomorrow</string>
+    <string name="action_new_timetable">New timetable</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_subjects_list">List of subjects</string>
+    <string name="advertisement">advertisement</string>
+    <string name="another_one_qm">Another one?</string>
+    <string name="another_own_subject">Do you want to create another custom subject?</string>
+    <string name="background">Background</string>
+    <string name="card_create_tt_button">Create timetable</string>
+    <string name="card_create_tt_content">You will now be guided through the simple steps to create the timetable.</string>
+    <string name="card_create_tt_title">Create your timetable</string>
+    <string name="card_share_app_content">Recommend SchoolManager to your friends.\nYou can send them a personalized message containing the link to the Play Store page of this app!</string>
+    <string name="card_share_app_no_button">Not now</string>
+    <string name="card_share_app_title">Tell your friends!</string>
+    <string name="card_share_app_yes_button">Let\'s go!</string>
+    <string name="colors">Colors</string>
+    <string name="done_em">Done!</string>
+    <string name="drawer_close">Close drawer</string>
+    <string name="drawer_open">Open drawer</string>
+    <string name="edit">Edit</string>
+    <string name="general">General</string>
+    <string name="hint_name_subject">The subject\'s name</string>
+    <string name="hint_name_subject_abbrev">The subject\'s abbrev.</string>
+    <string name="menu_delete">Delete</string>
+    <string name="newTimetable">New Timetable</string>
+    <string name="new_timetable_choose_subjects_header">Select your subjects</string>
+    <string name="new_timetable_choose_subjects_text">Please select the subjects you want to add to your timetable\nIn the next step you can add information to those subjects (e.g. the teacher\'s name).\n\nIf you also have subjects that are not listed below, you can create those later.</string>
+    <string name="new_tt_done_body">Your timetable has been created.</string>
+    <string name="no">No</string>
+    <string name="own_subjects">Now you can create additional custom subjects.\nYou can edit their names, too.\nDo you want to do that?</string>
+    <string name="own_subjects_title">Custom subjects?</string>
+    <string name="period">Period</string>
+    <string name="pref_period10_end">10th period end</string>
+    <string name="pref_title_periods">Periods</string>
+    <string name="preferences">Preferences</string>
+    <string name="save">Save</string>
+    <string name="send_to">Send to...</string>
+    <string name="share">Share</string>
+    <string name="subject">Subject</string>
+    <string name="text">Text</string>
+    <string name="thank_you_smiley">Thank you :)</string>
+    <string name="DoublePeriod0304">3.-4.</string>
+    <string name="DoublePeriod0506">5.-6.</string>
+    <string name="DoublePeriod0708">7.-8.</string>
+    <string name="DoublePeriod0910">9.-10.</string>
+    <string name="DoublePeriod1112">11.-12.</string>
+    <string name="AddLessons">Add Lessons</string>
+    <string name="pref_period10_end_summary">Set the time for the 10th period to end.</string>
+    <string name="pref_period11_end">11th period end</string>
+    <string name="pref_period12_end">12th period end</string>
+    <string name="pref_period1_end">1st period end</string>
+    <string name="pref_period2_end">2nd period end</string>
+    <string name="pref_period3_end">3rd period end</string>
+    <string name="pref_period4_end">4th period end</string>
+    <string name="pref_period5_end">5th period end</string>
+    <string name="pref_period6_end">6th period end</string>
+    <string name="pref_period7_end">7th period end</string>
+    <string name="pref_period8_end">8th period end</string>
+    <string name="pref_period9_end">9th period end</string>
+    <string name="pref_period11_start">11th period start</string>
+    <string name="pref_period12_start">12th period start</string>
+    <string name="pref_period1_start">1st period start</string>
+    <string name="pref_period2_start">2nd period start</string>
+    <string name="pref_period3_start">3rd period start</string>
+    <string name="pref_period4_start">4th period start</string>
+    <string name="pref_period5_start">5th period start</string>
+    <string name="pref_period6_start">6th period start</string>
+    <string name="pref_period7_start">7th period start</string>
+    <string name="pref_period8_start">8th period start</string>
+    <string name="pref_period9_start">9th period start</string>
+    <string name="pref_period10_start">10th period start</string>
+    <string name="pref_period11_end_summary">Set the time for the 11th period to end.</string>
+    <string name="pref_period12_end_summary">Set the time for the 12th period to end.</string>
+    <string name="pref_period1_end_summary">Set the time for the 1st period to end.</string>
+    <string name="pref_period2_end_summary">Set the time for the 2nd period to end.</string>
+    <string name="pref_period3_end_summary">Set the time for the 3rd period to end.</string>
+    <string name="pref_period4_end_summary">Set the time for the 4th period to end.</string>
+    <string name="pref_period5_end_summary">Set the time for the 5th period to end.</string>
+    <string name="pref_period6_end_summary">Set the time for the 6th period to end.</string>
+    <string name="pref_period7_end_summary">Set the time for the 7th period to end.</string>
+    <string name="pref_period8_end_summary">Set the time for the 8th period to end.</string>
+    <string name="pref_period9_end_summary">Set the time for the 9th period to end.</string>
+    <string name="pref_period10_start_summary">Set the time for the 10th period to start.</string>
+    <string name="pref_period11_start_summary">Set the time for the 11th period to start.</string>
+    <string name="pref_period12_start_summary">Set the time for the 12th period to start.</string>
+    <string name="pref_period1_start_summary">Set the time for the 1st period to start.</string>
+    <string name="pref_period2_start_summary">Set the time for the 2nd period to start.</string>
+    <string name="pref_period3_start_summary">Set the time for the 3rd period to start.</string>
+    <string name="pref_period4_start_summary">Set the time for the 4th period to start.</string>
+    <string name="pref_period5_start_summary">Set the time for the 5th period to start.</string>
+    <string name="pref_period6_start_summary">Set the time for the 6th period to start.</string>
+    <string name="pref_period7_start_summary">Set the time for the 7th period to start.</string>
+    <string name="pref_period8_start_summary">Set the time for the 8th period to start.</string>
+    <string name="pref_period9_start_summary">Set the time for the 9th period to start.</string>
+    <string name="share_app_default_share_text">Hi! Check out this new app! It helps you organize your school day.\nHere\'s the link:</string>
+    <string name="share_app_fragment_fill_in_your_message">Now type in your personal message.\nIt will be sent together with the link below.</string>
+    <string name="share_app_title">Share</string>
+    <string name="title_fragment_edit_subject">Edit Subject</string>
+    <string name="title_fragment_lesson">Lesson</string>
+    <string name="title_fragment_subject">Subject</string>
+    <string name="title_fragment_timetable">Timetable</string>
+    <string name="welcome">Welcome!</string>
+    <string name="yes">yes</string>
+    <string name="homework_title">Title</string>
+    <string name="homework_description">Description</string>
+    <string name="homework_deadline">Deadline:</string>
+    <string name="homework_subject">Subject:</string>
+    <string name="homework">Homework</string>
+    <string name="next_lesson">Next lesson</string>
+    <string name="homework_status">Status:</string>
+    <string name="date_formatter_local">dd/MM/yy</string>
+    <string name="homework_status_done">DONE</string>
+    <string name="homework_status_pending">PENDING</string>
+    <string name="card_homework_title">Homework</string>
+    <string name="card_homework_view_all_button">View all</string>
+    <string name="card_homework_due_tomorrow">Due tomorrow:</string>
+    <string name="fab_homework_text">Homework</string>
+    <string name="card_homework_tomorrow_title">Homework tomorrow</string>
+    <string name="title_activity_dialog_edit_homework">DialogEditHomework</string>
+    <string name="title_fragment_homework_pending">Pending</string>
+    <string name="title_fragment_homework_done">Done</string>
+    <string name="delete">Delete</string>
+    <string name="snackbar_homework_deleted">Task deleted</string>
+    <string name="snackbar_homework_deleted_action">Undo</string>
+    <string name="snackbar_homework_deleted_restored">Task restored</string>
+    <string name="action_delete_subject">Delete subject</string>
+    <string name="dialog_delete_subject_confirm_title"> - Delete subject?</string>
+    <string name="dialog_delete_subject_confirm_yes_button">Yes</string>
+    <string name="dialog_delete_subject_confirm_no_button">No</string>
+    <string name="action_add_subject">Add subject</string>
+    <string name="pref_title_notifications">Notifications</string>
+    <string name="pref_notification_lesson_start">Start of a lesson</string>
+    <string name="pref_notification_lesson_start_description">Select if and when you want to be notified.</string>
+    <string name="pref_title_timetable_settings">Timetable</string>
+    <string name="pref_notification_settings_text">When do you want to be notified about the start of a lesson?</string>
+    <string name="pref_notification_settings_never">Never</string>
+    <string name="pref_notification_settings_minutes_before">minutes before</string>
+    <string name="pref_notification_settings_wait_for_previous_to_end">Wait for previous lesson to end</string>
+    <string name="pref_notification_settings_only_when_changing_rooms">Only when changing rooms</string>
+    <string name="pref_title_periods_summary">Set start and end time of the timetable periods</string>
+</resources>

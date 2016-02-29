@@ -1,0 +1,113 @@
+<resources>
+
+
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    
+    <dimen name="clickable_text">20sp</dimen>
+    
+    <dimen name="heading_text">48sp</dimen>
+    <dimen name="heading_padding">10dp</dimen>
+
+    <!-- TODO Use Roboto-Medium! -->
+    <dimen name="text_size_title">20sp</dimen>
+    
+    <dimen name="card_content_text">14sp</dimen>
+    <dimen name="card_content_title">24sp</dimen>
+
+    <dimen name="card_title_top_padding">24dp</dimen>
+ 
+    <dimen name="card_padding">16dp</dimen>
+    <dimen name="card_margin">8dp</dimen>
+
+    <dimen name="cards_divider_top_margin">16dp</dimen>
+    <dimen name="cards_divider_bottom_margin">16dp</dimen>
+ 
+    <dimen name="card_action_margin">3dp</dimen>
+    <dimen name="card_action_padding">8dp</dimen>
+
+    <dimen name="avatar_height_width">40dp</dimen>
+    <dimen name="avatar_touch_target_size">48dp</dimen>
+
+    <dimen name="icon_height_width">24dp</dimen>
+    <dimen name="icon_touch_target_size">48dp</dimen>
+
+    <dimen name="subject_circle_medium">56dp</dimen>
+    <dimen name="subject_circle_medium_text_size">20sp</dimen>
+    <dimen name="subject_circle_large">96dp</dimen>
+    <dimen name="subject_circle_large_text_size">34sp</dimen>
+    <dimen name="subject_circle_large_stroke">8dp</dimen>
+
+    <dimen name="button_height">56dp</dimen>
+    <dimen name="button_min_width">168dp</dimen>
+
+    <dimen name="appbar_dropshadow_height">5dp</dimen>
+    <dimen name="card_dropshadow_height">2dp</dimen>
+    <!--
+         Per the design guidelines, navigation drawers should be between 240dp and 320dp:
+         https://developer.android.com/design/patterns/navigation-drawer.html
+    -->
+    <dimen name="navigation_drawer_width">280dp</dimen>
+    <dimen name="navigation_drawer_row_height">48dp</dimen>
+    <dimen name="navigation_drawer_side_padding">16dp</dimen>
+    <dimen name="navigation_drawer_text_margin_left">72dp</dimen>
+    <dimen name="navigation_drawer_icon_size">20dp</dimen>
+    <dimen name="navigation_drawer_text_size">14sp</dimen>
+    <dimen name="navigation_drawer_divider_vertical_padding">8dp</dimen>
+
+    <dimen name="list_avatarWithText_text_size">16sp</dimen>
+    <dimen name="list_avatarWithText_tile_height">56dp</dimen>
+    <dimen name="list_avatarWithText_left_avatar_padding">16dp</dimen>
+    <dimen name="list_avatarWithText_text_paddingLeft">72dp</dimen>
+    <dimen name="list_avatarWithText_text_paddingRight">16dp</dimen>
+    <dimen name="list_avatarWithText_text_paddingTop">20dp</dimen>
+    <dimen name="list_avatarWithText_text_paddingBottom">24dp</dimen>
+    <dimen name="list_avatarWithText_listPadding_topAndBottom">8dp</dimen>
+
+
+    <dimen name="list_2LineAvatarIcon_tile_height">72dp</dimen>
+    <dimen name="list_2LineAvatarIcon_text_size">16sp</dimen>
+    <dimen name="list_2LineAvatarIcon_sec_text_size">14sp</dimen>
+    <dimen name="list_2LineAvatarIcon_text_paddingLeft">72dp</dimen>
+    <dimen name="list_2LineAvatarIcon_text_paddingRight">72dp</dimen>
+    <dimen name="list_2LineAvatarIcon_text_paddingTop">20dp</dimen>
+    <dimen name="list_2LineAvatarIcon_text_paddingBottom">20dp</dimen>
+    <dimen name="list_2LineAvatarIcon_left_avatar_padding">16dp</dimen>
+    <dimen name="list_2LineAvatarIcon_icon_height_width">48dp</dimen>
+    <dimen name="list_2LineAvatarIcon_right_icon_padding">4dp</dimen>
+    <dimen name="list_2LineAvatarIcon_divider_paddingLeft">72dp</dimen>
+    <dimen name="list_2LineAvatarIcon_divider_paddingRight">0dp</dimen>
+    <dimen name="list_2LineAvatarIcon_listPadding_top">8dp</dimen>
+    <dimen name="list_2LineAvatarIcon_listPadding_bottom">80dp</dimen>
+    <dimen name="list_2LineAvatarIcon_verticalSpacing">0dp</dimen>
+
+    <dimen name="list_1LineAvatarIcon_tile_height">56dp</dimen>
+    <dimen name="list_1LineAvatarIcon_text_size">16sp</dimen>
+    <dimen name="list_1LineAvatarIcon_text_paddingLeft">72dp</dimen>
+    <dimen name="list_1LineAvatarIcon_text_paddingRight">72dp</dimen>
+    <dimen name="list_1LineAvatarIcon_text_paddingTop">20dp</dimen>
+    <dimen name="list_1LineAvatarIcon_text_paddingBottom">24dp</dimen>
+    <dimen name="list_1LineAvatarIcon_left_avatar_padding">16dp</dimen>
+    <dimen name="list_1LineAvatarIcon_icon_height_width">48dp</dimen>
+    <dimen name="list_1LineAvatarIcon_right_icon_padding">4dp</dimen>
+    <dimen name="list_1LineAvatarIcon_divider_paddingLeft">0dp</dimen>
+    <dimen name="list_1LineAvatarIcon_divider_paddingRight">0dp</dimen>
+    <dimen name="list_1LineAvatarIcon_listPadding_top">8dp</dimen>
+    <dimen name="list_1LineAvatarIcon_listPadding_bottom">8dp</dimen>
+    <dimen name="list_1LineAvatarIcon_verticalSpacing">0dp</dimen>
+
+    <dimen name="status_bar_underlay">0dp</dimen>
+    <dimen name="status_bar_underlay_negative">0dp</dimen>
+
+    <dimen name="card_header_bar_height">56dp</dimen>
+
+    <dimen name="fab_bottom_scroll_padding">80dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_normal_size">56dp</dimen>
+    <dimen name="fab_mini_size">40dp</dimen>
+
+    <dimen name="card_stream_bottom_padding">90dp</dimen>
+
+</resources>

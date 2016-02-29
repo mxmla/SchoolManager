@@ -1,0 +1,159 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="${packageName}.${activityClass}">
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:minHeight="56dp"
+            android:layout_marginLeft="@dimen/card_padding"
+            android:layout_marginRight="@dimen/card_padding"
+            android:layout_marginTop="@dimen/card_padding"
+            app:hintAnimationEnabled="true" >
+
+            <EditText
+                android:id="@+id/etTitle"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:minHeight="48dp"
+                android:textSize="@dimen/text_size_title"
+                android:textColor="@color/Text"
+                android:singleLine="true"
+                android:hint="@string/homework_title"
+                android:background="@android:color/transparent"
+                android:nextFocusUp="@id/etTitle"
+                android:nextFocusLeft="@id/etTitle" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:minHeight="80dp"
+            android:layout_marginLeft="@dimen/card_padding"
+            android:layout_marginRight="@dimen/card_padding"
+            android:layout_marginTop="@dimen/card_padding"
+            android:layout_marginBottom="@dimen/card_padding"
+            app:hintAnimationEnabled="true" >
+
+            <EditText
+                android:id="@+id/etContent"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:minHeight="48dp"
+                android:layout_gravity="start|top"
+                android:textColor="@color/Text"
+                android:textSize="16dp"
+                android:hint="@string/homework_description"
+                android:inputType="textMultiLine"
+                android:background="@android:color/transparent" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/Dividers" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableRow
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginBottom="@dimen/card_margin" >
+
+                <TextView
+                    android:id="@+id/TextView01"
+                    style="@style/CardContentText"
+                    android:textColor="@color/SecondaryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_weight="0"
+                    android:layout_marginLeft="@dimen/card_padding"
+                    android:layout_marginRight="@dimen/card_padding"
+                    android:text="@string/homework_subject" />
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:layout_marginRight="@dimen/card_padding"
+                    android:id="@+id/spinnerSubject" />
+            </TableRow>
+
+            <TableRow
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/card_margin" >
+
+                <TextView
+                    android:id="@+id/TextView02"
+                    style="@style/CardContentText"
+                    android:textColor="@color/SecondaryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_weight="0"
+                    android:layout_marginLeft="@dimen/card_padding"
+                    android:layout_marginRight="@dimen/card_padding"
+                    android:text="@string/homework_deadline" />
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:layout_marginRight="@dimen/card_padding"
+                    android:id="@+id/spinnerDeadline" />
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/card_padding"
+            android:layout_marginRight="@dimen/card_padding" >
+
+            <Button
+                android:id="@+id/buttonOK"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="@string/OK" />
+
+            <Button
+                android:id="@+id/buttonCancel"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="@string/Cancel" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
