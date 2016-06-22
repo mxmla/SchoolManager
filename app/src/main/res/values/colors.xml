@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
@@ -8,6 +9,17 @@
 
     <color name="BackgroundColor">#EEEEEE</color>
     <color name="BackgroundColorMaterialVorgabe">#FAFAFA</color>
+    -->
+
+    <color name="colorPrimary">@color/blue</color>
+    <color name="colorPrimaryDark">@color/blue_700</color>
+    <color name="colorAccent">@color/blue</color>
+    <color name="colorAccentLight">@color/blue_100</color>
+    <color name="colorAccentDark">@color/blue_700</color>
+
+    <color name="BackgroundColor">#EEEEEE</color>
+    <color name="BackgroundColorMaterialVorgabe">#FAFAFA</color>
+
 
     <color name="Text">#DE000000</color>
     <color name="TextDarkBg">#FFFFFFFF</color>
@@ -38,6 +50,12 @@
     <color name="indigo">#3F51B5</color>
     <color name="indigo_700">#303F9F</color>
     <color name="blue">#2196F3</color>
+    <color name="blue_100">#BBDEFB</color>
+    <color name="blue_700">#1976D2</color>
+    <color name="blue_A100">#82B1FF</color>
+    <color name="blue_A200">#448AFF</color>
+    <color name="blue_A400">#2979FF</color>
+    <color name="blue_A700">#2962FF</color>
     <color name="light_blue">#03A9F4</color>
     <color name="cyan">#00BCD4</color>
     <color name="cyan_A100">#84FFFF</color>
@@ -46,15 +64,40 @@
     <color name="teal">#009688</color>
     <color name="teal_700">#00796B</color>
     <color name="green">#4CAF50</color>
+    <color name="green_A100">#B9F6CA</color>
+    <color name="green_A200">#69F0AE</color>
+    <color name="green_A400">#00E676</color>
+    <color name="green_A700">#00C853</color>
     <color name="light_green">#8BC34A</color>
+    <color name="light_green_100">#DCEDC8</color>
+    <color name="light_green_700">#689F38</color>
+    <color name="light_green_A100">#CCFF90</color>
+    <color name="light_green_A200">#B2FF59</color>
+    <color name="light_green_A400">#76FF03</color>
+    <color name="light_green_A700">#64DD17</color>
     <color name="lime">#CDDC39</color>
+    <color name="lime_A100">#F4FF81</color>
+    <color name="lime_A200">#EEFF41</color>
+    <color name="lime_A400">#C6FF00</color>
+    <color name="lime_A700">#AEEA00</color>
     <color name="yellow">#FFEB3B</color>
     <color name="amber">#FFC107</color>
+    <color name="amber_100">#FFECB3</color>
+    <color name="amber_700">#FFA000</color>
     <color name="orange">#FF9800</color>
+    <color name="orange_100">#FFE0B2</color>
+    <color name="orange_300">#FFB74D</color>
+    <color name="orange_700">#F57C00</color>
+    <color name="orange_A100">#FFD180</color>
+    <color name="orange_A200">#FFAB40</color>
+    <color name="orange_A400">#FF9100</color>
+    <color name="orange_A700">#FF6D00</color>
     <color name="deep_orange">#FF5722</color>
     <color name="brown">#795548</color>
     <color name="grey">#9E9E9E</color>
     <color name="blue_grey">#607D8B</color>
+    <color name="blue_grey_100">#CFD8DC</color>
+    <color name="blue_grey_700">#455A64</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
 
@@ -72,6 +115,7 @@
     <color name="gray_light">#AAFFFFFF</color>
     <color name="gray_dark">#55FFFFFF</color>
 
+    <!--
     <color name="color_home">#3F51B5</color>
     <color name="color_home_dark">#303F9F</color>
     <color name="color_home_light">#BBDEFB</color>
@@ -91,7 +135,33 @@
     <color name="color_settings_dark">#455A64</color>
     <color name="color_settings_light">#CFD8DC</color>
     <color name="color_settings_accent">#FF4081</color>
-    
+    -->
+
+    <color name="color_home">@color/colorPrimary</color>
+    <color name="color_home_dark">@color/colorAccentDark</color>
+    <color name="color_home_light">@color/colorAccentLight</color>
+    <color name="color_home_accent">@color/colorAccent</color>
+    <color name="color_home_appbar">@color/colorPrimary</color>
+
+    <color name="color_timetable">@color/light_green</color>
+    <color name="color_timetable_dark">@color/light_green_700</color>
+    <color name="color_timetable_light">@color/light_green_100</color>
+    <color name="color_timetable_accent">@color/colorAccent</color>
+    <color name="color_timetable_appbar">@color/colorPrimary</color>
+
+    <color name="color_homework">@color/orange</color>
+    <color name="color_homework_dark">@color/orange_700</color>
+    <color name="color_homework_light">@color/orange_300</color>
+    <color name="color_homework_accent">@color/colorAccent</color>
+    <color name="color_homework_appbar">@color/colorPrimary</color>
+
+    <color name="color_settings">@color/blue_grey</color>
+    <color name="color_settings_dark">@color/blue_grey_700</color>
+    <color name="color_settings_light">@color/blue_grey_100</color>
+    <color name="color_settings_accent">@color/colorAccent</color>
+    <color name="color_settings_appbar">@color/colorPrimary</color>
+
+
     <color name="color_circle_stroke_color">#6B6B6B</color>
     
     <color name="title_textcolor_inverted">@android:color/white</color>

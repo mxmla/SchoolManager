@@ -26,13 +26,47 @@
         android:layout_marginTop="?actionBarSize"
         android:layout_below="@id/status_bar_placeholder" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewSubjects"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/list_avatarWithText_listPadding_topAndBottom"
-        android:paddingBottom="@dimen/list_avatarWithText_listPadding_topAndBottom"
-        android:layout_below="@id/actionBarPlaceholder" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/actionBarPlaceholder">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                style="@style/SectionTitleStyle"
+                android:layout_marginTop="@dimen/card_padding">
+
+                <TextView
+                    android:id="@+id/slSectionTitleText"
+                    style="@style/SectionTitleTextStyle"
+                    android:text="@string/title_subjects_list"/>
+                <TextView
+                    android:id="@+id/slSectionTitleButton"
+                    style="@style/SectionTitleButtonStyle"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.CardView
+                style="@style/Card"
+                android:layout_height="match_parent"
+                android:layout_marginTop="0dp"
+                custom:cardElevation="2dp"
+                custom:cardUseCompatPadding="true" >
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewSubjects"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/list_avatarWithText_listPadding_topAndBottom" />
+
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
 
     <View
         android:layout_width="match_parent"

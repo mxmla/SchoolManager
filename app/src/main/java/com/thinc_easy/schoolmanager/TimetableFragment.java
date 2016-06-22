@@ -82,7 +82,7 @@ public class TimetableFragment extends Fragment {
         ((TimetableActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.title_fragment_timetable));
         ((TimetableActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
 
-		int ttColor = ((TimetableActivity) getActivity()).getResources().getColor(R.color.color_timetable);
+		int ttColor = ((TimetableActivity) getActivity()).getResources().getColor(R.color.color_timetable_appbar);
 		((TimetableActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ttColor));
 
 
@@ -99,8 +99,8 @@ public class TimetableFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
+    public void onResume(){
+        super.onResume();
         ((TimetableActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.title_fragment_timetable));
 	}
 
@@ -227,6 +227,7 @@ public class TimetableFragment extends Fragment {
     				if (sName != null && !sName.equals("-") && !sName.equals(" ") && !sName.equals("") & sAbbrev != null && !sAbbrev.equals("-") && !sAbbrev.equals(" ") && !sAbbrev.equals("")){
     					used = true;
     					oneused = true;
+						//Toast.makeText(getActivity(), String.valueOf(dayInt)+", "+String.valueOf(periodInt)+", "+sName, Toast.LENGTH_SHORT).show();
 
                         final float scale = getActivity().getResources().getDisplayMetrics().density;
     					int bounds = (int) (56 * scale + 0.5f);

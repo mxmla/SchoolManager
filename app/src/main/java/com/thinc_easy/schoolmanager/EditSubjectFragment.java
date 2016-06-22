@@ -335,11 +335,11 @@ public class EditSubjectFragment extends Fragment{
 				}
 			}
 
-    		if (!subjectInfo[2].equals(null) & !subjectInfo[2].equals("") & !subjectInfo[2].equals("-")){
-    			etTeacherName.setText(subjectInfo[2].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ","));
+    		if (!subjectInfo[2].equals(null) & !subjectInfo[2].equals("") & !subjectInfo[2].equals("-") & !subjectInfo[2].equals("[null]")){
+    			etTeacherName.setText(subjectInfo[2].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",").replace("[null]", ""));
     		}
-    		if (!subjectInfo[3].equals(null) & !subjectInfo[3].equals("") & !subjectInfo[3].equals("-")){
-    			etTeacherAbbrev.setText(subjectInfo[3].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ","));
+    		if (!subjectInfo[3].equals(null) & !subjectInfo[3].equals("") & !subjectInfo[3].equals("-") & !subjectInfo[3].equals("[null]")){
+    			etTeacherAbbrev.setText(subjectInfo[3].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",").replace("[null]", ""));
     		}
     		if (!subjectInfo[4].equals(null) & !subjectInfo[4].equals("") & !subjectInfo[4].equals("-")){
     			etRoom1.setText(subjectInfo[19].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ","));
@@ -764,6 +764,9 @@ public class EditSubjectFragment extends Fragment{
 		Room3 = Room3.replace(System.getProperty("line.separator"), "[newline]").replace(",", "[comma]");
 		Room4 = Room4.replace(System.getProperty("line.separator"), "[newline]").replace(",", "[comma]");
 		Room5 = Room5.replace(System.getProperty("line.separator"), "[newline]").replace(",", "[comma]");
+
+		if (mTeacherName==null) mTeacherName="[null]";
+		if (mTeacherAbbrev==null) mTeacherAbbrev="[null]";
 
 		DataStorageHandler.EditSubject(getActivity(), mSubjectName, mSubjectAbbrev, mTeacherName, mTeacherAbbrev,
 				Day1, Day2, Day3, Day4, Day5,

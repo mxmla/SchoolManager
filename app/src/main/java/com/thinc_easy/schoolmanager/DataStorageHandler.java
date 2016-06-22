@@ -45,6 +45,10 @@ public class DataStorageHandler {
                     room1, room2, room3, room4, room5,
                     color, textColor);
 
+
+            deleteSubjectFromPeriodsTxt(context, sName);
+            deleteSubjectFromTtFieldsTxt(context, sName);
+
             EditPeriodEntry(context, day1, period1f, period1t, sName);
             EditPeriodEntry(context, day2, period2f, period2t, sName);
             EditPeriodEntry(context, day3, period3f, period3t, sName);
@@ -308,7 +312,7 @@ public class DataStorageHandler {
             // Put every period into the array
             int from = Integer.parseInt(periodF);
             int to = Integer.parseInt(periodT);
-            String[] mDayNames = context.getResources().getStringArray(R.array.DayNames);
+            String[] mDayNames = context.getResources().getStringArray(R.array.DayIDs);
 
             String[][] myArray = toArray(context, "TtFields.txt");
             int Rows = nmbrRowsCols(context, "TtFields.txt")[0];
@@ -318,7 +322,8 @@ public class DataStorageHandler {
 
             for (int p = from; p < to + 1; p++) {
 
-                int dayNumber = 0;
+                // TODO dayNumber = -1 in order to check if day was found?
+                int dayNumber = -1;
                 for (int i = 0; i < mDayNames.length; i++) {
                     if (mDayNames[i].equals(day)) dayNumber = i;
                 }
@@ -642,9 +647,10 @@ public class DataStorageHandler {
             }
         }
 
+        myArray = newArray;
         Rows = countA;
 
-        writeToCSVFile(context, file, myArray, Rows, Cols);
+        writeToCSVFile(context, file, myArray, Rows, Cols, "deleteSubjectFromSubjectsTxt");
     }
 
     public static void deleteSubjectFromHomeworkTxt(Context context, String subject){
@@ -673,9 +679,10 @@ public class DataStorageHandler {
             }
         }
 
+        myArray = newArray;
         Rows = countA;
 
-        writeToCSVFile(context, file, myArray, Rows, Cols);
+        writeToCSVFile(context, file, myArray, Rows, Cols, "deleteSubjectFromHomeworkTxt");
     }
 
     public static void deleteSubjectFromNotificationsTxt(Context context, String subject){
@@ -704,6 +711,7 @@ public class DataStorageHandler {
             }
         }
 
+        myArray = newArray;
         Rows = countA;
 
         // write data to file
@@ -723,7 +731,7 @@ public class DataStorageHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }*/
-        writeToCSVFile(context, file, myArray, Rows, Cols);
+        writeToCSVFile(context, file, myArray, Rows, Cols, "deleteSubjectFromNotificationsTxt");
     }
 
     public static void deleteSubjectFromPeriodsTxt(Context context, String subject){
@@ -752,6 +760,7 @@ public class DataStorageHandler {
             }
         }
 
+        myArray = newArray;
         Rows = countA;
 
         // write data to file
@@ -771,7 +780,7 @@ public class DataStorageHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }*/
-        writeToCSVFile(context, file, myArray, Rows, Cols);
+        writeToCSVFile(context, file, myArray, Rows, Cols, "deleteSubjectFromPeriodsTxt");
     }
 
     public static void deleteSubjectFromTtFieldsTxt(Context context, String subject){
@@ -800,6 +809,7 @@ public class DataStorageHandler {
             }
         }
 
+        myArray = newArray;
         Rows = countA;
 
 
@@ -820,7 +830,7 @@ public class DataStorageHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }*/
-        writeToCSVFile(context, file, myArray, Rows, Cols);
+        writeToCSVFile(context, file, myArray, Rows, Cols, "deleteSubjectFromTtFieldsTxt");
     }
 
     public static void deleteSubjectNotifications(Context context, String subject){
@@ -868,25 +878,25 @@ public class DataStorageHandler {
             int Cols = nmbrRowsCols(context, fileNames[i])[1];
             File file = new File(context.getExternalFilesDir(null), fileNames[i]);
             String[] columnNames = context.getResources().getStringArray(arrayNames[i]);
-            Toast.makeText(context, "columnNames " + columnNames[0] + ", " + columnNames[1], Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "columnNames " + columnNames[0] + ", " + columnNames[1], Toast.LENGTH_SHORT).show();
 
 
             for (int n = 0; n < columnNames.length; n++){
                 if (columnNames[n].equals("day") || columnNames[n].equals("day1") || columnNames[n].equals("day2") ||
                         columnNames[n].equals("day3") || columnNames[n].equals("day4") || columnNames[n].equals("day5")){
-                    Toast.makeText(context, "equals " + columnNames[n], Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "equals " + columnNames[n], Toast.LENGTH_SHORT).show();
 
                     for (int r = 0; r < Rows; r++){
                         for (int dn = 0; dn < dayNames.length; dn++){
                             if (myArray[r][n].equals(dayNames[dn])){
                                 myArray[r][n] = dayIDs[dn];
-                                Toast.makeText(context, "myArray = " + dayIDs[dn], Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(context, "myArray = " + dayIDs[dn], Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
                 }
             }
-            writeToCSVFile(context, file, myArray, Rows, Cols);
+            writeToCSVFile(context, file, myArray, Rows, Cols, "updateDayNamesToIDs");
         }
     }
 
@@ -901,6 +911,7 @@ public class DataStorageHandler {
                                                         String room1, String room2, String room3, String room4, String room5,
                                                         String color, String textColor,
                                                         String timeBeforeMinutes, String neverNotify, String waitForPrevious, String onlyWhenChangingRooms){
+        //Toast.makeText(context, "editAllTtNotificationsTxtSubject", Toast.LENGTH_SHORT).show();
         File file = new File(context.getExternalFilesDir(null), "AllTtNotifications.txt");
         String[][] myArray = toArray(context, "AllTtNotifications.txt");
         int Rows = nmbrRowsCols(context, "AllTtNotifications.txt")[0];
@@ -921,19 +932,28 @@ public class DataStorageHandler {
             myArray = new String[0][0];
             Rows = 0;
         } else {
-            String[][] deleteArray = new String[Rows-countDel][Cols];
+            String[][] deleteArray = new String[0][0];
             int countOut = 0;
+            int countIn = 0;
             for (int r2 = 0; r2 < Rows; r2++){
                 if(!myArray[r2][5].equals(sName)){
-                    for (int c1 = 0; c1 < Cols; c1++){
-                        deleteArray[r2][c1] = myArray[r2-countOut][c1];
+                    String[][] interimArray = new String[countIn+1][Cols];
+                    for(int r1 = 0; r1 < countIn; r1++) {
+                        for (int c1 = 0; c1 < Cols; c1++) {
+                            interimArray[r1][c1]=deleteArray[r1][c1];
+                        }
                     }
+                    for (int n = 0; n < Cols; n++){
+                        interimArray[countIn][n]=myArray[r2][n];
+                    }
+                    deleteArray=interimArray;
+                    countIn++;
                 } else {
                     countOut++;
                 }
             }
             myArray = deleteArray;
-            Rows = Rows - countOut;
+            Rows = countIn;
         }
 
 
@@ -944,59 +964,79 @@ public class DataStorageHandler {
         String[] periodTArray = {period1t, period2t, period3t, period4t, period5t};
         String[] roomsArray = {room1, room2, room3, room4, room5};
 
+        // Do it for all 5 periods
         for (int p1 = 0; p1 < 5; p1++){
-            if(!daysArray[p1].equals("-") && !periodFArray[p1].equals("-") && !periodTArray[p1].equals("-")){
+            // check if there is data for period
+            if(!daysArray[p1].equals("-") && !periodFArray[p1].equals("-") && !periodTArray[p1].equals("-")
+                    && !daysArray[p1].equals("") && !periodFArray[p1].equals("") && !periodTArray[p1].equals("")){
                 String timePeriodStartMinutes, periods, timeStart, timeEnd, timeEndMinutes;
 
+                // get the day's ID
                 int dayInt = -1;
                 for (int id = 0; id < dayIDs.length; id++){
                     if (daysArray[p1].equals(dayIDs[id])) dayInt = id;
                 }
 
+                // check if day ID was found successfully
                 if (dayInt < 0){
                     Log.e("dayID exception", "Could not find Day ID - period won't be notified for. In: DataStorageHandler, editAllTtNotificationsTxtSubject()");
                 } else {
+                    // find the period's ID
                     int periodInt = Integer.parseInt(periodFArray[p1]) - 1;
+                    int periodToInt = Integer.parseInt(periodTArray[p1]) - 1;
                     {
-                        Log.e("periodInt exception", "Period could not be parsed to Integer - period won't be notified for. In: DataStorageHandler, editAllTtNotificationsTxtSubject()");
+                        Log.e("periodInt exception", "Period could not be parsed to Integer ("+periodFArray[p1]+") - period won't be notified for. In: DataStorageHandler, editAllTtNotificationsTxtSubject()");
                     }
 
+                    // get start and end time for this period from preferences
                     String timeStartUnSplit = prefs.getString(keysPeriodsStart[periodInt], "false");
-                    String timeEndUnSplit = prefs.getString(keysPeriodsEnd[periodInt], "false");
+                    String timeEndUnSplit = prefs.getString(keysPeriodsEnd[periodToInt], "false");
+                    // check if times have been fund successfully
                     if (timeStartUnSplit.equals("false") || timeEndUnSplit.equals("false")){
                         Log.e("prefs exception", "period start time preference could not be found - period won't be notified for. In: DataStorageHandler, editAllTtNotificationsTxtSubject()");
                     } else {
+                        // calculate times in minutes
                         String[] timeSplit = timeStartUnSplit.split(":");
                         int timePeriodStartMinutesInt = dayInt*24*60 + Integer.parseInt(timeSplit[0])*60 + Integer.parseInt(timeSplit[1]);
                         timePeriodStartMinutes = String.valueOf(timePeriodStartMinutesInt);
 
+                        // set the "periods" text for notification
                         if (periodFArray[p1].equals(periodTArray[p1])) {
                             periods = periodFArray[p1];
                         } else {
                             periods = periodFArray[p1] + "-" + periodTArray[p1];
                         }
 
-                        timeStart = timeStartUnSplit;
-                        timeEnd = timeEndUnSplit;
 
+                        timeStart = formatTime(timeStartUnSplit);
+
+                        timeEnd = formatTime(timeEndUnSplit);
+
+                        // calculate end time in minutes
                         String[] timeEndSplit = timeEndUnSplit.split(":");
                         int timePeriodEndMinutesInt = dayInt*24*60 + Integer.parseInt(timeEndSplit[0])*60 + Integer.parseInt(timeEndSplit[1]);
                         timeEndMinutes = String.valueOf(timePeriodEndMinutesInt);
 
 
+                        // check where to put the period's notification (sort by starting time)
                         int newRow = 0;
                         for (int nr = 0; nr < Rows; nr++){
-                            if (timePeriodStartMinutesInt > Integer.parseInt(myArray[nr][0])) {
+                            if (myArray[nr][0] == null){
+                                Log.e("Null problem", "null: "+String.valueOf(nr)+myArray[nr][5]+". In: DataStorageHandler, editAllTtNotificationsSubjectTxt(), 'check where to put the period's notification'");
+                            } else if (timePeriodStartMinutesInt > Integer.parseInt(myArray[nr][0])) {
                                 newRow++;
                             }
                         }
 
+                        // create newMyArray
                         String[][] newMyArray = new String[Rows+1][Cols];
+                        // copy myArray entries to newMyArray until where the new line will be inserted
                         for (int before = 0; before < newRow; before++){
                             for (int c = 0; c < Cols; c++){
                                 newMyArray[before][c] = myArray[before][c];
                             }
                         }
+                        // insert new line
                         newMyArray[newRow][0] = timePeriodStartMinutes;
                         newMyArray[newRow][1] = timeBeforeMinutes;
                         newMyArray[newRow][2] = neverNotify;
@@ -1012,18 +1052,23 @@ public class DataStorageHandler {
                         newMyArray[newRow][12] = timeEnd;
                         newMyArray[newRow][13] = timeEndMinutes;
 
-                        for (int after = newRow+1; after < Rows; after++){
+                        // insert entries after new line
+                        for (int after = newRow; after < Rows; after++){
                             for (int c = 0; c < Cols; c++){
-                                newMyArray[after][c] = myArray[after][c];
+                                newMyArray[after+1][c] = myArray[after][c];
                             }
                         }
 
+                        // make newMyArray the new myArray
                         myArray = newMyArray;
+                        Rows++;
                     }
                 }
             }
         }
-        writeToCSVFile(context, file, myArray, Rows, Cols);
+        //Toast.makeText(context, "AllTt: "+myArray[0][0]+", "+myArray[0][1], Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "AllTt Rows Print: "+String.valueOf(Rows), Toast.LENGTH_SHORT).show();
+        writeToCSVFile(context, file, myArray, Rows, Cols, "editAllTtNotificationsTxtSubject");
         updateActiveTtNotificationsTxt(context);
     }
 
@@ -1057,7 +1102,7 @@ public class DataStorageHandler {
             Rows = Rows - countOut;
         }
 
-        writeToCSVFile(context, file, myArray, Rows, Cols);
+        writeToCSVFile(context, file, myArray, Rows, Cols, "deleteSubjectFromAllTtNotifications");
         context.startService(new Intent(context, NotificationService.class));
     }
 
@@ -1074,13 +1119,14 @@ public class DataStorageHandler {
         boolean rooms = prefs.getBoolean("pref_key_notification_only_if_change_rooms", false);
         int timePref = prefs.getInt("pref_key_notification_time", 0);
 
-
+        //Toast.makeText(context, "rowsAll: "+RowsAll, Toast.LENGTH_SHORT).show();
         int count = 0;
         for (int i = 0; i < RowsAll; i++){
             boolean dT = AllTtNoifications[i][2].equals("default") && never;
             boolean tT = AllTtNoifications[i][2].equals("true") && never;
             boolean tF = AllTtNoifications[i][2].equals("true") && !never;
-            if (!dT && !tT && tF) {
+            // TODO is this correct?? (tF instead of !tF)
+            if (!dT && !tT && !tF) {
                 count++;
             }
         }
@@ -1092,7 +1138,9 @@ public class DataStorageHandler {
             boolean dT = AllTtNoifications[i][2].equals("default") && never;
             boolean tT = AllTtNoifications[i][2].equals("true") && never;
             boolean tF = AllTtNoifications[i][2].equals("true") && !never;
-            if (!dT && !tT && tF) {
+
+            //Toast.makeText(context, "dT: "+String.valueOf(dT)+", tT: "+String.valueOf(tT)+", tF"+String.valueOf(tF), Toast.LENGTH_SHORT).show();
+            if (!dT && !tT && !tF) {
 
                 boolean roomsProblem = false;
                 if (AllTtNoifications[i][4].equals("default")) {
@@ -1113,9 +1161,11 @@ public class DataStorageHandler {
 
                     if (AllTtNoifications[i][1].equals("default")) {
                         timeNotification = String.valueOf(Integer.parseInt(AllTtNoifications[i][0]) - timePref);
-                    } else {
+                    } else if (isStringNumeric(AllTtNoifications[i][1])){
                         timeNotification = String.valueOf(Integer.parseInt(AllTtNoifications[i][0])
                                 - Integer.parseInt(AllTtNoifications[i][1]));
+                    } else {
+                        timeNotification = String.valueOf(Integer.parseInt(AllTtNoifications[i][0]) - timePref);
                     }
 
                     boolean waitForPrevious = false;
@@ -1128,7 +1178,7 @@ public class DataStorageHandler {
                     }
 
                     if (waitForPrevious) {
-                        if (isStringNumeric(AllTtNoifications[i - 1][13])) {
+                        if (i > 0 && isStringNumeric(AllTtNoifications[i - 1][13])) {
                             if (Integer.parseInt(timeNotification) <= Integer.parseInt(AllTtNoifications[i - 1][13]))
                                 timeNotification = AllTtNoifications[i - 1][13];
                         }
@@ -1165,20 +1215,217 @@ public class DataStorageHandler {
 
                     myArray = newMyArray;
                     count2++;
+                    //Toast.makeText(context, myArray[0][0], Toast.LENGTH_SHORT).show();
                 }
             }
         }
 
-        writeToCSVFile(context, file, myArray, count2, ColsMyArray);
+        writeToCSVFile(context, file, myArray, count2, ColsMyArray, "updateActiveTtNotificationsTxt");
         context.startService(new Intent(context, NotificationService.class));
+        //Toast.makeText(context, "updateActiveTtNotifications", Toast.LENGTH_SHORT).show();
     }
 
 
 
+    public static void changeNotificationMethod(Context context){
+        changeNotificationMethod(context, false);
+    }
+
+    public static void changeNotificationMethod(Context context, boolean force){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String pref_NotificationMethodUpdated = "NotificationMethodUpdated";
+        String pref_NotificationUpdate2016_05_20 = "NotificationUpdate20160520";
+
+        String[][] myArray = toArray(context, "Subjects.txt");
+        int rows = nmbrRowsCols(context, "Subjects.txt")[0];
+        int cols = nmbrRowsCols(context, "Subjects.txt")[1];
+
+        String[][] nArray = toArray(context, "AllTtNotifications.txt");
+        int nRows = nmbrRowsCols(context, "AllTtNotifications.txt")[0];
+
+        //Toast.makeText(context, "rows: " +String.valueOf(rows), Toast.LENGTH_SHORT).show();
+        for (int i = 0; i < rows; i++) {
+            boolean already = false;
+            for (int r = 0; r < nRows; r++){
+                if (nArray[r][5].equals(myArray[i][0])) already = true;
+            }
+            if (!already || force) {
+                editAllTtNotificationsTxtSubject(context, myArray[i][0], myArray[i][1], myArray[i][2], myArray[i][3],
+                        myArray[i][4], myArray[i][5], myArray[i][6], myArray[i][7], myArray[i][8],
+                        myArray[i][9], myArray[i][10], myArray[i][11], myArray[i][12], myArray[i][13],
+                        myArray[i][14], myArray[i][15], myArray[i][16], myArray[i][17], myArray[i][18],
+                        myArray[i][19], myArray[i][20], myArray[i][21], myArray[i][22], myArray[i][23],
+                        myArray[i][24], myArray[i][25],
+                        "default", "default", "default", "default");
+            }
+        }
 
 
-    public static void writeToCSVFile(Context context, File file, String[][] myArray, int Rows, int Cols){
-        Toast.makeText(context, "writeToCSVFile", Toast.LENGTH_SHORT).show();
+        String[][] notifArray = toArray(context, "Notifications.txt");
+        int notifRows = nmbrRowsCols(context, "Notifications.txt")[0];
+        int notifCols = nmbrRowsCols(context, "Notifications.txt")[1];
+
+        for (int i2 = 0; i2 < notifRows; i2++) {
+            new ReminderManager(context).deleteReminder(Long.getLong(notifArray[i2][0]));
+        }
+
+        prefs.edit().putBoolean(pref_NotificationMethodUpdated, true).apply();
+        prefs.edit().putBoolean(pref_NotificationUpdate2016_05_20, true).apply();
+    }
+
+    public static void checkTtFieldsTxt(Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String pref_checkTtFieldsTxt2016_05_28 = "CheckTtFieldsTxt20160528";
+
+        String[][] subjects = toArray(context, "Subjects.txt");
+        String[][] fields = toArray(context, "TtFields.txt");
+        int[] subjectsRC = nmbrRowsCols(context, "Subjects.txt");
+        int[] fieldsRC = nmbrRowsCols(context, "TtFields.txt");
+        File fFile = new File(context.getExternalFilesDir(null), "TtFields.txt");
+
+        if (fieldsRC[1] >= 5){
+            int deleted = 0;
+            for (int i = 0; i < fieldsRC[0]; i++) {
+                if (i < fieldsRC[0] - deleted) {
+                    boolean doubleBooking = false;
+                    for (int i1 = 0; i1 < fieldsRC[0]-deleted; i1++) {
+                        if (fields[i][0].equals(fields[i1][0])) doubleBooking = true;
+                    }
+                    if (doubleBooking) {
+                        deletePeriodContainingField(context, fields[i][0], fields[i][1]);
+                        deleted++;
+                    }
+
+                    boolean foundSubject = false;
+                    for (int s = 0; s < subjectsRC[0]; s++) {
+                        if (fields[i][1].equals(subjects[s][0])) {
+                            fields[i][2] = subjects[s][1];
+                            fields[i][3] = subjects[s][24];
+                            fields[i][4] = subjects[s][25];
+                            foundSubject = true;
+                        }
+                    }
+                    if (!foundSubject) {
+                        if (fieldsRC[0] == 1) {
+                            String[][] newFields = new String[0][0];
+                            writeToCSVFile(context, fFile, newFields, 0, 0, "checkTtFilesTxt");
+                        }
+                        String[][] newFields = new String[fieldsRC[0] - 1][fieldsRC[1]];
+
+                        for (int i1 = 0; i1 < i; i1++) {
+                            for (int c = 0; c < fieldsRC[1]; c++) {
+                                newFields[i1][c] = fields[i1][c];
+                            }
+                        }
+                        for (int i2 = i + 1; i2 < fieldsRC[0]; i2++) {
+                            for (int c = 0; c < fieldsRC[1]; c++) {
+                                newFields[i2 - 1][c] = fields[i2][c];
+                            }
+                        }
+
+                        writeToCSVFile(context, fFile, newFields, fieldsRC[0] - 1, fieldsRC[1], "checkTtFilesTxt");
+                    }
+                }
+            }
+        }
+
+        prefs.edit().putBoolean(pref_checkTtFieldsTxt2016_05_28, true).apply();
+    }
+
+    public static void deletePeriodContainingField (Context context, String field, String subject){
+        String[][] subjects = toArray(context, "Subjects.txt");
+        String[][] periods = toArray(context, "Periods.txt");
+        String[][] fields = toArray(context, "TtFields.txt");
+
+        int[] subjectsRC = nmbrRowsCols(context, "Subjects.txt");
+        int[] periodsRC = nmbrRowsCols(context, "Periods.txt");
+        int[] fieldsRC = nmbrRowsCols(context, "TtFields.txt");
+
+        boolean fail = false;
+        if (isStringNumeric(field)) {
+            int iField = Integer.parseInt(field);
+
+            int day = -1;
+            int period = -1;
+            for (int d = 0; d < 7; d++) {
+                if (d*12 +1 <= iField && iField <= d*12 +12){
+                    day = d;
+                    period = iField - d*12;
+                }
+            }
+
+            if (day >= 0 && period >0){
+                if (periodsRC[1] >= 3) {
+                    for (int p = 0; p < periodsRC[0]; p++) {
+                        if (periods[p][0].equals(String.valueOf(day))
+                                && periods[p][1].equals(String.valueOf(period))
+                                && periods[p][2].equals(subject)){
+                            deletePeriodFromPeriodsTxt(context, p);
+                        }
+                    }
+                }
+
+
+                for (int s = 0; s < subjectsRC[0]; s++){
+                    for (int s1 = 0; s1 < 5; s1++) {
+                        if (subjects[s][0].equals((subject)) && subjects[s][4+s1].equals(String.valueOf(day))){
+                            int from = -1;
+                            int to = -1;
+                            if (isStringNumeric(subjects[s][9+s1])) from = Integer.valueOf(subjects[s][9+s1]);
+                            if (isStringNumeric(subjects[s][14+s1])) to = Integer.valueOf(subjects[s][14+s1]);
+
+                            if (from > -1 && to > -1){
+                                if (from <= period && period <= to){
+                                    subjects[s][4+s1] = "-";
+                                    subjects[s][9+s1] = "-";
+                                    subjects[s][14+s1] = "-";
+                                }
+                            }
+                        }
+                    }
+                }
+                File sFile = new File(context.getExternalFilesDir(null), "Subjects.txt");
+                writeToCSVFile(context, sFile, subjects, subjectsRC[0], subjectsRC[1], "deletePeriodContainingField");
+
+            } else {
+                fail = true;
+            }
+        } else {
+            fail = true;
+        }
+    }
+
+    public static void deletePeriodFromPeriodsTxt (Context context, int row){
+        String[][] periods = toArray(context, "Periods.txt");
+        int[] periodsRC = nmbrRowsCols(context, "Periods.txt");
+        File file = new File(context.getExternalFilesDir(null), "Subjects.txt");
+
+        if (periodsRC[0]>0 && periodsRC[1]>=3) {
+            if (periodsRC[0] == 1){
+                String newPArray[][] = new String[0][0];
+                writeToCSVFile(context, file, newPArray, 0, 0, "deletePeriodFromPeriodsTxt");
+            } else {
+                String newPArray[][] = new String[periodsRC[0] - 1][periodsRC[1]];
+
+                for (int i1 = 0; i1 < row; i1++) {
+                    for (int c = 0; c < periodsRC[1]; c++) {
+                        newPArray[i1][c] = periods[i1][c];
+                    }
+                }
+                for (int i2 = row + 1; i2 < periodsRC[0]; i2++) {
+                    for (int c = 0; c < periodsRC[1]; c++) {
+                        newPArray[i2 - 1][c] = periods[i2][c];
+                    }
+                }
+
+                writeToCSVFile(context, file, newPArray, periodsRC[0] - 1, periodsRC[1], "deletePeriodFromPeriodsTxt");
+            }
+        }
+    }
+
+
+    public static void writeToCSVFile(Context context, File file, String[][] myArray, int Rows, int Cols, String caller){
+        //Toast.makeText(context, myArray[0][0], Toast.LENGTH_SHORT).show();
         // write data to file
         try{
             BufferedWriter buf = new BufferedWriter(new FileWriter(file));
@@ -1194,11 +1441,11 @@ public class DataStorageHandler {
                     for (int c1 = 1; c1 < Cols; c1++){
                         line = line + "," + myArray[t][c1];
                     }
-                    Toast.makeText(context, "write "+ line, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "write "+ line, Toast.LENGTH_SHORT).show();
                     buf.write(line);
                     buf.newLine();
                 }else{
-                    Toast.makeText(context, "CANNOT save data:" + myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3], Toast.LENGTH_SHORT).show();
+                    Log.e("Data saving error", "CANNOT save data:" + caller + myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2]+". In: DataStorageHandler, writeToCSVFile");
                 }
             }
             buf.close();
@@ -1272,12 +1519,12 @@ public class DataStorageHandler {
     }
 
 
-    public static boolean isStringNumeric( String str )
-    {
+    public static boolean isStringNumeric( String str ) {
         DecimalFormatSymbols currentLocaleSymbols = DecimalFormatSymbols.getInstance();
         char localeMinusSign = currentLocaleSymbols.getMinusSign();
 
-        if ( !Character.isDigit( str.charAt( 0 ) ) && str.charAt( 0 ) != localeMinusSign ) return false;
+        if (str == null || str.length() <= 0) return false;
+        if (!Character.isDigit( str.charAt( 0 ) ) && str.charAt( 0 ) != localeMinusSign ) return false;
 
         boolean isDecimalSeparatorFound = false;
         char localeDecimalSeparator = currentLocaleSymbols.getDecimalSeparator();
@@ -1305,5 +1552,29 @@ public class DataStorageHandler {
         }
         Toast.makeText(context, "external storage currently NOT available", Toast.LENGTH_SHORT).show();
         return false;
+    }
+
+    public static String formatTime(String time){
+        // Make 3:0 -> 03:00
+        if (time.length() >= 3) {
+            String h, m;
+            String hour = time.split(":")[0];
+            String minute = time.split(":")[1];
+            if (hour.length() == 1) {
+                h = "0" + hour;
+            } else {
+                h = hour;
+            }
+            if (minute.length() == 1) {
+                m = "0" + minute;
+            } else {
+                m = minute;
+            }
+            String newTime = h + ":" + m;
+
+            return newTime;
+        } else {
+            return "";
+        }
     }
 }

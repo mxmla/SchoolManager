@@ -368,6 +368,80 @@
 				</LinearLayout>
 			</android.support.v7.widget.CardView>
 
+			<android.support.v7.widget.CardView
+				android:id="@+id/customSubjectsCard"
+				style="@style/Card"
+				custom:cardElevation="2dp"
+				custom:cardUseCompatPadding="true" >
+
+				<LinearLayout
+					android:id="@+id/card_custom_subjects"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical" >
+
+					<TextView
+						android:id="@+id/tvD7"
+						style="@style/CardTitle"
+						android:text="@string/CustomSubjects" />
+
+					<LinearLayout
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:orientation="vertical"
+						style="@style/CardContent">
+
+						<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="48dp"
+							android:orientation="horizontal">
+							<CheckBox
+								android:id="@+id/checkBox20"
+								android:layout_width="wrap_content"
+								android:layout_height="48dp"
+								style="@style/CardContentText" />
+							<EditText
+								android:id="@+id/etCustom1"
+								android:layout_width="match_parent"
+								android:layout_height="wrap_content"
+								android:layout_centerVertical="true"
+								android:hint="@string/new_timetable_custom_subject_name_hint"/>
+						</LinearLayout>
+
+						<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="48dp"
+							android:orientation="horizontal">
+							<CheckBox
+								android:id="@+id/checkBox21"
+								android:layout_width="wrap_content"
+								android:layout_height="48dp"
+								style="@style/CardContentText" />
+							<EditText
+								android:id="@+id/etCustom2"
+								android:layout_width="match_parent"
+								android:layout_height="wrap_content"
+								android:layout_centerVertical="true"
+								android:hint="@string/new_timetable_custom_subject_name_hint"/>
+						</LinearLayout>
+						
+						<LinearLayout
+							android:id="@+id/customSubjectsPlaceholder"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:orientation="vertical"></LinearLayout>
+
+						<ImageView
+							android:id="@+id/ivAddCSubject"
+							android:layout_width="48dp"
+							android:layout_height="48dp"
+							android:src="@drawable/ic_add_black_48dp"
+							android:clickable="true"/>
+
+					</LinearLayout>
+				</LinearLayout>
+			</android.support.v7.widget.CardView>
+
 
 			<Button
 				android:id="@+id/confirm"

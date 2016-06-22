@@ -37,7 +37,7 @@ public class ShareAppFragment extends Fragment {
         // update the actionbar to show the up carat/affordance
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        int ttColor = ((MainActivity) getActivity()).getResources().getColor(R.color.color_home);
+        int ttColor = ((MainActivity) getActivity()).getResources().getColor(R.color.color_home_appbar);
         ((MainActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ttColor));
 
         bShare = (Button) v.findViewById(R.id.share);

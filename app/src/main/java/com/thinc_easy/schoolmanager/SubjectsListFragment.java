@@ -2,6 +2,7 @@ package com.thinc_easy.schoolmanager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ public class SubjectsListFragment extends Fragment {
     private RecyclerView recyclerView;
     private MyAdapter adapter;
     ListView listViewSubjects;
+    private TextView slSectionTitleText, slSectionTitleButton;
 
     private static String[] subjectNames;
     private static String[] subjectAbbrev;
@@ -50,6 +54,13 @@ public class SubjectsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_subjects_list, container, false);
+
+        slSectionTitleText = (TextView) v.findViewById(R.id.slSectionTitleText);
+        slSectionTitleButton = (TextView) v.findViewById(R.id.slSectionTitleButton);
+
+        slSectionTitleText.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf"));
+        slSectionTitleButton.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf"));
+        slSectionTitleButton.setTextColor(getActivity().getResources().getColor(R.color.color_timetable));
 
         String[][] subjectsArray = ((TimetableActivity) getActivity()).toArray(getActivity(), "Subjects.txt");
         int[] numberRowsCols = ((TimetableActivity) getActivity()).nmbrRowsCols(getActivity(), "Subjects.txt");
@@ -92,10 +103,21 @@ public class SubjectsListFragment extends Fragment {
             icons[i2] = gd;
         }
 
+        int verticalSpacing = (int) (getActivity().getResources().getDimension(R.dimen.list_1LineAvatarIcon_verticalSpacing));
+        int listPaddingTop = (int) (getActivity().getResources().getDimension(R.dimen.list_1LineAvatarIcon_listPadding_top));
+        int listPaddingBottom = (int) (getActivity().getResources().getDimension(R.dimen.list_1LineAvatarIcon_listPadding_bottom));
+        int dividerPaddingLeft = (int) (getActivity().getResources().getDimension(R.dimen.list_1LineAvatarIcon_divider_paddingLeft));
+        int dividerPaddingRight = (int) (getActivity().getResources().getDimension(R.dimen.list_1LineAvatarIcon_divider_paddingRight));
+        int adapterItemSize = (int) getActivity().getResources().getDimension(R.dimen.list_1LineAvatarIcon_tile_height);
+
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerViewSubjects);
         adapter = new MyAdapter(getActivity(), getData(), "1LineAvatarAndText");
+        int viewHeight = (adapter.getItemCount() * (listPaddingTop + listPaddingBottom + adapterItemSize + verticalSpacing + getActivity().obtainStyledAttributes(new int[]{android.R.attr.listDivider}).getDrawable(0).getIntrinsicHeight()));
+        recyclerView.getLayoutParams().height = viewHeight;
+        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager((TimetableActivity) getActivity()));
+
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener(){
 
             @Override

@@ -6,273 +6,513 @@
     android:id="@+id/rlContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/BackgroundColor"
     tools:context="com.thinc_easy.schoolmanager.MainFragment" >
 
-    <ScrollView
-        android:id="@+id/scrollView"
+
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefresh1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:layout_alignParentTop="true" >
+        android:layout_alignParentTop="true">
 
-        <LinearLayout
-            android:id="@+id/LinearLayout01"
+        <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:gravity="center"
+            android:orientation="vertical">
+            <!--android:layout_alignParentTop="true">-->
 
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Refresh"
-                style="?android:attr/buttonBarButtonStyle"
-                android:id="@+id/bRefresh" />
+            <LinearLayout
+                android:id="@+id/LinearLayout01"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/NowLessonCard"
-                style="@style/Card"
-                custom:cardElevation="2dp"
-                custom:cardUseCompatPadding="true" >
-
-                <LinearLayout
+                <!--
+                <Button
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" >
+                    android:text="Refresh"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:id="@+id/bRefresh" /> -->
+
+                <RelativeLayout
+                    android:id="@+id/ttSectionTitle"
+                    style="@style/SectionTitleStyle"
+                    android:layout_marginTop="@dimen/card_padding">
+
+                    <TextView
+                        android:id="@+id/ttSectionTitleText"
+                        style="@style/SectionTitleTextStyle"
+                        android:text="@string/title_activity_timetable"/>
+                    <TextView
+                        android:id="@+id/ttSectionTitleButton"
+                        style="@style/SectionTitleButtonStyle" />
+                </RelativeLayout>
+<!--
+                <android.support.v7.widget.CardView
+                    android:id="@+id/NoLessonsCard"
+                    style="@style/Card"
+                    custom:cardElevation="2dp"
+                    custom:cardUseCompatPadding="true" >
 
                     <LinearLayout
-                        android:id="@+id/CardNowLessonHeaderBar"
-                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+                        
+                        <TextView
+                            android:layout_width=""
+                            android:layout_height="" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView> -->
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/NowLessonCard"
+                    style="@style/Card"
+                    android:layout_marginTop="0dp"
+                    custom:cardElevation="2dp"
+                    custom:cardUseCompatPadding="true" >
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/card_padding"
-                        android:background="@color/color_timetable_dark"
-                        android:foreground="@drawable/custom_bg" >
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="@dimen/card_padding"
-                            android:src="@drawable/ic_arrow_forward_white_24dp"
-                            android:background="@android:color/transparent" />
-
-                        <TextView
-                            android:id="@+id/CardNowLessonTitle"
-                            style="@style/CardTitle"
-                            android:text="@string/NowSubject"
-                            android:textColor="@color/TextDarkBg" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        style="@style/CardContent"
-                        android:orientation="horizontal" >
-
-                        <View
-                            android:id="@+id/NowSubjectColorView"
-                            android:layout_width="@dimen/subject_circle_medium"
-                            android:layout_height="@dimen/subject_circle_medium"
-                            android:layout_marginRight="@dimen/card_padding"
-                            android:layout_gravity="center"
-                            android:background="@color/orange_light" />
+                        android:orientation="vertical">
 
                         <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" >
-
-                            <TextView
-                                android:id="@+id/tvNowSubjectName"
-                                style="@style/CardContentText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="20dp"
-                                android:text="Medium Text" />
-
-                            <TextView
-                                android:id="@+id/tvNowRoom"
-                                style="@style/CardContentText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="20dp"
-                                android:text="Medium Text" />
-
-                            <TextView
-                                android:id="@+id/tvNowTeacher"
-                                style="@style/CardContentText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="20dp"
-                                android:text="Medium Text" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/NextLessonCard"
-                style="@style/Card"
-                custom:cardElevation="2dp"
-                custom:cardUseCompatPadding="true" >
-
-                <LinearLayout
-                    style="@style/CardContentArea"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" >
-
-                    <LinearLayout
-                        android:id="@+id/CardNextLessonHeaderBar"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/card_padding"
-                        android:background="@color/color_timetable_dark"
-                        android:foreground="@drawable/custom_bg" >
-
-                        <ImageView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="@dimen/card_padding"
-                            android:src="@drawable/ic_arrow_forward_white_24dp"
-                            android:background="@android:color/transparent" />
+                            android:orientation="horizontal" >
 
-                        <TextView
-                            android:id="@+id/CardNextLessonTitle"
-                            style="@style/CardTitle"
-                            android:text="@string/NextSubject"
-                            android:textColor="@color/TextDarkBg" />
-                    </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
-                    <LinearLayout
-                        style="@style/CardContent"
-                        android:orientation="horizontal" >
+                                <TextView
+                                    android:id="@+id/CardNowLessonTitle"
+                                    style="@style/CardSubtitleBase"
+                                    android:paddingBottom="0dp"
+                                    android:text="@string/NowSubject" />
 
-                        <View
-                            android:id="@+id/NextSubjectColorView"
-                            android:layout_width="@dimen/subject_circle_medium"
-                            android:layout_height="@dimen/subject_circle_medium"
-                            android:layout_marginRight="@dimen/card_padding"
-                            android:layout_gravity="center"
-                            android:background="@color/orange_light" />
+                                <TextView
+                                    android:id="@+id/tvNowSubjectName"
+                                    style="@style/CardTitle"
+                                    android:paddingTop="0dp"
+                                    android:text="Medium Text" />
+                            </LinearLayout>
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="@dimen/card_padding">
+                                <View
+                                    android:id="@+id/NowSubjectColorView"
+                                    android:layout_width="@dimen/subject_circle_medium"
+                                    android:layout_height="@dimen/subject_circle_medium"
+                                    android:layout_gravity="right|center_vertical"
+                                    android:background="@color/orange" />
+
+                                <TextView
+                                    android:id="@+id/tvNowSubjectAbbrev"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/subject_circle_medium_text_size"
+                                    android:layout_centerInParent="true"/>
+                            </RelativeLayout>
+                        </LinearLayout>
 
                         <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" >
+                            style="@style/CardContent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/tvNextSubjectName"
-                                style="@style/CardContentText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="20dp"
-                                android:text="Medium Text" />
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp">
+                                <TextView
+                                    android:id="@+id/tvNowRoom"
+                                    style="@style/CardContentText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="36dp"
+                                    android:text="Medium Text" />
 
-                            <TextView
-                                android:id="@+id/tvNextRoom"
-                                style="@style/CardContentText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="20dp"
-                                android:text="Medium Text" />
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginBottom="10dp"
+                                    android:alpha="0.56"
+                                    android:src="@drawable/ic_place_black_48dp"/>
+                            </RelativeLayout>
 
-                            <TextView
-                                android:id="@+id/tvNextTeacher"
-                                style="@style/CardContentText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="20dp"
-                                android:text="Medium Text" />
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="36dp">
+                                    <TextView
+                                        android:id="@+id/tvNowPeriods"
+                                        style="@style/CardContentText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="Medium Text" />
+
+                                    <TextView
+                                        android:id="@+id/tvNowTimes"
+                                        style="@style/CardContentText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/SecondaryText"
+                                        android:textSize="@dimen/card_content_text_small"
+                                        android:text="Medium Text" />
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginTop="10dp"
+                                    android:alpha="0.56"
+                                    android:src="@drawable/ic_schedule_black_48dp"/>
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp">
+                                <TextView
+                                    android:id="@+id/tvNowTeacher"
+                                    style="@style/CardContentText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="36dp"
+                                    android:text="Medium Text" />
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginBottom="10dp"
+                                    android:alpha="0.56"
+                                    android:src="@drawable/ic_person_black_48dp"/>
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:visibility="gone">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginBottom="10dp"
+                                    android:alpha="0.56"
+                                    android:src="@drawable/ic_place_black_48dp"/>
+                            </RelativeLayout>
+
                         </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+                </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/TomorrowLessonsCard"
-                style="@style/Card"
-                custom:cardElevation="2dp"
-                custom:cardUseCompatPadding="true" >
 
-                <LinearLayout
-                    style="@style/CardContentArea"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" >
+                <android.support.v7.widget.CardView
+                    android:id="@+id/NextLessonCard"
+                    style="@style/Card"
+                    custom:cardElevation="2dp"
+                    custom:cardUseCompatPadding="true" >
 
                     <LinearLayout
-                        android:id="@+id/CardTomorrowLessonsHeaderBar"
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/card_padding"
-                        android:background="@color/color_timetable_dark"
-                        android:foreground="@drawable/custom_bg" >
+                        android:orientation="vertical">
 
-                        <ImageView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="@dimen/card_padding"
-                            android:src="@drawable/ic_arrow_forward_white_24dp"
-                            android:background="@android:color/transparent" />
+                            android:orientation="horizontal" >
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/CardNextLessonTitle"
+                                    style="@style/CardSubtitleBase"
+                                    android:paddingBottom="0dp"
+                                    android:text="@string/NextSubject" />
+
+                                <TextView
+                                    android:id="@+id/tvNextSubjectName"
+                                    style="@style/CardTitle"
+                                    android:paddingTop="0dp"
+                                    android:text="Medium Text" />
+                            </LinearLayout>
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="@dimen/card_padding">
+                                <View
+                                    android:id="@+id/NextSubjectColorView"
+                                    android:layout_width="@dimen/subject_circle_medium"
+                                    android:layout_height="@dimen/subject_circle_medium"
+                                    android:layout_gravity="right|center_vertical"
+                                    android:background="@color/orange" />
+
+                                <TextView
+                                    android:id="@+id/tvNextSubjectAbbrev"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/subject_circle_medium_text_size"
+                                    android:layout_centerInParent="true"/>
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            style="@style/CardContent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp">
+                                <TextView
+                                    android:id="@+id/tvNextRoom"
+                                    style="@style/CardContentText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="36dp"
+                                    android:text="Medium Text" />
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginBottom="10dp"
+                                    android:alpha="0.56"
+                                    android:src="@drawable/ic_place_black_48dp"/>
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="36dp">
+                                    <TextView
+                                        android:id="@+id/tvNextPeriods"
+                                        style="@style/CardContentText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="Medium Text" />
+
+                                    <TextView
+                                        android:id="@+id/tvNextTimes"
+                                        style="@style/CardContentText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/SecondaryText"
+                                        android:textSize="@dimen/card_content_text_small"
+                                        android:text="Medium Text" />
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginTop="10dp"
+                                    android:alpha="0.56"
+                                    android:src="@drawable/ic_schedule_black_48dp"/>
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp">
+                                <TextView
+                                    android:id="@+id/tvNextTeacher"
+                                    style="@style/CardContentText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="36dp"
+                                    android:text="Medium Text" />
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginBottom="10dp"
+                                    android:alpha="0.56"
+                                    android:src="@drawable/ic_person_black_48dp"/>
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:visibility="gone">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginBottom="10dp"
+                                    android:alpha="0.56"
+                                    android:src="@drawable/ic_place_black_48dp"/>
+                            </RelativeLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/TomorrowLessonsCard"
+                    style="@style/Card"
+                    custom:cardElevation="2dp"
+                    custom:cardUseCompatPadding="true" >
+
+                    <LinearLayout
+                        style="@style/CardContentArea"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
 
                         <TextView
                             android:id="@+id/CardTomorrowLessonsTitle"
                             style="@style/CardTitle"
-                            android:text="@string/TomorrowSubjects"
-                            android:textColor="@color/TextDarkBg" />
-                    </LinearLayout>
+                            android:text="@string/TomorrowSubjects" />
+
+                        <LinearLayout
+                            android:id="@+id/buttonRow1"
+                            style="@style/CardAction"
+                            android:layout_marginLeft="@dimen/card_margin"
+                            android:layout_marginRight="@dimen/card_margin"
+                            android:orientation="horizontal" >
+
+                            <Button
+                                android:id="@+id/button1"
+                                style="@style/TomorrowLessonsCardFields" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
+
+                            <Button
+                                android:id="@+id/button2"
+                                style="@style/TomorrowLessonsCardFields" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
+
+                            <Button
+                                android:id="@+id/button3"
+                                style="@style/TomorrowLessonsCardFields" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
+
+                            <Button
+                                android:id="@+id/button4"
+                                style="@style/TomorrowLessonsCardFields" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
+
+                            <Button
+                                android:id="@+id/button5"
+                                style="@style/TomorrowLessonsCardFields" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/buttonRow2"
+                            style="@style/CardAction"
+                            android:layout_marginLeft="@dimen/card_margin"
+                            android:layout_marginRight="@dimen/card_margin"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/button6"
+                                style="@style/TomorrowLessonsCardFields" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
+
+                            <Button
+                                android:id="@+id/button7"
+                                style="@style/TomorrowLessonsCardFields" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
+
+                            <Button
+                                android:id="@+id/button8"
+                                style="@style/TomorrowLessonsCardFields" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
+
+                            <Button
+                                android:id="@+id/button9"
+                                style="@style/TomorrowLessonsCardFields" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
+
+                            <Button
+                                android:id="@+id/button10"
+                                style="@style/TomorrowLessonsCardFields" />
+                        </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/buttonRow1"
+                        android:id="@+id/buttonRow3"
                         style="@style/CardAction"
-                        android:orientation="horizontal" >
-
-                        <Button
-                            android:id="@+id/button1"
-                            style="@style/TomorrowLessonsCardFields" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
-
-                        <Button
-                            android:id="@+id/button2"
-                            style="@style/TomorrowLessonsCardFields" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
-
-                        <Button
-                            android:id="@+id/button3"
-                            style="@style/TomorrowLessonsCardFields" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
-
-                        <Button
-                            android:id="@+id/button4"
-                            style="@style/TomorrowLessonsCardFields" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
-
-                        <Button
-                            android:id="@+id/button5"
-                            style="@style/TomorrowLessonsCardFields" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/buttonRow2"
-                        style="@style/CardAction"
+                        android:layout_marginLeft="@dimen/card_margin"
+                        android:layout_marginRight="@dimen/card_margin"
                         android:orientation="horizontal">
 
                         <Button
-                            android:id="@+id/button6"
+                            android:id="@+id/button11"
                             style="@style/TomorrowLessonsCardFields" />
 
                         <View
@@ -281,7 +521,7 @@
                             android:layout_weight="1" />
 
                         <Button
-                            android:id="@+id/button7"
+                            android:id="@+id/button12"
                             style="@style/TomorrowLessonsCardFields" />
 
                         <View
@@ -290,7 +530,7 @@
                             android:layout_weight="1" />
 
                         <Button
-                            android:id="@+id/button8"
+                            android:id="@+id/button13"
                             style="@style/TomorrowLessonsCardFields" />
 
                         <View
@@ -299,7 +539,7 @@
                             android:layout_weight="1" />
 
                         <Button
-                            android:id="@+id/button9"
+                            android:id="@+id/button14"
                             style="@style/TomorrowLessonsCardFields" />
 
                         <View
@@ -308,272 +548,226 @@
                             android:layout_weight="1" />
 
                         <Button
-                            android:id="@+id/button10"
+                            android:id="@+id/button15"
                             style="@style/TomorrowLessonsCardFields" />
+                        </LinearLayout>
                     </LinearLayout>
+                </android.support.v7.widget.CardView>
 
-                <LinearLayout
-                    android:id="@+id/buttonRow3"
-                    style="@style/CardAction"
-                    android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/button11"
-                        style="@style/TomorrowLessonsCardFields" />
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
 
-                    <Button
-                        android:id="@+id/button12"
-                        style="@style/TomorrowLessonsCardFields" />
+                <RelativeLayout
+                    android:id="@+id/hwSectionTitle"
+                    style="@style/SectionTitleStyle"
+                    android:layout_marginTop="@dimen/card_padding">
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
+                    <TextView
+                        android:id="@+id/hwSectionTitleText"
+                        style="@style/SectionTitleTextStyle"
+                        android:text="@string/title_activity_homework"/>
+                    <TextView
+                        android:id="@+id/hwSectionTitleButton"
+                        style="@style/SectionTitleButtonStyle" />
+                </RelativeLayout>
 
-                    <Button
-                        android:id="@+id/button13"
-                        style="@style/TomorrowLessonsCardFields" />
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
+                <android.support.v7.widget.CardView
+                    android:id="@+id/CardHomework"
+                    style="@style/Card"
+                    android:layout_marginTop="0dp"
+                    custom:cardElevation="2dp"
+                    custom:cardUseCompatPadding="true" >
 
-                    <Button
-                        android:id="@+id/button14"
-                        style="@style/TomorrowLessonsCardFields" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
-                    <Button
-                        android:id="@+id/button15"
-                        style="@style/TomorrowLessonsCardFields" />
-                    </LinearLayout>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/CardHomework"
-                style="@style/Card"
-                custom:cardElevation="2dp"
-                custom:cardUseCompatPadding="true" >
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" >
-                    
                     <LinearLayout
-                        android:id="@+id/CardHomeworkHeaderBar"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/color_homework_dark"
-                        android:foreground="@drawable/custom_bg" >
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="@dimen/card_padding"
-                            android:src="@drawable/ic_arrow_forward_white_24dp"
-                            android:background="@android:color/transparent" />
+                        android:orientation="vertical" >
 
                         <TextView
-                            android:id="@+id/CardHomeworkTitle"
+                            android:id="@+id/CardHomeworkDueTomorrow"
                             style="@style/CardTitle"
-                            android:text="@string/card_homework_tomorrow_title"
-                            android:textColor="@color/TextDarkBg" />
-                    </LinearLayout>
-                    <!--
-                    <TextView
-                        android:id="@+id/CardHomeworkDueTomorrow"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        style="@style/CardContent"
-                        android:paddingBottom="0dp"
-                        android:textColor="@color/Text"
-                        android:text="@string/card_homework_due_tomorrow"/> -->
+                            android:paddingBottom="@dimen/card_margin"
+                            android:textColor="@color/SecondaryText"
+                            android:textSize="@dimen/card_content_text"
+                            android:text="@string/card_homework_due_tomorrow"/>
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recyclerViewHomeworkSmall"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <LinearLayout
-                        style="?android:attr/buttonBarStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
-
-                        <Button
-                            android:id="@+id/CardHomeworkViewAllButton"
-                            style="?android:attr/buttonBarButtonStyle"
-                            android:layout_width="0dp"
-                            android:layout_height="48dp"
-                            android:layout_weight="1"
-                            android:textColor="@color/colorAccent"
-                            android:text="@string/card_homework_view_all_button" />
-                    </LinearLayout>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/CardCreateTt"
-                style="@style/Card"
-                custom:cardElevation="2dp"
-                custom:cardUseCompatPadding="true" >
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@color/color_timetable_dark" >
-
-                    <TextView
-                        android:id="@+id/CardCreateTtTitle"
-                        style="@style/CardTitle"
-                        android:text="@string/card_create_tt_title"
-                        android:textColor="@color/TextDarkBg" />
-
-                    <TextView
-                        android:id="@+id/tvD2"
-                        style="@style/CardContent"
-                        android:text="@string/card_create_tt_content"
-                        android:textColor="@color/SecondaryTextDarkBg"/>
-
-                    <LinearLayout
-                        style="?android:attr/buttonBarStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
-
-                        <Button
-                            android:id="@+id/CardCreateTtButton"
-                            style="?android:attr/buttonBarButtonStyle"
-                            android:layout_width="0dp"
-                            android:layout_height="48dp"
-                            android:layout_weight="1"
-                            android:textColor="@color/colorAccent"
-                            android:text="@string/card_create_tt_button" />
-                    </LinearLayout>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-            <View
-                android:visibility="gone"
-                style="@style/DividersStyle"
-                android:layout_marginTop="@dimen/cards_divider_top_margin"
-                android:layout_marginBottom="@dimen/cards_divider_bottom_margin" />
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/ShareApp"
-                android:visibility="gone"
-                style="@style/Card"
-                custom:cardElevation="2dp"
-                custom:cardUseCompatPadding="true" >
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" >
-
-                    <LinearLayout
-                        android:id="@+id/CardShareAppHeaderBar"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/card_padding"
-                        android:background="@color/color_home_dark"
-                        android:foreground="@drawable/custom_bg" >
-
-                        <ImageView
-                            android:layout_width="wrap_content"
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recyclerViewHomeworkSmall"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="@dimen/card_padding"
-                            android:src="@drawable/ic_arrow_forward_white_24dp"
-                            android:background="@android:color/transparent" />
+                            android:layout_marginBottom="@dimen/list_1LineAvatarIcon_listPadding_top"/>
+
+                        <!--
+                        <LinearLayout
+                            style="?android:attr/buttonBarStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <Button
+                                android:id="@+id/CardHomeworkViewAllButton"
+                                style="?android:attr/buttonBarButtonStyle"
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"
+                                android:layout_weight="1"
+                                android:textAlignment="textEnd"
+                                android:layout_gravity="end"
+                                android:textColor="@color/colorAccent"
+                                android:text="@string/card_homework_view_all_button" />
+                        </LinearLayout> -->
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/CardCreateTt"
+                    style="@style/Card"
+                    custom:cardElevation="2dp"
+                    custom:cardUseCompatPadding="true" >
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@color/color_timetable_dark" >
 
                         <TextView
-                            android:id="@+id/CardShareAppTitle"
+                            android:id="@+id/CardCreateTtTitle"
                             style="@style/CardTitle"
-                            android:text="@string/card_share_app_title"
+                            android:text="@string/card_create_tt_title"
                             android:textColor="@color/TextDarkBg" />
-                    </LinearLayout>
 
-                    <TextView
-                        style="@style/CardContent"
-                        android:text="@string/card_share_app_content" />
+                        <TextView
+                            android:id="@+id/tvD2"
+                            style="@style/CardContent"
+                            android:text="@string/card_create_tt_content"
+                            android:textColor="@color/SecondaryTextDarkBg"/>
+
+                        <LinearLayout
+                            style="?android:attr/buttonBarStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <Button
+                                android:id="@+id/CardCreateTtButton"
+                                style="?android:attr/buttonBarButtonStyle"
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"
+                                android:layout_weight="1"
+                                android:textColor="@color/colorAccent"
+                                android:text="@string/card_create_tt_button" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <View
+                    android:visibility="gone"
+                    style="@style/DividersStyle"
+                    android:layout_marginTop="@dimen/cards_divider_top_margin"
+                    android:layout_marginBottom="@dimen/cards_divider_bottom_margin" />
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/ShareApp"
+                    android:visibility="gone"
+                    style="@style/Card"
+                    custom:cardElevation="2dp"
+                    custom:cardUseCompatPadding="true" >
 
                     <LinearLayout
-                        style="?android:attr/buttonBarStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
-
-                        <Button
-                            android:id="@+id/CardDontShareButton"
-                            style="?android:attr/buttonBarButtonStyle"
-                            android:layout_width="0dp"
-                            android:layout_height="48dp"
-                            android:layout_weight="1"
-                            android:textColor="@color/colorAccent"
-                            android:text="@string/card_share_app_no_button" />
-
-                        <Button
-                            android:id="@+id/CardShareButton"
-                            style="?android:attr/buttonBarButtonStyle"
-                            android:layout_width="0dp"
-                            android:layout_height="48dp"
-                            android:layout_weight="1"
-                            android:textColor="@color/colorAccentLight"
-                            android:text="@string/card_share_app_yes_button" />
-                    </LinearLayout>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/CardAdBanner"
-                android:visibility="gone"
-                style="@style/Card"
-                custom:cardElevation="2dp"
-                custom:cardUseCompatPadding="true" >
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" >
-                    <TextView
-                        style="@style/CardContent"
-                        android:text="@string/advertisement"
-                        android:textColor="@color/yellow"
-                        android:layout_gravity="right"
-                        android:layout_marginBottom="0dp"
-                        android:paddingBottom="0dp"/>
-
-                    <com.google.android.gms.ads.AdView
-                        android:id="@+id/adView"
-                        android:layout_width="match_parent"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_alignParentBottom="true"
-                        ads:adSize="BANNER"
-                        ads:adUnitId="ca-app-pub-9138088263014683/2729174857">
-                    </com.google.android.gms.ads.AdView>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+                        android:orientation="vertical" >
 
-            <View
-                android:layout_height="@dimen/fab_bottom_scroll_padding"
-                android:layout_width="match_parent"/>
+                        <LinearLayout
+                            android:id="@+id/CardShareAppHeaderBar"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/card_padding"
+                            android:background="@color/color_home_dark"
+                            android:foreground="@drawable/custom_bg" >
 
-        </LinearLayout>
-    </ScrollView>
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/card_padding"
+                                android:src="@drawable/ic_arrow_forward_white_24dp"
+                                android:background="@android:color/transparent" />
+
+                            <TextView
+                                android:id="@+id/CardShareAppTitle"
+                                style="@style/CardTitle"
+                                android:text="@string/card_share_app_title"
+                                android:textColor="@color/TextDarkBg" />
+                        </LinearLayout>
+
+                        <TextView
+                            style="@style/CardContent"
+                            android:text="@string/card_share_app_content" />
+
+                        <LinearLayout
+                            style="?android:attr/buttonBarStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <Button
+                                android:id="@+id/CardDontShareButton"
+                                style="?android:attr/buttonBarButtonStyle"
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"
+                                android:layout_weight="1"
+                                android:textColor="@color/colorAccent"
+                                android:text="@string/card_share_app_no_button" />
+
+                            <Button
+                                android:id="@+id/CardShareButton"
+                                style="?android:attr/buttonBarButtonStyle"
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"
+                                android:layout_weight="1"
+                                android:textColor="@color/colorAccentLight"
+                                android:text="@string/card_share_app_yes_button" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/CardAdBanner"
+                    android:visibility="gone"
+                    style="@style/Card"
+                    custom:cardElevation="2dp"
+                    custom:cardUseCompatPadding="true" >
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+                        <TextView
+                            style="@style/CardContent"
+                            android:text="@string/advertisement"
+                            android:textColor="@color/yellow"
+                            android:layout_gravity="right"
+                            android:layout_marginBottom="0dp"
+                            android:paddingBottom="0dp"/>
+
+                        <com.google.android.gms.ads.AdView
+                            android:id="@+id/adView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_alignParentBottom="true"
+                            ads:adSize="BANNER"
+                            ads:adUnitId="ca-app-pub-9138088263014683/2729174857">
+                        </com.google.android.gms.ads.AdView>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <View
+                    android:layout_height="@dimen/fab_bottom_scroll_padding"
+                    android:layout_width="match_parent"/>
+
+            </LinearLayout>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <View
         android:layout_width="match_parent"
@@ -631,6 +825,7 @@
         android:clickable="true"
         custom:fabSize="normal"
         android:hapticFeedbackEnabled="true"
-        android:src="@drawable/ic_add_white_48dp"/>
+        android:src="@drawable/ic_add_white_48dp"
+        android:visibility="gone"/>
 
 </RelativeLayout>

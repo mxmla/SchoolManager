@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -55,13 +56,27 @@ public class EditSubjectActivity extends ActionBarActivity implements DialogColo
         setSupportActionBar(toolbar);
 
 		if (getIntent().getExtras().getString("caller").equals("NewTimetable") && getIntent().getExtras().getString("subjects").equals("true")){
-			mEditSubjectFragment = getSupportFragmentManager().findFragmentByTag
-					(EditSubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG);
-			
-			firstSubject = getIntent().getExtras().getInt("first_subject");
+			mCustomSubjectFragment = getSupportFragmentManager().findFragmentByTag(CustomSubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG);
+
+			ArrayList<String> subjectsToAddNames = getIntent().getExtras().getStringArrayList("subjects_to_add_names");
 			subjectsToAdd = getIntent().getExtras().getIntegerArrayList("subjects_to_add");
 			thisSubject = 0;
-			
+
+			if (getIntent().hasExtra("first_subject") && getIntent().getExtras().getInt("first_subject") >= 0){
+				firstSubject = getIntent().getExtras().getInt("first_subject");
+			} else {
+				firstSubject = 0;
+			}
+
+			if (mCustomSubjectFragment == null){
+				mCustomSubjectFragment = new CustomSubjectFragment();
+				Bundle args = new Bundle();
+				args.putString("subject_name", subjectsToAddNames.get(firstSubject));
+			}
+
+
+			/*mEditSubjectFragment = getSupportFragmentManager().findFragmentByTag
+					(EditSubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG);
 			
 			if (mEditSubjectFragment == null){
 				mEditSubjectFragment = new EditSubjectFragment();
@@ -74,7 +89,7 @@ public class EditSubjectActivity extends ActionBarActivity implements DialogColo
 				transaction.add(R.id.container, mEditSubjectFragment, 
 						EditSubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG);
 				transaction.commit();
-			}
+			}*/
 		}
 
 		if (getIntent().getExtras().getString("caller").equals("NewTimetable") && getIntent().getExtras().getString("subjects").equals("false")){

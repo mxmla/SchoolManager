@@ -73,52 +73,63 @@ public class SubjectFragment extends Fragment{
         edit = (Button) v.findViewById(R.id.edit);
         
         tvSubject.setText(SubjectArray[0].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + " (" + SubjectArray[1].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + ")");
-        tvTeacher.setText(SubjectArray[2].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + " (" + SubjectArray[3].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + ")");
+        tvTeacher.setText(SubjectArray[2].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",").replace("[null]", "")
+                + " (" + SubjectArray[3].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",").replace("[null]", "") + ")");
         
         if (SubjectArray[4].equals("-")){
         	tr1.setVisibility(View.GONE);
         } else {
             String day = "";
             for (int i = 0; i < mDayIDs.length; i++){
-                if (mDayIDs[i].equals(SubjectArray[4])) day = mDayNames[4];
+                if (mDayIDs[i].equals(SubjectArray[4])) day = mDayNames[i];
             }
-        	tvPeriod1.setText(day + ", " + SubjectArray[9] + ". - " + SubjectArray[14] + ". " + getResources().getString(R.string.period) + " (" + SubjectArray[19].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + ")");
+            String r = "";
+            if (SubjectArray[19] != null) r = " (" + SubjectArray[19].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + ")";
+        	tvPeriod1.setText(day + ", " + SubjectArray[9] + ". - " + SubjectArray[14] + ". " + getResources().getString(R.string.period) + r);
         }
         if (SubjectArray[5].equals("-")){
         	tr2.setVisibility(View.GONE);
         } else {
             String day = "";
             for (int i = 0; i < mDayIDs.length; i++){
-                if (mDayIDs[i].equals(SubjectArray[5])) day = mDayNames[4];
+                if (mDayIDs[i].equals(SubjectArray[5])) day = mDayNames[i];
             }
-        	tvPeriod2.setText(day + ", " + SubjectArray[10] + ". - " + SubjectArray[15] + ". " + getResources().getString(R.string.period) + " (" + SubjectArray[20].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + ")");
+            String r = "";
+            if (SubjectArray[20] != null) r = " (" + SubjectArray[20].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + ")";
+        	tvPeriod2.setText(day + ", " + SubjectArray[10] + ". - " + SubjectArray[15] + ". " + getResources().getString(R.string.period) + r);
         }
         if (SubjectArray[6].equals("-")){
         	tr3.setVisibility(View.GONE);
         } else {
             String day = "";
             for (int i = 0; i < mDayIDs.length; i++){
-                if (mDayIDs[i].equals(SubjectArray[6])) day = mDayNames[4];
+                if (mDayIDs[i].equals(SubjectArray[6])) day = mDayNames[i];
             }
-        	tvPeriod3.setText(day + ", " + SubjectArray[11] + ". - " + SubjectArray[16] + ". " + getResources().getString(R.string.period) + " (" + SubjectArray[21].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + ")");
+            String r ="";
+            if (SubjectArray[21] != null) r = " (" + SubjectArray[21].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + ")";
+        	tvPeriod3.setText(day + ", " + SubjectArray[11] + ". - " + SubjectArray[16] + ". " + getResources().getString(R.string.period) + r);
         }
         if (SubjectArray[7].equals("-")){
         	tr4.setVisibility(View.GONE);
     	} else {
             String day = "";
             for (int i = 0; i < mDayIDs.length; i++){
-                if (mDayIDs[i].equals(SubjectArray[7])) day = mDayNames[4];
+                if (mDayIDs[i].equals(SubjectArray[7])) day = mDayNames[i];
             }
-            tvPeriod4.setText(day + ", " + SubjectArray[12] + ". - " + SubjectArray[17] + ". " + getResources().getString(R.string.period) + " (" + SubjectArray[22].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + ")");
+            String r = "";
+            if (SubjectArray[22] != null) r = " (" + SubjectArray[22].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + ")";
+            tvPeriod4.setText(day + ", " + SubjectArray[12] + ". - " + SubjectArray[17] + ". " + getResources().getString(R.string.period) + r);
         }
         if (SubjectArray[8].equals("-")){
         	tr5.setVisibility(View.GONE);
         } else {
             String day = "";
             for (int i = 0; i < mDayIDs.length; i++){
-                if (mDayIDs[i].equals(SubjectArray[8])) day = mDayNames[4];
+                if (mDayIDs[i].equals(SubjectArray[8])) day = mDayNames[i];
             }
-        	tvPeriod5.setText(day + ", " + SubjectArray[13] + ". - " + SubjectArray[18] + ". " + getResources().getString(R.string.period) + " (" + SubjectArray[23].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + ")");
+            String r = "";
+            if (SubjectArray[23] != null) r = " (" + SubjectArray[23].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + ")";
+        	tvPeriod5.setText(day + ", " + SubjectArray[13] + ". - " + SubjectArray[18] + ". " + getResources().getString(R.string.period) + r);
         }
         
     	int colorInt = 0xffFFFFFF;

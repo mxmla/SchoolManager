@@ -27,6 +27,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.widget.ViewSwitcher;
 
@@ -36,7 +37,7 @@ public class CustomSubjectFragment extends Fragment{
 	private int mSubjectInt;
 	private String[] mDayNames;
 	private String[] mPeriodNumbers;
-	private TextView tvSubjectName;
+	private TextView tvSubjectName, tvSmallSubjectName, tvSmallSubjectAbbrev;
 	private LinearLayout header1;
 	private FrameLayout flTitle;
 	private int hTextSize;
@@ -90,7 +91,7 @@ public class CustomSubjectFragment extends Fragment{
         
         mSubjectNames = getResources().getStringArray(R.array.SubjectNames);
         mSubjectAbbrevs = getResources().getStringArray(R.array.SubjectAbbreviations);
-        mDayNames = getResources().getStringArray(R.array.DayNames);
+        mDayNames = getResources().getStringArray(R.array.DayIDs);
         mPeriodNumbers = getResources().getStringArray(R.array.PeriodNumbers);
         mDaySpinner1 = (Spinner) v.findViewById(R.id.spinner1);
         mPeriodSpinner01 = (Spinner) v.findViewById(R.id.spinner2);
@@ -120,6 +121,9 @@ public class CustomSubjectFragment extends Fragment{
 		});
         
         etSubjectAbbrev = (EditText) v.findViewById(R.id.etSubjectAbbrev);
+
+		tvSmallSubjectName = (TextView) v.findViewById(R.id.TextView06);
+		tvSmallSubjectAbbrev = (TextView) v.findViewById(R.id.TextView05);
         
 
 		mInsertPoint1 = (FrameLayout) v.findViewById(R.id.insert_point_1);
@@ -237,19 +241,6 @@ public class CustomSubjectFragment extends Fragment{
 			@Override
 			public void onClick(View v) {
 				SaveData();
-				if (getArguments().getString("action").equals("add_subject")){
-					if (getArguments().getString("caller").equals("Timetable")){
-						Intent i = new Intent(getActivity(),
-								TimetableActivity.class);
-						startActivityForResult(i, 0);
-					} else {
-						Intent i = new Intent(getActivity(),
-								TimetableActivity.class);
-						startActivityForResult(i, 0);
-					}
-				} else {
-					((EditSubjectActivity)getActivity()).AnotherCustom();
-				}
 			}
 		});
         
@@ -675,12 +666,51 @@ public class CustomSubjectFragment extends Fragment{
 		Room4 = Room4.replace(System.getProperty("line.separator"), "[newline]").replace(",", "[comma]");
 		Room5 = Room5.replace(System.getProperty("line.separator"), "[newline]").replace(",", "[comma]");
 
-		DataStorageHandler.EditSubject(getActivity(), mSubjectName, mSubjectAbbrev, mTeacherName, mTeacherAbbrev,
-				Day1, Day2, Day3, Day4, Day5,
-				Period11, Period21, Period31, Period41, Period51,
-				Period12, Period22, Period32, Period42, Period52,
-				Room1, Room2, Room3, Room4, Room5,
-				Color, Textcolor,
-				"default", "default", "default", "default");
+		boolean proceed = true;
+		if (mSubjectName==null||mSubjectName.equals("")){
+			proceed=false;
+			tvSmallSubjectName.setTextColor(getResources().getColor(R.color.red));
+		}
+		if (mSubjectAbbrev==null||mSubjectAbbrev.equals("")){
+			proceed=false;
+			tvSmallSubjectAbbrev.setTextColor(getResources().getColor(R.color.red));
+		}
+		if (mTeacherName==null) mTeacherName="[null]";
+		if (mTeacherAbbrev==null) mTeacherAbbrev="[null]";
+
+		if (!proceed){
+			Toast.makeText(getActivity(), getResources().getString(R.string.toast_type_in_subject_name_and_abbreviation), Toast.LENGTH_LONG).show();
+		} else {
+			//TODO something here still doesn't work...
+			if (mTeacherName==null) mTeacherName="";
+			if (mTeacherAbbrev==null) mTeacherAbbrev="";
+			if (Room1==null) Room1="";
+			if (Room2==null) Room2="";
+			if (Room3==null) Room3="";
+			if (Room4==null) Room4="";
+			if (Room5==null) Room5="";
+
+			DataStorageHandler.EditSubject(getActivity(), mSubjectName, mSubjectAbbrev, mTeacherName, mTeacherAbbrev,
+					Day1, Day2, Day3, Day4, Day5,
+					Period11, Period21, Period31, Period41, Period51,
+					Period12, Period22, Period32, Period42, Period52,
+					Room1, Room2, Room3, Room4, Room5,
+					Color, Textcolor,
+					"default", "default", "default", "default");
+
+			if (getArguments() != null && getArguments().containsKey("action") && getArguments().getString("action").equals("add_subject")){
+				if (getArguments().containsKey("caller") && getArguments().getString("caller").equals("Timetable")){
+					Intent i = new Intent(getActivity(),
+							TimetableActivity.class);
+					startActivityForResult(i, 0);
+				} else {
+					Intent i = new Intent(getActivity(),
+							TimetableActivity.class);
+					startActivityForResult(i, 0);
+				}
+			} else {
+				((EditSubjectActivity)getActivity()).AnotherCustom();
+			}
+		}
 	}
 }

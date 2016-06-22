@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -144,16 +145,36 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
             selectItem(0);
         }
         */
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String pref_NotificationMethodUpdated = "NotificationMethodUpdated";
+        String pref_NotificationUpdate2016_05_20 = "NotificationUpdate20160520";
+        String pref_checkTtFieldsTxt2016_05_28 = "CheckTtFieldsTxt20160528";
+
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         mOpenMainActivityCount = Integer.valueOf(readFromPreferences(this, KEY_OPEN_MAIN_ACTIVITY_COUNT, "0"));
-        if (mOpenMainActivityCount < mHowOftenUntilShareApp){
+
+        if (!prefs.getBoolean(pref_NotificationMethodUpdated, false) || mOpenMainActivityCount%10 == 0) {
+            DataStorageHandler.changeNotificationMethod(this);
+        }
+
+        if (!prefs.getBoolean(pref_NotificationUpdate2016_05_20, false)){
+            DataStorageHandler.changeNotificationMethod(this, true);
+        }
+
+        if (!prefs.getBoolean(pref_checkTtFieldsTxt2016_05_28, false)){
+            DataStorageHandler.checkTtFieldsTxt(this);
+        }
+
+        saveToPreferences(this, KEY_OPEN_MAIN_ACTIVITY_COUNT, String.valueOf(mOpenMainActivityCount + 1));
+        /*if (mOpenMainActivityCount < mHowOftenUntilShareApp){
             saveToPreferences(this, KEY_OPEN_MAIN_ACTIVITY_COUNT, String.valueOf(mOpenMainActivityCount + 1));
-        } /*else if (mOpenMainActivityCount == mHowOftenUntilShareApp){
+        } else if (mOpenMainActivityCount == mHowOftenUntilShareApp){
             saveToPreferences(this, KEY_OPEN_MAIN_ACTIVITY_COUNT, "0");
         }*/
 
         updateDayNamesToIDs();
+
         
 		
 		if (mMainFragment == null){
@@ -169,10 +190,10 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
 
     private void updateDayNamesToIDs(){
         String isUpdated = readFromPreferences(this, "pref_are_daynames_saved_as_ids", "false");
-        //if (!isUpdated.equals("true")){
+        if (!isUpdated.equals("true")){
             DataStorageHandler.updateDayNamesToIDs(this);
-            //saveToPreferences(this, "pref_are_daynames_saved_as_ids", "true");
-        //}
+            saveToPreferences(this, "pref_are_daynames_saved_as_ids", "true");
+        }
     }
 
     public void refreshMainFragment(){

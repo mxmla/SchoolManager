@@ -187,8 +187,8 @@
     <string name="MusicalAndArtisticSubjects">Musisch-künstlerische Fächer</string>
     <string name="SubjectMusic">Musik</string>
     <string name="SubjectArt">Kunst</string>
-    <string name="NowSubject">Jetzt läuft</string>
-    <string name="NextSubject">Nächstes Fach</string>
+    <string name="NowSubject">Jetzt</string>
+    <string name="NextSubject">Nächstes</string>
     <string name="TomorrowSubjects">Fächer morgen</string>
     <string name="title_fragment_lesson">Stunde</string>
     <string name="title_fragment_subject">Fach</string>
@@ -263,7 +263,7 @@
     <string name="pref_period10_end_summary">Lege fest, wann die 10. Stunde endet.</string>
     <string name="pref_period11_end_summary">Lege fest, wann die 11. Stunde endet.</string>
     <string name="pref_period12_end_summary">Lege fest, wann die 12. Stunde endet.</string>
-    <string name="pref_title_periods">Stunden</string>
+    <string name="pref_title_periods">Stundenzeiten</string>
     <string name="homework_title">Titel</string>
     <string name="homework_description">Beschreibung</string>
     <string name="homework_deadline">Fertig bis:</string>
@@ -276,7 +276,7 @@
     <string name="homework_status_pending">AUSSTEHEND</string>
     <string name="card_homework_title">Hausaufgaben</string>
     <string name="card_homework_view_all_button">Alle ansehen</string>
-    <string name="card_homework_due_tomorrow">Zu morgen:</string>
+    <string name="card_homework_due_tomorrow">Zu morgen</string>
     <string name="fab_homework_text">Hausaufgabe</string>
     <string name="card_homework_tomorrow_title">Hausaufgaben morgen</string>
     <string name="title_activity_dialog_edit_homework">DialogEditHomework</string>
@@ -292,8 +292,8 @@
     <string name="dialog_delete_subject_confirm_no_button">Nein</string>
     <string name="action_add_subject">Fach hinzufügen</string>
     <string name="pref_title_notifications">Benachrichtigungen</string>
-    <string name="pref_notification_lesson_start">Beginn einer Stunde</string>
-    <string name="pref_notification_lesson_start_description">Wähle, ob und wann du benachrichtigt werden möchtest.</string>
+    <string name="pref_notification_lesson_start">Unterricht-Benachrichtigungen</string>
+    <string name="pref_notification_lesson_start_description">Wähle, ob und wann du benachrichtigt werden möchtest, wenn eine Stunde anfängt.</string>
     <string name="pref_title_timetable_settings">Stundenplan</string>
     <string name="pref_notification_settings_text">Wann möchtest du benachrichtigt werden, bevor eine Unterrichts-Stunde startet?</string>
     <string name="pref_notification_settings_never">Nie</string>
@@ -301,4 +301,10 @@
     <string name="pref_notification_settings_wait_for_previous_to_end">Ende der vorherigen Stunde abwarten</string>
     <string name="pref_notification_settings_only_when_changing_rooms">Nur bei Raumwechsel</string>
     <string name="pref_title_periods_summary">Stelle die Start- und End-Zeiten der Stunden ein.</string>
+    <string name="toast_type_in_subject_name_and_abbreviation">Bitte Fach-Name und -Abkürzung eingeben.</string>
+    <string name="section_title_button_text">mehr</string>
+    <string name="periods">Stunden</string>
+    <string name="title_subjects_list">Fächer</string>
+    <string name="CustomSubjects">Eigene Fächer</string>
+    <string name="new_timetable_custom_subject_name_hint">Fach-Namen eingeben</string>
 </resources>

@@ -55,7 +55,7 @@ public class SettingsActivity extends ActionBarActivity {
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        int sColor = getResources().getColor(R.color.color_settings);
+        int sColor = getResources().getColor(R.color.color_settings_appbar);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(sColor));
 
         drawerFragment = (NavigationDrawerFragment1)

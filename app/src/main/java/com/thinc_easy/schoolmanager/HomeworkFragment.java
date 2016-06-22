@@ -63,7 +63,7 @@ public class HomeworkFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_homework, container, false);
 
-        int hwColor = getActivity().getResources().getColor(R.color.color_homework);
+        int hwColor = getActivity().getResources().getColor(R.color.color_homework_appbar);
         ((HomeworkActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(hwColor));
 
         SimpleDateFormat form = new SimpleDateFormat(getActivity().getResources().getString(R.string.date_formatter_general));

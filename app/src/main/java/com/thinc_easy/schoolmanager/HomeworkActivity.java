@@ -3,6 +3,7 @@ package com.thinc_easy.schoolmanager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -83,6 +84,7 @@ public class HomeworkActivity extends ActionBarActivity implements DialogEditHom
         tabLayout.getTabAt(1).setText(getResources().getString(R.string.title_fragment_homework_done).toString());
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setBackgroundTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{getResources().getColor(R.color.color_homework)}));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -749,7 +749,7 @@ public class TimetableActivity extends ActionBarActivity
         // Handle action buttons
         switch(item.getItemId()) {
 		case android.R.id.home:
-			Toast.makeText(this, "Up clicked", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(this, "Up clicked", Toast.LENGTH_SHORT).show();
 			return false;
 		case R.id.action_subjects_list:
 			menuActionSubjectsList();

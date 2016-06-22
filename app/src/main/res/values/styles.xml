@@ -72,6 +72,37 @@
         <item name="android:alpha">0.12</item>
     </style>
 
+    <style name="SectionTitleStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingLeft">@dimen/card_padding</item>
+        <item name="android:paddingRight">@dimen/card_padding</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/custom_bg</item>
+    </style>
+
+    <style name="SectionTitleTextStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:padding">@dimen/card_margin</item>
+        <item name="android:textColor">@color/Text</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
+    </style>
+
+    <style name="SectionTitleButtonStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:padding">@dimen/card_margin</item>
+        <item name="android:textColor">@color/Text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:text">@string/section_title_button_text</item>
+    </style>
+
     <style name="List2LineAvatarIconTextStyle">
         <item name="android:textSize">@dimen/list_2LineAvatarIcon_text_size</item>
         <item name="android:textColor">@color/Text</item>
@@ -245,7 +276,8 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingBottom">@dimen/card_padding</item>
-        <item name="android:textSize">@dimen/card_content_title</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:textSize">@dimen/card_content_text</item>
         <item name="android:textColor">@color/SecondaryText</item>
     </style>
  

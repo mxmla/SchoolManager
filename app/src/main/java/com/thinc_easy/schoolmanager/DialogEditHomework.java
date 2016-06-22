@@ -210,12 +210,14 @@ public class DialogEditHomework extends DialogFragment{
                 content = etContent.getText().toString();
                 content = content.replace(System.getProperty("line.separator"), "[newline]").replace(",", "[comma]");
                 if (date.equals("nextPeriod")) date = subjectNextLesson(subject);
-                if (exists){
-                    communicator.onDialogMessageUpdateHomework(eID, title, content, subject, date, eDone);
-                } else {
-                    communicator.onDialogMessageHomework(title, content, subject, date);
+                if(subject!=null && !subject.equals("") && !subject.equals("-")) {
+                    if (exists) {
+                        communicator.onDialogMessageUpdateHomework(eID, title, content, subject, date, eDone);
+                    } else {
+                        communicator.onDialogMessageHomework(title, content, subject, date);
+                    }
+                    dismiss();
                 }
-                dismiss();
             }
         });
         bCancel = (Button) view.findViewById(R.id.buttonCancel);

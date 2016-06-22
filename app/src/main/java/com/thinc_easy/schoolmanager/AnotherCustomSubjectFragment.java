@@ -21,7 +21,7 @@ public class AnotherCustomSubjectFragment extends Fragment{
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_another_custom_subject, container, false);
 
-		int ttColor = ((EditSubjectActivity) getActivity()).getResources().getColor(R.color.color_timetable);
+		int ttColor = ((EditSubjectActivity) getActivity()).getResources().getColor(R.color.color_timetable_appbar);
 		((EditSubjectActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ttColor));
         
         bYes = (Button) v.findViewById(R.id.buttonYes);

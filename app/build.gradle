@@ -7,8 +7,8 @@ android {
         applicationId "com.thinc_easy.schoolmanager"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 16
-        versionName "1.1.1"
+        versionCode 28
+        versionName "2.0.9"
     }
     buildTypes {
         release {

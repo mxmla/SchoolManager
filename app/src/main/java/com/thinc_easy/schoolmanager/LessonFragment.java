@@ -60,7 +60,7 @@ public class LessonFragment extends Fragment{
         // update the actionbar to show the up carat/affordance
         ((TimetableActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        int ttColor = ((TimetableActivity) getActivity()).getResources().getColor(R.color.color_timetable);
+        int ttColor = ((TimetableActivity) getActivity()).getResources().getColor(R.color.color_timetable_appbar);
         ((TimetableActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ttColor));
 
         int dayInt = getArguments().getInt("dayInt");
@@ -80,8 +80,10 @@ public class LessonFragment extends Fragment{
                 int pF =Integer.parseInt(SubjectArray[i+5].replaceAll("[\\D]", ""));
                 int pT =Integer.parseInt(SubjectArray[i+10].replaceAll("[\\D]", ""));
                 boolean periodsCorrect = false;
+                //Toast.makeText(getActivity(), "periodInt: "+periodInt, Toast.LENGTH_SHORT).show();
                 for (int i2 = pF; i2 <= pT; i2++){
                     // periodInt + 1, because periodInts start with 0 and in SubjectArray they start with 1!
+                    //Toast.makeText(getActivity(), "test", Toast.LENGTH_SHORT).show();
                     if (periodInt + 1 == i2) periodsCorrect = true;
                 }
                 if (periodsCorrect) {
@@ -95,9 +97,12 @@ public class LessonFragment extends Fragment{
         tvTeacher = (TextView) v.findViewById(R.id.tvTeacher);
         tvPeriod = (TextView) v.findViewById(R.id.tvPeriod);
         
-        tvTeacher.setText(SubjectArray[2].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + " (" + SubjectArray[3].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + ")");
+        tvTeacher.setText(SubjectArray[2].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",").replace("[null]", "")
+                + " (" + SubjectArray[3].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",").replace("[null]", "") + ")");
 
-        tvPeriod.setText(dayNames[dayInt] + ", " + periodFrom + ". - " + periodTo + ". " + getResources().getString(R.string.period) + " (" + room.replace("[comma]", ",") + ")");
+        String r = "";
+        if (room != null) r = " (" + room.replace("[comma]", ",") + ")";
+        tvPeriod.setText(dayNames[dayInt] + ", " + periodFrom + ". - " + periodTo + ". " + getResources().getString(R.string.period) + r);
         
         
     	int colorInt = 0xffFFFFFF;
@@ -213,7 +218,7 @@ public class LessonFragment extends Fragment{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        Toast.makeText(getActivity(), "itemSelected", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "itemSelected", Toast.LENGTH_SHORT).show();
         // Get item selected and deal with it.
         switch (item.getItemId()){
             case android.R.id.home:

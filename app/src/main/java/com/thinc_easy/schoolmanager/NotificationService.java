@@ -7,12 +7,18 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Timer;
@@ -23,6 +29,7 @@ import java.util.TimerTask;
  */
 public class NotificationService extends Service {
     public String[] thisArray = {"false", "false", "false", "false", "false", "false", "false", "false", "false"};
+    public int nowRow = 0;
 
     //@Nullable
     @Override
@@ -36,11 +43,17 @@ public class NotificationService extends Service {
         try{
             mTimer.cancel();
             timerTask.cancel();
+
         } catch (Exception e){
             e.printStackTrace();
         }
-        mTimer =new Timer();
-        mTimer.schedule(timerTask, timeTillNextMillis());
+
+        int time = timeTillNextMillis();
+        //Toast.makeText(getApplicationContext(), String.valueOf(time), Toast.LENGTH_SHORT).show();
+        if (time >= 0) {
+            mTimer = new Timer();
+            mTimer.schedule(timerTask, time);
+        }
     }
 
     @Override
@@ -60,28 +73,39 @@ public class NotificationService extends Service {
         public void run() {
             Log.e("Log", "Running");
             notifyNow();
-            mTimer.schedule(timerTask, timeTillNextMillis());
+            try{
+                mTimer.cancel();
+                timerTask.cancel();
+
+                int time = timeTillNextMillis();
+                if (time >= 0) {
+                    mTimer.schedule(timerTask, time);
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         }
     };
 
     public void onDestroy(){
-        try{
+        /*try{
             mTimer.cancel();
             timerTask.cancel();
         } catch (Exception e){
             e.printStackTrace();
-        }
-        Intent intent = new Intent("com.thinc_easy.schoolmanager");
+        }*/
+        Intent intent = new Intent("com.thinc_easy.schoolmanager.MainActivity");
         //intent.putExtra("yourvalue", "torestore");
         sendBroadcast(intent);
     }
 
     public void notifyNow(){
+        //Toast.makeText(getApplicationContext(), "notifyNow", Toast.LENGTH_SHORT).show();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("RSSPullService");
 
-        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(""));
-        PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, myIntent, PendingIntent.FLAG_ONE_SHOT);
+        Intent myIntent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         Context context = getApplicationContext();
 
         String titleLine = "";
@@ -110,11 +134,12 @@ public class NotificationService extends Service {
                 .setSmallIcon(R.drawable.ic_launcher);
 
 
+
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
             Notification notification = builder.build();
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(1, notification);
+            notificationManager.notify(nowRow, notification);
         }
     }
 
@@ -144,7 +169,8 @@ public class NotificationService extends Service {
             if (!found){
                 //get first one in array as this is the first one in the next week
                 int tMillis = Integer.parseInt(myArray[0][0]) * 60 * 1000;
-                difference = tMillis - now;
+                int weekMillis = 7*24*60*60*1000;
+                difference = weekMillis - now + tMillis;
                 thisRow = 0;
                 found = true;
             }
@@ -152,6 +178,7 @@ public class NotificationService extends Service {
             if (thisRow >= 0){
                 for (int c = 0; c < Cols; c++){
                     thisArray[c] = myArray[thisRow][c];
+                    nowRow = thisRow;
                 }
             }
 

@@ -116,7 +116,7 @@
     <string name="Name">Name</string>
     <string name="NameAbbrev">Abbrev.</string>
     <string name="Next">Next</string>
-    <string name="NextSubject">Next subject</string>
+    <string name="NextSubject">Next</string>
     <string name="NoSubjects">You have not created any subjects yet.</string>
     <string name="NowSubject">Now</string>
     <string name="OK">OK</string>
@@ -189,7 +189,7 @@
     <string name="own_subjects_title">Custom subjects?</string>
     <string name="period">Period</string>
     <string name="pref_period10_end">10th period end</string>
-    <string name="pref_title_periods">Periods</string>
+    <string name="pref_title_periods">Period timing</string>
     <string name="preferences">Preferences</string>
     <string name="save">Save</string>
     <string name="send_to">Send to...</string>
@@ -271,7 +271,7 @@
     <string name="homework_status_pending">PENDING</string>
     <string name="card_homework_title">Homework</string>
     <string name="card_homework_view_all_button">View all</string>
-    <string name="card_homework_due_tomorrow">Due tomorrow:</string>
+    <string name="card_homework_due_tomorrow">Due tomorrow</string>
     <string name="fab_homework_text">Homework</string>
     <string name="card_homework_tomorrow_title">Homework tomorrow</string>
     <string name="title_activity_dialog_edit_homework">DialogEditHomework</string>
@@ -287,13 +287,19 @@
     <string name="dialog_delete_subject_confirm_no_button">No</string>
     <string name="action_add_subject">Add subject</string>
     <string name="pref_title_notifications">Notifications</string>
-    <string name="pref_notification_lesson_start">Start of a lesson</string>
-    <string name="pref_notification_lesson_start_description">Select if and when you want to be notified.</string>
+    <string name="pref_notification_lesson_start">Class notifications</string>
+    <string name="pref_notification_lesson_start_description">Set if and when you want to be notified about the start of a lesson.</string>
     <string name="pref_title_timetable_settings">Timetable</string>
     <string name="pref_notification_settings_text">When do you want to be notified about the start of a lesson?</string>
     <string name="pref_notification_settings_never">Never</string>
     <string name="pref_notification_settings_minutes_before">minutes before</string>
     <string name="pref_notification_settings_wait_for_previous_to_end">Wait for previous lesson to end</string>
     <string name="pref_notification_settings_only_when_changing_rooms">Only when changing rooms</string>
-    <string name="pref_title_periods_summary">Set start and end time of the timetable periods</string>
+    <string name="pref_title_periods_summary">Set start and end time of the timetable periods.</string>
+    <string name="toast_type_in_subject_name_and_abbreviation">Please type in the subject\'s name and abbreviation.</string>
+    <string name="section_title_button_text">more</string>
+    <string name="periods">Periods</string>
+    <string name="title_subjects_list">Subjects</string>
+    <string name="CustomSubjects">Custom subjects</string>
+    <string name="new_timetable_custom_subject_name_hint">Enter subject title</string>
 </resources>
