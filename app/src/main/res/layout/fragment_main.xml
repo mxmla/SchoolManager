@@ -653,7 +653,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="48dp"
                                 android:layout_weight="1"
-                                android:textColor="@color/colorAccent"
+                                android:textColor="@color/colorAccentLight"
                                 android:text="@string/card_create_tt_button" />
                         </LinearLayout>
                     </LinearLayout>

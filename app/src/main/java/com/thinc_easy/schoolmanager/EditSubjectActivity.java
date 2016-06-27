@@ -44,6 +44,7 @@ public class EditSubjectActivity extends ActionBarActivity implements DialogColo
 	private int firstSubject;
 	private int thisSubject;
 	private ArrayList<Integer> subjectsToAdd;
+	ArrayList<String> subjectsToAddNames;
 	private Drawable mActionBarBackgroundDrawable;
 	private int headerHeight;
 
@@ -58,7 +59,7 @@ public class EditSubjectActivity extends ActionBarActivity implements DialogColo
 		if (getIntent().getExtras().getString("caller").equals("NewTimetable") && getIntent().getExtras().getString("subjects").equals("true")){
 			mCustomSubjectFragment = getSupportFragmentManager().findFragmentByTag(CustomSubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG);
 
-			ArrayList<String> subjectsToAddNames = getIntent().getExtras().getStringArrayList("subjects_to_add_names");
+			subjectsToAddNames = getIntent().getExtras().getStringArrayList("subjects_to_add_names");
 			subjectsToAdd = getIntent().getExtras().getIntegerArrayList("subjects_to_add");
 			thisSubject = 0;
 
@@ -71,7 +72,13 @@ public class EditSubjectActivity extends ActionBarActivity implements DialogColo
 			if (mCustomSubjectFragment == null){
 				mCustomSubjectFragment = new CustomSubjectFragment();
 				Bundle args = new Bundle();
-				args.putString("subject_name", subjectsToAddNames.get(firstSubject));
+				args.putString("subject_name", subjectsToAddNames.get(thisSubject));
+				args.putString("caller", "NewTimetable");
+				mCustomSubjectFragment.setArguments(args);
+
+				FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+				transaction.add(R.id.container, mCustomSubjectFragment, CustomSubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG);
+				transaction.commit();
 			}
 
 
@@ -175,6 +182,23 @@ public class EditSubjectActivity extends ActionBarActivity implements DialogColo
     // when called by NewTimetable
 	public void NextSubject(){
 		thisSubject = thisSubject + 1;
+		if (thisSubject < subjectsToAddNames.size()){
+			mCustomSubjectFragment = new CustomSubjectFragment();
+			Bundle args = new Bundle();
+			args.putString("subject_name", subjectsToAddNames.get(thisSubject));
+			args.putString("caller", "NewTimetable");
+			mCustomSubjectFragment.setArguments(args);
+
+			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+			transaction.replace(R.id.container, mCustomSubjectFragment, CustomSubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG);
+			transaction.commit();
+		}else{
+			Completed();
+		}
+	}
+
+	/*public void NextSubject(){
+		thisSubject = thisSubject + 1;
 		if (thisSubject < subjectsToAdd.size()){
 			mEditSubjectFragment = new EditSubjectFragment();
 			Bundle args = new Bundle();
@@ -192,7 +216,7 @@ public class EditSubjectActivity extends ActionBarActivity implements DialogColo
 			transaction.replace(R.id.container, mCustomSubjectsOrNotFragment, CustomSubjectsOrNotFragment.DEFAULT_EDIT_FRAGMENT_TAG);
 			transaction.commit();
 		}
-	}
+	}*/
 	
 	public void EditCustom(){
 		mCustomSubjectFragment = new CustomSubjectFragment();

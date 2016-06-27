@@ -124,6 +124,11 @@ public class CustomSubjectFragment extends Fragment{
 
 		tvSmallSubjectName = (TextView) v.findViewById(R.id.TextView06);
 		tvSmallSubjectAbbrev = (TextView) v.findViewById(R.id.TextView05);
+
+		if (getArguments().getString("caller").equals("NewTimetable")){
+			String sName = getArguments().getString("subject_name");
+			etSubjectName.setText(sName.replace("[null]", ""));
+		}
         
 
 		mInsertPoint1 = (FrameLayout) v.findViewById(R.id.insert_point_1);
@@ -214,7 +219,7 @@ public class CustomSubjectFragment extends Fragment{
 		
 		bColorChooserBg = (Button) v.findViewById(R.id.bColorChooserBg);
 		GradientDrawable bgd = (GradientDrawable) getResources().getDrawable(R.drawable.color_circle);
-		bgd.setColor(getResources().getColor(R.color.white));
+		bgd.setColor(getResources().getColor(R.color.color_timetable));
 		bgd.setStroke(1, getResources().getColor(R.color.color_circle_stroke_color));
 		bColorChooserBg.setBackgroundDrawable(bgd);
 		bColorChooserT = (Button) v.findViewById(R.id.bColorChooserT);
@@ -236,6 +241,13 @@ public class CustomSubjectFragment extends Fragment{
 		});
 
 		mNextButton = (Button) v.findViewById(R.id.confirm);
+		if (getArguments() != null && getArguments().containsKey("caller")
+				&& getArguments().getString("caller").equals("NewTimetable")){
+			mNextButton.setText(getActivity().getResources().getString(R.string.Next));
+		} else if (getArguments() != null && getArguments().containsKey("caller")
+				&& getArguments().getString("caller").equals("Timetable")){
+			mNextButton.setText(getActivity().getResources().getString(R.string.save));
+		}
 
 		mNextButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -709,7 +721,7 @@ public class CustomSubjectFragment extends Fragment{
 					startActivityForResult(i, 0);
 				}
 			} else {
-				((EditSubjectActivity)getActivity()).AnotherCustom();
+				((EditSubjectActivity)getActivity()).NextSubject();
 			}
 		}
 	}

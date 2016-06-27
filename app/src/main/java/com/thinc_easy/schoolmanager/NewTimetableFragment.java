@@ -40,8 +40,8 @@ public class NewTimetableFragment extends Fragment {
 	LinearLayout llCustomS;
 	ImageView ivAdd;
 	CardView cScard;
-	EditText etC1;
-	EditText etC2;
+	EditText etC1, etC2;
+	CheckBox cbC1, cbC2;
 	int _intMyLineCount;
 	private List<EditText> editTextList = new ArrayList<EditText>();
 	private List<CheckBox> checkBoxList = new ArrayList<CheckBox>();
@@ -61,6 +61,14 @@ public class NewTimetableFragment extends Fragment {
 		ivAdd = (ImageView) v.findViewById(R.id.ivAddCSubject);
 		llCustomS = (LinearLayout) v.findViewById(R.id.customSubjectsPlaceholder);
 		cScard = (CardView) v.findViewById(R.id.customSubjectsCard);
+
+		cbC1 = (CheckBox) v.findViewById(R.id.checkBox20);
+		cbC2 = (CheckBox) v.findViewById(R.id.checkBox21);
+		etC1 = (EditText) v.findViewById(R.id.etCustom1);
+		etC2 = (EditText) v.findViewById(R.id.etCustom2);
+
+		etC1.setSingleLine(true);
+		etC2.setSingleLine(true);
 
 		ivAdd.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -86,11 +94,6 @@ public class NewTimetableFragment extends Fragment {
 						mSubjectsSelectedNames.add(mCheckboxes[i].getText().toString());
 					}
 				}
-
-				CheckBox cbC1 = (CheckBox) v.findViewById(R.id.checkBox20);
-				CheckBox cbC2 = (CheckBox) v.findViewById(R.id.checkBox21);
-				etC1 = (EditText) v.findViewById(R.id.etCustom1);
-				etC2 = (EditText) v.findViewById(R.id.etCustom2);
 
 				if (cbC1.isChecked()){
 					String sC;
@@ -188,6 +191,7 @@ public class NewTimetableFragment extends Fragment {
 		editText.setId(_intID);
 		editText.setHint(getActivity().getResources().getString(R.string.new_timetable_custom_subject_name_hint));
 		editText.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
+		editText.setSingleLine(true);
 		//editText.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
 		//editText.setBackgroundColor(Color.WHITE);
 		editTextList.add(editText);
