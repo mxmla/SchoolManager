@@ -182,7 +182,7 @@
     <string name="menu_delete">Delete</string>
     <string name="newTimetable">New Timetable</string>
     <string name="new_timetable_choose_subjects_header">Select your subjects</string>
-    <string name="new_timetable_choose_subjects_text">Please select the subjects you want to add to your timetable\nIn the next step you can add information to those subjects (e.g. the teacher\'s name).\n\nIf you also have subjects that are not listed below, you can create those later.</string>
+    <string name="new_timetable_choose_subjects_text">Please select the subjects you want to add to your timetable\nIn the next step you can add further details about each subject such as your teachers, a color scheme for each subject and the time and place of your lessons.</string>
     <string name="new_tt_done_body">Your timetable has been created.</string>
     <string name="no">No</string>
     <string name="own_subjects">Now you can create additional custom subjects.\nYou can edit their names, too.\nDo you want to do that?</string>

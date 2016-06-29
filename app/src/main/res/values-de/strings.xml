@@ -196,7 +196,7 @@
     <string name="title_fragment_timetable">Stundenplan</string>
     <string name="action_subjects_list">Liste der Fächer</string>
     <string name="new_timetable_choose_subjects_header">Fächer wählen</string>
-    <string name="new_timetable_choose_subjects_text">Bitte wähle die Fächer aus, die du dem Stundenplan hinzufügen möchtest.\nIm nächsten Schritt kannst du diesen Fächern Informationen hinzufügen (z.B. Name des Lehrers).\n\nWenn du auch Fächer hast, die hier nicht aufgelistet sind, kannst du diese später hinzufügen.</string>
+    <string name="new_timetable_choose_subjects_text">Bitte wähle die Fächer aus, die du dem Stundenplan hinzufügen möchtest.\nIm nächsten Schritt kannst du weitere Details zu jedem Fach hinzufügen, wie z.B. den Lehrer, ein Farbthema für das jeweilige Fach, sowie wann und in welchem Raum dein Unterricht stattfindet.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="card_create_tt_title">Stundenplan erstellen</string>
