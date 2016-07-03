@@ -16,6 +16,7 @@
         <item>Home</item>
         <item>Stundenplan</item>
         <item>Hausaufgaben</item>
+        <item>Meine Schule</item>
         <item>Einstellungen</item>
     </string-array>
     <string-array name="SubjectNames">
@@ -307,4 +308,16 @@
     <string name="title_subjects_list">Fächer</string>
     <string name="CustomSubjects">Eigene Fächer</string>
     <string name="new_timetable_custom_subject_name_hint">Fach-Namen eingeben</string>
+    <string name="title_activity_my_school">Meine Schule</string>
+    <string name="action_select_school">Schule auswählen</string>
+    <string name="pref_my_school_settings_text">Bitte wähle deine Schule.</string>
+    <string name="pref_my_school_settings_not_in_the_list">Meine Schule ist nicht aufgelistet</string>
+    <string name="country_germany">Deutschland</string>
+    <string name="country_united_states_of_america">Vereinigte Staaten von Amerika</string>
+    <string name="toast_saved">Gespeichert</string>
+    <string name="pref_title_my_school">Meine Schule</string>
+    <string name="pref_my_school_select_school">Wähle deine Schule</string>
+    <string name="pref_my_school_select_school_description">Wähle deine Schule für ein personalisierteres Erlebnis.</string>
+    <string name="pref_my_school_country">Land</string>
+    <string name="pref_my_school_school">Schule</string>
 </resources>

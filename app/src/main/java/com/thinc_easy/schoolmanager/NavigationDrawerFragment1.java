@@ -68,7 +68,9 @@ public class NavigationDrawerFragment1 extends Fragment{
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer_1, container, false);
 
         titles = getResources().getStringArray(R.array.activity_titles);
-        int[] colors = {getResources().getColor(R.color.color_home), getResources().getColor(R.color.color_timetable), getResources().getColor(R.color.color_homework), getResources().getColor(R.color.color_settings)};
+        int[] colors = {getResources().getColor(R.color.color_home),
+                getResources().getColor(R.color.color_timetable), getResources().getColor(R.color.color_homework),
+                getResources().getColor(R.color.color_myschool), getResources().getColor(R.color.color_settings)};
         icons = new GradientDrawable[colors.length];
 
         final float scale = getResources().getDisplayMetrics().density;
@@ -115,6 +117,13 @@ public class NavigationDrawerFragment1 extends Fragment{
                             startActivityForResult(i2, 0); }
                         break;
                     case 3:
+                        if (getActivity().getClass().equals(MySchoolActivity.class)){
+                        } else {
+                            Intent i3 = new Intent(getActivity(),
+                                    MySchoolActivity.class);
+                            startActivityForResult(i3, 0); }
+                        break;
+                    case 4:
                         if (getActivity().getClass().equals(SettingsActivity.class)){
                         } else {
                             Intent i3 = new Intent(getActivity(),

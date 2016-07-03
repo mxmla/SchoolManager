@@ -3,6 +3,7 @@ package com.thinc_easy.schoolmanager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.inputmethodservice.Keyboard;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -16,10 +17,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.InterruptedIOException;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -1456,6 +1460,18 @@ public class DataStorageHandler {
         }
     }
 
+    public static String[][] toArray(Context context, String filename, boolean fromAssets){
+        String[][] myArray = new String[0][0];
+
+        if (!fromAssets){
+            myArray = toArray(context, filename);
+        } else if (fromAssets){
+            myArray = toArrayAssets(context, filename);
+        }
+
+        return myArray;
+    }
+
     public static String[][] toArray(Context context, String filename){
 
         int Rows = nmbrRowsCols(context, filename)[0];
@@ -1517,6 +1533,90 @@ public class DataStorageHandler {
         RowsCols[1] = Cols;
         return RowsCols;
     }
+
+    public static String[][] toArrayAssets(Context context, String filename){
+        AssetManager assetManager = context.getAssets();
+        InputStream input;
+        String text = "[no text]";
+        String [][] myArray = new String[0][0];
+
+        final int[] RowsCols = nmbrRowsColsAssets(context, filename);
+        int Rows = RowsCols[0];
+        int Cols = RowsCols[1];
+
+        if (Rows != 0 && Cols != 0) {
+            myArray = new String[Rows][Cols];
+
+            try {
+                input = assetManager.open(filename);
+
+                int size = input.available();
+                byte[] buffer = new byte[size];
+
+                input.read(buffer);
+                input.close();
+
+                text = new String(buffer);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+            if (text != null && text.length() > 0 && !text.equals("[no text]")) {
+                String[] sRows = text.split(System.getProperty("line.separator"));
+
+                for (int i = 0; i < sRows.length; i++) {
+                    String[] sCols = sRows[i].split(",");
+                    for (int c = 0; c < sCols.length; c++){
+                        myArray[i][c] = sCols[c];
+                    }
+                }
+            }
+        }
+
+        return myArray;
+    }
+
+    public static int[] nmbrRowsColsAssets(Context context, String filename){
+        AssetManager assetManager = context.getAssets();
+        InputStream input;
+        String text = "[no text]";
+        int Rows = 0;
+        int Cols = 0;
+
+        try {
+            input = assetManager.open(filename);
+
+            int size = input.available();
+            byte[] buffer = new byte[size];
+
+            input.read(buffer);
+            input.close();
+
+            text = new String(buffer);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        if (text != null && text.length() > 0 && !text.equals("[no text]")){
+            String[] sRows = text.split(System.getProperty("line.separator"));
+            Rows = sRows.length;
+
+            for (int i = 0; i < Rows; i++){
+                String[] sCols = sRows[i].split(",");
+                if (sCols.length > Cols) Cols = sCols.length;
+            }
+        }
+
+        int[] RowsCols = new int[2];
+        RowsCols[0] = Rows;
+        RowsCols[1] = Cols;
+        return RowsCols;
+    }
+
 
 
     public static boolean isStringNumeric( String str ) {

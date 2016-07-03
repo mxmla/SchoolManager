@@ -1,55 +1,55 @@
-11110001,John C. Fremont Senior High,0
-11110010,Upland High School,0
-11110011,Montebello High School,0
-11110012,El Camino Real Senior High School,0
-11110013,Schurr High School,0
-11110014,Sylmar Senior High School,0
-11110015,Anaheim High School,0
-11110016,Nathaniel Narbonne Senior High School,0
-11110017,Manual Arts Senior High School,0
-11110018,Bell Gardens High School,0
-11110019,Fontana High School,0
-11110002,Bell Senior High School,0
-11110020,John Marshall Senior High School,0
-11110021,Pete William J. Knight High School,0
-11110022,Phineas Banning Senior High School,0
-11110023,Los Osos  High School,0
-11110024,Fountain Valley High School,0
-11110025,Vista Murrieta High School,0
-11110026,Rancho Verde High School,0
-11110027,South Gate Senior High School,0
-11110028,Carson Senior High School,0
-11110029,Montclair High School,0
-11110003,Granada Hills Charter High School,0
-11110030,Los Alamitos High School,0
-11110031,East Palo Alto Academy,0
-11110004,Huntington Park Senior High School,0
-11110005,Central High School - East Campus,0
-11110006,Grover Cleveland High School,0
-11110007,David Starr Jordan High School,0
-11110008,Santiago High School,0
-11110009,Chaffey High School,0
-11210001,Plano East Senior High School,0
-11210002,North Shore Senior High School,0
-11210003,The Woodlands High School,0
-11210004,Klein Oak High School,0
-11310001,Chicago International Charter School,0
-11310002,Noble Charter Schools,0
-11310003,Lane Tech College Prep High School,0
-11310004,Neuqua Valley High School,0
-11310005,Adlai E. Stevenson High School,0
-11410001,Brooklyn Technical High School,0
-11410002,Brooklyn Technical High School,0
-11410003,Fort Hamilton High School,0
-11410004,DeWitt Clinton High School,0
-11410005,Benjamin N. Cardozo High School,0
-11410006,Brentwood High School,0
-11410007,Tottenville High School,0
-11410008,Midwood High School at Brooklyn College,0
-11410009,Forest Hills High School,0
-11510001,John A. Ferguson Senior High School,0
-11510002,Cypress Bay High School,0
-11510003,Dr. Phillips High School,0
-11510004,South Dade Senior High Academy Magnet School,0
-11510005,Seminole High School,0
-21110001,Domgymnasium Verden,0
+010101010001,John C. Fremont Senior High,0
+010101010010,Upland High School,0
+010101010011,Montebello High School,0
+010101010002,Bell Senior High School,0
+010101010020,John Marshall Senior High School,0
+010101010021,Pete William J. Knight High School,0
+010101010022,Phineas Banning Senior High School,0
+010101010023,Los Osos  High School,0
+010101010024,Fountain Valley High School,0
+010101010025,Vista Murrieta High School,0
+010101010026,Rancho Verde High School,0
+010101010012,El Camino Real Senior High School,0
+010101010013,Schurr High School,0
+010101010014,Sylmar Senior High School,0
+010101010015,Anaheim High School,0
+010101010016,Nathaniel Narbonne Senior High School,0
+010101010017,Manual Arts Senior High School,0
+010101010018,Bell Gardens High School,0
+010101010019,Fontana High School,0
+010101010027,South Gate Senior High School,0
+010101010028,Carson Senior High School,0
+010101010029,Montclair High School,0
+010101010003,Granada Hills Charter High School,0
+010101010030,Los Alamitos High School,0
+010101010031,East Palo Alto Academy,0
+010101010004,Huntington Park Senior High School,0
+010101010005,Central High School - East Campus,0
+010101010006,Grover Cleveland High School,0
+010101010007,David Starr Jordan High School,0
+010101010008,Santiago High School,0
+010101010009,Chaffey High School,0
+010102010001,Plano East Senior High School,0
+010102010002,North Shore Senior High School,0
+010102010003,The Woodlands High School,0
+010102010004,Klein Oak High School,0
+010103010001,Chicago International Charter School,0
+010103010002,Noble Charter Schools,0
+010103010003,Lane Tech College Prep High School,0
+010103010004,Neuqua Valley High School,0
+010103010005,Adlai E. Stevenson High School,0
+010104010001,Brooklyn Technical High School,0
+010104010002,Brooklyn Technical High School,0
+010104010003,Fort Hamilton High School,0
+010104010004,DeWitt Clinton High School,0
+010104010005,Benjamin N. Cardozo High School,0
+010104010006,Brentwood High School,0
+010104010007,Tottenville High School,0
+010104010008,Midwood High School at Brooklyn College,0
+010104010009,Forest Hills High School,0
+010105010001,John A. Ferguson Senior High School,0
+010105010002,Cypress Bay High School,0
+010105010003,Dr. Phillips High School,0
+010105010004,South Dade Senior High Academy Magnet School,0
+010105010005,Seminole High School,0
+020101010001,Domgymnasium Verden,0

@@ -383,4 +383,14 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="LinkText">
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:textSize">@dimen/card_content_text</item>
+    </style>
+
+    <style name="Link" parent="@style/LinkText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
 </resources>

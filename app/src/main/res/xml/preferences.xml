@@ -145,6 +145,21 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/pref_title_my_school"
+        android:key="pref_key_my_school_settings" >
+
+        <Preference
+            android:title="@string/pref_my_school_select_school"
+            android:summary="@string/pref_my_school_select_school_description" >
+
+            <intent android:action="com.thinc_easy.schoolmanager.MYSCHOOLSETTINGSACTIVITY" >
+                <extra android:name="caller" android:value="settings" />
+            </intent>
+        </Preference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/pref_title_notifications"
         android:key="pref_key_notification_settings" >
 

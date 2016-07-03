@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/BackgroundColor"
+    tools:context="com.thinc_easy.schoolmanager.MySchoolSettingsFragment">
+
+    <TextView
+        android:id="@+id/introText"
+        android:text="@string/pref_my_school_settings_text"
+        style="@style/IntroductiveText"
+        android:gravity="top|start"/>
+
+    <LinearLayout
+        style="@style/CardContent"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/introText">
+        <TextView
+            android:id="@+id/tvCountry"
+            style="@style/CardContentText"
+            android:layout_marginTop="@dimen/card_margin"
+            android:layout_marginBottom="@dimen/card_margin"
+            android:layout_marginStart="@dimen/card_padding"
+            android:layout_marginEnd="@dimen/card_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pref_my_school_country"/>
+
+        <Spinner
+            android:id="@+id/sCountry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/card_padding"
+            android:layout_marginEnd="@dimen/card_padding"
+            android:paddingBottom="@dimen/card_padding"
+            android:layout_marginLeft="@dimen/card_padding">
+        </Spinner>
+
+        <TextView
+            android:id="@+id/tvSchool"
+            style="@style/CardContentText"
+            android:layout_marginTop="@dimen/card_margin"
+            android:layout_marginBottom="@dimen/card_margin"
+            android:layout_marginStart="@dimen/card_padding"
+            android:layout_marginEnd="@dimen/card_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pref_my_school_school"/>
+
+        <Spinner
+            android:id="@+id/sSchool"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/card_padding"
+            android:layout_marginEnd="@dimen/card_padding"
+            android:paddingBottom="@dimen/card_padding"
+            android:layout_marginLeft="@dimen/card_padding"
+            android:layout_below="@id/sCountry">
+        </Spinner>
+    </LinearLayout>
+</RelativeLayout>

@@ -56,7 +56,7 @@ public class NotificationSettingsFragment extends Fragment {
     }
 
     private void saveData(){
-        //Toast.makeText(getActivity(), "saveData", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.toast_saved), Toast.LENGTH_LONG).show();
         String timeString = et1.getText().toString();
 
         if (rb1.isChecked()) {

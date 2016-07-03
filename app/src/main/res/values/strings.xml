@@ -21,6 +21,7 @@
         <item>Home</item>
         <item>Timetable</item>
         <item>Homework</item>
+        <item>My School</item>
         <item>Settings</item>
     </string-array>
     <string-array name="SubjectNames">
@@ -386,4 +387,16 @@
     <string name="title_subjects_list">Subjects</string>
     <string name="CustomSubjects">Custom subjects</string>
     <string name="new_timetable_custom_subject_name_hint">Enter subject title</string>
+    <string name="title_activity_my_school">My School</string>
+    <string name="action_select_school">Select school</string>
+    <string name="pref_my_school_settings_text">Please select your school.</string>
+    <string name="pref_my_school_settings_not_in_the_list">My school is not in the list</string>
+    <string name="country_united_states_of_america">United States of America</string>
+    <string name="country_germany">Germany</string>
+    <string name="toast_saved">Saved</string>
+    <string name="pref_title_my_school">My School</string>
+    <string name="pref_my_school_select_school">Select your school</string>
+    <string name="pref_my_school_select_school_description">Select your school for a more personalized experience.</string>
+    <string name="pref_my_school_country">Country</string>
+    <string name="pref_my_school_school">School</string>
 </resources>
