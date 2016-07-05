@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,9 +32,14 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.widget.ViewSwitcher;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 public class CustomSubjectFragment extends Fragment{
 	
 	public static final String DEFAULT_EDIT_FRAGMENT_TAG = "editFragmentTag";
+	private Tracker mTracker;
+	private String fragmentName;
 	private int mSubjectInt;
 	private String[] mDayNames;
 	private String[] mPeriodNumbers;
@@ -88,6 +94,12 @@ public class CustomSubjectFragment extends Fragment{
         ((EditSubjectActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.title_fragment_edit_subject));
 		int ttColor = getActivity().getResources().getColor(R.color.color_timetable);
 		((EditSubjectActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ttColor));
+
+
+		fragmentName = "CustomSubjectFragment";
+		// Obtain the shared Tracker instance.
+		SchoolManager application = (SchoolManager) getActivity().getApplication();
+		mTracker = application.getDefaultTracker();
         
         mSubjectNames = getResources().getStringArray(R.array.SubjectNames);
         mSubjectAbbrevs = getResources().getStringArray(R.array.SubjectAbbreviations);
@@ -258,6 +270,18 @@ public class CustomSubjectFragment extends Fragment{
         
         return v;
     }
+
+	@Override
+	public void onResume(){
+		super.onResume();
+
+		Log.i("Analytics", "Setting screen name: " + fragmentName);
+		mTracker.setScreenName("Image~" + fragmentName);
+		mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+	}
+
+
+
 
     private void setUpTvSubjectName(View v){
 		tvSubjectName.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Regular.ttf"));

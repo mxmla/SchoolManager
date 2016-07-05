@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,12 +16,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 /**
  * Created by M on 30.07.2015.
  */
 public class ShareAppFragment extends Fragment {
 
     public static final String DEFAULT_EDIT_FRAGMENT_TAG = "editFragmentTag";
+    private Tracker mTracker;
+    private String fragmentName;
 
     private Button bShare;
     private EditText editText1;
@@ -28,6 +34,12 @@ public class ShareAppFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_share_app, container, false);
+
+        fragmentName = "ShareAppFragment";
+        // Obtain the shared Tracker instance.
+        SchoolManager application = (SchoolManager) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+
 
         ((MainActivity) getActivity()).getSupportActionBar().setTitle("");
 
@@ -77,5 +89,14 @@ public class ShareAppFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        Log.i("Analytics", "Setting screen name: " + fragmentName);
+        mTracker.setScreenName("Image~" + fragmentName);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 }

@@ -44,6 +44,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,6 +56,8 @@ import java.util.List;
 public class MainFragment extends Fragment {
 	
 	public static final String DEFAULT_EDIT_FRAGMENT_TAG = "editFragmentTag";
+    private Tracker mTracker;
+    private String fragmentName;
     public static final int NOTIFICATION_ID = 1;
     private String nowSubjectName, nowSubjectAbbrev,
             nowPeriodTo, nowPeriodFrom, nowDayName, nowRoom, nowTeacher;
@@ -104,6 +108,11 @@ public class MainFragment extends Fragment {
         ((MainActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(hColor));
 
         mUserClickedDontShare = Boolean.valueOf(readFromPreferences(getActivity(), KEY_USER_CLICKED_DONT_SHARE, "false"));
+
+        fragmentName = "MainFragment";
+        // Obtain the shared Tracker instance.
+        SchoolManager application = (SchoolManager) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
 
         AdView mAdView = (AdView) v.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -190,6 +199,15 @@ public class MainFragment extends Fragment {
                 getActivity().getResources().getColor(R.color.color_homework),
                 getActivity().getResources().getColor(R.color.color_settings));
         return v;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        Log.i("Analytics", "Setting screen name: " + fragmentName);
+        mTracker.setScreenName("Image~" + fragmentName);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void TimetableSection(View v){

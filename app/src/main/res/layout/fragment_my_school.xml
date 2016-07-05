@@ -20,6 +20,20 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"/>
 
+    <Button
+        android:id="@+id/selectSchoolButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/my_school_button_settings_select_school"/>
+
+    <TextView
+        android:id="@+id/tvNoSchool"
+        style="@style/CardContent"
+        android:layout_centerInParent="true"
+        android:layout_above="@id/selectSchoolButton"
+        android:text="@string/my_school_no_school_selected"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/appbar_dropshadow_height"

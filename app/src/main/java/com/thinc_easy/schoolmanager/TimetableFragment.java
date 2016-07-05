@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,11 +21,16 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 
 public class TimetableFragment extends Fragment {
 	
 	public static final String DEFAULT_EDIT_FRAGMENT_TAG = "editFragmentTag";
-	
+
+	private Tracker mTracker;
+	private String fragmentName;
 	private TableLayout tableLayout; 
 	private static int progress;
 	private ProgressBar progressBar;
@@ -79,6 +85,11 @@ public class TimetableFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_timetable, container, false);
 
+		fragmentName = "TimetableFragment";
+		// Obtain the shared Tracker instance.
+		SchoolManager application = (SchoolManager) getActivity().getApplication();
+		mTracker = application.getDefaultTracker();
+
         ((TimetableActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.title_fragment_timetable));
         ((TimetableActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
 
@@ -102,6 +113,10 @@ public class TimetableFragment extends Fragment {
     public void onResume(){
         super.onResume();
         ((TimetableActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.title_fragment_timetable));
+
+		Log.i("Analytics", "Setting screen name: " + fragmentName);
+		mTracker.setScreenName("Image~" + fragmentName);
+		mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 	}
 
     private void findViews(View v){
@@ -526,4 +541,5 @@ public class TimetableFragment extends Fragment {
     	
     	return dif;
     }
+
 }

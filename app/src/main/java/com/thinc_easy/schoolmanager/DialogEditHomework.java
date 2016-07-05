@@ -9,6 +9,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -33,6 +37,8 @@ import java.util.Scanner;
 
 public class DialogEditHomework extends DialogFragment{
     Communicator communicator;
+    private Tracker mTracker;
+    private String fragmentName;
     private EditText etTitle, etContent;
     private Button bOK, bCancel;
     private ArrayAdapter<String> adapterSubject, adapterDate;
@@ -57,6 +63,10 @@ public class DialogEditHomework extends DialogFragment{
         View view = inflater.inflate(R.layout.dialog_edit_homework, null);
         builder.setView(view);
 
+        fragmentName = "DialogEditHomework";
+        // Obtain the shared Tracker instance.
+        SchoolManager application = (SchoolManager) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
 
         exists = getArguments().getBoolean("existing");
         if (exists){
@@ -344,5 +354,14 @@ public class DialogEditHomework extends DialogFragment{
         RowsCols[0] = Rows;
         RowsCols[1] = Cols;
         return RowsCols;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        Log.i("Analytics", "Setting screen name: " + fragmentName);
+        mTracker.setScreenName("Image~" + fragmentName);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 }

@@ -21,6 +21,7 @@ import android.widget.ListView;
  */
 public class MySchoolActivity extends ActionBarActivity {
     public static final int NOTIFICATION_ID = 1;
+    Fragment mMySchoolFragment;
 
     private Toolbar toolbar;
     private CharSequence mTitle;
@@ -46,7 +47,7 @@ public class MySchoolActivity extends ActionBarActivity {
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer_1);
         drawerFragment.setUp(R.id.fragment_navigation_drawer_1, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
 
-        Fragment mMySchoolFragment = getSupportFragmentManager().findFragmentByTag
+        mMySchoolFragment = getSupportFragmentManager().findFragmentByTag
                 (MySchoolFragment.DEFAULT_EDIT_FRAGMENT_TAG);
 
 
@@ -94,7 +95,7 @@ public class MySchoolActivity extends ActionBarActivity {
         switch(item.getItemId()) {
             case R.id.action_select_school:
                 Intent i1 = new Intent(this,
-                        SettingsActivity.class);
+                        MySchoolSettingsActivity.class);
                 startActivityForResult(i1, 0);
                 return true;
             case R.id.action_settings:

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,9 +32,13 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 import android.widget.ViewSwitcher;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 public class EditSubjectFragment extends Fragment{
-	
 	public static final String DEFAULT_EDIT_FRAGMENT_TAG = "editFragmentTag";
+	private Tracker mTracker;
+	private String fragmentName;
 	private int mSubjectInt;
 	private String[] mDayNames;
 	private String[] mDayIDs;
@@ -84,6 +89,11 @@ public class EditSubjectFragment extends Fragment{
         Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_edit_subject, container, false);
+
+		fragmentName = "EditSubjectFragment";
+		// Obtain the shared Tracker instance.
+		SchoolManager application = (SchoolManager) getActivity().getApplication();
+		mTracker = application.getDefaultTracker();
 
         mSubjectNames = getResources().getStringArray(R.array.SubjectNames);
         mSubjectAbbrevs = getResources().getStringArray(R.array.SubjectAbbreviations);
@@ -835,5 +845,14 @@ public class EditSubjectFragment extends Fragment{
 			default:
 				return super.onOptionsItemSelected(item);
 		}
+	}
+
+	@Override
+	public void onResume(){
+		super.onResume();
+
+		Log.i("Analytics", "Setting screen name: " + fragmentName);
+		mTracker.setScreenName("Image~" + fragmentName);
+		mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 	}
 }

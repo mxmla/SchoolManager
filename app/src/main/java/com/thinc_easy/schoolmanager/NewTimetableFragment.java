@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,13 +23,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class NewTimetableFragment extends Fragment {
-	
 	public static final String DEFAULT_EDIT_FRAGMENT_TAG = "editFragmentTag";
+	private Tracker mTracker;
+	private String fragmentName;
 	private int mFirstSubject;
 	private ArrayList<Integer> mSubjectsSelected;
 	private ArrayList<String> mSubjectsSelectedNames = new ArrayList<String>();
@@ -52,6 +57,11 @@ public class NewTimetableFragment extends Fragment {
         Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_new_timetable, container, false);
+
+		fragmentName = "NewTimetableFragment";
+		// Obtain the shared Tracker instance.
+		SchoolManager application = (SchoolManager) getActivity().getApplication();
+		mTracker = application.getDefaultTracker();
         
         mSubjectsSelected = new ArrayList<Integer>();
         mCheckboxes = new CheckBox[19];
@@ -233,4 +243,12 @@ public class NewTimetableFragment extends Fragment {
 		}
 	}
 
+	@Override
+	public void onResume(){
+		super.onResume();
+
+		Log.i("Analytics", "Setting screen name: " + fragmentName);
+		mTracker.setScreenName("Image~" + fragmentName);
+		mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+	}
 }

@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +24,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,9 +35,10 @@ import java.util.List;
 
 
 public class HomeworkFragment extends Fragment{
-
     public static final String DEFAULT_EDIT_FRAGMENT_TAG = "editFragmentTag";
 
+    private Tracker mTracker;
+    private String fragmentName;
     private RecyclerView recyclerView;
     private HomeworkAdapter adapter;
     private static String[] ID;
@@ -62,6 +67,11 @@ public class HomeworkFragment extends Fragment{
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_homework, container, false);
+
+        fragmentName = "HomeworkFragment";
+        // Obtain the shared Tracker instance.
+        SchoolManager application = (SchoolManager) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
 
         int hwColor = getActivity().getResources().getColor(R.color.color_homework_appbar);
         ((HomeworkActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(hwColor));
@@ -335,5 +345,14 @@ public class HomeworkFragment extends Fragment{
     public static interface ClickListener{
         public void onClick(View view, int position);
         public void onLongClick(View view, int position);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        Log.i("Analytics", "Setting screen name: " + fragmentName);
+        mTracker.setScreenName("Image~" + fragmentName);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 }

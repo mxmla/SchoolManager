@@ -225,6 +225,17 @@
         <item name="android:ellipsize">end</item>
         <item name="android:textColor">@color/TextDarkBg</item>
     </style>
+
+    <style name="BigTitleStyle">
+        <item name="android:textSize">72sp</item>
+        <item name="android:layout_height">120dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingLeft">@dimen/card_padding</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
     
     <!-- Card Stream -->
     <style name="CardStream">

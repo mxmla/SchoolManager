@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.text.DecimalFormatSymbols;
 
 /**
@@ -22,6 +26,8 @@ import java.text.DecimalFormatSymbols;
 public class NotificationSettingsFragment extends Fragment {
     public static final String DEFAULT_EDIT_FRAGMENT_TAG = "editFragmentTag";
 
+    private Tracker mTracker;
+    private String fragmentName;
     private SharedPreferences prefs;
     private RadioGroup rg1;
     private RadioButton rb1, rb2;
@@ -33,6 +39,11 @@ public class NotificationSettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_notification_settings, container, false);
+
+        fragmentName = "NotificationSettingsFragment";
+        // Obtain the shared Tracker instance.
+        SchoolManager application = (SchoolManager) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 
@@ -127,4 +138,12 @@ public class NotificationSettingsFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        Log.i("Analytics", "Setting screen name: " + fragmentName);
+        mTracker.setScreenName("Image~" + fragmentName);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
 }

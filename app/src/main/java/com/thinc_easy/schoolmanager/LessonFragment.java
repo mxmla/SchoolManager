@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,10 +22,14 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 public class LessonFragment extends Fragment{
-	
 	public static final String DEFAULT_EDIT_FRAGMENT_TAG = "editFragmentTag";
 
+    private Tracker mTracker;
+    private String fragmentName;
     private String caller;
 	private int hTextSize;
 	private TextView tvSubjectName, tvSubject, tvTeacher, tvPeriod;
@@ -48,6 +53,11 @@ public class LessonFragment extends Fragment{
         Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_lesson, container, false);
+
+        fragmentName = "LessonFragment";
+        // Obtain the shared Tracker instance.
+        SchoolManager application = (SchoolManager) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
 
         caller = getArguments().getString("caller");
 
@@ -244,5 +254,14 @@ public class LessonFragment extends Fragment{
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        Log.i("Analytics", "Setting screen name: " + fragmentName);
+        mTracker.setScreenName("Image~" + fragmentName);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 }

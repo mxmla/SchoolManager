@@ -56,4 +56,17 @@ public class MySchoolSettingsActivity extends ActionBarActivity {
             transaction.commit();
         }
     }
+
+    public void showAddSchoolFragment(){
+        Fragment mMySchoolAddSchoolFragment = getSupportFragmentManager().findFragmentByTag
+                (MySchoolAddSchoolFragment.DEFAULT_EDIT_FRAGMENT_TAG);
+
+
+        mMySchoolAddSchoolFragment = new MySchoolAddSchoolFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, mMySchoolAddSchoolFragment,
+                MySchoolAddSchoolFragment.DEFAULT_EDIT_FRAGMENT_TAG);
+        transaction.commit();
+    }
 }

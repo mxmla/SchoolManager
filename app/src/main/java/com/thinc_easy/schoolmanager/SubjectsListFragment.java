@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -20,6 +21,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +34,8 @@ public class SubjectsListFragment extends Fragment {
 
     public static final String DEFAULT_EDIT_FRAGMENT_TAG = "editFragmentTag";
 
+    private Tracker mTracker;
+    private String fragmentName;
     private RecyclerView recyclerView;
     private MyAdapter adapter;
     ListView listViewSubjects;
@@ -54,6 +60,11 @@ public class SubjectsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_subjects_list, container, false);
+
+        fragmentName = "SubjectsListFragment";
+        // Obtain the shared Tracker instance.
+        SchoolManager application = (SchoolManager) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
 
         slSectionTitleText = (TextView) v.findViewById(R.id.slSectionTitleText);
         slSectionTitleButton = (TextView) v.findViewById(R.id.slSectionTitleButton);
@@ -249,4 +260,12 @@ public class SubjectsListFragment extends Fragment {
         super.onPause();
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        Log.i("Analytics", "Setting screen name: " + fragmentName);
+        mTracker.setScreenName("Image~" + fragmentName);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
 }

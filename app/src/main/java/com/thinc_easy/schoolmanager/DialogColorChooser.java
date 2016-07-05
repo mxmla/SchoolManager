@@ -6,13 +6,19 @@ import android.app.Dialog;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 public class DialogColorChooser extends DialogFragment implements View.OnClickListener{
 	Communicator communicator;
+	private Tracker mTracker;
+	private String fragmentName;
 	private TextView title;
 	private Button bOK, bCancel;
 	private Button cb1, cb2, cb3, cb4, cb5, cb6, cb7, cb8, cb9, cb10, cb11, cb12, cb13, cb14, cb15, cb16, cb17, cb18, cb19, cb20, cb21;
@@ -45,6 +51,10 @@ public class DialogColorChooser extends DialogFragment implements View.OnClickLi
 	}
 	
 	public Dialog onCreateDialog(Bundle savedInstanceState){
+		fragmentName = "DialogColorChooser";
+		// Obtain the shared Tracker instance.
+		SchoolManager application = (SchoolManager) getActivity().getApplication();
+		mTracker = application.getDefaultTracker();
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -85,7 +95,7 @@ public class DialogColorChooser extends DialogFragment implements View.OnClickLi
 		setCancelable(false);
 		return inflater.inflate(R.layout.dialog_color_chooser, null);
 	}*/
-	
+
 	@Override
 	public void onClick(View v) {
 		/*if (v.getId() == ){
@@ -159,6 +169,15 @@ public class DialogColorChooser extends DialogFragment implements View.OnClickLi
 			});
 				
 		}
+	}
+
+	@Override
+	public void onResume(){
+		super.onResume();
+
+		Log.i("Analytics", "Setting screen name: " + fragmentName);
+		mTracker.setScreenName("Image~" + fragmentName);
+		mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 	}
 	
 	interface Communicator{
