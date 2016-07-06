@@ -338,7 +338,7 @@
     <string name="spinner_please_select">-- Bitte wählen --</string>
     <string name="title_section_news">Neuigkeiten</string>
     <string name="card_introducing_new_feature">Neue Funktion</string>
-    <string name="card_introducing_my_school_text">Hurra! :D\n\nDie nächste große Funktion ist da: <b>MySchool</b>.\nJetzt ist die Website deiner Schule mit all ihren Funktionen(wie Stundenplan Änderungen, Aufgaben, Terminen, News, Speisepläne, ...) nur noch einen Fingertipp entfernt!\n\nÖffne einfach das Navigationsmenü (links) und wähle \"Meine Schule\".</string>
+    <string name="card_introducing_my_school_text">Hurra! :D\n\nDie nächste <b>große</b> Funktion ist da: MySchool.\nJetzt ist die Website deiner Schule mit all ihren Funktionen(wie Stundenplan Änderungen, Aufgaben, Terminen, News, Speisepläne, ...) nur noch einen Fingertipp entfernt!\n\nÖffne einfach das Navigationsmenü (links) und wähle \"Meine Schule\".</string>
     <string name="dismiss">Verbergen</string>
     <string name="take_me_there">Los geht\'s!</string>
     <string name="feature_MySchool">MySchool</string>

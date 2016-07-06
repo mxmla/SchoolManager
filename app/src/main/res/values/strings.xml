@@ -423,7 +423,7 @@
     <string name="filename_my_school_add_school_my_suggestions" translatable="false">MySchool_AddSchool_SuggestedByMe.txt</string>
     <string name="title_section_news">News</string>
     <string name="card_introducing_new_feature">New feature</string>
-    <string name="card_introducing_my_school_text">Yippee! :D\n\nWe\'re excited to introduce to you this big new feature: <b>MySchool</b>.\nWith MySchool, your school\'s website with all its features (like timetable changes, tasks, events, news, meal plans, ...) is now only a tap away!\n\nSimply open the side menu on the left and tap on \"MySchool\".</string>
+    <string name="card_introducing_my_school_text">Yippee! :D\n\nWe\'re excited to introduce to you this <b>big</b> new feature: MySchool.\nWith MySchool, your school\'s website with all its features (like timetable changes, tasks, events, news, meal plans, ...) is now only a tap away!\n\nSimply open the side menu on the left and tap on \"MySchool\".</string>
     <string name="dismiss">Dismiss</string>
     <string name="take_me_there">Take me there!</string>
     <string name="feature_MySchool">MySchool</string>
