@@ -114,7 +114,8 @@ public class MySchoolAddSchoolFragment extends Fragment {
 
                     mTracker.send(new HitBuilders.EventBuilder()
                             .setCategory("MySchool - Add school")
-                            .setAction("C: "+country+" || S: "+school+" || W: "+url)
+                            .setAction("C: "+country+" || S: "+school+" || W: "+url+" || ID: "+
+                                    registerAddSchool(country, school, url))
                             .build());
 
                     added = "true";

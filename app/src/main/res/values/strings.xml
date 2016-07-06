@@ -420,5 +420,5 @@
     <string name="my_school_add_school_not_in_the_list_button">My school is not in the list</string>
     <string name="my_school_add_school_title">Please enter your school\'s details.</string>
     <string name="spinner_please_select">-- Please select --</string>
-    <string name="filename_my_school_add_school_my_suggestions">"MySchool_AddSchool_SuggestedByMe.txt"</string>
+    <string name="filename_my_school_add_school_my_suggestions" translatable="false">MySchool_AddSchool_SuggestedByMe.txt</string>
 </resources>
