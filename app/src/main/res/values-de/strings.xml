@@ -329,11 +329,19 @@
     <string name="my_school_add_school_url">Website</string>
     <string name="my_school_add_school_url_hint">Die Website deiner Schule (optional)</string>
     <string name="my_school_add_school_share_title">Super!</string>
-    <string name="my_school_add_school_share_text">Deine Schule wird bald in SchoolManager aufgenommen! :)\n\nJetzt zeig\' diese App deinen Freunden:</string>
+    <string name="my_school_add_school_share_text">Deine Schule wird bald in SchoolManager aufgenommen! :)\n\nSag es deinen Freunden!</string>
     <string name="my_school_add_school_share_button">Teilen</string>
     <string name="my_school_add_school_missing_information">Bitte nenne das <b>Land</b> und den <b>Namen</b> deiner Schule.</string>
     <string name="my_school_add_school_not_in_the_list">Sollte deine Schule nicht aufgelistet sein, kannst du</string>
     <string name="my_school_add_school_not_in_the_list_button">Meine Schule ist nicht aufgelistet</string>
     <string name="my_school_add_school_title">Bitte trage die Informationen zu deiner Schule ein.</string>
     <string name="spinner_please_select">-- Bitte wählen --</string>
+    <string name="title_section_news">Neuigkeiten</string>
+    <string name="card_introducing_new_feature">Neue Funktion</string>
+    <string name="card_introducing_my_school_text">Hurra! :D\n\nDie nächste große Funktion ist da: <b>MySchool</b>.\nJetzt ist die Website deiner Schule mit all ihren Funktionen(wie Stundenplan Änderungen, Aufgaben, Terminen, News, Speisepläne, ...) nur noch einen Fingertipp entfernt!\n\nÖffne einfach das Navigationsmenü (links) und wähle \"Meine Schule\".</string>
+    <string name="dismiss">Verbergen</string>
+    <string name="take_me_there">Los geht\'s!</string>
+    <string name="feature_MySchool">MySchool</string>
+    <string name="my_school_added_new_schools">Neue Schulen hinzugefügt</string>
+    <string name="card_my_school_added_new_schools_text">Wir haben die folgenden 5 Schulen zu MySchool (\"Meine Schule\") hinzugefügt:\n\n- Gemeinschaftsschule Auenland (Deutschland)\n- Akademie für berufliche Bildung Berlin, Dresden, Köln (Deutschland)\n- Gaußschule Gymnasium am Löwenwall (Deutschland)\n- Nsawkaw State Senior High School (Ghana)\n- Warwick Business School (Vereinigtes Königreich)\n\nFinde heraus, ob deine Schule schon dabei ist!</string>
 </resources>

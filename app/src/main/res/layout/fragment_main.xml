@@ -39,6 +39,8 @@
                     style="?android:attr/buttonBarButtonStyle"
                     android:id="@+id/bRefresh" /> -->
 
+
+
                 <RelativeLayout
                     android:id="@+id/ttSectionTitle"
                     style="@style/SectionTitleStyle"
@@ -52,6 +54,8 @@
                         android:id="@+id/ttSectionTitleButton"
                         style="@style/SectionTitleButtonStyle" />
                 </RelativeLayout>
+
+
 <!--
                 <android.support.v7.widget.CardView
                     android:id="@+id/NoLessonsCard"
@@ -655,6 +659,189 @@
                                 android:layout_weight="1"
                                 android:textColor="@color/colorAccentLight"
                                 android:text="@string/card_create_tt_button" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <RelativeLayout
+                    android:id="@+id/newsSectionTitle"
+                    style="@style/SectionTitleStyle"
+                    android:layout_marginTop="@dimen/card_padding">
+
+                    <TextView
+                        android:id="@+id/newsSectionTitleText"
+                        style="@style/SectionTitleTextStyle"
+                        android:text="@string/title_section_news"/>
+                    <!--
+                    <TextView
+                        android:id="@+id/newsSectionTitleButton"
+                        style="@style/SectionTitleButtonStyle" />
+                    -->
+                </RelativeLayout>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/IntroducingMySchoolCard"
+                    style="@style/Card"
+                    android:layout_marginTop="0dp"
+                    custom:cardElevation="2dp"
+                    custom:cardUseCompatPadding="true" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/CardIntroMySchoolTitle"
+                                    style="@style/CardSubtitleBase"
+                                    android:paddingBottom="0dp"
+                                    android:text="@string/card_introducing_new_feature" />
+
+                                <TextView
+                                    android:id="@+id/tvMySchoolTitle"
+                                    style="@style/CardTitle"
+                                    android:paddingTop="0dp"
+                                    android:text="@string/feature_MySchool" />
+                            </LinearLayout>
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="@dimen/card_padding">
+                                <ImageView
+                                    android:id="@+id/MySchoolImageView"
+                                    android:layout_width="@dimen/subject_circle_medium"
+                                    android:layout_height="@dimen/subject_circle_medium"
+                                    android:layout_gravity="right|center_vertical"
+                                    android:src="@drawable/ic_launcher"/>
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            style="@style/CardContent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/CardContentText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/card_introducing_my_school_text"/>
+
+                            <LinearLayout
+                                style="?android:attr/buttonBarStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end">
+                                <Button
+                                    android:id="@+id/bDismissNewFeature"
+                                    style="?android:attr/buttonBarButtonStyle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/SecondaryText"
+                                    android:text="@string/dismiss"/>
+                                <Button
+                                    android:id="@+id/bGoToNewFeature"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/take_me_there"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/MySchoolAddedSchoolsCard"
+                    style="@style/Card"
+                    android:layout_marginTop="0dp"
+                    custom:cardElevation="2dp"
+                    custom:cardUseCompatPadding="true" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    style="@style/CardSubtitleBase"
+                                    android:paddingBottom="0dp"
+                                    android:text="@string/feature_MySchool" />
+
+                                <TextView
+                                    style="@style/CardTitle"
+                                    android:paddingTop="0dp"
+                                    android:text="@string/my_school_added_new_schools" />
+                            </LinearLayout>
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="@dimen/card_padding">
+                                <ImageView
+                                    android:layout_width="@dimen/subject_circle_medium"
+                                    android:layout_height="@dimen/subject_circle_medium"
+                                    android:layout_gravity="right|center_vertical"
+                                    android:src="@drawable/ic_launcher"/>
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            style="@style/CardContent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/CardContentText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/card_my_school_added_new_schools_text"/>
+
+                            <LinearLayout
+                                style="?android:attr/buttonBarStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end">
+                                <Button
+                                    android:id="@+id/bDismissAddedSchools"
+                                    style="?android:attr/buttonBarButtonStyle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/SecondaryText"
+                                    android:text="@string/dismiss"/>
+                                <Button
+                                    android:id="@+id/bAddedSchoolsGoTo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/take_me_there"/>
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>

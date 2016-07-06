@@ -16,6 +16,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -82,6 +83,8 @@ public class MainFragment extends Fragment {
     private String KEY_OPEN_MAIN_ACTIVITY_COUNT = "open_main_activity_count";
     public static final String PREF_FILE_NAME = "testpref";
     public HomeworkAdapter adapter;
+    private boolean dismissedNewFeatureMySchool = false;
+    private boolean dismissedAddedNewSchoolsInfo = false;
 
     private int[] colorIntsOld = {0xff33B5E5, 0xff0099CC, 0xffAA66CC, 0xff9933CC, 0xff99CC00, 0xff669900,
             0xffFFBB33, 0xffFF8800, 0xffFF4444, 0xffCC0000, 0xff000000, 0xffFFFFFF};
@@ -170,6 +173,7 @@ public class MainFragment extends Fragment {
         FloatingActionButton(v);
         TimetableSection(v);
         HomeworkSection(v);
+        newFeatureCard(v);
 
         /*bRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1143,6 +1147,86 @@ public class MainFragment extends Fragment {
                 }
             });
         }
+    }
+
+    private void newFeatureCard(View v){
+        final RelativeLayout rlNews = (RelativeLayout) v.findViewById(R.id.newsSectionTitle);
+        final CardView cvNewFeature = (CardView) v.findViewById(R.id.IntroducingMySchoolCard);
+        final CardView cvAddedSchools = (CardView) v.findViewById(R.id.MySchoolAddedSchoolsCard);
+        Button bNewFeatureDismiss = (Button) v.findViewById(R.id.bDismissNewFeature);
+        Button bNewFeatureGoTo = (Button) v.findViewById(R.id.bGoToNewFeature);
+        Button bAddedSchoolsDismiss = (Button) v.findViewById(R.id.bDismissAddedSchools);
+        Button bAddedSchoolsGoTo = (Button) v.findViewById(R.id.bAddedSchoolsGoTo);
+
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        dismissedNewFeatureMySchool = false;
+        dismissedAddedNewSchoolsInfo = false;
+
+        final String dismissedNewFeatureMySchoolKey = "dismissed_new_feature_my_school";
+        final String dismissedAddedNewSchoolsInfoKey = "dismissed_added_new_schools_info";
+
+        if (prefs.contains(dismissedNewFeatureMySchoolKey))
+            dismissedNewFeatureMySchool = prefs.getBoolean(dismissedNewFeatureMySchoolKey, false);
+        if (prefs.contains(dismissedAddedNewSchoolsInfoKey))
+            dismissedAddedNewSchoolsInfo = prefs.getBoolean(dismissedAddedNewSchoolsInfoKey, false);
+
+        if (dismissedNewFeatureMySchool) cvNewFeature.setVisibility(View.GONE);
+        if (dismissedAddedNewSchoolsInfo) cvAddedSchools.setVisibility(View.GONE);
+        if (dismissedNewFeatureMySchool && dismissedAddedNewSchoolsInfo) rlNews.setVisibility(View.GONE);
+
+        bNewFeatureDismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cvNewFeature.setVisibility(View.GONE);
+                dismissedNewFeatureMySchool = true;
+                if (dismissedAddedNewSchoolsInfo && dismissedNewFeatureMySchool)
+                    rlNews.setVisibility(View.GONE);
+
+                prefs.edit().putBoolean(dismissedNewFeatureMySchoolKey, true);
+            }
+        });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            bNewFeatureGoTo.setBackgroundTintList(getActivity().getResources().getColorStateList(R.color.button_color_state_list));
+            bNewFeatureGoTo.setTextColor(getActivity().getResources().getColor(R.color.TextDarkBg));
+        } else {
+            bNewFeatureGoTo.setTextColor(getActivity().getResources().getColor(R.color.colorAccent));
+        }
+
+        bNewFeatureGoTo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), MySchoolActivity.class);
+                startActivityForResult(i, 0);
+            }
+        });
+
+        bAddedSchoolsDismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cvAddedSchools.setVisibility(View.GONE);
+                dismissedAddedNewSchoolsInfo = true;
+                if (dismissedAddedNewSchoolsInfo && dismissedNewFeatureMySchool)
+                    rlNews.setVisibility(View.GONE);
+
+                prefs.edit().putBoolean(dismissedAddedNewSchoolsInfoKey, true);
+            }
+        });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            bAddedSchoolsGoTo.setBackgroundTintList(getActivity().getResources().getColorStateList(R.color.button_color_state_list));
+            bAddedSchoolsGoTo.setTextColor(getActivity().getResources().getColor(R.color.TextDarkBg));
+        } else {
+            bAddedSchoolsGoTo.setTextColor(getActivity().getResources().getColor(R.color.colorAccent));
+        }
+
+        bAddedSchoolsGoTo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), MySchoolSettingsActivity.class);
+                startActivityForResult(i, 0);
+            }
+        });
     }
 
     private void shareAppCard(View v){

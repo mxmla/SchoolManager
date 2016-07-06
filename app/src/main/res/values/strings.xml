@@ -387,7 +387,7 @@
     <string name="title_subjects_list">Subjects</string>
     <string name="CustomSubjects">Custom subjects</string>
     <string name="new_timetable_custom_subject_name_hint">Enter subject title</string>
-    <string name="title_activity_my_school">My School</string>
+    <string name="title_activity_my_school">MySchool</string>
     <string name="action_select_school">Select school</string>
     <string name="pref_my_school_settings_text">Please select your school.</string>
     <string name="pref_my_school_settings_not_in_the_list">My school is not in the list</string>
@@ -413,7 +413,7 @@
     <string name="my_school_add_school_url">Website</string>
     <string name="my_school_add_school_url_hint">Your school\'s website (optional)</string>
     <string name="my_school_add_school_share_title">Great!</string>
-    <string name="my_school_add_school_share_text">Your school will soon be added to SchoolManager! :)\n\nNow tell your friends about this app:</string>
+    <string name="my_school_add_school_share_text">Your school will soon be added to SchoolManager! :)\n\nTell your friends about it!</string>
     <string name="my_school_add_school_share_button">Share</string>
     <string name="my_school_add_school_missing_information">Please provide the <b>country</b> and <b>name</b> of your school.</string>
     <string name="my_school_add_school_not_in_the_list">If your school is not in the list you can</string>
@@ -421,4 +421,12 @@
     <string name="my_school_add_school_title">Please enter your school\'s details.</string>
     <string name="spinner_please_select">-- Please select --</string>
     <string name="filename_my_school_add_school_my_suggestions" translatable="false">MySchool_AddSchool_SuggestedByMe.txt</string>
+    <string name="title_section_news">News</string>
+    <string name="card_introducing_new_feature">New feature</string>
+    <string name="card_introducing_my_school_text">Yippee! :D\n\nWe\'re excited to introduce to you this big new feature: <b>MySchool</b>.\nWith MySchool, your school\'s website with all its features (like timetable changes, tasks, events, news, meal plans, ...) is now only a tap away!\n\nSimply open the side menu on the left and tap on \"MySchool\".</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="take_me_there">Take me there!</string>
+    <string name="feature_MySchool">MySchool</string>
+    <string name="my_school_added_new_schools">Added new schools</string>
+    <string name="card_my_school_added_new_schools_text">We added the following 5 schools to MySchool:\n\n- Nsawkaw State Senior High School (Ghana)\n- Warwick Business School (United Kingdom)\n- Gemeinschaftsschule Auenland (Germany)\n- Akademie für berufliche Bildung Berlin, Dresden, Cologne (Germany)\n- Gaussschule Gymnasium am Löwenwall (Germany)\n\nCheck out if your school has been added already!</string>
 </resources>
