@@ -37,7 +37,8 @@ public class MySchoolSettingsFragment extends Fragment {
     private String fragmentName;
     private SharedPreferences prefs;
     private Spinner sCountry, sSchool;
-    private String countryName, countryID, schoolName, schoolID, prefKeyScoolID, prefKeyCountryID;
+    private String countryName, countryID, schoolName, schoolID, prefKeySchoolID, prefKeyCountryID,
+            prefKeySchoolName, prefKeyCountryName;
     List<String> usaSchools, usaSchoolIDs, germanySchools, germanySchoolIDs;
     private String[][] allSchools;
     private Button nitlButton;
@@ -55,7 +56,9 @@ public class MySchoolSettingsFragment extends Fragment {
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 
         prefKeyCountryID = getActivity().getResources().getString(R.string.pref_key_my_school_country_id);
-        prefKeyScoolID = getActivity().getResources().getString(R.string.pref_key_my_school_school_id);
+        prefKeySchoolID = getActivity().getResources().getString(R.string.pref_key_my_school_school_id);
+        prefKeyCountryName = getActivity().getResources().getString(R.string.pref_key_my_school_country_name);
+        prefKeySchoolName = getActivity().getResources().getString(R.string.pref_key_my_school_school_name);
 
         sCountry = (Spinner) v.findViewById(R.id.sCountry);
         sSchool = (Spinner) v.findViewById(R.id.sSchool);
@@ -81,8 +84,26 @@ public class MySchoolSettingsFragment extends Fragment {
     private void saveData(){
         Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.toast_saved), Toast.LENGTH_LONG).show();
 
+
+        if (prefs.contains(prefKeySchoolID) && !prefs.getString(prefKeySchoolID, "-").equals(schoolID)
+                && prefs.contains(prefKeyCountryID)){
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("MySchool - Select school - Selection changed")
+                    .setAction("NEW C: "+countryID+" ("+countryName+"), S: "+schoolID+" ("+schoolName+
+                            ") || OLD C: "+prefs.getString(prefKeyCountryID, "[none]")+", S: "+
+                            prefs.getString(prefKeySchoolID, "[none]"))
+                    .build());
+        } else if (!prefs.contains(prefKeySchoolID)) {
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("MySchool - Select school - First selection")
+                    .setAction("SELECTED C: "+countryID+" ("+countryName+") || S: "+schoolID+" ("+schoolName+")")
+                    .build());
+        }
+
         prefs.edit().putString(prefKeyCountryID, countryID).apply();
-        prefs.edit().putString(prefKeyScoolID, schoolID).apply();
+        prefs.edit().putString(prefKeySchoolID, schoolID).apply();
+        prefs.edit().putString(prefKeyCountryName, countryName).apply();
+        prefs.edit().putString(prefKeySchoolName, schoolName).apply();
     }
 
     private void initialSetup(){
@@ -142,8 +163,8 @@ public class MySchoolSettingsFragment extends Fragment {
 
                     sCountry.setSelection(c);
 
-                    if (prefs.contains(prefKeyScoolID)){
-                        String prefSchoolID = prefs.getString(prefKeyScoolID, "[none]");
+                    if (prefs.contains(prefKeySchoolID)){
+                        String prefSchoolID = prefs.getString(prefKeySchoolID, "[none]");
                         for (int s = 0; s < allSchools.length; s++){
                             if (allSchools[s][0].equals(prefSchoolID)){
                                 schoolID = prefSchoolID;

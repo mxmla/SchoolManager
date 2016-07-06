@@ -25,7 +25,11 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.SignInButton;
 
+import java.io.File;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -125,6 +129,44 @@ public class MySchoolAddSchoolFragment extends Fragment {
         });
     }
 
+    private String registerAddSchool(String cName, String sName, String mURL){
+        final String registerFilename = getActivity().getResources().
+                getString(R.string.filename_my_school_add_school_my_suggestions);
+        final int[] registerRowsColsOld = DataStorageHandler.nmbrRowsCols(getActivity(), registerFilename);
+        final int registerRowsOld = registerRowsColsOld[0];
+        final int registerColsOld = registerRowsColsOld[1];
+
+        int registerColsNew = 5;
+        String[][] registerArray = DataStorageHandler.toArray(getActivity(), registerFilename);
+
+        String[][] newRegisterArray;
+        if (registerColsNew >= registerColsOld) {
+            newRegisterArray = new String[registerRowsOld + 1][registerColsNew];
+        } else {
+            newRegisterArray = new String[registerRowsOld + 1][registerColsOld];
+        }
+
+        for (int i = 0; i < registerRowsOld; i++){
+            for (int c = 0; c < registerColsOld; c++){
+                newRegisterArray[i][c] = registerArray[i][c];
+            }
+        }
+
+        SecureRandom random = new SecureRandom();
+        final String nextSessionId = new BigInteger(130, random).toString(32);
+
+        newRegisterArray[registerRowsOld][0] = nextSessionId;
+        newRegisterArray[registerRowsOld][1] = DataStorageHandler.formatDateGeneralFormat(getActivity(), Calendar.getInstance());
+        newRegisterArray[registerRowsOld][2] = cName;
+        newRegisterArray[registerRowsOld][3] = sName;
+        newRegisterArray[registerRowsOld][4] = mURL;
+
+        File file = new File(getActivity().getExternalFilesDir(null), registerFilename);
+        DataStorageHandler.writeToCSVFile(getActivity(), file, newRegisterArray, registerRowsOld+1, registerColsNew, "MySchoolAddSchoolFragment");
+
+        return nextSessionId;
+    }
+
     private void setUpShare(){
         tvIntro.setVisibility(View.GONE);
         svAddSchool.setVisibility(View.GONE);
@@ -146,6 +188,13 @@ public class MySchoolAddSchoolFragment extends Fragment {
                 sendIntent.putExtra(Intent.EXTRA_TEXT, linkText);
                 sendIntent.setType("text/plain");
                 startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
+
+                int nrShares = 0;
+                if (prefs.contains(getActivity().getResources().getString(R.string.pref_key_number_shares))){
+                    nrShares = prefs.getInt(getActivity().getResources().getString(R.string.pref_key_number_shares), 0);
+                }
+                nrShares ++;
+                prefs.edit().putInt(getActivity().getResources().getString(R.string.pref_key_number_shares), nrShares).apply();
 
                 shared = "true";
 

@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.InterruptedIOException;
 import java.text.DecimalFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -1676,5 +1677,12 @@ public class DataStorageHandler {
         } else {
             return "";
         }
+    }
+
+    public static String formatDateGeneralFormat(Context context, Calendar calendar){
+        SimpleDateFormat formatter = new SimpleDateFormat(context.getResources().getString(R.string.date_formatter_general));
+
+        String date = formatter.format(calendar.getTime());
+        return date;
     }
 }

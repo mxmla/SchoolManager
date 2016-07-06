@@ -401,6 +401,9 @@
     <string name="pref_my_school_school">School</string>
     <string name="pref_key_my_school_country_id" translatable="false">pref_key_my_school_country_id</string>
     <string name="pref_key_my_school_school_id" translatable="false">pref_key_my_school_school_id</string>
+    <string name="pref_key_my_school_country_name" translatable="false">pref_key_my_school_country_name</string>
+    <string name="pref_key_my_school_school_name" translatable="false">pref_key_my_school_school_name</string>
+    <string name="pref_key_number_shares" translatable="false">pref_key_number_shares</string>
     <string name="my_school_no_school_selected">Oops! You haven\'t selected your school yet.\nYou can do that in the settings ;)</string>
     <string name="my_school_button_settings_select_school">Take me there!</string>
     <string name="my_school_add_school_country_hint">The country your school is in</string>
@@ -417,4 +420,5 @@
     <string name="my_school_add_school_not_in_the_list_button">My school is not in the list</string>
     <string name="my_school_add_school_title">Please enter your school\'s details.</string>
     <string name="spinner_please_select">-- Please select --</string>
+    <string name="filename_my_school_add_school_my_suggestions">"MySchool_AddSchool_SuggestedByMe.txt"</string>
 </resources>
