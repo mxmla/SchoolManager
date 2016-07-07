@@ -271,12 +271,14 @@ public class MySchoolSettingsFragment extends Fragment {
 
         if (prefs.contains(prefKeySchoolID) && !prefs.getString(prefKeySchoolID, "-").equals(schoolID)
                 && prefs.contains(prefKeyCountryID)){
+
             mTracker.send(new HitBuilders.EventBuilder()
                     .setCategory("MySchool - Select school - Selection changed")
                     .setAction("NEW C: "+countryID+" ("+countryName+"), S: "+schoolID+" ("+schoolName+
                             ") || OLD C: "+prefs.getString(prefKeyCountryID, "[none]")+", S: "+
                             prefs.getString(prefKeySchoolID, "[none]"))
                     .build());
+
         } else if (!prefs.contains(prefKeySchoolID)) {
             mTracker.send(new HitBuilders.EventBuilder()
                     .setCategory("MySchool - Select school - First selection")
@@ -284,6 +286,8 @@ public class MySchoolSettingsFragment extends Fragment {
                     .build());
         }
 
+
+        Toast.makeText(getActivity(), schoolID+", "+schoolName, Toast.LENGTH_SHORT).show();
 
         prefs.edit().putString(prefKeyCountryID, countryID).apply();
         prefs.edit().putString(prefKeySchoolID, schoolID).apply();

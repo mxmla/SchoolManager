@@ -1182,7 +1182,7 @@ public class MainFragment extends Fragment {
                 if (dismissedAddedNewSchoolsInfo && dismissedNewFeatureMySchool)
                     rlNews.setVisibility(View.GONE);
 
-                prefs.edit().putBoolean(dismissedNewFeatureMySchoolKey, true);
+                prefs.edit().putBoolean(dismissedNewFeatureMySchoolKey, true).apply();
             }
         });
 
@@ -1209,7 +1209,7 @@ public class MainFragment extends Fragment {
                 if (dismissedAddedNewSchoolsInfo && dismissedNewFeatureMySchool)
                     rlNews.setVisibility(View.GONE);
 
-                prefs.edit().putBoolean(dismissedAddedNewSchoolsInfoKey, true);
+                prefs.edit().putBoolean(dismissedAddedNewSchoolsInfoKey, true).apply();
             }
         });
 

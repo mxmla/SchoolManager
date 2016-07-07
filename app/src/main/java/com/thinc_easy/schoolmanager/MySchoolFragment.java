@@ -1,5 +1,6 @@
 package com.thinc_easy.schoolmanager;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
@@ -39,6 +40,9 @@ public class MySchoolFragment extends Fragment {
     private Button goToSettings;
     private String url, schoolID, prefKeySchoolID;
     private int whichWebPage;
+    private ProgressDialog progDailog;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,6 +90,9 @@ public class MySchoolFragment extends Fragment {
                         webView.getSettings().setBuiltInZoomControls(true);
                         webView.getSettings().setDisplayZoomControls(false);
                         webView.getSettings().setSupportMultipleWindows(true);
+                        webView.getSettings().setLoadWithOverviewMode(true);
+                        webView.getSettings().setUseWideViewPort(true);
+
                         webView.loadUrl(url);
                         foundURL = true;
                     }

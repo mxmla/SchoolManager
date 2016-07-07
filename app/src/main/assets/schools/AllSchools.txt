@@ -58,6 +58,10 @@
 020105030001,Akademie für berufliche Bildung gGmbH Dresden,0
 020104010001,Akademie für berufliche Bildung gGmbH Köln,0
 060104010001,Nsawkaw State Senior High School,0
-020101010001,Gaußschule Gymnasium am Löwenwall,0
+020101010002,Gaußschule Gymnasium am Löwenwall,0
 020302010001,Warwick Business School,0
+020101020001,Jungmannschule Eckernförde,0
+050101010001,British International School Tabuk,0
+050202030001,Alpha College Of Technology,0
+
 

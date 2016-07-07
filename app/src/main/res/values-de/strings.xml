@@ -343,13 +343,25 @@
     <string name="take_me_there">Los geht\'s!</string>
     <string name="feature_MySchool">MySchool</string>
     <string name="my_school_added_new_schools">Neue Schulen hinzugefügt</string>
-    <string name="card_my_school_added_new_schools_text">Wir haben die folgenden 5 Schulen zu MySchool (\"Meine Schule\") hinzugefügt:\n\n- Gemeinschaftsschule Auenland (Deutschland)\n- Akademie für berufliche Bildung Berlin, Dresden, Köln (Deutschland)\n- Gaußschule Gymnasium am Löwenwall (Deutschland)\n- Nsawkaw State Senior High School (Ghana)\n- Warwick Business School (Vereinigtes Königreich)\n\nFinde heraus, ob deine Schule schon dabei ist!</string>
+    <string name="card_my_school_added_new_schools_text">
+        Wir haben die folgenden <u>8 Schulen</u> zu MySchool (\"Meine Schule\") hinzugefügt:
+        \n\n<b>Deutschland:</b>\n- Gemeinschaftsschule Auenland
+        \n- Akademie für berufliche Bildung gGmbH
+        \n- Gaußschule Gymnasium am Löwenwall
+        \n- Jungmannschule Eckernförde
+        \n<b>Ghana:</b>\n- Nsawkaw State Senior High School
+        \n<b>Vereinigtes Königreich:</b>\n- Warwick Business School
+        \n<b>Königreich Saudi-Arabien (KSA):</b>\n- British International School Tabuk
+        \n<b>Malaysia:</b>- Alpha College Of Technology
+        \n\nFinde heraus, ob deine Schule schon dabei ist!</string>
 
     <string-array name="my_school_countries">
-        <item>-- Bitte wählen --</item>
-        <item>Vereinigte Staaten von Amerika</item>
-        <item>Deutschland</item>
+        <item>-- Please select --</item>
+        <item>United States of America</item>
+        <item>Germany</item>
         <item>Ghana</item>
-        <item>Vereinigtes Königreich</item>
+        <item>United Kingdom</item>
+        <item>Königreich Saudi-Arabien</item>
+        <item>Malaysia</item>
     </string-array>
 </resources>

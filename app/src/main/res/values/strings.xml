@@ -428,7 +428,14 @@
     <string name="take_me_there">Take me there!</string>
     <string name="feature_MySchool">MySchool</string>
     <string name="my_school_added_new_schools">Added new schools</string>
-    <string name="card_my_school_added_new_schools_text">We added the following 5 schools to MySchool:\n\n- Nsawkaw State Senior High School (Ghana)\n- Warwick Business School (United Kingdom)\n- Gemeinschaftsschule Auenland (Germany)\n- Akademie für berufliche Bildung Berlin, Dresden, Cologne (Germany)\n- Gaussschule Gymnasium am Löwenwall (Germany)\n\nCheck out if your school has been added already!</string>
+    <string name="card_my_school_added_new_schools_text">We added the following <u>8 schools</u> to MySchool:
+        \n\n<b>Ghana:</b>\n- Nsawkaw State Senior High School\n<b>United Kingdom:</b>\n- Warwick Business School
+        \n<b>Kingdom of Saudi Arabia (KSA):</b>\n- British International School Tabuk
+        \n<b>Malaysia:</b>\n- Alpha College Of Technology
+        \n<b>Germany:</b>\n- Gemeinschaftsschule Auenland
+        \n- Gaussschule Gymnasium am Löwenwall\n- Jungmannschule Eckernförde
+        \n- Akademie für berufliche Bildung
+        \n\nCheck out if your school has been added already!</string>
 
     <string-array name="my_school_countries">
         <item>-- Please select --</item>
@@ -436,5 +443,7 @@
         <item>Germany</item>
         <item>Ghana</item>
         <item>United Kingdom</item>
+        <item>Kingdom of Saudi Arabia</item>
+        <item>Malaysia</item>
     </string-array>
 </resources>
