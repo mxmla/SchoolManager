@@ -73,13 +73,30 @@
             </Spinner>
 
             <Button
+                android:id="@+id/bSaveSchoolSelection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginTop="@dimen/card_padding"
+                android:layout_marginBottom="@dimen/card_padding"
+                android:text="@string/save"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/dividerHorizontal"/>
+
+            <Button
                 android:id="@+id/bNotInTheList"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/card_padding"
                 android:layout_marginBottom="@dimen/card_padding"
+                android:textColor="@color/colorAccentDark"
                 android:text="@string/my_school_add_school_not_in_the_list_button"/>
+
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

@@ -344,4 +344,12 @@
     <string name="feature_MySchool">MySchool</string>
     <string name="my_school_added_new_schools">Neue Schulen hinzugefügt</string>
     <string name="card_my_school_added_new_schools_text">Wir haben die folgenden 5 Schulen zu MySchool (\"Meine Schule\") hinzugefügt:\n\n- Gemeinschaftsschule Auenland (Deutschland)\n- Akademie für berufliche Bildung Berlin, Dresden, Köln (Deutschland)\n- Gaußschule Gymnasium am Löwenwall (Deutschland)\n- Nsawkaw State Senior High School (Ghana)\n- Warwick Business School (Vereinigtes Königreich)\n\nFinde heraus, ob deine Schule schon dabei ist!</string>
+
+    <string-array name="my_school_countries">
+        <item>-- Bitte wählen --</item>
+        <item>Vereinigte Staaten von Amerika</item>
+        <item>Deutschland</item>
+        <item>Ghana</item>
+        <item>Vereinigtes Königreich</item>
+    </string-array>
 </resources>
