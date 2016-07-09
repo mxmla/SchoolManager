@@ -286,9 +286,6 @@ public class MySchoolSettingsFragment extends Fragment {
                     .build());
         }
 
-
-        Toast.makeText(getActivity(), schoolID+", "+schoolName, Toast.LENGTH_SHORT).show();
-
         prefs.edit().putString(prefKeyCountryID, countryID).apply();
         prefs.edit().putString(prefKeySchoolID, schoolID).apply();
         prefs.edit().putString(prefKeyCountryName, countryName).apply();

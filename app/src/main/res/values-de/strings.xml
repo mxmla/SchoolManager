@@ -342,18 +342,20 @@
     <string name="dismiss">Verbergen</string>
     <string name="take_me_there">Los geht\'s!</string>
     <string name="feature_MySchool">MySchool</string>
-    <string name="my_school_added_new_schools">Neue Schulen hinzugefügt</string>
+    <string name="my_school_added_new_schools">11 neue Schulen in MySchool</string>
     <string name="card_my_school_added_new_schools_text">
-        Wir haben die folgenden <u>8 Schulen</u> zu MySchool (\"Meine Schule\") hinzugefügt:
-        \n\n<b>Deutschland:</b>\n- Gemeinschaftsschule Auenland
+        <b>Deutschland:</b>\n- Gemeinschaftsschule Auenland
         \n- Akademie für berufliche Bildung gGmbH
         \n- Gaußschule Gymnasium am Löwenwall
         \n- Jungmannschule Eckernförde
+        \n- Schulzentrum Walle
+        \n<b>Österreich:</b>\n- Bildungszentrum Kenyongasse AHS
+        \n<b>Nigeria:</b>\n- National Open University of Nigeria
         \n<b>Ghana:</b>\n- Nsawkaw State Senior High School
         \n<b>Vereinigtes Königreich:</b>\n- Warwick Business School
         \n<b>Königreich Saudi-Arabien (KSA):</b>\n- British International School Tabuk
         \n<b>Malaysia:</b>- Alpha College Of Technology
-        \n\nFinde heraus, ob deine Schule schon dabei ist!</string>
+        \n\nFinde heraus, ob deine Schule schon dabei ist!\n</string>
 
     <string-array name="my_school_countries">
         <item>-- Please select --</item>
@@ -363,5 +365,7 @@
         <item>United Kingdom</item>
         <item>Königreich Saudi-Arabien</item>
         <item>Malaysia</item>
+        <item>Nigeria</item>
+        <item>Österreich</item>
     </string-array>
 </resources>

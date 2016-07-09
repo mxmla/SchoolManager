@@ -63,5 +63,9 @@
 020101020001,Jungmannschule Eckernförde,0
 050101010001,British International School Tabuk,0
 050202030001,Alpha College Of Technology,0
+060204080001,National Open University of Nigeria,0
+020605010001,Bildungszentrum Kenyongasse AHS,0
+020101050001,Schulzentrum Walle,0
+
 
 
