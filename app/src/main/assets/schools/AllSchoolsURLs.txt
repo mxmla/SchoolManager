@@ -62,10 +62,12 @@
 060104010001,1,http://www.ghanaedudirectory.com/Search/Details/14365
 020101010002,1,http://gaussschule-braunschweig.de/
 020302010001,1,http://www.wbs.ac.uk/
-020101020001,1,http://www.jungmannschule.de/
+020101020002,1,http://www.jungmannschule.de/
 050101010001,1,https://www.nwafh.med.sa/en/GeneralServices/BritishSchool/Pages/default.aspx
 050202030001,1,http://www.kolejteknologialpha.edu.my/
 060204080001,1,http://www.nou.edu.ng/
 020605010001,1,http://www.kenyon.at/ahs/
 020101050001,1,http://www.szwalle.de/startseite/
-
+020102020001,1,http://www.asgleonberg.de/
+020102010001,1,http://www.bsz-kelheim.de/
+020102020002,1,http://www.realschule-winterlingen.de/

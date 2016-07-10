@@ -427,17 +427,12 @@
     <string name="dismiss">Dismiss</string>
     <string name="take_me_there">Take me there!</string>
     <string name="feature_MySchool">MySchool</string>
-    <string name="my_school_added_new_schools">11 schools added to MySchool</string>
+    <string name="my_school_added_new_schools">New schools added to MySchool</string>
     <string name="card_my_school_added_new_schools_text">
         <b>Ghana:</b>\n- Nsawkaw State Senior High School\n<b>United Kingdom:</b>\n- Warwick Business School
         \n<b>Kingdom of Saudi Arabia (KSA):</b>\n- British International School Tabuk
         \n<b>Malaysia:</b>\n- Alpha College Of Technology
         \n<b>Nigeria:</b>\n- National Open University of Nigeria
-        \n<b>Austria:</b>\n- Bildungszentrum Kenyongasse AHS
-        \n<b>Germany:</b>\n- Gemeinschaftsschule Auenland
-        \n- Gaussschule Gymnasium am Löwenwall\n- Jungmannschule Eckernförde
-        \n- Akademie für berufliche Bildung
-        \n- Schulzentrum Walle
         \n\nCheck out if your school has been added already!\n</string>
 
     <string-array name="my_school_countries">
