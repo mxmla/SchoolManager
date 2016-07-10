@@ -1172,14 +1172,14 @@ public class MainFragment extends Fragment {
 
         if (dismissedNewFeatureMySchool) cvNewFeature.setVisibility(View.GONE);
         if (dismissedAddedNewSchoolsInfo) cvAddedSchools.setVisibility(View.GONE);
-        if (dismissedNewFeatureMySchool && dismissedAddedNewSchoolsInfo) rlNews.setVisibility(View.GONE);
+        if (cvNewFeature.getVisibility() == View.GONE && cvAddedSchools.getVisibility() == View.GONE) rlNews.setVisibility(View.GONE);
 
         bNewFeatureDismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cvNewFeature.setVisibility(View.GONE);
                 dismissedNewFeatureMySchool = true;
-                if (dismissedAddedNewSchoolsInfo && dismissedNewFeatureMySchool)
+                if (cvNewFeature.getVisibility() == View.GONE && cvAddedSchools.getVisibility() == View.GONE)
                     rlNews.setVisibility(View.GONE);
 
                 prefs.edit().putBoolean(dismissedNewFeatureMySchoolKey, true).apply();
@@ -1206,7 +1206,7 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
                 cvAddedSchools.setVisibility(View.GONE);
                 dismissedAddedNewSchoolsInfo = true;
-                if (dismissedAddedNewSchoolsInfo && dismissedNewFeatureMySchool)
+                if (cvNewFeature.getVisibility() == View.GONE && cvAddedSchools.getVisibility() == View.GONE)
                     rlNews.setVisibility(View.GONE);
 
                 prefs.edit().putBoolean(dismissedAddedNewSchoolsInfoKey, true).apply();
