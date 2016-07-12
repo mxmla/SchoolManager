@@ -39,12 +39,12 @@ public class MySchoolAddSchoolFragment extends Fragment {
     public static final String DEFAULT_EDIT_FRAGMENT_TAG = "editFragmentTag";
 
     private Tracker mTracker;
-    private String fragmentName, country, school, url, linkText, added, shared;
+    private String fragmentName, country, school, url, linkText, added, shared, city;
     private SharedPreferences prefs;
-    private TextView tvIntro, tvError, tvCountry, tvSchool, tvURL;
+    private TextView tvIntro, tvError, tvCountry, tvSchool, tvURL, tvCity;
     private ScrollView svAddSchool, svShare;
     private Button bAddSchool, bShare;
-    private EditText etCountry, etSchool, etURL;
+    private EditText etCountry, etSchool, etURL, etCity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,6 +62,7 @@ public class MySchoolAddSchoolFragment extends Fragment {
         tvError = (TextView) v.findViewById(R.id.tvError);
         tvCountry = (TextView) v.findViewById(R.id.tvCountry);
         tvSchool = (TextView) v.findViewById(R.id.tvSchool);
+        tvCity = (TextView) v.findViewById(R.id.tvCity);
         tvURL = (TextView) v.findViewById(R.id.tvURL);
         svAddSchool = (ScrollView) v.findViewById(R.id.svAddSchool);
         svShare = (ScrollView) v.findViewById(R.id.svShare);
@@ -69,6 +70,7 @@ public class MySchoolAddSchoolFragment extends Fragment {
         bShare = (Button) v.findViewById(R.id.bShare);
         etCountry = (EditText) v.findViewById(R.id.etCountry);
         etSchool = (EditText) v.findViewById(R.id.etSchool);
+        etCity = (EditText) v.findViewById(R.id.etCity);
         etURL = (EditText) v.findViewById(R.id.etURL);
 
         linkText = getActivity().getResources().getString(R.string.link_to_play_store_page);
@@ -90,6 +92,7 @@ public class MySchoolAddSchoolFragment extends Fragment {
 
         tvCountry.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Medium.ttf"));
         tvSchool.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Medium.ttf"));
+        tvCity.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Medium.ttf"));
         tvURL.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Medium.ttf"));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -104,18 +107,22 @@ public class MySchoolAddSchoolFragment extends Fragment {
             public void onClick(View v) {
                 country = etCountry.getText().toString();
                 school = etSchool.getText().toString();
+                city = etCity.getText().toString();
                 url = etURL.getText().toString();
 
                 if (country != null && !country.equals("") && !country.equals(" ") &&
-                        school != null && !school.equals("") && !school.equals(" ")){
+                        school != null && !school.equals("") && !school.equals(" ") &&
+                        city != null && !city.equals("") && !city.equals(" ")){
                     tvError.setVisibility(View.INVISIBLE);
 
                     if (url == null) url = "[none]";
 
+                    String id = registerAddSchool(country, school, url);
+
                     mTracker.send(new HitBuilders.EventBuilder()
                             .setCategory("MySchool - Add school")
-                            .setAction("C: "+country+" || S: "+school+" || W: "+url+" || ID: "+
-                                    registerAddSchool(country, school, url))
+                            .setAction("+("+id+") "+country+" | "+city+" | "+school+" | "+url)
+                            .setLabel("+("+id+") "+school+" | "+url)
                             .build());
 
                     added = "true";

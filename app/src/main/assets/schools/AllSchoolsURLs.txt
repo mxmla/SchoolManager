@@ -71,3 +71,11 @@
 020102020001,1,http://www.asgleonberg.de/
 020102010001,1,http://www.bsz-kelheim.de/
 020102020002,1,http://www.realschule-winterlingen.de/
+020102010002,1,http://wiki.bnv-bamberg.de/flg-wiki/index.php/Hauptseite
+020104010002,1,http://www.gymnasium-schwertstrasse.de/
+020104010003,1,http://www.rseichen-koeln.de/
+020103020001,1,http://www.elisabethgymnasium.com/
+020101020003,1,http://www.bbz-norderstedt.de/
+020104010004,1,http://www.hge-witten.de/web/
+050203010001,1,http://smksas-ch.blogspot.de/
+020103020002,1,http://www.liebegymnasium.de/

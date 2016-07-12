@@ -40,6 +40,28 @@
                 android:hint="@string/my_school_add_school_country_hint"/>
 
             <TextView
+                android:id="@+id/tvCity"
+                style="@style/CardContentText"
+                android:paddingTop="@dimen/card_padding"
+                android:layout_marginTop="@dimen/card_padding"
+                android:layout_marginStart="@dimen/card_padding"
+                android:layout_marginEnd="@dimen/card_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_settings_accent"
+                android:text="@string/my_school_add_school_city"/>
+
+            <EditText
+                android:id="@+id/etCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/card_padding"
+                android:layout_marginEnd="@dimen/card_padding"
+                android:layout_marginBottom="@dimen/card_margin"
+                android:layout_marginLeft="@dimen/card_padding"
+                android:hint="@string/my_school_add_school_city_hint"/>
+
+            <TextView
                 android:id="@+id/tvSchool"
                 style="@style/CardContentText"
                 android:paddingTop="@dimen/card_padding"

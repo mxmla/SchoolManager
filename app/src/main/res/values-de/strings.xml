@@ -322,6 +322,8 @@
     <string name="pref_my_school_school">Schule</string>
     <string name="my_school_no_school_selected">Ups! Du hast deine Schule noch nicht gewählt.\nDu kannst das in den Einstellungen machen ;)</string>
     <string name="my_school_button_settings_select_school">Los geht\'s!</string>
+    <string name="my_school_add_school_city">Stadt</string>
+    <string name="my_school_add_school_city_hint">Ort, in dem sich deine Schule befindet</string>
     <string name="my_school_add_school_comments">Anmerkungen</string>
     <string name="my_school_add_school_comments_hint">(optional)</string>
     <string name="my_school_add_school_country_hint">Das Land in dem deine Schule ist</string>
@@ -329,9 +331,9 @@
     <string name="my_school_add_school_url">Website</string>
     <string name="my_school_add_school_url_hint">Die Website deiner Schule (optional)</string>
     <string name="my_school_add_school_share_title">Super!</string>
-    <string name="my_school_add_school_share_text">Deine Schule wird bald in SchoolManager aufgenommen! :)\n\nSag es deinen Freunden!</string>
+    <string name="my_school_add_school_share_text">Wir arbeiten daran, deine Schule in SchoolManager aufzunehmen! :)\n\n(Dies dauert normalerweise 1-3 Tage.)\n\n\nErzähle deinen Freunden von dieser App:</string>
     <string name="my_school_add_school_share_button">Teilen</string>
-    <string name="my_school_add_school_missing_information">Bitte nenne das <b>Land</b> und den <b>Namen</b> deiner Schule.</string>
+    <string name="my_school_add_school_missing_information">Bitte nenne<b>Land</b>, <b>Ort</b> und <b>Namen</b> deiner Schule.</string>
     <string name="my_school_add_school_not_in_the_list">Sollte deine Schule nicht aufgelistet sein, kannst du</string>
     <string name="my_school_add_school_not_in_the_list_button">Meine Schule ist nicht aufgelistet</string>
     <string name="my_school_add_school_title">Bitte trage die Informationen zu deiner Schule ein.</string>

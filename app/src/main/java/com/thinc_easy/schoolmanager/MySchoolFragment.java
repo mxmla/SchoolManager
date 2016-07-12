@@ -1,6 +1,7 @@
 package com.thinc_easy.schoolmanager;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
@@ -11,10 +12,12 @@ import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -92,6 +95,9 @@ public class MySchoolFragment extends Fragment {
                         webView.getSettings().setSupportMultipleWindows(true);
                         webView.getSettings().setLoadWithOverviewMode(true);
                         webView.getSettings().setUseWideViewPort(true);
+                        webView.getSettings().setDomStorageEnabled(true);
+                        webView.setPadding(0, 0, 0, 0);
+                        webView.setInitialScale(getScale());
 
                         webView.loadUrl(url);
                         foundURL = true;
@@ -133,6 +139,14 @@ public class MySchoolFragment extends Fragment {
         Log.i("Analytics", "Setting screen name: " + fragmentName);
         mTracker.setScreenName("Image~" + fragmentName);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
+
+    private int getScale(){
+        Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        int width = display.getWidth();
+        Double val = new Double(width);/*/new Double(PIC_WIDTH);
+        val = val * 100d;*/
+        return val.intValue();
     }
 
 

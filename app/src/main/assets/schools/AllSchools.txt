@@ -69,3 +69,11 @@
 020102020001,Albert-Schweitzer-Gymnasium Leonberg,0
 020102010001,FOS/BOS Kelheim,0
 020102020002,Realschule Winterlingen,0
+020102010002,Franz-Ludwig-Gymnasium Bamberg,0
+020104010002,Gymnasium Schwertstraße Solingen,0
+020104010003,Eichendorff Realschule Köln,0
+020103020001,Elisabeth-Gymnasium Eisenach,0
+020101020003,Berufsbildungszentrum (BBZ) Norderstedt,0
+020104010004,Holzkamp-Gesamtschule Witten,0
+050203010001,SMK Sultan Ahmad Shah,0
+020103020002,Karl-Theodor-Liebe-Gymnasium,0
