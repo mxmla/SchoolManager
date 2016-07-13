@@ -79,3 +79,8 @@
 020104010004,1,http://www.hge-witten.de/web/
 050203010001,1,http://smksas-ch.blogspot.de/
 020103020002,1,http://www.liebegymnasium.de/
+010102020001,1,http://www.elcaminorealacademy.com/
+010104040001,1,https://www.belvideresd.org/cms/One.aspx?portalId=344884&pageId=379136
+020103020003,1,http://www.ilmenau-kolleg.de/
+020103010001,1,http://www.lessing-gymnasium.de/
+020101010003,1,http://www.gymnasium-winsen.de/
