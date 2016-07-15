@@ -1,3 +1,6 @@
+050303010001,FEU Institute of Technology,0
+060303020001,Shree Bharat Sharda Mandir School,0
+050402050001,SMA Negeri 2 Malang,0
 020101010003,Gymnasium Winsen,0
 020103010001,Lessing-Gymnasium Plauen,0
 020103020003,Ilmenau-Kolleg,0

@@ -331,7 +331,7 @@
     <string name="my_school_add_school_url">Website</string>
     <string name="my_school_add_school_url_hint">Die Website deiner Schule (optional)</string>
     <string name="my_school_add_school_share_title">Super!</string>
-    <string name="my_school_add_school_share_text">Wir arbeiten daran, deine Schule in SchoolManager aufzunehmen! :)\n\n(Dies dauert normalerweise 1-3 Tage.)\n\n\n\nErzähle deinen Freunden von dieser App:</string>
+    <string name="my_school_add_school_share_text">Wir arbeiten jetzt daran, deine Schule in SchoolManager aufzunehmen! :)\n\nDas dauert normalerweise 1-3 Tage...\n\n\n\nErzähle deinen Freunden von dieser App:</string>
     <string name="my_school_add_school_share_button">Teilen</string>
     <string name="my_school_add_school_missing_information">Bitte nenne<b>Land</b>, <b>Ort</b> und <b>Namen</b> deiner Schule.</string>
     <string name="my_school_add_school_not_in_the_list">Sollte deine Schule nicht aufgelistet sein, kannst du</string>
@@ -367,5 +367,8 @@
         <item>Malaysia</item>
         <item>Nigeria</item>
         <item>Österreich</item>
+        <item>Philippinen</item>
+        <item>Südafrika</item>
+        <item>Indonesien</item>
     </string-array>
 </resources>

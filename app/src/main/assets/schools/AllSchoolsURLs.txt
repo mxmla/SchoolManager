@@ -84,3 +84,6 @@
 020103020003,1,http://www.ilmenau-kolleg.de/
 020103010001,1,http://www.lessing-gymnasium.de/
 020101010003,1,http://www.gymnasium-winsen.de/
+050303010001,1,http://www.feutech.edu.ph/
+060303020001,1,https://www.facebook.com/pages/Shree-Bharat-Sharda-Mandir-School/453160684740325
+050402050001,1,http://www.smandaku.com

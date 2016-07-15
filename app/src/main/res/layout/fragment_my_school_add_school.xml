@@ -37,6 +37,7 @@
                 android:layout_marginEnd="@dimen/card_padding"
                 android:layout_marginBottom="@dimen/card_margin"
                 android:layout_marginLeft="@dimen/card_padding"
+                android:singleLine="true"
                 android:hint="@string/my_school_add_school_country_hint"/>
 
             <TextView
@@ -59,6 +60,7 @@
                 android:layout_marginEnd="@dimen/card_padding"
                 android:layout_marginBottom="@dimen/card_margin"
                 android:layout_marginLeft="@dimen/card_padding"
+                android:singleLine="true"
                 android:hint="@string/my_school_add_school_city_hint"/>
 
             <TextView
@@ -81,6 +83,7 @@
                 android:layout_marginEnd="@dimen/card_padding"
                 android:layout_marginBottom="@dimen/card_margin"
                 android:layout_marginLeft="@dimen/card_padding"
+                android:singleLine="true"
                 android:hint="@string/my_school_add_school_school_hint"/>
 
             <TextView
@@ -103,6 +106,7 @@
                 android:layout_marginEnd="@dimen/card_padding"
                 android:layout_marginBottom="@dimen/card_margin"
                 android:layout_marginLeft="@dimen/card_padding"
+                android:singleLine="true"
                 android:hint="@string/my_school_add_school_url_hint"/>
 
             <!--

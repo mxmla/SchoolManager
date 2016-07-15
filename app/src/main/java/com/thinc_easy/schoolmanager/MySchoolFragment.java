@@ -93,11 +93,14 @@ public class MySchoolFragment extends Fragment {
                         webView.getSettings().setBuiltInZoomControls(true);
                         webView.getSettings().setDisplayZoomControls(false);
                         webView.getSettings().setSupportMultipleWindows(true);
+
                         webView.getSettings().setLoadWithOverviewMode(true);
                         webView.getSettings().setUseWideViewPort(true);
+                        /*
                         webView.getSettings().setDomStorageEnabled(true);
                         webView.setPadding(0, 0, 0, 0);
                         webView.setInitialScale(getScale());
+                        */
 
                         webView.loadUrl(url);
                         foundURL = true;
@@ -127,6 +130,10 @@ public class MySchoolFragment extends Fragment {
                 }
             });
         }
+    }
+
+    public void webViewGoBack(){
+        webView.goBack();
     }
 
     @Override

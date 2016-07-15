@@ -117,12 +117,21 @@ public class MySchoolAddSchoolFragment extends Fragment {
 
                     if (url == null) url = "[none]";
 
-                    String id = registerAddSchool(country, school, url);
+
+                    String userID = "[none]";
+                    final String keyUserID = getActivity().getResources().getString(R.string.pref_key_user_id);
+                    if (prefs.contains(keyUserID)){
+                        userID = prefs.getString(keyUserID, "[none]");
+                    }
+                    if (userID == null || userID.equals("") || userID.equals("[none]")){
+                        userID = registerAddSchool(country, school, url);
+                        prefs.edit().putString(keyUserID, userID).apply();
+                    }
 
                     mTracker.send(new HitBuilders.EventBuilder()
                             .setCategory("MySchool - Add school")
-                            .setAction("+("+id+") "+country+" | "+city+" | "+school+" | "+url)
-                            .setLabel("+("+id+") "+school+" | "+url)
+                            .setAction("+("+userID+") "+country+" | "+city+" | "+school+" | "+url)
+                            .setLabel("+("+userID+") "+school+" | "+url)
                             .build());
 
                     added = "true";
