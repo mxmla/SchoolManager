@@ -1,3 +1,11 @@
+050305010001,Southern Masbate Roosevelt College,0
+050303020001,Angeles University Foundation,0
+020801010001,Storforshei barne- og ungdomsskole,0
+060102020001,University of Ghana,0
+060102020002,University of Ghana Medical School,0
+060302010001,Bulumko Secondary School,0
+050502040001,SMHSS Kollam,0
+020102010003,Maria-Ward-Schule Kempten,0
 050303010001,FEU Institute of Technology,0
 060303020001,Shree Bharat Sharda Mandir School,0
 050402050001,SMA Negeri 2 Malang,0

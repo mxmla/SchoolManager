@@ -104,6 +104,7 @@ public class MySchoolFragment extends Fragment {
 
                         webView.loadUrl(url);
                         foundURL = true;
+                        Toast.makeText(getActivity(), "Loading...", Toast.LENGTH_LONG).show();
                     }
                 }
             }

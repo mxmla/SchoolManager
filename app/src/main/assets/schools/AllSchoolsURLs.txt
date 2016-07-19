@@ -87,3 +87,11 @@
 050303010001,1,http://www.feutech.edu.ph/
 060303020001,1,https://www.facebook.com/pages/Shree-Bharat-Sharda-Mandir-School/453160684740325
 050402050001,1,http://www.smandaku.com
+050305010001,1,https://www.facebook.com/THISisSMRC/
+050303020001,1,http://www.auf.edu.ph/
+020801010001,1,http://www.rana.kommune.no/barn_familie_skole/skole_sfo/skolene/storforshei_skole/Sider/Storforshei_skole.aspx
+060102020001,1,http://www.ug.edu.gh/
+060102020002,1,http://www.ugms.edu.gh/
+060302010001,1,https://www.facebook.com/physics.bulumko/?rf=115063345172010
+050502040001,1,http://www.smhss.org/
+020102010003,1,http://www.mw-kempten.de/

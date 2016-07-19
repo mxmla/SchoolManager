@@ -450,6 +450,8 @@
         <item>Philippines</item>
         <item>South Africa</item>
         <item>Indonesia</item>
+        <item>Norway</item>
+        <item>India</item>
     </string-array>
     <string name="pref_key_user_id" translatable="false">pref_key_user_id</string>
 </resources>
