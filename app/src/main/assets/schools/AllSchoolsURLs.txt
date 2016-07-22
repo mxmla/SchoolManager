@@ -95,3 +95,6 @@
 060302010001,1,https://www.facebook.com/physics.bulumko/?rf=115063345172010
 050502040001,1,http://www.smhss.org/
 020102010003,1,http://www.mw-kempten.de/
+020104010005,1,http://www.lessing-gymnasium.eu/
+010104040002,1,http://berkeley.bloomfield.k12.nj.us/pages/Berkeley_School
+010104030001,1,http://www.pitt.edu/

@@ -1,3 +1,6 @@
+020104010005,Lessing-Gymnasium Köln (Zündorf),0
+010104040002,Berkeley Elementary School (Bloomfield),0
+010104030001,University of Pittsburgh,0
 050305010001,Southern Masbate Roosevelt College,0
 050303020001,Angeles University Foundation,0
 020801010001,Storforshei barne- og ungdomsskole,0
