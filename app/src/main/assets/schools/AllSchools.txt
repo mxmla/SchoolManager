@@ -1,3 +1,12 @@
+050504020001,Msb-55 Fulsar,0
+020104020001,Realschule plus Salz,0
+020103020004,Regelschule Breitungen,0
+020101010004,Gymnasium am Wall Verden,0
+020102020003,Otto-Rommel-Realschule in Holzgerlingen,0
+020105010002,Heinz-Berggruen-Gymnasium Berlin,0
+040100080001,Universidad Nacional de San Antonio Abad del Cusco,0
+050504020002,Podar International School Amreli,0
+050502020001,Nrs Grammar School Hyderabad,0
 020104010005,Lessing-Gymnasium Köln (Zündorf),0
 010104040002,Berkeley Elementary School (Bloomfield),0
 010104030001,University of Pittsburgh,0
