@@ -113,3 +113,10 @@
 050504020002,2,http://www.podar.net/
 050504020002,3,http://www.podar.org/
 050502020001,1,http://www.icbse.com/schools/nrs-grammar-school/28050991408
+010102010005,1,http://swapp2.canyonisd.net/site/default.aspx?domainid=213
+020601010001,1,http://www.hblalentia.at/
+020104010006,1,http://lessing-rs.de/
+050503060001,1,http://schools.findthebest.in/l/91183/Dhaneswarpur-Gopal-Chandra-Siksha-Sadan-in-Paschim-Medinipur
+020104010007,1,http://www.berufskolleg-iserlohn.de/
+030105020001,1,http://www.namadgi.act.edu.au/
+030200090001,1,http://e2learn.school.nz/

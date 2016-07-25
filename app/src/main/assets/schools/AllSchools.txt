@@ -1,3 +1,10 @@
+010102010005,Randall High School Amarillo,0
+020601010001,HBLA Lentia,0
+020104010006,Lessing Realschule Gelsenkirchen,0
+050503060001,Dhaneswarpur Gopal Chandra Siksha Sadan Midnapur,0
+020104010007,Berufskolleg Iserlohn,0
+030105020001,Namadgi School ACT,0
+030200090001,Tawa College Wellington,0
 050504020001,Msb-55 Fulsar,0
 020104020001,Realschule plus Salz,0
 020103020004,Regelschule Breitungen,0

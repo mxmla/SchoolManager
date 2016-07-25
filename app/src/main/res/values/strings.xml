@@ -453,6 +453,8 @@
         <item>Norway</item>
         <item>India</item>
         <item>Peru</item>
+        <item>Australia</item>
+        <item>New Zealand</item>
     </string-array>
     <string name="pref_key_user_id" translatable="false">pref_key_user_id</string>
     <string name="pref_key_user_id_registered" translatable="false">pref_key_user_id_registered</string>
