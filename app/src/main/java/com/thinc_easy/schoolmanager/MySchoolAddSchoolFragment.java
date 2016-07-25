@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.SignInButton;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.File;
 import java.math.BigInteger;
@@ -133,6 +134,9 @@ public class MySchoolAddSchoolFragment extends Fragment {
                             .setAction("+("+userID+") "+country+" | "+city+" | "+school+" | "+url)
                             .setLabel("+("+userID+") "+school+" | "+url)
                             .build());
+
+                    FirebaseMessaging.getInstance().subscribeToTopic("user_"+userID);
+                    Log.d("FCM", "Subscribed to user topic");
 
                     added = "true";
                     setUpShare();

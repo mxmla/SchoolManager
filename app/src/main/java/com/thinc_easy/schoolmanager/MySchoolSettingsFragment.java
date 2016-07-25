@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.google.android.gms.ads.internal.request.StringParcel;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -279,11 +280,35 @@ public class MySchoolSettingsFragment extends Fragment {
                             prefs.getString(prefKeySchoolID, "[none]"))
                     .build());
 
+
+            FirebaseMessaging.getInstance().unsubscribeFromTopic("school_"+prefs.getString(prefKeySchoolID, "[none]"));
+            Log.d("FCM", "Unsubscribed from school topic");
+            FirebaseMessaging.getInstance().unsubscribeFromTopic("country_"+prefs.getString(prefKeyCountryID, "[none]"));
+            Log.d("FCM", "Unsubscribed from country topic");
+            FirebaseMessaging.getInstance().unsubscribeFromTopic("state_"+prefs.getString(prefKeySchoolID, "[none]").substring(0,6));
+            Log.d("FCM", "Unsubscribed from state topic");
+
+            FirebaseMessaging.getInstance().subscribeToTopic("school_"+schoolID);
+            Log.d("FCM", "Subscribed to school topic");
+            FirebaseMessaging.getInstance().subscribeToTopic("country_"+countryID);
+            Log.d("FCM", "Subscribed to country topic");
+            FirebaseMessaging.getInstance().subscribeToTopic("state_"+schoolID.substring(0,6));
+            Log.d("FCM", "Subscribed to state topic");
+
+
+
         } else if (!prefs.contains(prefKeySchoolID)) {
             mTracker.send(new HitBuilders.EventBuilder()
                     .setCategory("MySchool - Select school - First selection")
                     .setAction("SELECTED C: "+countryID+" ("+countryName+") || S: "+schoolID+" ("+schoolName+")")
                     .build());
+
+            FirebaseMessaging.getInstance().subscribeToTopic("school_"+schoolID);
+            Log.d("FCM", "Subscribed to school topic");
+            FirebaseMessaging.getInstance().subscribeToTopic("country_"+countryID);
+            Log.d("FCM", "Subscribed to country topic");
+            FirebaseMessaging.getInstance().subscribeToTopic("state_"+schoolID.substring(0,6));
+            Log.d("FCM", "Subscribed to state topic");
         }
 
         prefs.edit().putString(prefKeyCountryID, countryID).apply();

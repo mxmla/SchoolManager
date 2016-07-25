@@ -23,6 +23,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -33,6 +34,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -102,7 +105,8 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
 
 
         startService(new Intent(this, NotificationService.class));
-		
+
+
 		/*mTitle = mDrawerTitle = getTitle();
 		mActivityTitles = getResources().getStringArray(R.array.activity_titles);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

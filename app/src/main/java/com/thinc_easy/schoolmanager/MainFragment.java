@@ -47,7 +47,13 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.io.File;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -174,6 +180,7 @@ public class MainFragment extends Fragment {
         TimetableSection(v);
         HomeworkSection(v);
         newFeatureCard(v);
+        handleUserSchoolIDs();
 
         /*bRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,6 +196,7 @@ public class MainFragment extends Fragment {
                 FloatingActionButton(v);*/
             /*}
         });*/
+
 
         SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swiperefresh1);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -232,6 +240,63 @@ public class MainFragment extends Fragment {
                     startActivityForResult(i, 0);
                 }
             });
+        }
+    }
+
+
+    private void handleUserSchoolIDs(){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+
+        final String keyUserID = getActivity().getResources().getString(R.string.pref_key_user_id);
+        final String keySchoolID = getActivity().getResources().getString(R.string.pref_key_my_school_school_id);
+        final String keyCountryID = getActivity().getResources().getString(R.string.pref_key_my_school_country_id);
+        final String keyUserIDRegistered = getActivity().getResources().getString(R.string.pref_key_user_id_registered);
+        final String keySchoolRegistered = getActivity().getResources().getString(R.string.pref_key_school_registered);
+        final String keyCountryRegistered = getActivity().getResources().getString(R.string.pref_key_country_registered);
+        final String keyStateRegistered = getActivity().getResources().getString(R.string.pref_key_state_registered);
+
+
+        String userID = "[none]";
+        if (prefs.contains(keyUserID)){
+            userID = prefs.getString(keyUserID, "[none]");
+        }
+        if (userID == null || userID.equals("") || userID.equals("[none]")){
+            SecureRandom random = new SecureRandom();
+            userID = new BigInteger(130, random).toString(32);
+            prefs.edit().putString(keyUserID, userID).apply();
+
+            FirebaseMessaging.getInstance().subscribeToTopic("user_"+userID);
+            Log.d("FCM", "Subscribed to user topic");
+            prefs.edit().putBoolean(keyUserIDRegistered, true).apply();
+        }
+
+
+        if (!prefs.contains(keyUserIDRegistered) || !prefs.getBoolean(keyUserIDRegistered, false)){
+
+            FirebaseMessaging.getInstance().subscribeToTopic("user_"+userID);
+            Log.d("FCM", "Subscribed to user topic");
+            prefs.edit().putBoolean(keyUserIDRegistered, true).apply();
+        }
+
+        if (!prefs.contains(keySchoolRegistered) || !prefs.getBoolean(keySchoolRegistered, false)){
+            if (prefs.contains(keySchoolID)){
+
+                FirebaseMessaging.getInstance().subscribeToTopic("school_"+prefs.getString(keySchoolID, "[none]"));
+                Log.d("FCM", "Subscribed to school topic");
+                FirebaseMessaging.getInstance().subscribeToTopic("state_"+prefs.getString(keySchoolID, "[none]").substring(0,6));
+                Log.d("FCM", "Subscribed to state topic");
+                prefs.edit().putBoolean(keySchoolRegistered, true).apply();
+                prefs.edit().putBoolean(keyStateRegistered, true).apply();
+            }
+        }
+
+        if (!prefs.contains(keySchoolRegistered) || !prefs.getBoolean(keySchoolRegistered, false)){
+            if (prefs.contains(keyCountryID)){
+
+                FirebaseMessaging.getInstance().subscribeToTopic("country_"+prefs.getString(keyCountryID, "[none]"));
+                Log.d("FCM", "Subscribed to country topic");
+                prefs.edit().putBoolean(keyCountryRegistered, true).apply();
+            }
         }
     }
 

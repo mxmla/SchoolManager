@@ -455,4 +455,8 @@
         <item>Peru</item>
     </string-array>
     <string name="pref_key_user_id" translatable="false">pref_key_user_id</string>
+    <string name="pref_key_user_id_registered" translatable="false">pref_key_user_id_registered</string>
+    <string name="pref_key_school_registered" translatable="false">pref_key_school_registered</string>
+    <string name="pref_key_country_registered" translatable="false">pref_key_country_registered</string>
+    <string name="pref_key_state_registered" translatable="false">pref_key_state_registered</string>
 </resources>
