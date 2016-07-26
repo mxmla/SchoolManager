@@ -123,6 +123,7 @@ public class NotificationService extends Service {
         subjectLine = subjectLine + thisArray[7]+" - "+thisArray[8];
 
 
+        Bitmap largeIcon = DataStorageHandler.drawableToBitmap(getResources().getDrawable(R.drawable.ic_launcher));
         Notification.Builder builder;
 
         builder = new Notification.Builder(context)
@@ -131,6 +132,7 @@ public class NotificationService extends Service {
                 .setContentIntent(pendingIntent)
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setAutoCancel(true)
+                .setLargeIcon(largeIcon)
                 .setSmallIcon(R.drawable.ic_launcher);
 
 

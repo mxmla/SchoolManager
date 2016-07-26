@@ -27,6 +27,8 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -273,9 +275,26 @@ public class MySchoolSettingsFragment extends Fragment {
         if (prefs.contains(prefKeySchoolID) && !prefs.getString(prefKeySchoolID, "-").equals(schoolID)
                 && prefs.contains(prefKeyCountryID)){
 
+            final String keyUserIDRegistered = getActivity().getResources().getString(R.string.pref_key_user_id_registered);
+
+            String userID = "[none]";
+            final String keyUserID = getActivity().getResources().getString(R.string.pref_key_user_id);
+            if (prefs.contains(keyUserID)){
+                userID = prefs.getString(keyUserID, "[none]");
+            }
+            if (userID == null || userID.equals("") || userID.equals("[none]")){
+                SecureRandom random = new SecureRandom();
+                userID = new BigInteger(130, random).toString(32);
+                prefs.edit().putString(keyUserID, userID).apply();
+
+                FirebaseMessaging.getInstance().subscribeToTopic("user_"+userID);
+                Log.d("FCM", "Subscribed to user topic");
+                prefs.edit().putBoolean(keyUserIDRegistered, true).apply();
+            }
+
             mTracker.send(new HitBuilders.EventBuilder()
                     .setCategory("MySchool - Select school - Selection changed")
-                    .setAction("NEW C: "+countryID+" ("+countryName+"), S: "+schoolID+" ("+schoolName+
+                    .setAction("s("+userID+") S: "+schoolID+" ("+schoolName+
                             ") || OLD C: "+prefs.getString(prefKeyCountryID, "[none]")+", S: "+
                             prefs.getString(prefKeySchoolID, "[none]"))
                     .build());
@@ -298,9 +317,26 @@ public class MySchoolSettingsFragment extends Fragment {
 
 
         } else if (!prefs.contains(prefKeySchoolID)) {
+            final String keyUserIDRegistered = getActivity().getResources().getString(R.string.pref_key_user_id_registered);
+
+            String userID = "[none]";
+            final String keyUserID = getActivity().getResources().getString(R.string.pref_key_user_id);
+            if (prefs.contains(keyUserID)){
+                userID = prefs.getString(keyUserID, "[none]");
+            }
+            if (userID == null || userID.equals("") || userID.equals("[none]")){
+                SecureRandom random = new SecureRandom();
+                userID = new BigInteger(130, random).toString(32);
+                prefs.edit().putString(keyUserID, userID).apply();
+
+                FirebaseMessaging.getInstance().subscribeToTopic("user_"+userID);
+                Log.d("FCM", "Subscribed to user topic");
+                prefs.edit().putBoolean(keyUserIDRegistered, true).apply();
+            }
+
             mTracker.send(new HitBuilders.EventBuilder()
                     .setCategory("MySchool - Select school - First selection")
-                    .setAction("SELECTED C: "+countryID+" ("+countryName+") || S: "+schoolID+" ("+schoolName+")")
+                    .setAction("sn("+userID+") S: "+schoolID+" ("+schoolName+")")
                     .build());
 
             FirebaseMessaging.getInstance().subscribeToTopic("school_"+schoolID);
