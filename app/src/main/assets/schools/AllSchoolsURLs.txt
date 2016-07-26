@@ -120,3 +120,8 @@
 020104010007,1,http://www.berufskolleg-iserlohn.de/
 030105020001,1,http://www.namadgi.act.edu.au/
 030200090001,1,http://e2learn.school.nz/
+060400040001,1,https://www.facebook.com/Coll%C3%A8ge-Saint-Antoine-Ankadifotsy-Antananarivo-196943423711903/
+020104030001,1,http://www.xn--privatekaufmnnischeschulen-rhc.de/
+030105010001,1,http://www.concord-h.schools.nsw.edu.au/
+010104030002,1,http://www.euacademycs.org/
+020103030001,1,http://www.ksdill.de/

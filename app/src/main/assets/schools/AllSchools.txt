@@ -1,3 +1,8 @@
+060400040001,Collège Saint Antoine Ankadifotsy Antananarivo,0
+020104030001,Private kaufmännische Schulen,0
+030105010001,Concord High School,0
+010104030002,Eastern University Academy Charter School,0
+020103030001,Kaufmännische Schulen des Lahn-Dill-Kreises,0
 010102010005,Randall High School Amarillo,0
 020601010001,HBLA Lentia,0
 020104010006,Lessing Realschule Gelsenkirchen,0
