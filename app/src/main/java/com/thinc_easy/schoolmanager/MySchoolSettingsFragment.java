@@ -287,9 +287,9 @@ public class MySchoolSettingsFragment extends Fragment {
                 userID = new BigInteger(130, random).toString(32);
                 prefs.edit().putString(keyUserID, userID).apply();
 
-                FirebaseMessaging.getInstance().subscribeToTopic("user_"+userID);
-                Log.d("FCM", "Subscribed to user topic");
-                prefs.edit().putBoolean(keyUserIDRegistered, true).apply();
+                FirebaseMessaging.getInstance().unsubscribeFromTopic("user_"+userID);
+                Log.d("FCM", "Unsubscribed from user topic");
+                prefs.edit().putBoolean(keyUserIDRegistered, false).apply();
             }
 
             mTracker.send(new HitBuilders.EventBuilder()
@@ -329,9 +329,9 @@ public class MySchoolSettingsFragment extends Fragment {
                 userID = new BigInteger(130, random).toString(32);
                 prefs.edit().putString(keyUserID, userID).apply();
 
-                FirebaseMessaging.getInstance().subscribeToTopic("user_"+userID);
-                Log.d("FCM", "Subscribed to user topic");
-                prefs.edit().putBoolean(keyUserIDRegistered, true).apply();
+                FirebaseMessaging.getInstance().unsubscribeFromTopic("user_"+userID);
+                Log.d("FCM", "Unsubscribed from user topic");
+                prefs.edit().putBoolean(keyUserIDRegistered, false).apply();
             }
 
             mTracker.send(new HitBuilders.EventBuilder()

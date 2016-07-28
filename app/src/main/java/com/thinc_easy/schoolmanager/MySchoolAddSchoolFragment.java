@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -135,8 +136,11 @@ public class MySchoolAddSchoolFragment extends Fragment {
                             .setLabel("+("+userID+") "+school+" | "+url)
                             .build());
 
-                    FirebaseMessaging.getInstance().subscribeToTopic("user_"+userID);
-                    Log.d("FCM", "Subscribed to user topic");
+                    Calendar calendar = Calendar.getInstance();
+                    String date = DataStorageHandler.formatDateGeneralFormat(getActivity(), calendar);
+
+                    FirebaseMessaging.getInstance().subscribeToTopic("addded_school--"+date);
+                    Log.d("FCM", "Subscribed to added_school topic");
 
                     added = "true";
                     setUpShare();

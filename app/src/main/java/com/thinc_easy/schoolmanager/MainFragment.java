@@ -265,17 +265,17 @@ public class MainFragment extends Fragment {
             userID = new BigInteger(130, random).toString(32);
             prefs.edit().putString(keyUserID, userID).apply();
 
-            FirebaseMessaging.getInstance().subscribeToTopic("user_"+userID);
+            /*FirebaseMessaging.getInstance().subscribeToTopic("user_"+userID);
             Log.d("FCM", "Subscribed to user topic");
-            prefs.edit().putBoolean(keyUserIDRegistered, true).apply();
+            prefs.edit().putBoolean(keyUserIDRegistered, true).apply();*/
         }
 
 
-        if (!prefs.contains(keyUserIDRegistered) || !prefs.getBoolean(keyUserIDRegistered, false)){
+        if (!prefs.contains(keyUserIDRegistered) || prefs.getBoolean(keyUserIDRegistered, false)){
 
-            FirebaseMessaging.getInstance().subscribeToTopic("user_"+userID);
-            Log.d("FCM", "Subscribed to user topic");
-            prefs.edit().putBoolean(keyUserIDRegistered, true).apply();
+            FirebaseMessaging.getInstance().unsubscribeFromTopic("user_"+userID);
+            Log.d("FCM", "Unsubscribed from user topic");
+            prefs.edit().putBoolean(keyUserIDRegistered, false).apply();
         }
 
         if (!prefs.contains(keySchoolRegistered) || !prefs.getBoolean(keySchoolRegistered, false)){
