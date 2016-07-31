@@ -1,3 +1,12 @@
+020104010008,Realschule im Kreuzviertel,0
+020102020004,Walter-Eucken-Schule,0
+010104150001,Scottsburg High School,0
+020900170001,Martinlaakson Koulu Vantaa,0
+021000010001,7o ΓΕΝΙΚΟ ΛΥΚΕΙΟ ΚΑΛΛΙΘΕΑΣ,0
+010105010006,Westridge Middle School,0
+010103010006,Southern Illinois University Edwardsville,0
+020104020002,Edith-Stein-Realschule Speyer,0
+020101010005,Realschule Misburg,0
 060400040001,Collège Saint Antoine Ankadifotsy Antananarivo,0
 020104030001,Private kaufmännische Schulen,0
 030105010001,Concord High School,0

@@ -125,3 +125,12 @@
 030105010001,1,http://www.concord-h.schools.nsw.edu.au/
 010104030002,1,http://www.euacademycs.org/
 020103030001,1,http://www.ksdill.de/
+020104010008,1,http://www.rik-muenster.de/
+020102020004,1,http://www.walter-eucken-schule.de/
+010104150001,1,http://scottcountyhs.ss11.sharpschool.com
+020900170001,1,http://www.edu.vantaa.fi/martsari/wp/
+021000010001,1,http://blogs.sch.gr/7lykkall/
+010105010006,1,https://www.ocps.net/lc/southwest/mwe/pages/default.aspx
+010103010006,1,http://www.siue.edu/
+020104020002,1,http://www.esr-speyer.de/meta/startseite/
+020101010005,1,http://www.rs-misburg.de/
