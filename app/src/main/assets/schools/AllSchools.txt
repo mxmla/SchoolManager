@@ -1,3 +1,4 @@
+040200250001,Wizard,0
 020104010008,Realschule im Kreuzviertel,0
 020102020004,Walter-Eucken-Schule,0
 010104150001,Scottsburg High School,0

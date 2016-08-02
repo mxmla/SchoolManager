@@ -134,3 +134,4 @@
 010103010006,1,http://www.siue.edu/
 020104020002,1,http://www.esr-speyer.de/meta/startseite/
 020101010005,1,http://www.rs-misburg.de/
+040200250001,1,http://www.wizard.com.br/
