@@ -1,3 +1,12 @@
+050501070001,Indraprastha International School,0
+010103020001,Troy Middle School,0
+020105030002,Gymnasium Burgstädt,0
+020101010006,BBS Haarentor,0
+020603010001,Neue Mittelschule Liefering,0
+020103020005,Gymnasium "Am Lindenberg" Ilmenau,0
+010104120001,Lewiston High School Maine,0
+020101010007,Gymnasium Bersenbrück,0
+020101010008,Christian-von-Dohm-Gymnasium,0
 040200250001,Wizard,0
 020104010008,Realschule im Kreuzviertel,0
 020102020004,Walter-Eucken-Schule,0

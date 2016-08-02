@@ -135,3 +135,12 @@
 020104020002,1,http://www.esr-speyer.de/meta/startseite/
 020101010005,1,http://www.rs-misburg.de/
 040200250001,1,http://www.wizard.com.br/
+050501070001,1,http://www.indraprasthaschool.com/webaura/iis/index.asp
+010103020001,1,http://www.troy.k12.mo.us/tms
+020105030002,1,http://www.gybu.de/
+020101010006,1,http://www.bbs-haarentor.de/
+020603010001,1,http://www.nms-liefering.salzburg.at/
+020103020005,1,http://www.gymlindenberg.de/
+010104120001,1,http://lhs.lewistonpublicschools.org/
+020101010007,1,http://www.gymbsb.de/
+020101010008,1,http://www.cvd-gs.de/
