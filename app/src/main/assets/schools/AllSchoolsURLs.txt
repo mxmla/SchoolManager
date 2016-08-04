@@ -144,3 +144,10 @@
 010104120001,1,http://lhs.lewistonpublicschools.org/
 020101010007,1,http://www.gymbsb.de/
 020101010008,1,http://www.cvd-gs.de/
+060500160001,1,http://www.hayahacademy.com/
+021100040001,1,http://sosh21.mogilev.by/
+020101010009,1,http://www.lmg-varel.de/
+020105030003,1,https://kepler-chemnitz.de/de/start/
+020104010009,1,http://www.gesamtschule-nordkirchen.de/
+030105010002,1,http://www.francisgre-h.schools.nsw.edu.au/
+020103030002,1,http://gymnasium-oberursel.de/
