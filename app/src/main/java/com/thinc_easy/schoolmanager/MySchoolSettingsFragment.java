@@ -30,6 +30,8 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -101,6 +103,26 @@ public class MySchoolSettingsFragment extends Fragment {
         for (int r1 = 0; r1 < countryIDs2Dim.length; r1++){
             countryIDs[r1+1] = countryIDs2Dim[r1][0];
         }
+
+        // Sort names and IDs alphabetically (by name)
+        String[][] countries = new String[countryNames.length][2];
+        for (int c = 0; c < countryIDs.length && c < countryNames.length; c++){
+            countries[c][0] = countryIDs[c];
+            countries[c][1] = countryNames[c];
+        }
+        Arrays.sort(countries, new Comparator<String[]>() {
+            @Override
+            public int compare(final String[] entry1, final String[] entry2) {
+                return entry1[1].compareTo(entry2[1]);
+            }
+        });
+        countryNames = new String[countries.length];
+        countryIDs = new String[countries.length];
+        for (int c = 0; c < countries.length; c++){
+            countryIDs[c] = countries[c][0];
+            countryNames[c] = countries[c][1];
+        }
+
 
         allSchools = DataStorageHandler.toArray(getActivity(), "schools/AllSchools.txt", true);
 
@@ -177,6 +199,25 @@ public class MySchoolSettingsFragment extends Fragment {
                 schools.add(allSchools[i][1]);
                 schoolIDs.add(allSchools[i][0]);
             }
+        }
+
+        // Sort names and IDs alphabetically (by name)
+        String[][] sortSchools = new String[schools.size()][2];
+        for (int c = 0; c < schoolIDs.size() && c < schools.size(); c++){
+            sortSchools[c][0] = schoolIDs.get(c);
+            sortSchools[c][1] = schools.get(c);
+        }
+        Arrays.sort(sortSchools, new Comparator<String[]>() {
+            @Override
+            public int compare(final String[] entry1, final String[] entry2) {
+                return entry1[1].compareTo(entry2[1]);
+            }
+        });
+        schools = new ArrayList<>();
+        schoolIDs = new ArrayList<>();
+        for (int c = 0; c < sortSchools.length; c++){
+            schoolIDs.add(sortSchools[c][0]);
+            schools.add(sortSchools[c][1]);
         }
 
         //if (schoolIDs.size()>0) schoolID = schoolIDs.get(0);
@@ -270,87 +311,99 @@ public class MySchoolSettingsFragment extends Fragment {
     }
 
     private void saveData(){
-        Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.toast_saved), Toast.LENGTH_SHORT).show();
+        boolean checkDataOK = true;
+        if (countryID == null || countryID.contains(getActivity().getResources().getString(R.string.spinner_please_select)) ||
+                !DataStorageHandler.isStringNumeric(countryID))
+            checkDataOK = false;
 
-        if (prefs.contains(prefKeySchoolID) && !prefs.getString(prefKeySchoolID, "-").equals(schoolID)
-                && prefs.contains(prefKeyCountryID)){
+        if (schoolID == null || countryID.contains(getActivity().getResources().getString(R.string.spinner_please_select)) ||
+                !DataStorageHandler.isStringNumeric(schoolID))
+            checkDataOK = false;
 
-            final String keyUserIDRegistered = getActivity().getResources().getString(R.string.pref_key_user_id_registered);
+        if (checkDataOK) {
+            if (prefs.contains(prefKeySchoolID) && !prefs.getString(prefKeySchoolID, "-").equals(schoolID)
+                    && prefs.contains(prefKeyCountryID)) {
 
-            String userID = "[none]";
-            final String keyUserID = getActivity().getResources().getString(R.string.pref_key_user_id);
-            if (prefs.contains(keyUserID)){
-                userID = prefs.getString(keyUserID, "[none]");
+                final String keyUserIDRegistered = getActivity().getResources().getString(R.string.pref_key_user_id_registered);
+
+                String userID = "[none]";
+                final String keyUserID = getActivity().getResources().getString(R.string.pref_key_user_id);
+                if (prefs.contains(keyUserID)) {
+                    userID = prefs.getString(keyUserID, "[none]");
+                }
+                if (userID == null || userID.equals("") || userID.equals("[none]")) {
+                    SecureRandom random = new SecureRandom();
+                    userID = new BigInteger(130, random).toString(32);
+                    prefs.edit().putString(keyUserID, userID).apply();
+
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic("user_" + userID);
+                    Log.d("FCM", "Unsubscribed from user topic");
+                    prefs.edit().putBoolean(keyUserIDRegistered, false).apply();
+                }
+
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("MySchool - Select school - Selection changed")
+                        .setAction("s(" + userID + ") S: " + schoolID + " (" + schoolName +
+                                ") || OLD C: " + prefs.getString(prefKeyCountryID, "[none]") + ", S: " +
+                                prefs.getString(prefKeySchoolID, "[none]"))
+                        .build());
+
+
+                FirebaseMessaging.getInstance().unsubscribeFromTopic("school_" + prefs.getString(prefKeySchoolID, "[none]"));
+                Log.d("FCM", "Unsubscribed from school topic");
+                FirebaseMessaging.getInstance().unsubscribeFromTopic("country_" + prefs.getString(prefKeyCountryID, "[none]"));
+                Log.d("FCM", "Unsubscribed from country topic");
+                FirebaseMessaging.getInstance().unsubscribeFromTopic("state_" + prefs.getString(prefKeySchoolID, "[none]").substring(0, 6));
+                Log.d("FCM", "Unsubscribed from state topic");
+
+                FirebaseMessaging.getInstance().subscribeToTopic("school_" + schoolID);
+                Log.d("FCM", "Subscribed to school topic");
+                FirebaseMessaging.getInstance().subscribeToTopic("country_" + countryID);
+                Log.d("FCM", "Subscribed to country topic");
+                FirebaseMessaging.getInstance().subscribeToTopic("state_" + schoolID.substring(0, 6));
+                Log.d("FCM", "Subscribed to state topic");
+
+
+            } else if (!prefs.contains(prefKeySchoolID)) {
+                final String keyUserIDRegistered = getActivity().getResources().getString(R.string.pref_key_user_id_registered);
+
+                String userID = "[none]";
+                final String keyUserID = getActivity().getResources().getString(R.string.pref_key_user_id);
+                if (prefs.contains(keyUserID)) {
+                    userID = prefs.getString(keyUserID, "[none]");
+                }
+                if (userID == null || userID.equals("") || userID.equals("[none]")) {
+                    SecureRandom random = new SecureRandom();
+                    userID = new BigInteger(130, random).toString(32);
+                    prefs.edit().putString(keyUserID, userID).apply();
+
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic("user_" + userID);
+                    Log.d("FCM", "Unsubscribed from user topic");
+                    prefs.edit().putBoolean(keyUserIDRegistered, false).apply();
+                }
+
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("MySchool - Select school - First selection")
+                        .setAction("sn(" + userID + ") S: " + schoolID + " (" + schoolName + ")")
+                        .build());
+
+                FirebaseMessaging.getInstance().subscribeToTopic("school_" + schoolID);
+                Log.d("FCM", "Subscribed to school topic");
+                FirebaseMessaging.getInstance().subscribeToTopic("country_" + countryID);
+                Log.d("FCM", "Subscribed to country topic");
+                FirebaseMessaging.getInstance().subscribeToTopic("state_" + schoolID.substring(0, 6));
+                Log.d("FCM", "Subscribed to state topic");
             }
-            if (userID == null || userID.equals("") || userID.equals("[none]")){
-                SecureRandom random = new SecureRandom();
-                userID = new BigInteger(130, random).toString(32);
-                prefs.edit().putString(keyUserID, userID).apply();
 
-                FirebaseMessaging.getInstance().unsubscribeFromTopic("user_"+userID);
-                Log.d("FCM", "Unsubscribed from user topic");
-                prefs.edit().putBoolean(keyUserIDRegistered, false).apply();
-            }
+            prefs.edit().putString(prefKeyCountryID, countryID).apply();
+            prefs.edit().putString(prefKeySchoolID, schoolID).apply();
+            prefs.edit().putString(prefKeyCountryName, countryName).apply();
+            prefs.edit().putString(prefKeySchoolName, schoolName).apply();
 
-            mTracker.send(new HitBuilders.EventBuilder()
-                    .setCategory("MySchool - Select school - Selection changed")
-                    .setAction("s("+userID+") S: "+schoolID+" ("+schoolName+
-                            ") || OLD C: "+prefs.getString(prefKeyCountryID, "[none]")+", S: "+
-                            prefs.getString(prefKeySchoolID, "[none]"))
-                    .build());
-
-
-            FirebaseMessaging.getInstance().unsubscribeFromTopic("school_"+prefs.getString(prefKeySchoolID, "[none]"));
-            Log.d("FCM", "Unsubscribed from school topic");
-            FirebaseMessaging.getInstance().unsubscribeFromTopic("country_"+prefs.getString(prefKeyCountryID, "[none]"));
-            Log.d("FCM", "Unsubscribed from country topic");
-            FirebaseMessaging.getInstance().unsubscribeFromTopic("state_"+prefs.getString(prefKeySchoolID, "[none]").substring(0,6));
-            Log.d("FCM", "Unsubscribed from state topic");
-
-            FirebaseMessaging.getInstance().subscribeToTopic("school_"+schoolID);
-            Log.d("FCM", "Subscribed to school topic");
-            FirebaseMessaging.getInstance().subscribeToTopic("country_"+countryID);
-            Log.d("FCM", "Subscribed to country topic");
-            FirebaseMessaging.getInstance().subscribeToTopic("state_"+schoolID.substring(0,6));
-            Log.d("FCM", "Subscribed to state topic");
-
-
-
-        } else if (!prefs.contains(prefKeySchoolID)) {
-            final String keyUserIDRegistered = getActivity().getResources().getString(R.string.pref_key_user_id_registered);
-
-            String userID = "[none]";
-            final String keyUserID = getActivity().getResources().getString(R.string.pref_key_user_id);
-            if (prefs.contains(keyUserID)){
-                userID = prefs.getString(keyUserID, "[none]");
-            }
-            if (userID == null || userID.equals("") || userID.equals("[none]")){
-                SecureRandom random = new SecureRandom();
-                userID = new BigInteger(130, random).toString(32);
-                prefs.edit().putString(keyUserID, userID).apply();
-
-                FirebaseMessaging.getInstance().unsubscribeFromTopic("user_"+userID);
-                Log.d("FCM", "Unsubscribed from user topic");
-                prefs.edit().putBoolean(keyUserIDRegistered, false).apply();
-            }
-
-            mTracker.send(new HitBuilders.EventBuilder()
-                    .setCategory("MySchool - Select school - First selection")
-                    .setAction("sn("+userID+") S: "+schoolID+" ("+schoolName+")")
-                    .build());
-
-            FirebaseMessaging.getInstance().subscribeToTopic("school_"+schoolID);
-            Log.d("FCM", "Subscribed to school topic");
-            FirebaseMessaging.getInstance().subscribeToTopic("country_"+countryID);
-            Log.d("FCM", "Subscribed to country topic");
-            FirebaseMessaging.getInstance().subscribeToTopic("state_"+schoolID.substring(0,6));
-            Log.d("FCM", "Subscribed to state topic");
+            Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.toast_saved), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.toast_school_selection_went_wrong), Toast.LENGTH_SHORT).show();
         }
-
-        prefs.edit().putString(prefKeyCountryID, countryID).apply();
-        prefs.edit().putString(prefKeySchoolID, schoolID).apply();
-        prefs.edit().putString(prefKeyCountryName, countryName).apply();
-        prefs.edit().putString(prefKeySchoolName, schoolName).apply();
     }
 
     @Override

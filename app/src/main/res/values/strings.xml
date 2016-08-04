@@ -467,4 +467,5 @@
     <string name="pref_key_school_registered" translatable="false">pref_key_school_registered</string>
     <string name="pref_key_country_registered" translatable="false">pref_key_country_registered</string>
     <string name="pref_key_state_registered" translatable="false">pref_key_state_registered</string>
+    <string name="toast_school_selection_went_wrong">Oops... something went wrong!</string>
 </resources>

@@ -382,4 +382,5 @@
         <item>Ägypten</item>
         <item>Weißrussland</item>
     </string-array>
+    <string name="toast_school_selection_went_wrong">Ups... etwas ist schiefgelaufen!</string>
 </resources>

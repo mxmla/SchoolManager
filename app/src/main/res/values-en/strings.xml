@@ -372,4 +372,5 @@
         <item>Egypt</item>
         <item>Belarus</item>
     </string-array>
+    <string name="toast_school_selection_went_wrong">Oops... something went wrong!</string>
 </resources>
