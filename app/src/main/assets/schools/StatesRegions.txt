@@ -1,0 +1,437 @@
+01010101,California
+01010102,Washington
+01010103,Oregon
+01010104,Nevada
+01010105,Idaho
+01010106,Utah
+01010107,Hawaii
+01010108,Alaska
+01010201,Texas
+01010202,New-Mexico
+01010203,Oklahoma
+01010204,Arizona
+01010301,Illinois
+01010302,Missouri
+01010303,Kansas
+01010304,Iowa
+01010305,Wisconsin
+01010306,Nebraska
+01010307,Colorado
+01010308,Minnesota
+01010309,South Dakota
+01010310,Wyoming
+01010311,North Dakota
+01010312,Montana
+01010401,New York
+01010402,Massachusetts
+01010403,Pennsylvania
+01010404,New Jersey
+01010405,Connecticut
+01010406,Delaware
+01010407,Maryland
+01010408,New Hampshire
+01010409,Virginia
+01010410,West Virginia
+01010411,Vermont
+01010412,Maine
+01010413,Michigan
+01010414,Ohio
+01010415,Indiana
+01010416,Kentucky
+01010417,Washington D.C.
+01010501,Florida
+01010502,Georgia
+01010503,Alabama
+01010504,South Carolina
+01010505,North Carolina
+01010506,Tennessee
+01010507,Mississippi
+01010508,Louisiana
+01010509,Arkansas
+02010101,Niedersachsen
+02010102,Schleswig-Holstein
+02010103,Mecklenburg-Vorpommern
+02010104,Hamburg
+02010105,Bremen
+02010201,Bayern
+02010202,Baden-Württemberg
+02010301,Sachsen-Anhalt
+02010302,Thüringen
+02010303,Hessen
+02010401,Nordrhein-Westfalen
+02010402,Rheinland-Pfalz
+02010403,Saarland
+02010501,Berlin
+02010502,Brandenburg
+02010503,Sachsen
+02030001,England
+02030002,Scottland
+02030003,Wales
+02030004,Northern Ireland
+06010101,Upper West
+06010102,Upper East
+06010103,Northern
+06010201,Central
+06010202,Greater Accra
+06010301,Ashanti
+06010401,Brong-Ahafo
+06010402,Western
+06010501,Brong-Ahafo
+06010502,Western
+05010101,Tabuk
+05010102,Al Jawf
+05010103,Northern Borders
+05010201,Asir
+05010202,Jizan
+05010203,Najran
+05010301,Ha'il
+05010302,Al Qasim
+05010401,Al Madinah
+05010402,Makkah
+05010403,Al Bahah
+05010501,Al Riyadh
+05010502,Eastern Province
+05020101,Perlis Indera Kayangan
+05020102,Kedah Darul Aman
+05020103,Penang
+05020201,Johor Darul Ta'zim
+05020202,Malacca
+05020203,Negeri Sembilan Darul Khusus
+05020301,Pahang Darul Makmur
+05020302,Kelantan Darul Naim
+05020303,Terengganu Darul Iman
+05020401,Perak Darul Ridzuan
+05020402,Selangor Darul Ehsan
+05020403,Federal Territory of Kuala Lumpur
+05020404,Federal Territory of Putrajaya
+05020501,Sabah
+05020502,Sarawak
+05020503,Federal Territory of Labuan
+02060101,Oberösterreich
+02060102,Niederösterreich
+02060201,Kärnten
+02060202,Steiermark
+02060301,Salzburg
+02060401,Vorarlberg
+02060402,Tirol
+02060501,Wien
+02060502,Burgenland
+06020101,Sokoto
+06020102,Kebbi
+06020103,Zamfara
+06020104,Katsina
+06020105,Kano
+06020106,Jigawa
+06020107,Bauchi
+06020201,Edo
+06020202,Delta
+06020203,Bayelsa
+06020204,Rivers
+06020205,Imo
+06020206,Abia
+06020207,Akwa Ibom
+06020301,Kaduna
+06020302,Plateau
+06020303,Nassarawa
+06020304,Federal Capital Territory (FCT)
+06020305,Kogi
+06020306,Enugu
+06020307,Anambra
+06020308,Ebonyi
+06020401,Niger
+06020402,Kwara
+06020403,Oyo
+06020404,Osun
+06020405,Ekiti
+06020406,Ondo
+06020407,Ogun
+06020408,Lagos
+06020501,Yobe
+06020502,Borno
+06020503,Gombe
+06020504,Adamawa
+06020505,Taraba
+06020506,Benue
+06020507,Cross River
+05030101,Ilocos Region
+05030102,Cordillera Administrative Region
+05030103,Cagayan Valley
+05030201,Soccsksargen
+05030202,Davao Region
+05030203,Northern Mindanao
+05030204,Zamboanga Peninsula
+05030301,National Capital Region
+05030302,Central Luzon
+05030303,Calabarzon
+05030401,Mimaropa
+05030402,Western Visayas
+05030403,Autonomous Region in Muslim Mindanao
+05030404,Negros Island Region
+05030501,Bicol Region
+05030502,Caraga
+05030503,Central Visayas
+05030504,Eastern Visayas
+06030101,Limpopo
+06030102,North West
+06030201,Western Cape
+06030202,Eastern Cape
+06030301,Free State
+06030302,Gauteng
+06030401,Northern Cape
+06030501,Mpumalanga
+06030502,KwaZulu-Natal
+05040101,Special Region of Aceh
+05040102,North Sumatra
+05040103,Riau Islands
+05040104,North Kalimantan
+05040105,Gorontalo
+05040106,North Sulawesi
+05040107,North Maluku
+05040201,Jakarta Special Capital Region
+05040202,West Java
+05040203,Central Java
+05040204,Special Region of Yogyakarta
+05040205,East Java
+05040206,Bali
+05040207,West Nusa Tenggara
+05040301,Bengka - Belitung Islands
+05040302,West Kalimantan
+05040303,South Kalimantan
+05040304,Central Kalimantan
+05040305,East Kalimantan
+05040306,West Sulawesi
+05040401,Riau
+05040402,West Sumatra
+05040403,Jambi
+05040404,South Sumatra
+05040405,Bengkulu
+05040406,Lampung
+05040407,Banten
+05040501,Central Sulawesi
+05040502,South Sulawesi
+05040503,Southeast Sulawesi
+05040504,East Nusa Tenggara
+05040505,Maluku
+05040506,Special Region of West Papua
+05040507,Special Region of Papua
+02080101,Nordland
+02080102,Troms
+02080103,Finnmark
+02080104,Svalbard
+02080201,Aust-Agder
+02080202,Vest-Agder
+02080301,Sør-Trøndelag
+02080302,Nord-Trøndelag
+02080401,Rogaland
+02080402,Hordaland
+02080403,Sogn og Fjordane
+02080404,Møre og Romsdal
+02080501,Østfold
+02080502,Akershus
+02080503,Oslo
+02080504,Hedmark
+02080505,Oppland
+02080506,Buskerud
+02080507,Vestfold
+02080508,Telemark
+05050101,Jammu and Kashmir
+05050102,Himachal Pradesh
+05050103,Punjab
+05050104,Chandigarh
+05050105,Haryana
+05050106,Uttarakhand
+05050107,Delhi
+05050201,Karnataka
+05050202,Andhra Pradesh
+05050203,Tamil Nadu
+05050204,Kerala
+05050205,Lakshadweep
+05050206,Poduchherry
+05050207,Andaman and Nicobar Islands
+05050301,Uttar Pradesh
+05050302,Bihar
+05050303,Jharkhand
+05050304,Chhattisgarh
+05050305,Odisha
+05050306,West Bengal
+05050307,Sikkim
+05050401,Rajasthan
+05050402,Gujarat
+05050403,Daman and Diu
+05050404,Dadra and Nagar Haveli
+05050405,Maharashtra
+05050406,Telangana
+05050407,Madhya Pradesh
+05050408,Goa
+05050501,Assam
+05050502,Arunachal Pradesh
+05050503,Nagaland
+05050504,Manipur
+05050505,Meghalaya
+05050506,Tripura
+05050507,Mizoram
+04010001,Amazonas
+04010002,Ancash
+04010003,Apurímac
+04010004,Arequipa
+04010005,Ayacucho
+04010006,Cajamarca
+04010007,Callao
+04010008,Cuzco
+04010009,Huancavelica
+04010010,Huánuco
+04010011,Ica
+04010012,Junín
+04010013,La Libertad
+04010014,Lambayeque
+04010015,Lima
+04010016,Loreto
+04010017,Madre de Dios
+04010018,Moquegua
+04010019,Pasco
+04010020,Piura
+04010021,Puno
+04010022,San Martín
+04010023,Tacna
+04010024,Tumbes
+04010025,Ucayali
+04010026,Province of Lima
+03010101,Northern Territory
+03010102,Queensland
+03010201,Victoria
+03010202,Tasmania
+03010301,South Australia
+03010401,Western Australia
+03010501,New South Wales
+03010502,Australian Capital Territory
+03020001,Northland
+03020002,Auckland
+03020003,Waikato
+03020004,Bay of Plenty
+03020005,Gisborne
+03020006,Hawke's Bay
+03020007,Taranaki
+03020008,Manawatu-Whanganui
+03020009,Wellington
+03020010,Tasman
+03020011,Nelson
+03020012,Marlborough
+03020013,West Coast
+03020014,Canterbury
+03020015,Otago
+03020016,Southland
+06040001,Diana
+06040002,Sava
+06040003,Itasy
+06040004,Analamanga
+06040005,Vakinankaratra
+06040006,Bongolava
+06040007,Sofia
+06040008,Boeny
+06040009,Betsiboka
+06040010,Melaky
+06040011,Alaotra Mangoro
+06040012,Atsinanana
+06040013,Analanjirofo
+06040014,Amoron'i Mania
+06040015,Haute-Matsiatra
+06040016,Vatovavy-Fitovinany
+06040017,Atsimo-Atsinanana
+06040018,Ihorombe
+06040019,Menabe
+06040020,Atsimo-Andrefana
+06040021,Androy
+06040022,Anosy
+02090001,Lapland
+02090002,Northern Ostrobothnia
+02090003,Kainuu
+02090004,North Karelia
+02090005,Northern Savonia
+02090006,Southern Savonia
+02090007,Southern Ostrobothnia
+02090008,Central Ostrobothnia
+02090009,Ostrobothnia
+02090010,Pirkanmaa
+02090011,Central Finland
+02090012,Satakunta
+02090013,Southwest Finland
+02090014,South Karelia
+02090015,Päijänne Tavastia
+02090016,Tavastia Proper
+02090017,Uusimaa
+02090018,Kymenlaakso
+02090019,Åland
+02100001,Attica
+02100002,Central Greece
+02100003,Central Macedonia
+02100004,Crete
+02100005,Eastern Macedonia and Thrace
+02100006,Epirus
+02100007,Ionian Islands
+02100008,North Aegean
+02100009,Peloponnese
+02100010,South Aegean
+02100011,Thessaly
+02100012,Western Greece
+02100013,Western Macedonia
+04020001,Acre
+04020002,Alagoas
+04020003,Amapá
+04020004,Amazonas
+04020005,Bahia
+04020006,Ceará
+04020007,Distrito Federal
+04020008,Espírito Santo
+04020009,Goiás
+04020010,Maranhão
+04020011,Mato Grosso
+04020012,Mato Grosso do Sul
+04020013,Minas Gerais
+04020014,Pará
+04020015,Paraíba
+04020016,Paraná
+04020017,Pernambuco
+04020018,Piauí
+04020019,Rio de Janeiro
+04020020,Rio Grande do Norte
+04020021,Rio Grande do Sul
+04020022,Rondônia
+04020023,Roraima
+04020024,Santa Catarina
+04020025,São Paulo
+04020026,Sergipe
+04020027,Tocantins
+06050001,Matrouh
+06050002,Alexandria
+06050003,Beheira
+06050004,Kafr el-Sheikh
+06050005,Dakahlia
+06050006,Damietta
+06050007,Port Said
+06050008,North Sinai
+06050009,Gharbia
+06050010,Monufia
+06050011,Qalyubia
+06050012,Al Sharqia
+06050013,Ismailia
+06050014,Giza
+06050015,Faiyum
+06050016,Cairo
+06050017,Suez
+06050018,South Sinai
+06050019,Beni Suef
+06050020,Minya
+06050021,New Valley
+06050022,Asyut
+06050023,Red Sea
+06050024,Sohag
+06050025,Qena
+06050026,Luxor
+06050027,Aswan
+02110001,Brest Region
+02110002,Homiel
+02110003,Hrodna
+02110004,Mahilioŭ
+02110005,Minsk Region
+02110006,Vitebsk Region
+02110007,Minsk City

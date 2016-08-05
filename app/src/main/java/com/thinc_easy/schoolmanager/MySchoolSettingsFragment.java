@@ -43,14 +43,14 @@ public class MySchoolSettingsFragment extends Fragment {
     private Tracker mTracker;
     private String fragmentName;
     private SharedPreferences prefs;
-    private Spinner sCountry, sSchool;
+    private Spinner sCountry, sState, sSchool;
     private String countryName, countryID, schoolName, schoolID, prefKeySchoolID, prefKeyCountryID,
-            prefKeySchoolName, prefKeyCountryName;
-    private String[][] allSchools;
+            prefKeySchoolName, prefKeyCountryName, stateName, stateID, prefKeyStateName, prefKeyStateID;
+    private String[][] allSchools, allStates;
     private String[] countryNames, countryIDs;
-    private List<String> schools, schoolIDs;
-    private boolean foundCountryPreference;
-    int selCount;
+    private List<String> schools, schoolIDs, states, stateIDs;
+    private boolean foundCountryPreference, foundStatePreference;
+    int selCount, statesSelCount;
     private Button nitlButton, saveButton;
 
     @Override
@@ -72,11 +72,14 @@ public class MySchoolSettingsFragment extends Fragment {
 
         sCountry = (Spinner) v.findViewById(R.id.sCountry);
         sSchool = (Spinner) v.findViewById(R.id.sSchool);
+        sState = (Spinner) v.findViewById(R.id.sState);
 
         TextView tvCountry = (TextView) v.findViewById(R.id.tvCountry);
         TextView tvSchool = (TextView) v.findViewById(R.id.tvSchool);
+        TextView tvState = (TextView) v.findViewById(R.id.tvState);
         tvCountry.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf"));
         tvSchool.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf"));
+        tvState.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf"));
 
         nitlButton = (Button) v.findViewById(R.id.bNotInTheList);
         saveButton = (Button) v.findViewById(R.id.bSaveSchoolSelection);
@@ -125,10 +128,13 @@ public class MySchoolSettingsFragment extends Fragment {
 
 
         allSchools = DataStorageHandler.toArray(getActivity(), "schools/AllSchools.txt", true);
+        allStates = DataStorageHandler.toArray(getActivity(), "schools/StatesRegions.txt", true);
 
 
         countryName = "[none]";
         countryID = "[none]";
+        stateName = "[none]";
+        stateID = "[none]";
         schoolName = "[none]";
         schoolID = "[none]";
 
@@ -138,12 +144,13 @@ public class MySchoolSettingsFragment extends Fragment {
         sCountry.setAdapter(adapterCountries);
 
         selCount = 0;
+        statesSelCount = 0;
         sCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id){
                 countryName = countryNames[parentView.getSelectedItemPosition()];
                 countryID = countryIDs[parentView.getSelectedItemPosition()];
 
-                if (selCount >= 1) setUpSchoolsSpinner(countryID, "oISListener");
+                if (selCount >= 1) setUpStatesSpinner(countryID, "oISListener");
                 selCount++;
             }
             public void onNothingSelected(AdapterView<?> parentView) {
@@ -166,9 +173,29 @@ public class MySchoolSettingsFragment extends Fragment {
             }
         }
 
-        setUpSchoolsSpinner(countryID, "setUp");
+        setUpStatesSpinner(countryID, "setUp");
 
-        if (foundCountryPreference){
+        foundStatePreference = false;
+        if (foundCountryPreference) {
+            if (prefs.contains(prefKeySchoolID)) {
+                final String prefStateID = prefs.getString(prefKeySchoolID, "[none]").substring(0, 8);
+
+                for (int c = 0; c < stateIDs.size(); c++) {
+                    final String thisID = stateIDs.get(c);
+                    if (prefStateID.equals(thisID)) {
+                        stateID = prefStateID;
+                        stateName = states.get(c);
+
+                        sState.setSelection(c, false);
+                        foundStatePreference = true;
+                    }
+                }
+            }
+        }
+
+        setUpSchoolsSpinner(stateID, "setUp");
+
+        if (foundStatePreference){
             if (prefs.contains(prefKeySchoolID)) {
                 final String prefSchoolID = prefs.getString(prefKeySchoolID, "[none]");
                 int position = 0;
@@ -176,7 +203,7 @@ public class MySchoolSettingsFragment extends Fragment {
                     if (prefSchoolID.equals(schoolIDs.get(s))) position = s;
                 }
 
-                if (schoolIDs.size() > 0){
+                if (schoolIDs.size() >= position){
                     sSchool.setSelection(position, false);
                 }
             }
@@ -187,7 +214,61 @@ public class MySchoolSettingsFragment extends Fragment {
 
     }
 
-    private void setUpSchoolsSpinner(String newCountryID, String caller){
+    private void setUpStatesSpinner(String newCountryID, String caller){
+        states = new ArrayList<>();
+        states.add(getActivity().getResources().getString(R.string.spinner_please_select));
+        stateIDs = new ArrayList<>();
+        stateIDs.add(getActivity().getResources().getString(R.string.spinner_please_select));
+
+
+        for (int i = 0; i < allStates.length; i++){
+            if (allStates[i][0].startsWith(String.valueOf(newCountryID))){
+                states.add(allStates[i][1]);
+                stateIDs.add(allStates[i][0]);
+            }
+        }
+
+        // Sort names and IDs alphabetically (by name)
+        String[][] sortStates = new String[states.size()][2];
+        for (int c = 0; c < stateIDs.size() && c < states.size(); c++){
+            sortStates[c][0] = stateIDs.get(c);
+            sortStates[c][1] = states.get(c);
+        }
+        Arrays.sort(sortStates, new Comparator<String[]>() {
+            @Override
+            public int compare(final String[] entry1, final String[] entry2) {
+                return entry1[1].compareTo(entry2[1]);
+            }
+        });
+        states = new ArrayList<>();
+        stateIDs = new ArrayList<>();
+        for (int c = 0; c < sortStates.length; c++){
+            stateIDs.add(sortStates[c][0]);
+            states.add(sortStates[c][1]);
+        }
+
+        //if (schoolIDs.size()>0) schoolID = schoolIDs.get(0);
+
+
+        ArrayAdapter<String> adapterStates = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, states);
+        adapterStates.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sState.setAdapter(adapterStates);
+        sState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                stateName = states.get(parent.getSelectedItemPosition());
+                stateID = stateIDs.get(parent.getSelectedItemPosition());
+
+                if (statesSelCount >= 1) setUpSchoolsSpinner(stateID, "oISListener");
+                statesSelCount++;
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+    }
+
+    private void setUpSchoolsSpinner(String newStateID, String caller){
         schools = new ArrayList<>();
         schools.add(getActivity().getResources().getString(R.string.spinner_please_select));
         schoolIDs = new ArrayList<>();
@@ -195,7 +276,7 @@ public class MySchoolSettingsFragment extends Fragment {
 
 
         for (int i = 0; i < allSchools.length; i++){
-            if (allSchools[i][0].startsWith(String.valueOf(newCountryID))){
+            if (allSchools[i][0].startsWith(String.valueOf(newStateID))){
                 schools.add(allSchools[i][1]);
                 schoolIDs.add(allSchools[i][0]);
             }
@@ -353,15 +434,20 @@ public class MySchoolSettingsFragment extends Fragment {
                 Log.d("FCM", "Unsubscribed from school topic");
                 FirebaseMessaging.getInstance().unsubscribeFromTopic("country_" + prefs.getString(prefKeyCountryID, "[none]"));
                 Log.d("FCM", "Unsubscribed from country topic");
-                FirebaseMessaging.getInstance().unsubscribeFromTopic("state_" + prefs.getString(prefKeySchoolID, "[none]").substring(0, 6));
+                FirebaseMessaging.getInstance().unsubscribeFromTopic("state_" + prefs.getString(prefKeySchoolID, "[none]").substring(0, 8));
                 Log.d("FCM", "Unsubscribed from state topic");
 
                 FirebaseMessaging.getInstance().subscribeToTopic("school_" + schoolID);
                 Log.d("FCM", "Subscribed to school topic");
                 FirebaseMessaging.getInstance().subscribeToTopic("country_" + countryID);
                 Log.d("FCM", "Subscribed to country topic");
-                FirebaseMessaging.getInstance().subscribeToTopic("state_" + schoolID.substring(0, 6));
+                FirebaseMessaging.getInstance().subscribeToTopic("state_" + schoolID.substring(0, 8));
                 Log.d("FCM", "Subscribed to state topic");
+
+                // Made a mistake here: Subscribed to Regions (North/South/...) instead of the actual states.
+                // Should have been substring of 8, but was 6 only.
+                FirebaseMessaging.getInstance().unsubscribeFromTopic("state_" + prefs.getString(prefKeySchoolID, "[none]").substring(0, 6));
+                FirebaseMessaging.getInstance().unsubscribeFromTopic("state_" + schoolID.substring(0, 6));
 
 
             } else if (!prefs.contains(prefKeySchoolID)) {

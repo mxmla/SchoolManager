@@ -49,6 +49,29 @@
             </Spinner>
 
             <TextView
+                android:id="@+id/tvState"
+                style="@style/CardContentText"
+                android:layout_marginTop="@dimen/card_padding"
+                android:layout_marginBottom="@dimen/card_margin"
+                android:layout_marginStart="@dimen/card_padding"
+                android:layout_marginEnd="@dimen/card_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_settings_accent"
+                android:text="@string/pref_my_school_state"/>
+
+            <Spinner
+                android:id="@+id/sState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/card_padding"
+                android:layout_marginEnd="@dimen/card_padding"
+                android:paddingBottom="@dimen/card_padding"
+                android:layout_marginLeft="@dimen/card_padding">
+                android:layout_below="@id/sCountry">
+            </Spinner>
+
+            <TextView
                 android:id="@+id/tvSchool"
                 style="@style/CardContentText"
                 android:layout_marginTop="@dimen/card_padding"
@@ -69,7 +92,7 @@
                 android:paddingBottom="@dimen/card_padding"
                 android:layout_marginLeft="@dimen/card_padding"
                 android:layout_marginBottom="@dimen/card_padding"
-                android:layout_below="@id/sCountry">
+                android:layout_below="@id/sState">
             </Spinner>
 
             <Button
