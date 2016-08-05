@@ -1,3 +1,9 @@
+010103080001,St Cloud State University,0
+020101010010,Kurt-Schwitters-Gymnasium Misburg,0
+020101010011,IGS Garbsen,0
+020101010012,Sibylla-Merian-Gymnasium-Meinersen,0
+020105030004,Freies Gymnasium Naunhof,0
+020300010002,The Castle School Taunton,0
 060500160001,Hayah International Academy,0
 021100040001,Средняя школа No 21,0
 020101010009,Lothar-Meyer-Gymnasium Varel,0
@@ -126,7 +132,7 @@
 020104010001,Akademie für berufliche Bildung gGmbH Köln,0
 060104010001,Nsawkaw State Senior High School,0
 020101010002,Gaußschule Gymnasium am Löwenwall,0
-020302010001,Warwick Business School,0
+020300010001,Warwick Business School,0
 020101020002,Jungmannschule Eckernförde,0
 050101010001,British International School Tabuk,0
 050202030001,Alpha College Of Technology,0
