@@ -374,4 +374,7 @@
     </string-array>
     <string name="toast_school_selection_went_wrong">Oops... something went wrong!</string>
     <string name="pref_my_school_state">State/Region</string>
+    <string name="title_section_my_school">MySchool</string>
+    <string name="card_my_school_site_updated_title">News on school website</string>
+    <string name="card_my_school_site_updated_content">Something\'s changed on your school\'s site since you last visited!</string>
 </resources>

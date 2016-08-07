@@ -384,4 +384,7 @@
     </string-array>
     <string name="toast_school_selection_went_wrong">Ups... etwas ist schiefgelaufen!</string>
     <string name="pref_my_school_state">Bundesland/Region</string>
+    <string name="title_section_my_school">MySchool - Meine Schule</string>
+    <string name="card_my_school_site_updated_title">Neuigkeiten auf der Schul-Website</string>
+    <string name="card_my_school_site_updated_content">Auf der Website deiner Schule hat sich etwas geändert seit du das letzte Mal dort warst!</string>
 </resources>

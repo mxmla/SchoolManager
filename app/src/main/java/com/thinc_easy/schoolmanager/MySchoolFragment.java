@@ -28,6 +28,9 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * Created by wassm on 2016-07-02.
@@ -84,6 +87,7 @@ public class MySchoolFragment extends Fragment {
                 for (int i = 0; i < AllSchoolsURLs.length; i++){
                     if (AllSchoolsURLs[i][0].equals(schoolID) && AllSchoolsURLs[i][1].equals(String.valueOf(whichWebPage))){
                         url = AllSchoolsURLs[i][2];
+                        saveWebsiteCode(url);
 
                         tvNoSchool.setVisibility(View.GONE);
                         goToSettings.setVisibility(View.GONE);
@@ -132,6 +136,53 @@ public class MySchoolFragment extends Fragment {
                 }
             });
         }
+    }
+
+    private void saveWebsiteCode(String urlToOpen){
+        final MySchoolActivity activityReference = (MySchoolActivity) getActivity();
+        final String urlString = urlToOpen;
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                URL url;
+                HttpURLConnection urlConnection = null;
+                StringBuilder stringBuilder = null;
+                SharedPreferences sharedprefs = PreferenceManager.getDefaultSharedPreferences(activityReference);
+                try {
+                    url = new URL(urlString);
+
+                    urlConnection = (HttpURLConnection) url
+                            .openConnection();
+
+                    InputStream in = urlConnection.getInputStream();
+
+                    InputStreamReader isw = new InputStreamReader(in);
+
+                    int data = isw.read();
+                    stringBuilder = new StringBuilder();
+                    while (data != -1) {
+                        char current = (char) data;
+                        data = isw.read();
+                        stringBuilder.append(current);
+                    }
+
+                    String strng = stringBuilder.toString();
+                    sharedprefs.edit().putString("website1codeLastTime", strng).apply();
+
+                    System.out.println("strng");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                }
+            }
+        });
+
+        thread.start();
     }
 
     public void webViewGoBack(){
