@@ -166,7 +166,7 @@
     <string name="another_own_subject">Do you want to create another custom subject?</string>
     <string name="background">Background</string>
     <string name="card_create_tt_button">Create timetable</string>
-    <string name="card_create_tt_content">You will now be guided through the simple steps to create the timetable.</string>
+    <string name="card_create_tt_content">I can guide you through the simple steps to create the timetable.</string>
     <string name="card_create_tt_title">Create your timetable</string>
     <string name="card_share_app_content">Recommend SchoolManager to your friends.\nYou can send them a personalized message containing the link to the Play Store page of this app!</string>
     <string name="card_share_app_no_button">Not now</string>

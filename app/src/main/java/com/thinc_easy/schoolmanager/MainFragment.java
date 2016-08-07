@@ -83,7 +83,7 @@ public class MainFragment extends Fragment {
     private String nextRoom, nextTeacher, nextPeriodTo, nextSubjectName;
     private int nextPeriodStart, nextPeriodSearchStart, breakNextLesson;
     private boolean isLesson, isNextLesson, isTomorrowSubjects, isHomeworkTomorrow,
-            isEndOfDay, beforeDayStart, dayEnd;
+            isEndOfDay, beforeDayStart, dayEnd, isCreateTimetable;
 
     private TextView tvNowSubjectName, tvNowRoom, tvNowTeacher, tvNowSubjectAbbrev,
             tvNextSubjectAbbrev, tvNowTimes, tvNextTimes, tvNowPeriods, tvNextPeriods,
@@ -91,7 +91,7 @@ public class MainFragment extends Fragment {
     private View vNowColor, vNextColor;
     private CardView nowLessonCard, nextLessonCard, tomorrowLessonsCard, createTtCard, shareAppCard,
             cvNewFeature, cvAddedSchools, mySchoolUpdatedCard;
-    RelativeLayout rlNews;
+    RelativeLayout rlNews, ttSectionTitle;
     private Button createTtCardButton, shareAppCardShareButton, shareAppCardDontShareButton,
             bRefresh;
     private Button bTS1, bTS2, bTS3, bTS4, bTS5, bTS6, bTS7, bTS8, bTS9, bTS10, bTS11, bTS12,
@@ -176,10 +176,12 @@ public class MainFragment extends Fragment {
         cvAddedSchools = (CardView) v.findViewById(R.id.MySchoolAddedSchoolsCard);
         mySchoolUpdatedCard = (CardView) v.findViewById(R.id.MySchoolSiteUpdatedCard);
         rlNews = (RelativeLayout) v.findViewById(R.id.newsSectionTitle);
+        ttSectionTitle = (RelativeLayout) v.findViewById(R.id.ttSectionTitle);
         //bRefresh = (Button) v.findViewById(R.id.bRefresh);
         isEndOfDay = true;
         isNextLesson = false;
         isTomorrowSubjects = false;
+        isCreateTimetable = true;
         isHomeworkTomorrow = false;
         beforeDayStart = false;
         dayEnd = false;
@@ -247,23 +249,24 @@ public class MainFragment extends Fragment {
     }
 
     private void TimetableSection(View v){
-        RelativeLayout ttSectionTitle = (RelativeLayout) v.findViewById(R.id.ttSectionTitle);
         TextView ttSectionTitleText = (TextView) v.findViewById(R.id.ttSectionTitleText);
         TextView ttSectionTitleButton = (TextView) v.findViewById(R.id.ttSectionTitleButton);
 
-        if (!isLesson && !isNextLesson && !isTomorrowSubjects){
+        ttSectionTitleText.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf"));
+        ttSectionTitleButton.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf"));
+        ttSectionTitleButton.setTextColor(getActivity().getResources().getColor(R.color.color_timetable));
+        ttSectionTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), TimetableActivity.class);
+                startActivityForResult(i, 0);
+            }
+        });
+
+        if (!isLesson && !isNextLesson && !isTomorrowSubjects && !isCreateTimetable){
             ttSectionTitle.setVisibility(View.GONE);
         } else {
-            ttSectionTitleText.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf"));
-            ttSectionTitleButton.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf"));
-            ttSectionTitleButton.setTextColor(getActivity().getResources().getColor(R.color.color_timetable));
-            ttSectionTitle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i = new Intent(getActivity(), TimetableActivity.class);
-                    startActivityForResult(i, 0);
-                }
-            });
+            ttSectionTitle.setVisibility(View.VISIBLE);
         }
     }
 
@@ -352,6 +355,7 @@ public class MainFragment extends Fragment {
     }
 
     private void MySchoolCheckForWebsiteUpdate(View v){
+        //TODO "randomly" indicates updated site every now and then
         Button goToMySchoolUpdated = (Button) v.findViewById(R.id.bGoToMySchoolUpdated);
         Button dismissMySchoolUpdated = (Button) v.findViewById(R.id.bDismissMySchoolUpdated);
 
@@ -384,6 +388,8 @@ public class MainFragment extends Fragment {
                 }
             }
         });
+
+        mySchoolUpdatedCard.setVisibility(View.GONE);
 
         String[][] AllSchoolsURLs = DataStorageHandler.toArray(getActivity(), "schools/AllSchoolsURLs.txt", true);
         String prefKeySchoolID = getActivity().getResources().getString(R.string.pref_key_my_school_school_id);
@@ -424,14 +430,15 @@ public class MainFragment extends Fragment {
                                         stringBuilder.append(current);
                                     }
 
-                                    strng = stringBuilder.toString();
+                                    String string = stringBuilder.toString();
+                                    strng = string;
 
                                     System.out.println("strng");
                                     if (sharedprefs.contains("website1codeLastTime")) {
 
                                         String oldStrng = sharedprefs.getString("website1codeLastTime", "[none]");
-                                        int compare = strng.compareTo(oldStrng);
-                                        if (strng.equals(oldStrng) || (-10 <= compare && compare <= 10)) {
+                                        int compare = string.compareTo(oldStrng);
+                                        if (string.equals(oldStrng) || (-10 <= compare && compare <= 10)) {
 
                                             System.out.println("EQUALSSSS");
 
@@ -451,7 +458,9 @@ public class MainFragment extends Fragment {
                                             });
 
                                         } else {
-                                            System.out.println("Does NOTTT equal");
+                                            //System.out.println(string);
+                                            System.out.println("Does NOTTT equal: "+String.valueOf(compare));
+                                            //System.out.println(oldStrng);
 
                                             activityReference.runOnUiThread(new Runnable() {
                                                 @Override
@@ -1360,26 +1369,61 @@ public class MainFragment extends Fragment {
     }
 
     private void CreateTtCard(View v){
-        int rows = ((MainActivity) getActivity()).nmbrRowsCols(getActivity(), "Periods.txt")[0];
-        int cols = ((MainActivity) getActivity()).nmbrRowsCols(getActivity(), "Periods.txt")[1];
-
-        if (rows > 0 && cols > 0){
-            createTtCard.setVisibility(View.GONE);
+        if (prefs.contains("CreateTimetableCardDismissed")) {
+            if (prefs.getBoolean("CreateTimetableCardDismissed", false)) {
+                isCreateTimetable = false;
+            } else {
+                isCreateTimetable = true;
+            }
         } else {
+            isCreateTimetable = true;
+        }
+
+        if (isCreateTimetable) {
+            int rows = ((MainActivity) getActivity()).nmbrRowsCols(getActivity(), "Periods.txt")[0];
+            int cols = ((MainActivity) getActivity()).nmbrRowsCols(getActivity(), "Periods.txt")[1];
+
+            if (rows > 0 && cols > 0) {
+                createTtCard.setVisibility(View.GONE);
+                isCreateTimetable = false;
+            } else {
+                isCreateTimetable = true;
+                createTtCard.setVisibility(View.VISIBLE);
+            /*
             createTtCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(getActivity(), NewTimetableActivity.class);
                     startActivityForResult(i, 0);
                 }
-            });
-            createTtCardButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(getActivity(), NewTimetableActivity.class);
-                    startActivityForResult(i, 0);
+            });*/
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    createTtCardButton.setBackgroundTintList(getActivity().getResources().getColorStateList(R.color.button_color_state_list));
+                    createTtCardButton.setTextColor(getActivity().getResources().getColor(R.color.TextDarkBg));
+                } else {
+                    createTtCardButton.setTextColor(getActivity().getResources().getColor(R.color.colorAccent));
                 }
-            });
+                createTtCardButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(getActivity(), NewTimetableActivity.class);
+                        startActivityForResult(i, 0);
+                    }
+                });
+
+                Button createTtCardDismiss = (Button) v.findViewById(R.id.CardCreateTtDismissButton);
+                createTtCardDismiss.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        prefs.edit().putBoolean("CreateTimetableCardDismissed", true).apply();
+                        createTtCard.setVisibility(View.GONE);
+                        isCreateTimetable = false;
+                        if (!isLesson && !isNextLesson && !isTomorrowSubjects && !isCreateTimetable) {
+                            ttSectionTitle.setVisibility(View.GONE);
+                        }
+                    }
+                });
+            }
         }
     }
 

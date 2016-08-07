@@ -201,7 +201,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="card_create_tt_title">Stundenplan erstellen</string>
-    <string name="card_create_tt_content">Du wirst nun durch die einfachen Schritte zum Erstellen des Stundenplans geführt.</string>
+    <string name="card_create_tt_content">Ich kann dich durch die einfachen Schritte zum Erstellen des Stundenplans führen.</string>
     <string name="card_create_tt_button">Stundenplan erstellen</string>
     <string name="advertisement">Werbung</string>
     <string name="card_share_app_title">Sag es deinen Freunden!</string>
