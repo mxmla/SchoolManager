@@ -1,3 +1,7 @@
+020105030005,Oberschule Naunhof,0
+020103030003,IGS Schillerschule Offenbach,0
+020104010010,Konrad-Heresbach-Gymnasium Mettmann,0
+020105030006,Geschwister Scholl Schule Liebertwolkwitz,0
 021200070001,Colegiul Național George Coșbuc Motru,0
 010103080001,St Cloud State University,0
 020101010010,Kurt-Schwitters-Gymnasium Misburg,0

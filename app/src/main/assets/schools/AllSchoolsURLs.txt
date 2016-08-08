@@ -158,3 +158,7 @@
 020105030004,1,http://freies-gymnasium-naunhof.de/
 020300010002,1,http://www.castleschool.co.uk/
 021200070001,1,http://cngcmotru.uv.ro/
+020105030005,1,http://www.oberschule-naunhof.de/pgs/Oeffentliches/PundA/PuAIndex.cfm
+020103030003,1,http://schillerschule-offenbach.de/meldung.php?si=57a8987612ee2&lang=1&view=&k1=main&k2=aktuelles&k3=&k4=
+020104010010,1,http://www.khgme.de/
+020105030006,1,http://www.oberschule-liebertwolkwitz.de/
