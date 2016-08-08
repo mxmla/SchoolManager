@@ -1,3 +1,4 @@
+021200070001,Colegiul Național George Coșbuc Motru,0
 010103080001,St Cloud State University,0
 020101010010,Kurt-Schwitters-Gymnasium Misburg,0
 020101010011,IGS Garbsen,0

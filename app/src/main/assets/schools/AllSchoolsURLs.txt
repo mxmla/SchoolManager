@@ -157,3 +157,4 @@
 020101010012,1,http://www.gymnasium-meinersen.de/
 020105030004,1,http://freies-gymnasium-naunhof.de/
 020300010002,1,http://www.castleschool.co.uk/
+021200070001,1,http://cngcmotru.uv.ro/

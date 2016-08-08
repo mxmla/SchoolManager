@@ -435,3 +435,11 @@
 02110005,Minsk Region
 02110006,Vitebsk Region
 02110007,Minsk City
+02120001,Nord-Vest
+02120002,Centru
+02120003,Nord-Est
+02120004,Sud-Est
+02120005,Sud - Muntenia
+02120006,București - Ilfov
+02120007,Sud-Vest Oltenia
+02120008,Vest
