@@ -205,7 +205,7 @@ public class MainFragment extends Fragment {
         NewsSection(v);
         newFeatureCard(v);
         handleUserSchoolIDs();
-        MySchoolCheckForWebsiteUpdate(v);
+        //MySchoolCheckForWebsiteUpdate(v);
 
         /*bRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
