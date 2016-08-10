@@ -162,3 +162,6 @@
 020103030003,1,http://schillerschule-offenbach.de/meldung.php?si=57a8987612ee2&lang=1&view=&k1=main&k2=aktuelles&k3=&k4=
 020104010010,1,http://www.khgme.de/
 020105030006,1,http://www.oberschule-liebertwolkwitz.de/
+010103020002,1,http://www.troy.k12.mo.us/Domain/1287
+030200140001,1,http://www.st-josephs.school.nz/
+060301020001,1,https://www.facebook.com/St-Augustine-Private-Christian-School-696692883701103/

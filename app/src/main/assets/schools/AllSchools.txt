@@ -1,3 +1,6 @@
+060301020001,St Augustine Private Christian School,0
+010103020002,Troy South Middle School,0
+030200140001,St Joseph's School Ashburton,0
 020105030005,Oberschule Naunhof,0
 020103030003,IGS Schillerschule Offenbach,0
 020104010010,Konrad-Heresbach-Gymnasium Mettmann,0

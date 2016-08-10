@@ -49,6 +49,12 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -206,6 +212,7 @@ public class MainFragment extends Fragment {
         newFeatureCard(v);
         handleUserSchoolIDs();
         //MySchoolCheckForWebsiteUpdate(v);
+        //storeSchoolInDatabase();
 
         /*bRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1550,6 +1557,72 @@ public class MainFragment extends Fragment {
         } else {
             shareAppCard.setVisibility(View.GONE);
         }*/
+    }
+
+    private void storeSchoolInDatabase(){
+        final String prefKeySchoolID = getActivity().getResources().getString(R.string.pref_key_my_school_school_id);
+
+        if (prefs.contains(prefKeySchoolID)) {
+            final String schoolID = prefs.getString(prefKeySchoolID, "[none]");
+            if (prefs.contains("FBDatabaseSchoolStored") && !prefs.getBoolean("FBDatabaseSchoolStored", false)
+                    && schoolID != null && !schoolID.equals("[none]")) {
+
+                final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
+                final String keySchoolsNrUsers = getActivity().getResources().getString(R.string.FBDbKeySchoolsNrUsers);
+
+                dbRef.runTransaction(new Transaction.Handler() {
+                    @Override
+                    public Transaction.Result doTransaction(final MutableData mutableData) {
+                        if (mutableData.child(keySchoolsNrUsers).child(schoolID).getValue() == null) {
+                            mutableData.child(keySchoolsNrUsers).child(schoolID).setValue(1);
+                        } else {
+                            mutableData.child(keySchoolsNrUsers).child(schoolID).setValue(
+                                    (Long) mutableData.child(keySchoolsNrUsers).child(schoolID).getValue() + 1);
+                        }
+
+                        return Transaction.success(mutableData.child(keySchoolsNrUsers).child(schoolID));
+                    }
+
+                    @Override
+                    public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot currentData) {
+                        if (databaseError != null) {
+                            Log.d("FBDatabase", "Firebase counter increment failed: School Nr Users");
+                        } else {
+                            Log.d("FBDatabase", "Firebase counter increment succeeded: School Nr Users");
+                        }
+                    }
+                });
+
+
+                final String prefKeyUserID = getActivity().getResources().getString(R.string.pref_key_user_id);
+                if (prefs.contains(prefKeyUserID)) {
+
+                    final String userID = prefs.getString(getActivity().getResources().getString(R.string.pref_key_user_id), "[none]");
+                    final String keySchoolsUsers = getActivity().getResources().getString(R.string.FBDbKeySchoolsUsers);
+
+                    if (userID != null & !userID.equals("[none]")) {
+                        dbRef.runTransaction(new Transaction.Handler() {
+                            @Override
+                            public Transaction.Result doTransaction(final MutableData mutableData) {
+                                mutableData.child(keySchoolsUsers).child(schoolID).child(userID).setValue(true);
+
+                                return Transaction.success(mutableData.child(keySchoolsUsers).child(schoolID).child(userID));
+                            }
+
+                            @Override
+                            public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot currentData) {
+                                if (databaseError != null) {
+                                    Log.d("FBDatabase", "Firebase counter increment failed: School Users");
+                                } else {
+                                    Log.d("FBDatabase", "Firebase counter increment succeeded: School Users");
+                                }
+                            }
+                        });
+                    }
+                }
+
+            }
+        }
     }
 
     public void saveToPreferences(Context context, String preferenceName, String preferenceValue){

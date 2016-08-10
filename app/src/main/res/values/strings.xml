@@ -473,4 +473,6 @@
     <string name="title_section_my_school">MySchool</string>
     <string name="card_my_school_site_updated_title">News on school website</string>
     <string name="card_my_school_site_updated_content">Something\'s changed on your school\'s site since you last visited!</string>
+    <string name="FBDbKeySchoolsNrUsers" translatable="false">Schools NrUsers</string>
+    <string name="FBDbKeySchoolsUsers" translatable="false">Schools Users</string>
 </resources>
