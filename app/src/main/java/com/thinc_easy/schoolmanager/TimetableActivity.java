@@ -243,7 +243,7 @@ public class TimetableActivity extends ActionBarActivity
 		getSupportActionBar().setTitle(mTitle);
 	}
 
-	private void FloatingActionButton(){
+	/*private void FloatingActionButton(){
 		final FloatingActionButton fabPlus = (FloatingActionButton) findViewById(R.id.fab);
 		final View overlay = findViewById(R.id.overlay);
 		final FloatingActionButton fabHomework = (FloatingActionButton) findViewById(R.id.fabHomework);
@@ -373,7 +373,7 @@ public class TimetableActivity extends ActionBarActivity
 				}
 			}
 		});
-	}
+	}*/
     
     public String getPeriodName(String day, String period){		
 		String[][] myArray = toArray(this, "Periods.txt");

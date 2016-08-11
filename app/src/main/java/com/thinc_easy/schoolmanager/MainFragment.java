@@ -205,7 +205,7 @@ public class MainFragment extends Fragment {
         HomeworkCard(v);
         CreateTtCard(v);
         shareAppCard(v);
-        FloatingActionButton(v);
+        //FloatingActionButton(v);
         TimetableSection(v);
         HomeworkSection(v);
         NewsSection(v);
@@ -1066,7 +1066,7 @@ public class MainFragment extends Fragment {
         }
     }
 
-    private void FloatingActionButton(View v){
+    /*private void FloatingActionButton(View v){
         final FloatingActionButton fabPlus = (FloatingActionButton) v.findViewById(R.id.fab);
         final View overlay = v.findViewById(R.id.overlay);
         final FloatingActionButton fabHomework = (FloatingActionButton) v.findViewById(R.id.fabHomework);
@@ -1196,7 +1196,7 @@ public class MainFragment extends Fragment {
                 }
             }
         });
-    }
+    }*/
 
     private void HomeworkCard(View v){
         CardView homeworkCard = (CardView) v.findViewById(R.id.CardHomework);

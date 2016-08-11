@@ -1081,7 +1081,7 @@
         android:visibility="gone"
         android:alpha="0"
         android:text="@string/fab_homework_text"/>
-
+<!--
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabHomework"
         android:layout_width="wrap_content"
@@ -1111,5 +1111,5 @@
         android:hapticFeedbackEnabled="true"
         android:src="@drawable/ic_add_white_48dp"
         android:visibility="gone"/>
-
+    -->
 </RelativeLayout>

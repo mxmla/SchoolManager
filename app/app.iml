@@ -151,8 +151,8 @@
     <orderEntry type="library" exported="" name="support-v13-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.0.0" level="project" />
     <orderEntry type="library" exported="" name="cardview-v7-22.2.1" level="project" />
-    <orderEntry type="library" exported="" name="firebase-iid-9.2.0" level="project" />
     <orderEntry type="library" exported="" name="firebase-common-9.2.0" level="project" />
+    <orderEntry type="library" exported="" name="firebase-iid-9.2.0" level="project" />
     <orderEntry type="library" exported="" name="firebase-core-9.2.0" level="project" />
     <orderEntry type="library" exported="" name="firebase-analytics-9.2.0" level="project" />
   </component>

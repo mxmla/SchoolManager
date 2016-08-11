@@ -1,3 +1,15 @@
+020105030014,Christian-Gottlob-Frege-Oberschule,0
+010102010006,International Leadership Of Texas (Grand Prairie),0
+010103070001,Centennial High School Pueblo,0
+020101010013,Gymnasium am Bötschenberg Helmstedt,0
+020105030008,G-E-Lessing-Gymnasium Hohenstein-Ernstthal,0
+020105030009,Humboldt-Gymnasium Radeberg,0
+020105030010,Oberschule Weißig,0
+020105030011,Oberschule Bad Düben,0
+020105030012,Martin-Luther-Gymnasium Hartha,0
+020105030013,Gutenbergschule Leipzig,0
+020105030007,Werner-Heisenberg-Schule Leipzig,0
+020102010004,Senefelder-Schule Treuchtlingen,0
 060301020001,St Augustine Private Christian School,0
 010103020002,Troy South Middle School,0
 030200140001,St Joseph's School Ashburton,0

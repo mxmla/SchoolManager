@@ -460,19 +460,27 @@ public class MySchoolSettingsFragment extends Fragment {
 
                 /*// Increment the number of users for this school. Add school to that database if necessary.
                 // Also decrement number of users for previous school.
-                final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
                 final String keySchoolsNrUsers = getActivity().getResources().getString(R.string.FBDbKeySchoolsNrUsers);
+                final String oldSchoolID = prefs.getString(prefKeySchoolID, "[none]");
+                final String keySchoolsUsers = getActivity().getResources().getString(R.string.FBDbKeySchoolsUsers);
+                final String fUserID = userID;
+                final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference refSchoolNrUsers = database.getReference(keySchoolsNrUsers+"/"+schoolID);
+                DatabaseReference refOldSchoolNrUsers = database.getReference(keySchoolsNrUsers+"/"+oldSchoolID);
+                DatabaseReference refSchoolUsers = database.getReference(keySchoolsUsers+"/"+schoolID+"/"+fUserID);
+                DatabaseReference refOldSchoolUsers = database.getReference(keySchoolsUsers+"/"+oldSchoolID+"/"+fUserID);
 
-                dbRef.runTransaction(new Transaction.Handler() {
+
+                refSchoolNrUsers.runTransaction(new Transaction.Handler() {
                     @Override
                     public Transaction.Result doTransaction(final MutableData mutableData) {
-                        if (mutableData.child(keySchoolsNrUsers).child(schoolID).getValue() == null) {
-                            mutableData.child(keySchoolsNrUsers).child(schoolID).setValue(1);
+                        if (mutableData.getValue() == null) {
+                            mutableData.setValue(1);
                         } else {
-                            mutableData.child(keySchoolsNrUsers).child(schoolID).setValue((Long) mutableData.getValue() + 1);
+                            mutableData.setValue((Long) mutableData.getValue() + 1);
                         }
 
-                        return Transaction.success(mutableData.child(keySchoolsNrUsers).child(schoolID));
+                        return Transaction.success(mutableData);
                     }
 
                     @Override
@@ -485,20 +493,18 @@ public class MySchoolSettingsFragment extends Fragment {
                     }
                 });
 
-                final String oldSchoolID = prefs.getString(prefKeySchoolID, "[none]");
-                dbRef.runTransaction(new Transaction.Handler() {
+                refOldSchoolNrUsers.runTransaction(new Transaction.Handler() {
                     @Override
                     public Transaction.Result doTransaction(final MutableData mutableData) {
-                        if (mutableData.child(keySchoolsNrUsers).child(oldSchoolID).getValue() != null) {
-                            if ((long) mutableData.child(keySchoolsNrUsers).child(oldSchoolID).getValue() <= 0){
-                                mutableData.child(keySchoolsNrUsers).child(oldSchoolID).setValue(0);
+                        if (mutableData.getValue() != null) {
+                            if ((long) mutableData.getValue() <= 0){
+                                mutableData.setValue(0);
                             } else {
-                                mutableData.child(keySchoolsNrUsers).child(oldSchoolID).setValue(
-                                        (Long) mutableData.child(keySchoolsNrUsers).child(oldSchoolID).getValue() - 1);
+                                mutableData.setValue((Long) mutableData.getValue() - 1);
                             }
                         }
 
-                        return Transaction.success(mutableData.child(keySchoolsNrUsers).child(schoolID));
+                        return Transaction.success(mutableData);
                     }
 
                     @Override
@@ -514,10 +520,8 @@ public class MySchoolSettingsFragment extends Fragment {
 
                 // Add this user ID to this school. Add school to that DB if necessary.
                 // Also remove user from previous school.
-                final String keySchoolsUsers = getActivity().getResources().getString(R.string.FBDbKeySchoolsUsers);
-                final String fUserID = userID;
 
-                dbRef.runTransaction(new Transaction.Handler() {
+                refSchoolUsers.runTransaction(new Transaction.Handler() {
                     @Override
                     public Transaction.Result doTransaction(final MutableData mutableData) {
                         mutableData.child(keySchoolsUsers).child(schoolID).child(fUserID).setValue(true);
@@ -535,12 +539,12 @@ public class MySchoolSettingsFragment extends Fragment {
                     }
                 });
 
-                dbRef.runTransaction(new Transaction.Handler() {
+                refOldSchoolUsers.runTransaction(new Transaction.Handler() {
                     @Override
                     public Transaction.Result doTransaction(final MutableData mutableData) {
-                        mutableData.child(keySchoolsUsers).child(oldSchoolID).child(fUserID).setValue(null);
+                        mutableData.setValue(null);
 
-                        return Transaction.success(mutableData.child(keySchoolsUsers).child(schoolID).child(fUserID));
+                        return Transaction.success(mutableData);
                     }
 
                     @Override
@@ -567,20 +571,24 @@ public class MySchoolSettingsFragment extends Fragment {
                 Log.d("FCM", "Subscribed to state topic");
 
 
-                /*// Increment the number of users for this school. Add school to that database if necessary.
-                final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
-                final String keySchoolsNrUsers = getActivity().getResources().getString(R.string.FBDbKeySchoolsNrUsers);
+                /*final String keySchoolsNrUsers = getActivity().getResources().getString(R.string.FBDbKeySchoolsNrUsers);
+                final String keySchoolsUsers = getActivity().getResources().getString(R.string.FBDbKeySchoolsUsers);
+                final String fUserID = userID;
+                final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference refSchoolNrUsers = database.getReference(keySchoolsNrUsers+"/"+schoolID);
+                DatabaseReference refSchoolUsers = database.getReference(keySchoolsUsers+"/"+schoolID+"/"+fUserID);
 
-                dbRef.runTransaction(new Transaction.Handler() {
+                // Increment the number of users for this school. Add school to that database if necessary.
+                refSchoolNrUsers.runTransaction(new Transaction.Handler() {
                     @Override
                     public Transaction.Result doTransaction(final MutableData mutableData) {
-                        if (mutableData.child(keySchoolsNrUsers).child(schoolID).getValue() == null) {
-                            mutableData.child(keySchoolsNrUsers).child(schoolID).setValue(1);
+                        if (mutableData.getValue() == null) {
+                            mutableData.setValue(1);
                         } else {
-                            mutableData.child(keySchoolsNrUsers).child(schoolID).setValue((Long) mutableData.getValue() + 1);
+                            mutableData.setValue((Long) mutableData.getValue() + 1);
                         }
 
-                        return Transaction.success(mutableData.child(keySchoolsNrUsers).child(schoolID));
+                        return Transaction.success(mutableData);
                     }
 
                     @Override
@@ -595,15 +603,12 @@ public class MySchoolSettingsFragment extends Fragment {
 
 
                 // Add this user ID to this school. Add school to that DB if necessary.
-                final String keySchoolsUsers = getActivity().getResources().getString(R.string.FBDbKeySchoolsUsers);
-                final String fUserID = userID;
-
-                dbRef.runTransaction(new Transaction.Handler() {
+                refSchoolUsers.runTransaction(new Transaction.Handler() {
                     @Override
                     public Transaction.Result doTransaction(final MutableData mutableData) {
-                        mutableData.child(keySchoolsUsers).child(schoolID).child(fUserID).setValue(true);
+                        mutableData.setValue(true);
 
-                        return Transaction.success(mutableData.child(keySchoolsUsers).child(schoolID).child(fUserID));
+                        return Transaction.success(mutableData);
                     }
 
                     @Override

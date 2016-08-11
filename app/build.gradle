@@ -7,8 +7,8 @@ android {
         applicationId "com.thinc_easy.schoolmanager"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 66
-        versionName "2.0.47"
+        versionCode 70
+        versionName "2.0.51"
     }
     buildTypes {
         release {
@@ -31,6 +31,7 @@ dependencies {
     compile 'com.android.support:support-annotations:23'
     compile 'com.android.support:design:23.0.0'
     compile 'com.google.android.gms:play-services-analytics:9.2.0'
+    compile 'com.google.firebase:firebase-core:9.2.0'
     compile 'com.google.firebase:firebase-messaging:9.2.0'
     compile 'com.google.firebase:firebase-database:9.2.0'
 }
