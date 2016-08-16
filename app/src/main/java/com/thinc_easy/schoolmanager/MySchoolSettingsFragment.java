@@ -548,6 +548,7 @@ public class MySchoolSettingsFragment extends Fragment {
                     } else {
                         // Transaction completed
                         Log.d("FBDB", "transactionsNrUsersNew:onComplete: " + String.valueOf(tries) + databaseError);
+                        prefs.edit().putBoolean("FBDatabaseSchoolNrUsersStored", true).apply();
                     }
                 }
             });
@@ -617,6 +618,7 @@ public class MySchoolSettingsFragment extends Fragment {
                     } else {
                         // Transaction completed
                         Log.d("FBDB", "transactionsUserIDNew:onComplete: " + String.valueOf(tries) + databaseError);
+                        prefs.edit().putBoolean("FBDatabaseSchoolUserIDStored", true).apply();
                     }
                 }
             });
