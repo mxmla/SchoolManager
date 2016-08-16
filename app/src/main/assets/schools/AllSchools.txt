@@ -1,3 +1,27 @@
+020101010021,BBS Buchholz,0
+020105030016,Lessing Oberschule Schkeuditz,0
+020104010013,Städtisches Gymnasium Gevelsberg,0
+020101010020,Berufsbildende Schule 14,0
+020103030004,Friedrich-Ebert-Gymnasium Mühlheim,0
+020104010012,Lessing Gymnasium Düsseldorf,0
+020102010007,Leonhard-Wagner-Gymnasium Schwabmünchen,0
+010101010032,Soar Charter Academy,0
+020101010019,Herzog-Ernst-Gymnasium Uelzen,0
+020103020007,Albert-Schweitzer-Gymnasium Erfurt,0
+020104010011,Liebfrauenschule Geldern,0
+020102010006,Walter-Mohr-Realschule Traunreut,0
+020103010003,Kurfürst-Joachim-Friedrich-Gymnasium Wolmirstedt,0
+020101010018,Evangelisches Gymnasium Nordhorn,0
+020103010002,Domgymnasium Merseburg,0
+020101010016,Gymnasium Ulricianum Aurich,0
+020101010017,BBS Ammerland,0
+020101010014,Waldschule KGS Schwanewede,0
+020101010015,IGS Osterholz-Scharmbeck,0
+020105030016,BSZ für Elektrotechnik Dresden,0
+020102010005,Christoph-Jacob-Treu-Gymnasium,0
+020102020005,Erich-Hauser-Gewerbeschule Rottweil,0
+020105030015,Werner-von-Siemens-Gymnasium Großenhain,0
+020103020006,Friedrich-König-Gymnasium Suhl,0
 020105030014,Christian-Gottlob-Frege-Oberschule,0
 010102010006,International Leadership Of Texas (Grand Prairie),0
 010103070001,Centennial High School Pueblo,0

@@ -22,5 +22,5 @@
 # the package com.yourcompany.models. Modify to fit the structure
 # of your app.
 -keepclassmembers class com.thinc_easy.models.** {
-  *;
+  *;
 }

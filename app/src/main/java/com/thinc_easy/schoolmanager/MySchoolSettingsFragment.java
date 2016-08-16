@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.math.BigInteger;
@@ -58,6 +60,7 @@ public class MySchoolSettingsFragment extends Fragment {
     private boolean foundCountryPreference, foundStatePreference;
     int selCount, statesSelCount;
     private Button nitlButton, saveButton;
+    private long NrUsersNewSchoolBefore, NrUsersOldSchoolBefore;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -398,6 +401,23 @@ public class MySchoolSettingsFragment extends Fragment {
     }
 
     private void saveData(){
+        DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
+        connectedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (connected) {
+                    System.out.println("connected");
+                } else {
+                    System.out.println("not connected");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                System.err.println("Listener was cancelled");
+            }
+        });
         boolean checkDataOK = true;
         if (countryID == null || countryID.contains(getActivity().getResources().getString(R.string.spinner_please_select)) ||
                 !DataStorageHandler.isStringNumeric(countryID))
@@ -458,104 +478,8 @@ public class MySchoolSettingsFragment extends Fragment {
                 FirebaseMessaging.getInstance().unsubscribeFromTopic("state_" + schoolID.substring(0, 6));
 
 
-                /*// Increment the number of users for this school. Add school to that database if necessary.
-                // Also decrement number of users for previous school.
-                final String keySchoolsNrUsers = getActivity().getResources().getString(R.string.FBDbKeySchoolsNrUsers);
-                final String oldSchoolID = prefs.getString(prefKeySchoolID, "[none]");
-                final String keySchoolsUsers = getActivity().getResources().getString(R.string.FBDbKeySchoolsUsers);
-                final String fUserID = userID;
-                final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference refSchoolNrUsers = database.getReference(keySchoolsNrUsers+"/"+schoolID);
-                DatabaseReference refOldSchoolNrUsers = database.getReference(keySchoolsNrUsers+"/"+oldSchoolID);
-                DatabaseReference refSchoolUsers = database.getReference(keySchoolsUsers+"/"+schoolID+"/"+fUserID);
-                DatabaseReference refOldSchoolUsers = database.getReference(keySchoolsUsers+"/"+oldSchoolID+"/"+fUserID);
+                transactionsSchools(schoolID, prefs.getString(prefKeySchoolID, "[none]"), userID);
 
-
-                refSchoolNrUsers.runTransaction(new Transaction.Handler() {
-                    @Override
-                    public Transaction.Result doTransaction(final MutableData mutableData) {
-                        if (mutableData.getValue() == null) {
-                            mutableData.setValue(1);
-                        } else {
-                            mutableData.setValue((Long) mutableData.getValue() + 1);
-                        }
-
-                        return Transaction.success(mutableData);
-                    }
-
-                    @Override
-                    public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot currentData) {
-                        if (databaseError != null) {
-                            Log.d("FBDatabase", "Firebase counter increment failed: School Nr Users");
-                        } else {
-                            Log.d("FBDatabase", "Firebase counter increment succeeded: School Nr Users");
-                        }
-                    }
-                });
-
-                refOldSchoolNrUsers.runTransaction(new Transaction.Handler() {
-                    @Override
-                    public Transaction.Result doTransaction(final MutableData mutableData) {
-                        if (mutableData.getValue() != null) {
-                            if ((long) mutableData.getValue() <= 0){
-                                mutableData.setValue(0);
-                            } else {
-                                mutableData.setValue((Long) mutableData.getValue() - 1);
-                            }
-                        }
-
-                        return Transaction.success(mutableData);
-                    }
-
-                    @Override
-                    public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot currentData) {
-                        if (databaseError != null) {
-                            Log.d("FBDatabase", "Firebase counter increment failed: School Nr Users");
-                        } else {
-                            Log.d("FBDatabase", "Firebase counter increment succeeded: School Nr Users");
-                        }
-                    }
-                });
-
-
-                // Add this user ID to this school. Add school to that DB if necessary.
-                // Also remove user from previous school.
-
-                refSchoolUsers.runTransaction(new Transaction.Handler() {
-                    @Override
-                    public Transaction.Result doTransaction(final MutableData mutableData) {
-                        mutableData.child(keySchoolsUsers).child(schoolID).child(fUserID).setValue(true);
-
-                        return Transaction.success(mutableData.child(keySchoolsUsers).child(schoolID).child(fUserID));
-                    }
-
-                    @Override
-                    public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot currentData) {
-                        if (databaseError != null) {
-                            Log.d("FBDatabase", "Firebase counter increment failed: School Users");
-                        } else {
-                            Log.d("FBDatabase", "Firebase counter increment succeeded: School Users");
-                        }
-                    }
-                });
-
-                refOldSchoolUsers.runTransaction(new Transaction.Handler() {
-                    @Override
-                    public Transaction.Result doTransaction(final MutableData mutableData) {
-                        mutableData.setValue(null);
-
-                        return Transaction.success(mutableData);
-                    }
-
-                    @Override
-                    public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot currentData) {
-                        if (databaseError != null) {
-                            Log.d("FBDatabase", "Firebase counter increment failed: School Users");
-                        } else {
-                            Log.d("FBDatabase", "Firebase counter increment succeeded: School Users");
-                        }
-                    }
-                });*/
             } else if (!prefs.contains(prefKeySchoolID)) {
                 // For first school selection by this user
                 mTracker.send(new HitBuilders.EventBuilder()
@@ -570,56 +494,6 @@ public class MySchoolSettingsFragment extends Fragment {
                 FirebaseMessaging.getInstance().subscribeToTopic("state_" + schoolID.substring(0, 6));
                 Log.d("FCM", "Subscribed to state topic");
 
-
-                /*final String keySchoolsNrUsers = getActivity().getResources().getString(R.string.FBDbKeySchoolsNrUsers);
-                final String keySchoolsUsers = getActivity().getResources().getString(R.string.FBDbKeySchoolsUsers);
-                final String fUserID = userID;
-                final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference refSchoolNrUsers = database.getReference(keySchoolsNrUsers+"/"+schoolID);
-                DatabaseReference refSchoolUsers = database.getReference(keySchoolsUsers+"/"+schoolID+"/"+fUserID);
-
-                // Increment the number of users for this school. Add school to that database if necessary.
-                refSchoolNrUsers.runTransaction(new Transaction.Handler() {
-                    @Override
-                    public Transaction.Result doTransaction(final MutableData mutableData) {
-                        if (mutableData.getValue() == null) {
-                            mutableData.setValue(1);
-                        } else {
-                            mutableData.setValue((Long) mutableData.getValue() + 1);
-                        }
-
-                        return Transaction.success(mutableData);
-                    }
-
-                    @Override
-                    public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot currentData) {
-                        if (databaseError != null) {
-                            Log.d("FBDatabase", "Firebase counter increment failed: School Nr Users");
-                        } else {
-                            Log.d("FBDatabase", "Firebase counter increment succeeded: School Nr Users");
-                        }
-                    }
-                });
-
-
-                // Add this user ID to this school. Add school to that DB if necessary.
-                refSchoolUsers.runTransaction(new Transaction.Handler() {
-                    @Override
-                    public Transaction.Result doTransaction(final MutableData mutableData) {
-                        mutableData.setValue(true);
-
-                        return Transaction.success(mutableData);
-                    }
-
-                    @Override
-                    public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot currentData) {
-                        if (databaseError != null) {
-                            Log.d("FBDatabase", "Firebase counter increment failed: School Users");
-                        } else {
-                            Log.d("FBDatabase", "Firebase counter increment succeeded: School Users");
-                        }
-                    }
-                });*/
             }
 
             prefs.edit().putString(prefKeyCountryID, countryID).apply();
@@ -632,6 +506,153 @@ public class MySchoolSettingsFragment extends Fragment {
             Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.toast_school_selection_went_wrong), Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void transactionsSchools(String schoolNew, String schoolOld, String user){
+        final int triesStart = 0;
+        final int maxTries = 10;
+        transactionsNrUsersNew(triesStart, maxTries, schoolNew);
+        transactionsNrUsersOld(triesStart, maxTries, schoolOld);
+        transactionsUserIDNew(triesStart, maxTries, schoolNew, user);
+        transactionsUserIDOld(triesStart, maxTries, schoolOld, user);
+    }
+
+    private void transactionsNrUsersNew(final int tries, final int maxTries, final String school){
+        if (tries <= maxTries && school != null && !school.equals("[none]")) {
+
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("Schools NrUsers/"+school);
+
+            myRef.runTransaction(new Transaction.Handler() {
+                @Override
+                public Transaction.Result doTransaction(MutableData mutableData) {
+                    final Object obj1 = mutableData.getValue();
+                    System.out.println("old: "+String.valueOf(obj1));
+
+                    if (obj1 != null) {
+                        final long l1 = (long) obj1;
+                        mutableData.setValue(l1 + 1);
+                        System.out.println("new: "+String.valueOf(l1+1));
+                    } else {
+                        mutableData.setValue(1);
+                        System.out.println("new: created (1)");
+                    }
+
+                    return Transaction.success(mutableData);
+                }
+
+                @Override
+                public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                    if (databaseError != null){
+                        Log.d("FBDB", "transactionsNrUsersNew:onComplete:Error: " + String.valueOf(tries) + databaseError);
+                        transactionsNrUsersNew(tries+1, maxTries, school);
+                    } else {
+                        // Transaction completed
+                        Log.d("FBDB", "transactionsNrUsersNew:onComplete: " + String.valueOf(tries) + databaseError);
+                    }
+                }
+            });
+        }
+    }
+
+    private void transactionsNrUsersOld(final int tries, final int maxTries, final String school){
+        if (tries <= maxTries && school != null && !school.equals("[none]")) {
+
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("Schools NrUsers/"+school);
+
+            myRef.runTransaction(new Transaction.Handler() {
+                @Override
+                public Transaction.Result doTransaction(MutableData mutableData) {
+                    final Object obj1 = mutableData.getValue();
+                    System.out.println("old: "+String.valueOf(obj1));
+
+                    if (obj1 != null) {
+                        final long l1 = (long) obj1;
+                        if (l1 <= 1){
+                            mutableData.setValue(null);
+                            System.out.println("new: null");
+                        } else {
+                            mutableData.setValue(l1 - 1);
+                            System.out.println("new: " + String.valueOf(l1 - 1));
+                        }
+                    }
+
+                    return Transaction.success(mutableData);
+                }
+
+                @Override
+                public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                    if (databaseError != null){
+                        Log.d("FBDB", "transactionsNrUsersOld:onComplete:Error: " + String.valueOf(tries) + databaseError);
+                        transactionsNrUsersOld(tries+1, maxTries, school);
+                    } else {
+                        // Transaction completed
+                        Log.d("FBDB", "transactionsNrUsersOld:onComplete: " + String.valueOf(tries) + databaseError);
+                    }
+                }
+            });
+        }
+    }
+
+    private void transactionsUserIDNew(final int tries, final int maxTries, final String school, final String user){
+        if (tries <= maxTries && school != null && !school.equals("[none]")
+                && user != null && !user.equals("[none]")) {
+
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("Schools Users/"+school+"/"+user);
+
+            myRef.runTransaction(new Transaction.Handler() {
+                @Override
+                public Transaction.Result doTransaction(MutableData mutableData) {
+                    mutableData.setValue(true);
+
+                    return Transaction.success(mutableData);
+                }
+
+                @Override
+                public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                    if (databaseError != null){
+                        Log.d("FBDB", "transactionsUserIDNew:onComplete:Error: " + String.valueOf(tries) + databaseError);
+                        transactionsUserIDNew(tries+1, maxTries, school, user);
+                    } else {
+                        // Transaction completed
+                        Log.d("FBDB", "transactionsUserIDNew:onComplete: " + String.valueOf(tries) + databaseError);
+                    }
+                }
+            });
+        }
+    }
+
+    private void transactionsUserIDOld(final int tries, final int maxTries, final String school, final String user){
+        if (tries <= maxTries && school != null && !school.equals("[none]")
+                && user != null && !user.equals("[none]")) {
+
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("Schools Users/"+school+"/"+user);
+
+            myRef.runTransaction(new Transaction.Handler() {
+                @Override
+                public Transaction.Result doTransaction(MutableData mutableData) {
+                    mutableData.setValue(null);
+
+                    return Transaction.success(mutableData);
+                }
+
+                @Override
+                public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                    if (databaseError != null){
+                        Log.d("FBDB", "transactionsUserIDOld:onComplete:Error: " + String.valueOf(tries) + databaseError);
+                        transactionsUserIDOld(tries+1, maxTries, school, user);
+                    } else {
+                        // Transaction completed
+                        Log.d("FBDB", "transactionsUserIDOld:onComplete: " + String.valueOf(tries) + databaseError);
+                    }
+                }
+            });
+        }
+    }
+
+    //private void addSchoolToFBDB(String
 
     @Override
     public void onResume(){
