@@ -443,3 +443,10 @@
 02120006,București - Ilfov
 02120007,Sud-Vest Oltenia
 02120008,Vest
+05060001,Abu Dhabi
+05060002,Ajman
+05060003,Dubai
+05060004,Fujairah
+05060005,Ras al-Khaimah
+05060006,Sharjah
+05060007,Umm al-Quwain
