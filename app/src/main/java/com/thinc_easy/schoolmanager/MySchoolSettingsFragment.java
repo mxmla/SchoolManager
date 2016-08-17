@@ -544,6 +544,7 @@ public class MySchoolSettingsFragment extends Fragment {
                 public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
                     if (databaseError != null){
                         Log.d("FBDB", "transactionsNrUsersNew:onComplete:Error: " + String.valueOf(tries) + databaseError);
+                        prefs.edit().putBoolean("FBDatabaseSchoolNrUsersStored", false).apply();
                         transactionsNrUsersNew(tries+1, maxTries, school);
                     } else {
                         // Transaction completed
@@ -614,6 +615,7 @@ public class MySchoolSettingsFragment extends Fragment {
                 public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
                     if (databaseError != null){
                         Log.d("FBDB", "transactionsUserIDNew:onComplete:Error: " + String.valueOf(tries) + databaseError);
+                        prefs.edit().putBoolean("FBDatabaseSchoolUserIDStored", false).apply();
                         transactionsUserIDNew(tries+1, maxTries, school, user);
                     } else {
                         // Transaction completed

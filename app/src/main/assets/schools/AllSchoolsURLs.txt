@@ -201,3 +201,7 @@
 020101010021,1,https://www.bbs-buchholz.de/internet/startseite/startseite.php
 020105030016,1,http://www.oberschule-schkeuditz.de/aktuelles/
 020104010013,1,http://www.gym-gevelsberg.de/
+010103010007,1,http://www.noblenetwork.org/southwest
+010102010007,1,http://veteransmemorialearlycollegehigh.weebly.com/
+020104010014,1,http://mmge-meerbusch.de/
+050600060001,1,http://iscsharjah.sabis.net/
