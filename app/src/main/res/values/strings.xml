@@ -462,6 +462,7 @@
         <item>Egypt</item>
         <item>Belarus</item>
         <item>Romania</item>
+        <item>United Arab Emirates</item>
     </string-array>
     <string name="pref_key_user_id" translatable="false">pref_key_user_id</string>
     <string name="pref_key_user_id_registered" translatable="false">pref_key_user_id_registered</string>
