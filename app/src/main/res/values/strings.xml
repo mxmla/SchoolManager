@@ -476,4 +476,12 @@
     <string name="card_my_school_site_updated_content">Something\'s changed on your school\'s site since you last visited!</string>
     <string name="FBDbKeySchoolsNrUsers" translatable="false">Schools NrUsers</string>
     <string name="FBDbKeySchoolsUsers" translatable="false">Schools Users</string>
+    <string name="card_school_challenge_title">School Challenge</string>
+    <string name="card_school_challenge_content">Get 10 classmates to download this app and to select your school in the settings!
+        \n\n<b>Reward:</b>
+        \nA new feature which lets you know when there\'s news on your school\'s website.
+    </string>
+    <string name="card_school_challenge_currently">Current\nusers</string>
+    <string name="card_school_challenge_users">users</string>
+    <string name="invite_friends">Invite friends</string>
 </resources>

@@ -55,6 +55,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -93,15 +94,18 @@ public class MainFragment extends Fragment {
 
     private TextView tvNowSubjectName, tvNowRoom, tvNowTeacher, tvNowSubjectAbbrev,
             tvNextSubjectAbbrev, tvNowTimes, tvNextTimes, tvNowPeriods, tvNextPeriods,
-            tvNextSubjectName, tvNextRoom, tvNextTeacher;
+            tvNextSubjectName, tvNextRoom, tvNextTeacher,
+            tvSchoolChallengeSubtitle, tvScoolChallengeCounter;
     private View vNowColor, vNextColor;
     private CardView nowLessonCard, nextLessonCard, tomorrowLessonsCard, createTtCard, shareAppCard,
-            cvNewFeature, cvAddedSchools, mySchoolUpdatedCard;
+            cvNewFeature, cvAddedSchools, mySchoolUpdatedCard, cSchoolChallenge;
     RelativeLayout rlNews, ttSectionTitle;
+    private LinearLayout llSchoolChallengeCounter;
+    private View vSchoolChallengeCounter;
     private Button createTtCardButton, shareAppCardShareButton, shareAppCardDontShareButton,
             bRefresh;
     private Button bTS1, bTS2, bTS3, bTS4, bTS5, bTS6, bTS7, bTS8, bTS9, bTS10, bTS11, bTS12,
-            bTS13, bTS14, bTS15;
+            bTS13, bTS14, bTS15, bSchoolChallengeInviteFriends;
     private boolean mUserClickedDontShare;
     private int mOpenMainActivityCount;
     private String KEY_USER_CLICKED_DONT_SHARE = "user_clicked_dont_share";
@@ -183,6 +187,12 @@ public class MainFragment extends Fragment {
         mySchoolUpdatedCard = (CardView) v.findViewById(R.id.MySchoolSiteUpdatedCard);
         rlNews = (RelativeLayout) v.findViewById(R.id.newsSectionTitle);
         ttSectionTitle = (RelativeLayout) v.findViewById(R.id.ttSectionTitle);
+        cSchoolChallenge = (CardView) v.findViewById(R.id.SchoolChallengeCard);
+        tvSchoolChallengeSubtitle = (TextView) v.findViewById(R.id.CardSchoolChallengeSubtitle);
+        tvScoolChallengeCounter = (TextView) v.findViewById(R.id.CardSchoolChallengeCounter);
+        llSchoolChallengeCounter = (LinearLayout) v.findViewById(R.id.CardSchoolChallengeLLCounter);
+        vSchoolChallengeCounter = (View) v.findViewById(R.id.CardSchoolChallengeCounterDividerView);
+        bSchoolChallengeInviteFriends = (Button) v.findViewById(R.id.bSchoolChallengeInviteFriends);
         //bRefresh = (Button) v.findViewById(R.id.bRefresh);
         isEndOfDay = true;
         isNextLesson = false;
@@ -213,6 +223,7 @@ public class MainFragment extends Fragment {
         handleUserSchoolIDs();
         //MySchoolCheckForWebsiteUpdate(v);
         storeSchoolInDatabase();
+        schoolChallengeCard(v);
 
         /*bRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -388,7 +399,8 @@ public class MainFragment extends Fragment {
                 mySchoolUpdatedCard.setVisibility(View.GONE);
                 if (cvNewFeature.getVisibility() == View.GONE
                         && cvAddedSchools.getVisibility() == View.GONE
-                        && mySchoolUpdatedCard.getVisibility() == View.GONE){
+                        && mySchoolUpdatedCard.getVisibility() == View.GONE
+                        && cSchoolChallenge.getVisibility() == View.GONE){
                     rlNews.setVisibility(View.GONE);
                 } else {
                     rlNews.setVisibility(View.VISIBLE);
@@ -456,7 +468,8 @@ public class MainFragment extends Fragment {
 
                                                     if (cvNewFeature.getVisibility() == View.GONE
                                                             && cvAddedSchools.getVisibility() == View.GONE
-                                                            && mySchoolUpdatedCard.getVisibility() == View.GONE) {
+                                                            && mySchoolUpdatedCard.getVisibility() == View.GONE
+                                                            && cSchoolChallenge.getVisibility() == View.GONE){
                                                         rlNews.setVisibility(View.GONE);
                                                     } else {
                                                         rlNews.setVisibility(View.VISIBLE);
@@ -498,8 +511,10 @@ public class MainFragment extends Fragment {
 
         if (!foundURL){
             mySchoolUpdatedCard.setVisibility(View.GONE);
-            if (cvNewFeature.getVisibility() == View.GONE && cvAddedSchools.getVisibility() == View.GONE
-                    && mySchoolUpdatedCard.getVisibility() == View.GONE) {
+            if (cvNewFeature.getVisibility() == View.GONE
+                    && cvAddedSchools.getVisibility() == View.GONE
+                    && mySchoolUpdatedCard.getVisibility() == View.GONE
+                    && cSchoolChallenge.getVisibility() == View.GONE){
                 rlNews.setVisibility(View.GONE);
             } else {
                 rlNews.setVisibility(View.VISIBLE);
@@ -1454,8 +1469,10 @@ public class MainFragment extends Fragment {
 
         if (dismissedNewFeatureMySchool) cvNewFeature.setVisibility(View.GONE);
         if (dismissedAddedNewSchoolsInfo) cvAddedSchools.setVisibility(View.GONE);
-        if (cvNewFeature.getVisibility() == View.GONE && cvAddedSchools.getVisibility() == View.GONE
-                && mySchoolUpdatedCard.getVisibility() == View.GONE){
+        if (cvNewFeature.getVisibility() == View.GONE
+                && cvAddedSchools.getVisibility() == View.GONE
+                && mySchoolUpdatedCard.getVisibility() == View.GONE
+                && cSchoolChallenge.getVisibility() == View.GONE){
             rlNews.setVisibility(View.GONE);
         } else {
             rlNews.setVisibility(View.VISIBLE);
@@ -1466,8 +1483,10 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
                 cvNewFeature.setVisibility(View.GONE);
                 dismissedNewFeatureMySchool = true;
-                if (cvNewFeature.getVisibility() == View.GONE && cvAddedSchools.getVisibility() == View.GONE
-                        && mySchoolUpdatedCard.getVisibility() == View.GONE){
+                if (cvNewFeature.getVisibility() == View.GONE
+                        && cvAddedSchools.getVisibility() == View.GONE
+                        && mySchoolUpdatedCard.getVisibility() == View.GONE
+                        && cSchoolChallenge.getVisibility() == View.GONE){
                     rlNews.setVisibility(View.GONE);
                 } else {
                     rlNews.setVisibility(View.VISIBLE);
@@ -1497,8 +1516,10 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
                 cvAddedSchools.setVisibility(View.GONE);
                 dismissedAddedNewSchoolsInfo = true;
-                if (cvNewFeature.getVisibility() == View.GONE && cvAddedSchools.getVisibility() == View.GONE
-                        && mySchoolUpdatedCard.getVisibility() == View.GONE){
+                if (cvNewFeature.getVisibility() == View.GONE
+                        && cvAddedSchools.getVisibility() == View.GONE
+                        && mySchoolUpdatedCard.getVisibility() == View.GONE
+                        && cSchoolChallenge.getVisibility() == View.GONE){
                     rlNews.setVisibility(View.GONE);
                 } else {
                     rlNews.setVisibility(View.VISIBLE);
@@ -1557,6 +1578,129 @@ public class MainFragment extends Fragment {
         } else {
             shareAppCard.setVisibility(View.GONE);
         }*/
+    }
+
+    private void schoolChallengeCard(View v){
+        if (prefs.contains(getActivity().getResources().getString(R.string.pref_key_my_school_school_id)) ||
+                prefs.contains(getActivity().getResources().getString(R.string.pref_key_my_school_school_name))){
+
+            final String schoolID = prefs.getString(getActivity().getResources().getString(R.string.pref_key_my_school_school_id), "[none]");
+            final String schoolName = prefs.getString(getActivity().getResources().getString(R.string.pref_key_my_school_school_name), "[none]");
+
+            if (schoolID != null && !schoolID.equals("[none]") && schoolName != null && !schoolName.equals("[none]")) {
+
+                final FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+                DatabaseReference ref = database.getReference();
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        boolean isChallenge = false;
+                        if (dataSnapshot.child("School Challenges (active)/c1 (20160818)").exists()){
+                            final Object obj1 = dataSnapshot.child("School Challenges (active)/c1 (20160818)").getValue();
+
+                            if (obj1 != null) {
+                                isChallenge = (boolean) obj1;
+
+                                if (isChallenge){
+                                    rlNews.setVisibility(View.VISIBLE);
+                                    cSchoolChallenge.setVisibility(View.VISIBLE);
+                                    tvSchoolChallengeSubtitle.setText(schoolName);
+
+                                    llSchoolChallengeCounter.setVisibility(View.GONE);
+                                    vSchoolChallengeCounter.setVisibility(View.GONE);
+
+                                    boolean foundValue = false;
+                                    if (dataSnapshot.child("Schools NrUsers/" + schoolID).exists()){
+                                        final Object obj2 = dataSnapshot.child("Schools NrUsers/" + schoolID).getValue();
+
+                                        if (obj2 != null) {
+                                            final long nrUsers = (long) obj2;
+                                            llSchoolChallengeCounter.setVisibility(View.VISIBLE);
+                                            vSchoolChallengeCounter.setVisibility(View.VISIBLE);
+                                            tvScoolChallengeCounter.setText(String.valueOf(nrUsers));
+                                            foundValue = true;
+                                        }
+                                    }
+                                    if (!foundValue) {
+                                        llSchoolChallengeCounter.setVisibility(View.GONE);
+                                        vSchoolChallengeCounter.setVisibility(View.GONE);
+                                    }
+
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                        bSchoolChallengeInviteFriends.setBackgroundTintList(getActivity().getResources().getColorStateList(R.color.button_color_state_list));
+                                        bSchoolChallengeInviteFriends.setTextColor(getActivity().getResources().getColor(R.color.TextDarkBg));
+                                    } else {
+                                        bSchoolChallengeInviteFriends.setTextColor(getActivity().getResources().getColor(R.color.colorAccent));
+                                    }
+
+                                    final String linkText = getActivity().getResources().getString(R.string.link_to_play_store_page);
+
+                                    bSchoolChallengeInviteFriends.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Intent sendIntent = new Intent();
+                                            sendIntent.setAction(Intent.ACTION_SEND);
+                                            sendIntent.putExtra(Intent.EXTRA_TEXT, linkText);
+                                            sendIntent.setType("text/plain");
+                                            startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
+
+                                            int nrShares = 0;
+                                            if (prefs.contains(getActivity().getResources().getString(R.string.pref_key_number_shares))){
+                                                nrShares = prefs.getInt(getActivity().getResources().getString(R.string.pref_key_number_shares), 0);
+                                            }
+                                            nrShares ++;
+                                            prefs.edit().putInt(getActivity().getResources().getString(R.string.pref_key_number_shares), nrShares).apply();
+
+                                            mTracker.send(new HitBuilders.EventBuilder()
+                                                    .setCategory("MySchool - Share app (MainFrag-SchoolChallenge)")
+                                                    .setAction("S: "+schoolID+" ("+schoolName+")")
+                                                    .build());
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                        if (!isChallenge) {
+                            cSchoolChallenge.setVisibility(View.GONE);
+                            if (cvNewFeature.getVisibility() == View.GONE
+                                    && cvAddedSchools.getVisibility() == View.GONE
+                                    && mySchoolUpdatedCard.getVisibility() == View.GONE
+                                    && cSchoolChallenge.getVisibility() == View.GONE){
+                                rlNews.setVisibility(View.GONE);
+                            } else {
+                                rlNews.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d("FBDB", "SchoolChallenge:DatabaseError: "+databaseError);
+                    }
+                });
+            } else {
+                cSchoolChallenge.setVisibility(View.GONE);
+                if (cvNewFeature.getVisibility() == View.GONE
+                        && cvAddedSchools.getVisibility() == View.GONE
+                        && mySchoolUpdatedCard.getVisibility() == View.GONE
+                        && cSchoolChallenge.getVisibility() == View.GONE){
+                    rlNews.setVisibility(View.GONE);
+                } else {
+                    rlNews.setVisibility(View.VISIBLE);
+                }
+            }
+        } else {
+            cSchoolChallenge.setVisibility(View.GONE);
+            if (cvNewFeature.getVisibility() == View.GONE
+                    && cvAddedSchools.getVisibility() == View.GONE
+                    && mySchoolUpdatedCard.getVisibility() == View.GONE
+                    && cSchoolChallenge.getVisibility() == View.GONE){
+                rlNews.setVisibility(View.GONE);
+            } else {
+                rlNews.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     private void storeSchoolInDatabase(){
