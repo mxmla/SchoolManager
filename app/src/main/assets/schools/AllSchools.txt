@@ -1,3 +1,5 @@
+020104020003,Julius-Wegeler-Schule Koblenz,0
+050105020001,Dhahran High School,0
 050600060001,The International School of Choueifat Sharjah,0
 010103010007,Mansueto High School,0
 010102010007,Veterans Memorial Early College High School,0

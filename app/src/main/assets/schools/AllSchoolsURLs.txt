@@ -205,3 +205,5 @@
 010102010007,1,http://veteransmemorialearlycollegehigh.weebly.com/
 020104010014,1,http://mmge-meerbusch.de/
 050600060001,1,http://iscsharjah.sabis.net/
+020104020003,1,http://www.julius-wegeler-schule.de/
+050105020001,1,http://dhs.isg.edu.sa/
