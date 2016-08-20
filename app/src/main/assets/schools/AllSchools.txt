@@ -1,3 +1,8 @@
+020103020008,Gymnasien Bergschule Apolda,0
+010103010008,Fenwick High School,0
+020105030018,Johann-Walter-Gymnasium Torgau,0
+020101040001,Stadtteilschule Blankenese,0
+020104010015,Sekundarschule Am Stoppenberg,0
 020104020003,Julius-Wegeler-Schule Koblenz,0
 050105020001,Dhahran High School,0
 050600060001,The International School of Choueifat Sharjah,0
@@ -5,7 +10,7 @@
 010102010007,Veterans Memorial Early College High School,0
 020104010014,Maria-Montessori-Gesamtschule Meerbusch,0
 020101010021,BBS Buchholz,0
-020105030016,Lessing Oberschule Schkeuditz,0
+020105030017,Lessing Oberschule Schkeuditz,0
 020104010013,Städtisches Gymnasium Gevelsberg,0
 020101010020,Berufsbildende Schule 14,0
 020103030004,Friedrich-Ebert-Gymnasium Mühlheim,0

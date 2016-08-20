@@ -199,7 +199,7 @@
 020103030004,1,http://www.fe-gymnasium.de/
 020104010012,1,http://www.lgbk.de/
 020101010021,1,https://www.bbs-buchholz.de/internet/startseite/startseite.php
-020105030016,1,http://www.oberschule-schkeuditz.de/aktuelles/
+020105030017,1,http://www.oberschule-schkeuditz.de/aktuelles/
 020104010013,1,http://www.gym-gevelsberg.de/
 010103010007,1,http://www.noblenetwork.org/southwest
 010102010007,1,http://veteransmemorialearlycollegehigh.weebly.com/
@@ -207,3 +207,8 @@
 050600060001,1,http://iscsharjah.sabis.net/
 020104020003,1,http://www.julius-wegeler-schule.de/
 050105020001,1,http://dhs.isg.edu.sa/
+020103020008,1,https://www.bergschule-apolda.de/
+010103010008,1,http://www.fenwickfriars.com/
+020105030018,1,http://www.johann-walter-gymnasium.de/?q=news
+020101040001,1,http://stadtteilschule-blankenese.de/
+020104010015,1,http://www.sekundarschule-am-stoppenberg.de/
