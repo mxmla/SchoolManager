@@ -1,3 +1,8 @@
+020103020009,Regelschule Robert Bosch Arnstadt,0
+020101010022,Albert-Schweitzer-Gymnasium Wolfsburg,0
+021300040001,Coolmine Community School Dublin,0
+010400190001,Universidad Autónoma de Nuevo León,0
+020700020001,Gewerblich Industrielle Berufsschule Bern,0
 020103020008,Gymnasien Bergschule Apolda,0
 010103010008,Fenwick High School,0
 020105030018,Johann-Walter-Gymnasium Torgau,0

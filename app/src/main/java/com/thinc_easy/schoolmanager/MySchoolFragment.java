@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.drawable.ColorDrawable;
+import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -18,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -92,7 +94,12 @@ public class MySchoolFragment extends Fragment {
                         tvNoSchool.setVisibility(View.GONE);
                         goToSettings.setVisibility(View.GONE);
                         webView.setVisibility(View.VISIBLE);
-                        webView.setWebViewClient(new WebViewClient());
+                        webView.setWebViewClient(new WebViewClient(){
+                            @Override
+                            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error){
+                                handler.proceed();
+                            }
+                        });
                         webView.getSettings().setJavaScriptEnabled(true);
                         webView.getSettings().setBuiltInZoomControls(true);
                         webView.getSettings().setDisplayZoomControls(false);
@@ -106,7 +113,13 @@ public class MySchoolFragment extends Fragment {
                         webView.setInitialScale(getScale());
                         */
 
-                        webView.loadUrl(url);
+                        webView.postDelayed(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                webView.loadUrl(url);
+                            }
+                        }, 500);
                         //webView.loadData(url, "text/html; charset=UTF-8", null);
                         foundURL = true;
                         Toast.makeText(getActivity(), "Loading...", Toast.LENGTH_LONG).show();

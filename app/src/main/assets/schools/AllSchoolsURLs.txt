@@ -212,3 +212,8 @@
 020105030018,1,http://www.johann-walter-gymnasium.de/?q=news
 020101040001,1,http://stadtteilschule-blankenese.de/
 020104010015,1,http://www.sekundarschule-am-stoppenberg.de/
+021300040001,1,http://www.coolminecs.ie/
+010400190001,1,http://www.uanl.mx/
+020700020001,1,https://www.gibb.ch/Seiten/default.aspx
+020103020009,1,http://www.rs-bosch-arnstadt.de/
+020101010022,1,http://www.asg-wob.de/

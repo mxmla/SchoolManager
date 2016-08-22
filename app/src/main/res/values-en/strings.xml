@@ -324,7 +324,7 @@
     <string name="my_school_add_school_country_hint">The country your school is in</string>
     <string name="my_school_add_school_school_hint">Name of your school</string>
     <string name="my_school_add_school_url">Website</string>
-    <string name="my_school_add_school_url_hint">Your school\'s website (optional)</string>
+    <string name="my_school_add_school_url_hint">e.g. www.my-school.com</string>
     <string name="my_school_add_school_share_title">Great!</string>
     <string name="my_school_add_school_share_text">We\'re now working on adding your school to SchoolManager! :)\n\nThat usually takes 1-3 days...\n\n\n\nTell your friends about this app:</string>
     <string name="my_school_add_school_share_button">Share</string>
@@ -373,6 +373,9 @@
         <item>Belarus</item>
         <item>Romania</item>
         <item>United Arab Emirates</item>
+        <item>Ireland</item>
+        <item>Mexico</item>
+        <item>Switzerland</item>
     </string-array>
     <string name="toast_school_selection_went_wrong">Oops... something went wrong!</string>
     <string name="pref_my_school_state">State/Region</string>

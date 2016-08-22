@@ -450,3 +450,92 @@
 05060005,Ras al-Khaimah
 05060006,Sharjah
 05060007,Umm al-Quwain
+02110001,Carlow County
+02110002,Dublin City
+02110003,Dún Laoghaire–Rathdown County
+02110004,Fingal County
+02110005,South Dublin County
+02110006,Kildare County
+02110007,Kilkenny County
+02110008,Laois County
+02110009,Longford County
+02110010,Louth County
+02110011,Meath County
+02110012,Offaly County
+02110013,Westmeath County
+02110014,Wexford County
+02110015,Wicklow County
+02110016,Clare County
+02110017,Cork City
+02110018,Cork County
+02110019,Kerry County
+02110020,Limerick City and County
+02110021,Tipperary County
+02110022,Waterford City and County
+02110023,Galway City
+02110024,Galway County
+02110025,Leitrim County
+02110026,Mayo County
+02110027,Roscommon County
+02110028,Sligo County
+02110029,Cavan County
+02110030,Donegal County
+02110031,Monaghan County
+01040001,Aguascalientes
+01040002,Baja California
+01040003,Baja California Sur
+01040004,Campeche
+01040005,Chiapas
+01040006,Chihuahua
+01040007,Ciudad de México
+01040008,Coahuila de Zaragoza
+01040009,Colima
+01040010,Durango
+01040011,Guanajuato
+01040012,Guerrero
+01040013,Hidalgo
+01040014,Jalisco
+01040015,México
+01040016,Michoacán de Ocampo
+01040017,Morelos
+01040018,Nayarit
+01040019,Nuevo León
+01040020,Oaxaca
+01040021,Puebla
+01040022,Querétaro de Arteaga
+01040023,Quintana Roo
+01040024,San Luis Potosí
+01040025,Sinaloa
+01040026,Sonora
+01040027,Tabasco
+01040028,Tamaulipas
+01040029,Tlaxcala
+01040030,Veracruz de Ignacio de la Llave
+01040031,Yucatán
+01040032,Zacatecas
+1,Zürich
+2,Bern
+3,Luzern
+4,Uri
+5,Schwyz
+6,Obwalden
+7,Nidwalden
+8,Glarus
+9,Zug
+10,Freiburg
+11,Solothurn
+12,Basel-Stadt
+13,Basel-Landschaft
+14,Schaffhausen
+15,Appenzell Ausserrhoden
+16,Appenzell Innerrhoden
+17,St. Gallen
+18,Graubünden
+19,Aargau
+20,Thurgau
+21,Tessin
+22,Waadt
+23,Wallis
+24,Neuenburg
+25,Genf
+26,Jura
