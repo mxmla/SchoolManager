@@ -65,7 +65,7 @@
 02010502,Brandenburg
 02010503,Sachsen
 02030001,England
-02030002,Scottland
+02030002,Scotland
 02030003,Wales
 02030004,Northern Ireland
 06010101,Upper West
@@ -513,29 +513,29 @@
 01040030,Veracruz de Ignacio de la Llave
 01040031,Yucatán
 01040032,Zacatecas
-1,Zürich
-2,Bern
-3,Luzern
-4,Uri
-5,Schwyz
-6,Obwalden
-7,Nidwalden
-8,Glarus
-9,Zug
-10,Freiburg
-11,Solothurn
-12,Basel-Stadt
-13,Basel-Landschaft
-14,Schaffhausen
-15,Appenzell Ausserrhoden
-16,Appenzell Innerrhoden
-17,St. Gallen
-18,Graubünden
-19,Aargau
-20,Thurgau
-21,Tessin
-22,Waadt
-23,Wallis
-24,Neuenburg
-25,Genf
-26,Jura
+02070001,Zürich
+02070002,Bern
+02070003,Luzern
+02070004,Uri
+02070005,Schwyz
+02070006,Obwalden
+02070007,Nidwalden
+02070008,Glarus
+02070009,Zug
+02070010,Freiburg
+02070011,Solothurn
+02070012,Basel-Stadt
+02070013,Basel-Landschaft
+02070014,Schaffhausen
+02070015,Appenzell Ausserrhoden
+02070016,Appenzell Innerrhoden
+02070017,St. Gallen
+02070018,Graubünden
+02070019,Aargau
+02070020,Thurgau
+02070021,Tessin
+02070022,Waadt
+02070023,Wallis
+02070024,Neuenburg
+02070025,Genf
+02070026,Jura

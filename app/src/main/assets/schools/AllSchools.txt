@@ -1,3 +1,13 @@
+020101010023,Gymnasium am Silberkamp,0
+020101010024,IGS Wunstorf,0
+020101010025,BBS ME Otto-Brenner-Schule,0
+020101020004,Käthe-Kollwitz-Schule Kiel,0
+020104020004,IGS Sophie Sondhelm Bad Kreuznach,0
+020101010026,Oberschule Lastrup	http://wordpres,0
+020604020001,Polytechnische Schule Fieberbrunn,0
+020300020001,Farr High School,0
+060305010001,Hoërskool Secunda,0
+020300010003,Chislehurst and Sidcup Grammar School,0
 020103020009,Regelschule Robert Bosch Arnstadt,0
 020101010022,Albert-Schweitzer-Gymnasium Wolfsburg,0
 021300040001,Coolmine Community School Dublin,0

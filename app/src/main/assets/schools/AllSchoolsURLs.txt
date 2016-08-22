@@ -217,3 +217,13 @@
 020700020001,1,https://www.gibb.ch/Seiten/default.aspx
 020103020009,1,http://www.rs-bosch-arnstadt.de/
 020101010022,1,http://www.asg-wob.de/
+020300020001,1,https://farrhigh.wordpress.com/
+060305010001,1,http://secundahs.co.za/
+020300010003,1,http://www.csgrammar.com/
+020101010023,1,http://www.silberkamp.de/
+020101010024,1,http://cms2.fun-box.org/joomla3/
+020101010025,1,http://bbs-me.de/
+020101020004,1,http://www.kaethe-kollwitz-schule.de/
+020104020004,1,http://igs-sophie-sondhelm.de/
+020101010026,1,http://wordpress.nibis.de/obslastrup/
+020604020001,1,http://www.pts-fieberbrunn.tsn.at/cms/
