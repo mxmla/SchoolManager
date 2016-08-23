@@ -227,3 +227,14 @@
 020104020004,1,http://igs-sophie-sondhelm.de/
 020101010026,1,http://wordpress.nibis.de/obslastrup/
 020604020001,1,http://www.pts-fieberbrunn.tsn.at/cms/
+060600060001,1,http://www.mohammedalfatih.com/
+010105050001,1,http://www.wsfcs.k12.nc.us/domain/2792
+010103040001,1,http://www.clinton.k12.ia.us/clinton_middle_school
+021400020001,1,http://en.via.dk/
+010105040001,1,http://www.sc.edu/
+020300010004,1,http://www.blue-coat.oldham.sch.uk/
+020104030002,1,http://www.pwg-merzig.de/
+020700170001,1,https://www.gbssg.ch/
+020300020002,1,http://stjohnshigh.ea.dundeecity.sch.uk/
+020104010016,1,http://www.luisenschule-mh.de/
+050503010001,1,http://www.somervillenoida.in/

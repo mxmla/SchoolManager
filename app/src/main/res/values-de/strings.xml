@@ -386,6 +386,8 @@
         <item>Irland</item>
         <item>Mexiko</item>
         <item>Schweiz</item>
+        <item>Marokko</item>
+        <item>Dänemark</item>
     </string-array>
     <string name="toast_school_selection_went_wrong">Ups... etwas ist schiefgelaufen!</string>
     <string name="pref_my_school_state">Bundesland/Region</string>

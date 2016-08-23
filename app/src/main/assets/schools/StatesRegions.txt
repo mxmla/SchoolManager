@@ -539,3 +539,20 @@
 02070024,Neuenburg
 02070025,Genf
 02070026,Jura
+06060001,Tanger-Tetouan-Al Hoceima
+06060002,Oriental
+06060003,Fès-Meknès
+06060004,Rabat-Salé-Kénitra
+06060005,Béni Mellal-Khénifra
+06060006,Casablanca-Settat
+06060007,Marrakech-Safi
+06060008,Drâa-Tafilalet
+06060009,Souss-Massa
+06060010,Guelmim-Oued Noun
+06060011,Laâyoune-Sakia El Hamra
+06060012,Dakhla-Oued Ed-Dahab
+02140001,Nordjylland
+02140002,Midtjylland
+02140003,Syddanmark
+02140004,Hovedstaden
+02140005,Sjælland

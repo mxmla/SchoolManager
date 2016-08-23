@@ -1,3 +1,14 @@
+060600060001,Groupe Scolaire Mohammed Al Fatih,0
+010105050001,Southeast Middle School Kernersville,0
+010103040001,Clinton Middle School,0
+021400020001,VIA University College,0
+010105040001,University of South Carolina,0
+020300010004,The Blue Coat School Oldham,0
+020104030002,Peter-Wust-Gymnasium Merzig,0
+020700170001,GBS St. Gallen,0
+020300020002,St John's RC High School Dundee,0
+020104010016,Luisenschule Mülheim an der Ruhr,0
+050503010001,Somerville School Noida,0
 020101010023,Gymnasium am Silberkamp,0
 020101010024,IGS Wunstorf,0
 020101010025,BBS ME Otto-Brenner-Schule,0
