@@ -239,3 +239,9 @@
 020104010016,1,http://www.luisenschule-mh.de/
 050503010001,1,http://www.somervillenoida.in/
 010103010009,1,http://bjh.butler53.com/pages/ButlerJrHigh
+050700520001,1,http://www.satit.nu.ac.th/2016/index.php
+020300010005,1,http://www.chilternhillsacademy.co.uk/
+030105010003,1,http://www.elizabeth-h.schools.nsw.edu.au/
+020102010008,1,http://www.waldorfschule-ismaning.de/
+020104020005,1,http://www.rs-katzenelnbogen.de/
+010101010033,1,http://www.tamdistrict.org/redwood
