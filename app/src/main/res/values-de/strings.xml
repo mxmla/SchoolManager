@@ -330,13 +330,14 @@
     <string name="my_school_add_school_school_hint">Name deiner Schule</string>
     <string name="my_school_add_school_url">Website</string>
     <string name="my_school_add_school_url_hint">z.B. www.meine-schule.com</string>
+    <string name="my_school_add_school_state_region">Bundesland/Kanton</string>
+    <string name="my_school_add_school_state_region_hint">Das Bundesland/Kanton in dem deine Schule ist</string>
     <string name="my_school_add_school_share_title">Super!</string>
-    <string name="my_school_add_school_share_text">Wir arbeiten jetzt daran, deine Schule in SchoolManager aufzunehmen! :)\n\nAufgrund sehr hoher Nachfrage kann das momentan <b>bis zu 1 Woche</b> dauern.\n\n<b>Wesentlich schneller</b> geht das jedoch, je mehr von deinen Mitschülern die Schule vorschlagen.\n\n<b>Also sag deinen Freunden und Klassenkameraden Bescheid!</b></string>
+    <string name="my_school_add_school_share_text">Ab 3 Anfragen wird deine Schule in SchoolManager aufgenommen. :)\n\n\n<b>Also erzähle deinen Freunden und Klassenkameraden von dieser App:</b></string>
     <string name="my_school_add_school_share_button">Freunde einladen</string>
     <string name="my_school_add_school_missing_information">Bitte nenne<b>Land</b>, <b>Ort</b> und <b>Namen</b> deiner Schule.</string>
     <string name="my_school_add_school_not_in_the_list">Sollte deine Schule nicht aufgelistet sein, kannst du</string>
     <string name="my_school_add_school_not_in_the_list_button">Meine Schule ist nicht aufgelistet</string>
-    <string name="my_school_add_school_title">Bitte trage die Informationen zu deiner Schule ein.</string>
     <string name="spinner_please_select">-- Bitte wählen --</string>
     <string name="title_section_news">Neuigkeiten</string>
     <string name="card_introducing_new_feature">Neue Funktion</string>
@@ -402,4 +403,6 @@
     <string name="card_school_challenge_currently">Nutzer\nmomentan</string>
     <string name="card_school_challenge_users">Nutzer</string>
     <string name="invite_friends">Freunde einladen</string>
+    <string name="my_school_add_school_title_text">Füge deine Schule hinzu und sag auch deinen Freunden Bescheid!\nBei 3 Anfragen wird eine Schule in die App aufgenommen.</string>
+    <string name="my_school_add_school_title">Schule hinzufügen</string>
 </resources>

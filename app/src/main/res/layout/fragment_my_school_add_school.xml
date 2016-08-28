@@ -1,159 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/introText"
-        android:text="@string/my_school_add_school_title"
-        style="@style/IntroductiveText"
-        android:gravity="top|start"/>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
 
     <ScrollView
         android:id="@+id/svAddSchool"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/introText"
+        android:gravity="top|start"
         android:layout_marginTop="@dimen/card_margin">
+
         <LinearLayout
-            style="@style/CardContent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/tvCountry"
-                style="@style/CardContentText"
-                android:layout_marginTop="@dimen/card_margin"
-                android:layout_marginStart="@dimen/card_padding"
-                android:layout_marginEnd="@dimen/card_padding"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/color_settings_accent"
-                android:text="@string/pref_my_school_country"/>
+            <android.support.v7.widget.CardView
+                style="@style/Card"
+                custom:cardElevation="2dp"
+                custom:cardUseCompatPadding="true"
+                custom:cardBackgroundColor="@color/colorPrimary" >
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
 
-            <EditText
-                android:id="@+id/etCountry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/card_padding"
-                android:layout_marginEnd="@dimen/card_padding"
-                android:layout_marginBottom="@dimen/card_margin"
-                android:layout_marginLeft="@dimen/card_padding"
-                android:singleLine="true"
-                android:hint="@string/my_school_add_school_country_hint"/>
+                    <TextView
+                        style="@style/CardTitle"
+                        android:text="@string/my_school_add_school_title"
+                        android:textColor="@color/TextDarkBg" />
 
-            <TextView
-                android:id="@+id/tvCity"
-                style="@style/CardContentText"
-                android:paddingTop="@dimen/card_padding"
-                android:layout_marginTop="@dimen/card_padding"
-                android:layout_marginStart="@dimen/card_padding"
-                android:layout_marginEnd="@dimen/card_padding"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/color_settings_accent"
-                android:text="@string/my_school_add_school_city"/>
+                    <TextView
+                        android:id="@+id/tvD1.1"
+                        style="@style/CardContent"
+                        android:text="@string/my_school_add_school_title_text"
+                        android:textColor="@color/SecondaryTextDarkBg" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
 
-            <EditText
-                android:id="@+id/etCity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/card_padding"
-                android:layout_marginEnd="@dimen/card_padding"
-                android:layout_marginBottom="@dimen/card_margin"
-                android:layout_marginLeft="@dimen/card_padding"
-                android:singleLine="true"
-                android:hint="@string/my_school_add_school_city_hint"/>
+            <android.support.v7.widget.CardView
+                style="@style/Card"
+                custom:cardElevation="2dp"
+                custom:cardUseCompatPadding="true" >
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/tvSchool"
-                style="@style/CardContentText"
-                android:paddingTop="@dimen/card_padding"
-                android:layout_marginTop="@dimen/card_padding"
-                android:layout_marginStart="@dimen/card_padding"
-                android:layout_marginEnd="@dimen/card_padding"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/color_settings_accent"
-                android:text="@string/pref_my_school_school"/>
+                    <TextView
+                        android:id="@+id/tvCountry"
+                        style="@style/CardContentText"
+                        android:layout_marginTop="@dimen/card_padding"
+                        android:layout_marginStart="@dimen/card_padding"
+                        android:layout_marginEnd="@dimen/card_padding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_settings_accent"
+                        android:text="@string/pref_my_school_country"/>
 
-            <EditText
-                android:id="@+id/etSchool"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/card_padding"
-                android:layout_marginEnd="@dimen/card_padding"
-                android:layout_marginBottom="@dimen/card_margin"
-                android:layout_marginLeft="@dimen/card_padding"
-                android:singleLine="true"
-                android:hint="@string/my_school_add_school_school_hint"/>
+                    <EditText
+                        android:id="@+id/etCountry"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/card_padding"
+                        android:layout_marginEnd="@dimen/card_padding"
+                        android:layout_marginBottom="@dimen/card_margin"
+                        android:layout_marginLeft="@dimen/card_padding"
+                        android:singleLine="true"
+                        android:hint="@string/my_school_add_school_country_hint"/>
 
-            <TextView
-                android:id="@+id/tvURL"
-                style="@style/CardContentText"
-                android:paddingTop="@dimen/card_padding"
-                android:layout_marginTop="@dimen/card_padding"
-                android:layout_marginStart="@dimen/card_padding"
-                android:layout_marginEnd="@dimen/card_padding"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/color_settings_accent"
-                android:text="@string/my_school_add_school_url"/>
+                    <TextView
+                        android:id="@+id/tvState"
+                        style="@style/CardContentText"
+                        android:layout_marginTop="@dimen/card_margin"
+                        android:layout_marginStart="@dimen/card_padding"
+                        android:layout_marginEnd="@dimen/card_padding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_settings_accent"
+                        android:text="@string/my_school_add_school_state_region"/>
 
-            <EditText
-                android:id="@+id/etURL"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/card_padding"
-                android:layout_marginEnd="@dimen/card_padding"
-                android:layout_marginBottom="@dimen/card_margin"
-                android:layout_marginLeft="@dimen/card_padding"
-                android:singleLine="true"
-                android:hint="@string/my_school_add_school_url_hint"/>
+                    <EditText
+                        android:id="@+id/etState"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/card_padding"
+                        android:layout_marginEnd="@dimen/card_padding"
+                        android:layout_marginBottom="@dimen/card_margin"
+                        android:layout_marginLeft="@dimen/card_padding"
+                        android:singleLine="true"
+                        android:hint="@string/my_school_add_school_state_region_hint"/>
 
-            <!--
-            <TextView
-                android:id="@+id/tvComments"
-                style="@style/CardContentText"
-                android:paddingTop="@dimen/card_padding"
-                android:layout_marginTop="@dimen/card_padding"
-                android:layout_marginBottom="@dimen/card_margin"
-                android:layout_marginStart="@dimen/card_padding"
-                android:layout_marginEnd="@dimen/card_padding"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/color_settings_accent"
-                android:text="@string/my_school_add_school_comments"/>
+                    <TextView
+                        android:id="@+id/tvCity"
+                        style="@style/CardContentText"
+                        android:layout_marginTop="@dimen/card_margin"
+                        android:layout_marginStart="@dimen/card_padding"
+                        android:layout_marginEnd="@dimen/card_padding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_settings_accent"
+                        android:text="@string/my_school_add_school_city"/>
 
-            <EditText
-                android:id="@+id/etComments"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/card_padding"
-                android:layout_marginEnd="@dimen/card_padding"
-                android:layout_marginBottom="@dimen/card_padding"
-                android:layout_marginLeft="@dimen/card_padding"
-                android:layout_below="@id/sCountry"
-                android:hint="@string/my_school_add_school_comments_hint"/>
-                -->
+                    <EditText
+                        android:id="@+id/etCity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/card_padding"
+                        android:layout_marginEnd="@dimen/card_padding"
+                        android:layout_marginBottom="@dimen/card_margin"
+                        android:layout_marginLeft="@dimen/card_padding"
+                        android:singleLine="true"
+                        android:hint="@string/my_school_add_school_city_hint"/>
 
-            <Button
-                android:id="@+id/bAddSchoolSave"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/card_padding"
-                android:layout_marginBottom="@dimen/card_padding"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/save"/>
+                    <TextView
+                        android:id="@+id/tvSchool"
+                        style="@style/CardContentText"
+                        android:layout_marginTop="@dimen/card_margin"
+                        android:layout_marginStart="@dimen/card_padding"
+                        android:layout_marginEnd="@dimen/card_padding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_settings_accent"
+                        android:text="@string/pref_my_school_school"/>
 
-            <TextView
-                android:id="@+id/tvError"
-                style="@style/CardContentText"
-                android:layout_marginBottom="@dimen/card_margin"
-                android:layout_marginStart="@dimen/card_padding"
-                android:layout_marginEnd="@dimen/card_padding"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/red"
-                android:text="@string/my_school_add_school_missing_information" />
+                    <EditText
+                        android:id="@+id/etSchool"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/card_padding"
+                        android:layout_marginEnd="@dimen/card_padding"
+                        android:layout_marginBottom="@dimen/card_margin"
+                        android:layout_marginLeft="@dimen/card_padding"
+                        android:singleLine="true"
+                        android:hint="@string/my_school_add_school_school_hint"/>
+
+                    <TextView
+                        android:id="@+id/tvURL"
+                        style="@style/CardContentText"
+                        android:layout_marginTop="@dimen/card_margin"
+                        android:layout_marginStart="@dimen/card_padding"
+                        android:layout_marginEnd="@dimen/card_padding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_settings_accent"
+                        android:text="@string/my_school_add_school_url"/>
+
+                    <EditText
+                        android:id="@+id/etURL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/card_padding"
+                        android:layout_marginEnd="@dimen/card_padding"
+                        android:layout_marginBottom="@dimen/card_margin"
+                        android:layout_marginLeft="@dimen/card_padding"
+                        android:singleLine="true"
+                        android:hint="@string/my_school_add_school_url_hint"/>
+
+                    <!--
+                    <TextView
+                        android:id="@+id/tvComments"
+                        style="@style/CardContentText"
+                        android:paddingTop="@dimen/card_padding"
+                        android:layout_marginTop="@dimen/card_padding"
+                        android:layout_marginBottom="@dimen/card_margin"
+                        android:layout_marginStart="@dimen/card_padding"
+                        android:layout_marginEnd="@dimen/card_padding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_settings_accent"
+                        android:text="@string/my_school_add_school_comments"/>
+
+                    <EditText
+                        android:id="@+id/etComments"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/card_padding"
+                        android:layout_marginEnd="@dimen/card_padding"
+                        android:layout_marginBottom="@dimen/card_padding"
+                        android:layout_marginLeft="@dimen/card_padding"
+                        android:layout_below="@id/sCountry"
+                        android:hint="@string/my_school_add_school_comments_hint"/>
+                        -->
+
+                    <Button
+                        android:id="@+id/bAddSchoolSave"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/card_padding"
+                        android:layout_marginBottom="@dimen/card_padding"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/save"/>
+
+                    <TextView
+                        android:id="@+id/tvError"
+                        style="@style/CardContentText"
+                        android:layout_marginBottom="@dimen/card_margin"
+                        android:layout_marginStart="@dimen/card_padding"
+                        android:layout_marginEnd="@dimen/card_padding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/red"
+                        android:text="@string/my_school_add_school_missing_information" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
         </LinearLayout>
     </ScrollView>
 

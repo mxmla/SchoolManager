@@ -245,3 +245,12 @@
 020102010008,1,http://www.waldorfschule-ismaning.de/
 020104020005,1,http://www.rs-katzenelnbogen.de/
 010101010033,1,http://www.tamdistrict.org/redwood
+020105020001,1,http://www.lfs-kw.brandenburg.de/cms/detail.php/bb1.c.174030.de
+020105030019,1,http://hoga-schulen.de/
+020105030020,1,https://cms.sachsen.schule/pgd/schule/
+020104010017,1,http://gymga-joomla.cephalix.de/index.php/de/
+020102020006,1,http://www.ks-gd.de/
+020102020007,1,http://www.mes-stuttgart.de/
+020103010004,1,http://www.gym-gerhardt.bildung-lsa.de/
+020101010027,1,http://www.igs-winsen.de/
+010105030001,1,http://pwhaleyah.wixsite.com/valleycubs?CFID=6653880&CFTOKEN=558206b002a9cab6-CCC2C438-97EE-C331-5FB84FF94579B7DA

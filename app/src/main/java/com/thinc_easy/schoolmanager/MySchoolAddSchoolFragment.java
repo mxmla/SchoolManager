@@ -25,6 +25,12 @@ import android.widget.Toast;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.SignInButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.File;
@@ -41,12 +47,12 @@ public class MySchoolAddSchoolFragment extends Fragment {
     public static final String DEFAULT_EDIT_FRAGMENT_TAG = "editFragmentTag";
 
     private Tracker mTracker;
-    private String fragmentName, country, school, url, linkText, added, shared, city;
+    private String fragmentName, country, school, url, linkText, added, shared, city, state, fbSchoolName;
     private SharedPreferences prefs;
-    private TextView tvIntro, tvError, tvCountry, tvSchool, tvURL, tvCity;
+    private TextView tvError, tvCountry, tvSchool, tvURL, tvCity, tvState;
     private ScrollView svAddSchool, svShare;
     private Button bAddSchool, bShare;
-    private EditText etCountry, etSchool, etURL, etCity;
+    private EditText etCountry, etSchool, etURL, etCity, etState;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,12 +66,13 @@ public class MySchoolAddSchoolFragment extends Fragment {
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 
-        tvIntro = (TextView) v.findViewById(R.id.introText);
+        //tvIntro = (TextView) v.findViewById(R.id.introText);
         tvError = (TextView) v.findViewById(R.id.tvError);
         tvCountry = (TextView) v.findViewById(R.id.tvCountry);
         tvSchool = (TextView) v.findViewById(R.id.tvSchool);
         tvCity = (TextView) v.findViewById(R.id.tvCity);
         tvURL = (TextView) v.findViewById(R.id.tvURL);
+        tvState = (TextView) v.findViewById(R.id.tvState);
         svAddSchool = (ScrollView) v.findViewById(R.id.svAddSchool);
         svShare = (ScrollView) v.findViewById(R.id.svShare);
         bAddSchool = (Button) v.findViewById(R.id.bAddSchoolSave);
@@ -74,6 +81,7 @@ public class MySchoolAddSchoolFragment extends Fragment {
         etSchool = (EditText) v.findViewById(R.id.etSchool);
         etCity = (EditText) v.findViewById(R.id.etCity);
         etURL = (EditText) v.findViewById(R.id.etURL);
+        etState = (EditText) v.findViewById(R.id.etState);
 
         linkText = getActivity().getResources().getString(R.string.link_to_play_store_page);
 
@@ -86,7 +94,7 @@ public class MySchoolAddSchoolFragment extends Fragment {
     }
 
     private void setUpAddSchool(){
-        tvIntro.setVisibility(View.VISIBLE);
+        //tvIntro.setVisibility(View.VISIBLE);
         svAddSchool.setVisibility(View.VISIBLE);
         tvError.setVisibility(View.INVISIBLE);
 
@@ -96,6 +104,7 @@ public class MySchoolAddSchoolFragment extends Fragment {
         tvSchool.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Medium.ttf"));
         tvCity.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Medium.ttf"));
         tvURL.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Medium.ttf"));
+        tvState.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Medium.ttf"));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             bAddSchool.setBackgroundTintList(getActivity().getResources().getColorStateList(R.color.button_color_state_list));
@@ -111,8 +120,11 @@ public class MySchoolAddSchoolFragment extends Fragment {
                 school = etSchool.getText().toString();
                 city = etCity.getText().toString();
                 url = etURL.getText().toString();
+                state = etState.getText().toString();
+
 
                 if (country != null && !country.equals("") && !country.equals(" ") &&
+                        state != null && !state.equals("") && !state.equals(" ") &&
                         school != null && !school.equals("") && !school.equals(" ") &&
                         city != null && !city.equals("") && !city.equals(" ")){
                     tvError.setVisibility(View.INVISIBLE);
@@ -130,10 +142,12 @@ public class MySchoolAddSchoolFragment extends Fragment {
                         prefs.edit().putString(keyUserID, userID).apply();
                     }
 
+                    transactionsFBAddSchool(country, state, city, school, url, userID);
+
                     mTracker.send(new HitBuilders.EventBuilder()
                             .setCategory("MySchool - Add school")
                             .setAction("+("+userID+") "+country+" | "+city+" | "+school+" | "+url)
-                            .setLabel("+("+userID+") "+school+" | "+url)
+                            .setLabel("+"+school+" ("+userID+")")
                             .build());
 
                     Calendar calendar = Calendar.getInstance();
@@ -193,7 +207,7 @@ public class MySchoolAddSchoolFragment extends Fragment {
     }
 
     private void setUpShare(){
-        tvIntro.setVisibility(View.GONE);
+        //tvIntro.setVisibility(View.GONE);
         svAddSchool.setVisibility(View.GONE);
 
         svShare.setVisibility(View.VISIBLE);
@@ -223,6 +237,8 @@ public class MySchoolAddSchoolFragment extends Fragment {
 
                 shared = "true";
 
+                if (fbSchoolName != null) transactionsFBClickedShare(fbSchoolName);
+
                 mTracker.send(new HitBuilders.EventBuilder()
                         .setCategory("MySchool - Share app (after Add school)")
                         .setAction("C: "+country+" || S: "+school+" || W: "+url)
@@ -231,6 +247,103 @@ public class MySchoolAddSchoolFragment extends Fragment {
         });
     }
 
+    private void transactionsFBAddSchool(String mCountry, String mState, String mCity, String mSchool, String mURL, String mUserID){
+        final int triesStart = 0;
+        final int maxTries = 10;
+        transactionAddSchool(triesStart, maxTries, mCountry, mState, mCity, mSchool, mURL, mUserID);
+    }
+
+    private void transactionAddSchool(final int tries, final int maxTries, final String mCountry,
+                                      final String mState, final String mCity, final String mSchool,
+                                      final String mURL, final String mUserID){
+        if (tries <= maxTries && mSchool != null && !mSchool.equals("[none]")) {
+
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("AddSchool Requested Schools");
+
+            myRef.runTransaction(new Transaction.Handler() {
+                @Override
+                public Transaction.Result doTransaction(MutableData mutableData) {
+                    int count = 0;
+                    String value_name = mSchool;
+                    while (count < 50){
+                        if (mutableData.child(value_name).getValue() == null && !mutableData.child(value_name).hasChildren()){
+                            mutableData.child(value_name).child("user_id").setValue(mUserID);
+                            mutableData.child(value_name).child("country").setValue(mCountry);
+                            mutableData.child(value_name).child("state").setValue(mState);
+                            mutableData.child(value_name).child("city").setValue(mCity);
+                            mutableData.child(value_name).child("url").setValue(mURL);
+
+                            fbSchoolName = value_name;
+                            break;
+                        } else {
+                            count ++;
+                            value_name = mSchool + String.valueOf(count);
+                        }
+                    }
+
+                    return Transaction.success(mutableData);
+                }
+
+                @Override
+                public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                    if (databaseError != null){
+                        Log.d("FBDB", "transactionAddSchool:onComplete:Error: " + String.valueOf(tries) + databaseError);
+                        transactionAddSchool(tries+1, maxTries, mCountry, mState, mCity, mSchool, mURL, mUserID);
+                    } else {
+                        // Transaction completed
+                        Log.d("FBDB", "transactionAddSchool:onComplete: " + String.valueOf(tries) + databaseError);
+                    }
+                }
+            });
+        }
+    }
+
+    private void transactionsFBClickedShare(String mSchoolValueName){
+        final int triesStart = 0;
+        final int maxTries = 10;
+        transactionShare(triesStart, maxTries, mSchoolValueName);
+    }
+
+    private void transactionShare(final int tries, final int maxTries, final String mSchoolValueName){
+        if (tries <= maxTries && mSchoolValueName != null && !mSchoolValueName.equals("[none]")) {
+
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("AddSchool Requested Schools");
+
+            myRef.runTransaction(new Transaction.Handler() {
+                @Override
+                public Transaction.Result doTransaction(MutableData mutableData) {
+                    if (mutableData.child(mSchoolValueName).getValue() != null){
+                        final Object obj1 = mutableData.child(mSchoolValueName).child("shared").getValue();
+                        System.out.println("old: "+String.valueOf(obj1));
+
+                        if (obj1 != null) {
+                            final long l1 = (long) obj1;
+                            mutableData.child(mSchoolValueName).child("shared").setValue(l1 + 1);
+                            System.out.println("shared: "+String.valueOf(l1+1));
+                        } else {
+                            mutableData.child(mSchoolValueName).child("shared").setValue(1);
+                            System.out.println("shared: created (1)");
+                        }
+                    }
+
+                    return Transaction.success(mutableData);
+                }
+
+                @Override
+                public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                    if (databaseError != null){
+                        Log.d("FBDB", "transactionAddSchool:onComplete:Error: " + String.valueOf(tries) + databaseError);
+                        transactionShare(tries+1, maxTries, mSchoolValueName);
+                    } else {
+                        // Transaction completed
+                        Log.d("FBDB", "transactionAddSchool:onComplete: " + String.valueOf(tries) + databaseError);
+                    }
+                }
+            });
+        }
+    }
 
     @Override
     public void onDestroy(){

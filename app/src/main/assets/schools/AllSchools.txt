@@ -1,3 +1,12 @@
+020105020001,Landesfinanzschule in Königs Wusterhausen,0
+020105030019,HOGA Schulen Dresden,0
+020105030020,Pestalozzi-Gymnasium Dresden,0
+020104010017,Gymnasium an der Gartenstraße Mönchengladbach,0
+020102020006,Kaufmännische Schule Schwäbisch Gmünd,0
+020102020007,Max-Eyth-Schule Stuttgart,0
+020103010004,Paul-Gerhardt-Gymnasium Gräfenhainichen,0
+020101010027,IGS Winsen-Roydorf,0
+010105030001,Alexandria High School,0
 050700520001,Naresuan University Secondary Demonstration School,0
 020300010005,Chiltern Hills Academy,0
 030105010003,Elizabeth Macarthur High School,0
