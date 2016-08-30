@@ -1,3 +1,28 @@
+020104010018,Krupp-Gymnasium Europaschule Duisburg,0
+020104010019,Realschule Höntrop,0
+020104010020,Hüffertgymnasium Warburg,0
+020104010021,Gemeinschaftshauptschule Wermelskirchen,0
+020104010022,Höhere Handelsschule Leverkusen,0
+020104010023,Realschule Stadtmitte Mülheim an der Ruhr,0
+020103010005,Berufsbildende Schulen Anhalt-Bitterfeld,0
+020101010028,Mariengymnasium Jever,0
+020104010024,Gesamtschule der Gemeinde Rödinghausen,0
+020105030021,Goethe-Gymnasium Reichenbach,0
+020101010029,Kooperative Gesamtschule Wiesmoor,0
+020105030022,Berufliches Schulzentrum Löbau,0
+020104010025,Johann-Conrad-Schlaun-Gymnasium Münster,0
+020101010030,Berufsbildende Schule Wittmund,0
+020101040002,Walddörfer-Gymnasium,0
+020104010026,Realschule im Gustav Heinemann Schulzentrum,0
+020104010027,Grundschule Tudorf,0
+020101010031,Johannes-Kepler-Gymnasium Garbsen,0
+020104010028,Stadtgymnasium Detmold,0
+020102020008,Graf-Eberhard-Gymnasium Bad Urach,0
+020103020010,Staatliches Berufsschulzentrum Kyffhäuserkreis,0
+020102010009,Viktor-Karell-Realschule Landau (Isar),0
+020104010029,Märkisches Berufskolleg Unna,0
+020104010030,Comenius Gymnasium Datteln,0
+020300040001,Craigavon Senior High School,0
 020105020001,Landesfinanzschule in Königs Wusterhausen,0
 020105030019,HOGA Schulen Dresden,0
 020105030020,Pestalozzi-Gymnasium Dresden,0
