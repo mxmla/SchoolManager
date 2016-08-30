@@ -278,7 +278,7 @@ public class MySchoolAddSchoolFragment extends Fragment {
                             break;
                         } else {
                             count ++;
-                            value_name = mSchool + String.valueOf(count);
+                            value_name = mSchool + "-" + String.valueOf(count);
                         }
                     }
 

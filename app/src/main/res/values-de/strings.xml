@@ -405,4 +405,8 @@
     <string name="invite_friends">Freunde einladen</string>
     <string name="my_school_add_school_title_text">Füge deine Schule hinzu und sag auch deinen Freunden Bescheid!\nBei 3 Anfragen wird eine Schule in die App aufgenommen.</string>
     <string name="my_school_add_school_title">Schule hinzufügen</string>
+    <string name="card_app_update_title">Update verfügbar</string>
+    <string name="card_app_update_subtitle">SchoolManager</string>
+    <string name="card_app_update_content">Wir empfehlen, die App auf die neuste Version zu updaten, damit du von den neuen Funktionen und Leistungsverbesserungen profitieren kannst.</string>
+    <string name="card_app_update_button">Jetzt updaten</string>
 </resources>

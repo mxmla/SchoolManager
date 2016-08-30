@@ -16,6 +16,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -98,14 +99,14 @@ public class MainFragment extends Fragment {
             tvSchoolChallengeSubtitle, tvScoolChallengeCounter;
     private View vNowColor, vNextColor;
     private CardView nowLessonCard, nextLessonCard, tomorrowLessonsCard, createTtCard, shareAppCard,
-            cvNewFeature, cvAddedSchools, mySchoolUpdatedCard, cSchoolChallenge;
+            cvNewFeature, cvAddedSchools, mySchoolUpdatedCard, cSchoolChallenge, cAppUpdate;
     RelativeLayout rlNews, ttSectionTitle;
     private LinearLayout llSchoolChallengeCounter;
     private View vSchoolChallengeCounter;
     private Button createTtCardButton, shareAppCardShareButton, shareAppCardDontShareButton,
             bRefresh;
     private Button bTS1, bTS2, bTS3, bTS4, bTS5, bTS6, bTS7, bTS8, bTS9, bTS10, bTS11, bTS12,
-            bTS13, bTS14, bTS15, bSchoolChallengeInviteFriends;
+            bTS13, bTS14, bTS15, bSchoolChallengeInviteFriends, bAppUpdate;
     private boolean mUserClickedDontShare;
     private int mOpenMainActivityCount;
     private String KEY_USER_CLICKED_DONT_SHARE = "user_clicked_dont_share";
@@ -193,6 +194,8 @@ public class MainFragment extends Fragment {
         llSchoolChallengeCounter = (LinearLayout) v.findViewById(R.id.CardSchoolChallengeLLCounter);
         vSchoolChallengeCounter = (View) v.findViewById(R.id.CardSchoolChallengeCounterDividerView);
         bSchoolChallengeInviteFriends = (Button) v.findViewById(R.id.bSchoolChallengeInviteFriends);
+        cAppUpdate = (CardView) v.findViewById(R.id.AppUpdateCard);
+        bAppUpdate = (Button) v.findViewById(R.id.bGoToUpdateApp);
         //bRefresh = (Button) v.findViewById(R.id.bRefresh);
         isEndOfDay = true;
         isNextLesson = false;
@@ -224,6 +227,7 @@ public class MainFragment extends Fragment {
         //MySchoolCheckForWebsiteUpdate(v);
         storeSchoolInDatabase();
         schoolChallengeCard(v);
+        appUpdateCard();
 
         /*bRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -372,6 +376,18 @@ public class MainFragment extends Fragment {
         newsSectionTitleText.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf"));
     }
 
+    private void NewsSectionShowHide(){
+        if (cvNewFeature.getVisibility() == View.GONE
+                && cvAddedSchools.getVisibility() == View.GONE
+                && mySchoolUpdatedCard.getVisibility() == View.GONE
+                && cSchoolChallenge.getVisibility() == View.GONE
+                && cAppUpdate.getVisibility() == View.GONE){
+            rlNews.setVisibility(View.GONE);
+        } else {
+            rlNews.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void MySchoolCheckForWebsiteUpdate(View v){
         //TODO "randomly" indicates updated site every now and then
         Button goToMySchoolUpdated = (Button) v.findViewById(R.id.bGoToMySchoolUpdated);
@@ -397,14 +413,7 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
                 prefs.edit().putString("website1codeLastTime", strng).apply();
                 mySchoolUpdatedCard.setVisibility(View.GONE);
-                if (cvNewFeature.getVisibility() == View.GONE
-                        && cvAddedSchools.getVisibility() == View.GONE
-                        && mySchoolUpdatedCard.getVisibility() == View.GONE
-                        && cSchoolChallenge.getVisibility() == View.GONE){
-                    rlNews.setVisibility(View.GONE);
-                } else {
-                    rlNews.setVisibility(View.VISIBLE);
-                }
+                NewsSectionShowHide();
             }
         });
 
@@ -466,14 +475,7 @@ public class MainFragment extends Fragment {
                                                 public void run() {
                                                     mySchoolUpdatedCard.setVisibility(View.GONE);
 
-                                                    if (cvNewFeature.getVisibility() == View.GONE
-                                                            && cvAddedSchools.getVisibility() == View.GONE
-                                                            && mySchoolUpdatedCard.getVisibility() == View.GONE
-                                                            && cSchoolChallenge.getVisibility() == View.GONE){
-                                                        rlNews.setVisibility(View.GONE);
-                                                    } else {
-                                                        rlNews.setVisibility(View.VISIBLE);
-                                                    }
+                                                    NewsSectionShowHide();
                                                 }
                                             });
 
@@ -511,14 +513,7 @@ public class MainFragment extends Fragment {
 
         if (!foundURL){
             mySchoolUpdatedCard.setVisibility(View.GONE);
-            if (cvNewFeature.getVisibility() == View.GONE
-                    && cvAddedSchools.getVisibility() == View.GONE
-                    && mySchoolUpdatedCard.getVisibility() == View.GONE
-                    && cSchoolChallenge.getVisibility() == View.GONE){
-                rlNews.setVisibility(View.GONE);
-            } else {
-                rlNews.setVisibility(View.VISIBLE);
-            }
+            NewsSectionShowHide();
         }
     }
 
@@ -1469,28 +1464,14 @@ public class MainFragment extends Fragment {
 
         if (dismissedNewFeatureMySchool) cvNewFeature.setVisibility(View.GONE);
         if (dismissedAddedNewSchoolsInfo) cvAddedSchools.setVisibility(View.GONE);
-        if (cvNewFeature.getVisibility() == View.GONE
-                && cvAddedSchools.getVisibility() == View.GONE
-                && mySchoolUpdatedCard.getVisibility() == View.GONE
-                && cSchoolChallenge.getVisibility() == View.GONE){
-            rlNews.setVisibility(View.GONE);
-        } else {
-            rlNews.setVisibility(View.VISIBLE);
-        }
+        NewsSectionShowHide();
 
         bNewFeatureDismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cvNewFeature.setVisibility(View.GONE);
                 dismissedNewFeatureMySchool = true;
-                if (cvNewFeature.getVisibility() == View.GONE
-                        && cvAddedSchools.getVisibility() == View.GONE
-                        && mySchoolUpdatedCard.getVisibility() == View.GONE
-                        && cSchoolChallenge.getVisibility() == View.GONE){
-                    rlNews.setVisibility(View.GONE);
-                } else {
-                    rlNews.setVisibility(View.VISIBLE);
-                }
+                NewsSectionShowHide();
 
                 prefs.edit().putBoolean(dismissedNewFeatureMySchoolKey, true).apply();
             }
@@ -1516,14 +1497,7 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
                 cvAddedSchools.setVisibility(View.GONE);
                 dismissedAddedNewSchoolsInfo = true;
-                if (cvNewFeature.getVisibility() == View.GONE
-                        && cvAddedSchools.getVisibility() == View.GONE
-                        && mySchoolUpdatedCard.getVisibility() == View.GONE
-                        && cSchoolChallenge.getVisibility() == View.GONE){
-                    rlNews.setVisibility(View.GONE);
-                } else {
-                    rlNews.setVisibility(View.VISIBLE);
-                }
+                NewsSectionShowHide();
 
                 prefs.edit().putBoolean(dismissedAddedNewSchoolsInfoKey, true).apply();
             }
@@ -1663,14 +1637,7 @@ public class MainFragment extends Fragment {
                         }
                         if (!isChallenge) {
                             cSchoolChallenge.setVisibility(View.GONE);
-                            if (cvNewFeature.getVisibility() == View.GONE
-                                    && cvAddedSchools.getVisibility() == View.GONE
-                                    && mySchoolUpdatedCard.getVisibility() == View.GONE
-                                    && cSchoolChallenge.getVisibility() == View.GONE){
-                                rlNews.setVisibility(View.GONE);
-                            } else {
-                                rlNews.setVisibility(View.VISIBLE);
-                            }
+                            NewsSectionShowHide();
                         }
                     }
 
@@ -1681,26 +1648,74 @@ public class MainFragment extends Fragment {
                 });
             } else {
                 cSchoolChallenge.setVisibility(View.GONE);
-                if (cvNewFeature.getVisibility() == View.GONE
-                        && cvAddedSchools.getVisibility() == View.GONE
-                        && mySchoolUpdatedCard.getVisibility() == View.GONE
-                        && cSchoolChallenge.getVisibility() == View.GONE){
-                    rlNews.setVisibility(View.GONE);
-                } else {
-                    rlNews.setVisibility(View.VISIBLE);
-                }
+                NewsSectionShowHide();
             }
         } else {
             cSchoolChallenge.setVisibility(View.GONE);
-            if (cvNewFeature.getVisibility() == View.GONE
-                    && cvAddedSchools.getVisibility() == View.GONE
-                    && mySchoolUpdatedCard.getVisibility() == View.GONE
-                    && cSchoolChallenge.getVisibility() == View.GONE){
-                rlNews.setVisibility(View.GONE);
-            } else {
-                rlNews.setVisibility(View.VISIBLE);
-            }
+            NewsSectionShowHide();
         }
+    }
+
+    private void appUpdateCard(){
+
+        final int app_version_code = BuildConfig.VERSION_CODE;
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        DatabaseReference ref = database.getReference();
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean newVersion = false;
+                int latestVersion = 0;
+                if (dataSnapshot.child("App Latest Version").exists()){
+                    final Object obj1 = dataSnapshot.child("App Latest Version").getValue();
+
+                    if (obj1 != null) {
+                        long longLV = (long) obj1;
+                        latestVersion = (int) longLV;
+
+                        if (latestVersion > app_version_code) newVersion = true;
+                        if (newVersion) {
+                            rlNews.setVisibility(View.VISIBLE);
+                            cAppUpdate.setVisibility(View.VISIBLE);
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                bAppUpdate.setBackgroundTintList(getActivity().getResources().getColorStateList(R.color.button_color_state_list));
+                                bAppUpdate.setTextColor(getActivity().getResources().getColor(R.color.TextDarkBg));
+                            } else {
+                                bAppUpdate.setTextColor(getActivity().getResources().getColor(R.color.colorAccent));
+                            }
+
+                            bAppUpdate.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    final String appPackageName = getActivity().getPackageName(); // getPackageName() from Context or Activity object
+                                    try {
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                                    } catch (android.content.ActivityNotFoundException anfe) {
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                                    }
+
+                                    mTracker.send(new HitBuilders.EventBuilder()
+                                            .setCategory("MainFrag - AppUpdate")
+                                            .setAction("Update button clicked")
+                                            .build());
+                                }
+                            });
+                        }
+                    }
+                }
+                if (!newVersion) {
+                    cAppUpdate.setVisibility(View.GONE);
+                    NewsSectionShowHide();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("FBDB", "SchoolChallenge:DatabaseError: "+databaseError);
+            }
+        });
     }
 
     private void storeSchoolInDatabase(){

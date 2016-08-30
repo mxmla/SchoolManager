@@ -709,6 +709,53 @@
                 </RelativeLayout>
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/AppUpdateCard"
+                    style="@style/Card"
+                    android:layout_marginTop="0dp"
+                    custom:cardElevation="2dp"
+                    custom:cardUseCompatPadding="true"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/CardAppUpdateTitle"
+                            style="@style/CardTitle"
+                            android:text="@string/card_app_update_title" />
+
+                        <LinearLayout
+                            style="@style/CardContent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/CardContentText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/card_padding"
+                                android:textColor="@color/SecondaryText"
+                                android:text="@string/card_app_update_content"/>
+
+                            <LinearLayout
+                                style="?android:attr/buttonBarStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end">
+                                <Button
+                                    android:id="@+id/bGoToUpdateApp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/card_app_update_button"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
                     android:id="@+id/MySchoolSiteUpdatedCard"
                     style="@style/Card"
                     android:layout_marginTop="0dp"
