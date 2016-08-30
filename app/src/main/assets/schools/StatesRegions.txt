@@ -556,3 +556,23 @@
 02140003,Syddanmark
 02140004,Hovedstaden
 02140005,Sjælland
+02150001,Lisbon
+02150002,Leiria
+02150003,Santarém
+02150004,Setúbal
+02150005,Beja
+02150006,Faro
+02150007,Évora
+02150008,Portalegre
+02150009,Castelo Branco
+02150010,Guarda
+02150011,Coimbra
+02150012,Aveiro
+02150013,Viseu
+02150014,Bragança
+02150015,Vila Real
+02150016,Porto
+02150017,Braga
+02150018,Viana do Castelo
+02150019,Azores Autonomous Region
+02150020,Madeira Autonomous Region

@@ -1,3 +1,4 @@
+021500030001,Escola Secundária Dr. Ginestal Machado,0
 020104010031,Berufskolleg Ostvest Datteln,0
 020102010010,Wolfgang-Borchert-Gymnasium Langenzenn,0
 020104010032,Schiller-Gymnasium Köln,0

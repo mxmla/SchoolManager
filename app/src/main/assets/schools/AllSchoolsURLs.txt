@@ -287,3 +287,4 @@
 010101010034,1,http://www.ranchomiragehighschool.org/
 020101010032,1,http://www.igs-obernkirchen.de/
 020300020003,1,tlss0f7oh09iv1cdbqte87tu3f
+021500030001,1,http://www.escola-ginestalmachado.net/
