@@ -1,3 +1,11 @@
+020104010031,Berufskolleg Ostvest Datteln,0
+020102010010,Wolfgang-Borchert-Gymnasium Langenzenn,0
+020104010032,Schiller-Gymnasium Köln,0
+020700170002,Gewerbliche Berufsschule St. Gallen,0
+020104010033,Gymnasium Heißen Mülheim (Ruhr),0
+010101010034,Rancho Mirage High School,0
+020101010032,IGS Obernkirchen,0
+020300020003,Kings Park Secondary School Glasgow,0
 020104010018,Krupp-Gymnasium Europaschule Duisburg,0
 020104010019,Realschule Höntrop,0
 020104010020,Hüffertgymnasium Warburg,0

@@ -279,3 +279,11 @@
 020104010029,1,http://www.mbk-unna.de/
 020104010030,1,http://www.comenius-gymnasium-datteln.de/
 020300040001,1,http://www.cshs.org.uk/
+020104010031,1,http://bk-ostvest.schulon.org/
+020102010010,1,http://www.wbg-lgz.de/
+020104010032,1,http://www.schillergymnasium-koeln.de/
+020700170002,1,https://www.gbssg.ch/
+020104010033,1,http://gymnasium-heissen.de/
+010101010034,1,http://www.ranchomiragehighschool.org/
+020101010032,1,http://www.igs-obernkirchen.de/
+020300020003,1,tlss0f7oh09iv1cdbqte87tu3f
