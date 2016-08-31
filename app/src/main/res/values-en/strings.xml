@@ -380,6 +380,7 @@
         <item>Morocco</item>
         <item>Denmark</item>
         <item>Portugal</item>
+        <item>Luxembourg</item>
     </string-array>
     <string name="toast_school_selection_went_wrong">Oops... something went wrong!</string>
     <string name="pref_my_school_state">State/Region</string>

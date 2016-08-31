@@ -576,3 +576,15 @@
 02150018,Viana do Castelo
 02150019,Azores Autonomous Region
 02150020,Madeira Autonomous Region
+02160001,Clervaux/Klierf
+02160002,Diekirch/Dikrech
+02160003,Redange/Réiden
+02160004,Vianden/Veianen
+02160005,Wiltz/Wolz
+02160006,Echternach/Iechternach
+02160007,Grevenmacher/Gréiwemaacher
+02160008,Remich/Réimech
+02160009,Capellen/Capellen
+02160010,Esch-sur-Alzette/Esch-Uelzecht
+02160011,Luxembourg/Lëtzebuerg
+02160012,Mersch/Miersch
