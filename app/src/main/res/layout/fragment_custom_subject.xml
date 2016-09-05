@@ -195,7 +195,7 @@
                                 android:id="@+id/tvD3"
                                 style="@style/CardContentText"
                                 android:textColor="@color/SecondaryText"
-                                android:layout_width="wrap_content"
+                                android:layout_width="48dp"
                                 android:layout_height="20dp"
                                 android:layout_marginRight="@dimen/card_padding"
                                 android:text="@string/Name" />
@@ -219,7 +219,7 @@
                                 android:id="@+id/tvD4"
                                 style="@style/CardContentText"
                                 android:textColor="@color/SecondaryText"
-                                android:layout_width="wrap_content"
+                                android:layout_width="48dp"
                                 android:layout_height="20dp"
                                 android:layout_marginRight="@dimen/card_padding"
                                 android:text="@string/NameAbbrev" />
@@ -236,6 +236,61 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_lessons_edit"
+                style="@style/Card"
+                custom:cardElevation="2dp"
+                custom:cardUseCompatPadding="true" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvCardLessonsTitle"
+                        style="@style/CardTitle"
+                        android:text="@string/edit_subject_lessons_edit_title" />
+
+                    <LinearLayout
+                        android:id="@+id/lessons_holder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
+
+                    <View
+                        style="@style/DividersStyle"
+                        android:layout_margin="0dp"/>
+
+                    <LinearLayout
+                        android:id="@+id/llAddLesson"
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:padding="@dimen/card_padding"
+                        android:orientation="horizontal"
+                        android:clickable="true"
+                        android:background="@drawable/custom_bg">
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_add_black_48dp"
+                            android:clickable="true"/>
+
+                        <TextView
+                            style="@style/CardContentText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/card_padding"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/edit_subject_button_add_lesson"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <!--
             <android.support.v7.widget.CardView
                 android:id="@+id/card_lesson_edit"
                 style="@style/Card"
@@ -909,6 +964,7 @@
                     android:visibility="gone" >
                 </FrameLayout>
             </LinearLayout>
+            -->
 
             <Button
                 android:id="@+id/confirm"

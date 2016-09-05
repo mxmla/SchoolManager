@@ -41,6 +41,122 @@
 				</LinearLayout>
 			</android.support.v7.widget.CardView>
 
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingLeft="@dimen/card_padding"
+				android:paddingRight="@dimen/card_padding"
+				android:layout_marginTop="@dimen/card_padding">
+
+				<TextView
+					android:id="@+id/newTtSettingsSectionTitleText"
+					style="@style/SectionTitleTextStyle"
+					android:text="@string/new_timetable_settings_title"/>
+			</RelativeLayout>
+
+			<android.support.v7.widget.CardView
+				style="@style/Card"
+				android:layout_marginTop="0dp"
+				custom:cardElevation="2dp"
+				custom:cardUseCompatPadding="true" >
+				<LinearLayout
+					android:paddingTop="@dimen/card_padding"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical" >
+
+					<Switch
+						android:id="@+id/switch_a_b_week"
+						style="@style/CardContent"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:text="@string/new_timetable_settings_a_b_cycle"/>
+
+					<LinearLayout
+						style="@style/CardContent"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:orientation="horizontal">
+
+						<TextView
+							android:id="@+id/tvNumberABWeeks"
+							style="@style/CardContentText"
+							android:layout_width="0dp"
+							android:layout_height="wrap_content"
+							android:layout_weight="1"
+							android:layout_gravity="center_vertical"
+							android:text="@string/new_timetable_settings_number_of_weeks"/>
+
+						<LinearLayout
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:orientation="horizontal">
+							<Button
+								android:id="@+id/bABNrPickDown"
+								android:layout_width="48dp"
+								android:layout_height="48dp"
+								android:layout_gravity="center_vertical"
+								android:text="-"/>
+							<EditText
+								android:id="@+id/etNrPick"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_gravity="center_vertical"
+								android:gravity="center_horizontal"
+								android:inputType="number"
+								android:ems="2"
+								android:text="2"/>
+							<Button
+								android:id="@+id/bABNrPickUp"
+								android:layout_width="48dp"
+								android:layout_height="48dp"
+								android:layout_gravity="center_vertical"
+								android:text="+"/>
+						</LinearLayout>
+					</LinearLayout>
+
+					<LinearLayout
+						style="@style/CardContent"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:orientation="horizontal">
+
+						<TextView
+							android:id="@+id/tvABPreviewTitle"
+							style="@style/CardContentText"
+							android:paddingRight="@dimen/card_padding"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="@string/new_timetable_settings_a_b_preview"/>
+
+						<ScrollView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content">
+							<TextView
+								android:id="@+id/tvABPreview"
+								style="@style/CardContentText"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="A | B"/>
+						</ScrollView>
+					</LinearLayout>
+				</LinearLayout>
+			</android.support.v7.widget.CardView>
+
+
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingLeft="@dimen/card_padding"
+				android:paddingRight="@dimen/card_padding"
+				android:layout_marginTop="@dimen/card_padding">
+
+				<TextView
+					android:id="@+id/newTtSubjectsSectionTitleText"
+					style="@style/SectionTitleTextStyle"
+					android:text="@string/new_timetable_subjects_title"/>
+			</RelativeLayout>
+
 			<android.support.v7.widget.CardView
 				style="@style/Card"
 				custom:cardElevation="2dp"

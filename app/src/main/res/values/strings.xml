@@ -498,4 +498,56 @@
     <string name="card_app_update_subtitle">SchoolManager</string>
     <string name="card_app_update_content">We recommend to update the app to the latest version so that you can benefit from the new features and performance improvements.</string>
     <string name="card_app_update_button">Update now</string>
+    <string name="new_timetable_settings_title">Timetable settings</string>
+    <string name="new_timetable_subjects_title">Subjects</string>
+    <string name="new_timetable_settings_a_b_cycle">A/B week cycle</string>
+    <string name="new_timetable_settings_number_of_weeks">Number of weeks</string>
+    <string name="new_timetable_settings_a_b_preview">Preview: </string>
+
+    <string-array name="alphabet" translatable="false">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+        <item>G</item>
+        <item>H</item>
+        <item>I</item>
+        <item>J</item>
+        <item>K</item>
+        <item>L</item>
+        <item>M</item>
+        <item>N</item>
+        <item>O</item>
+        <item>P</item>
+        <item>Q</item>
+        <item>R</item>
+        <item>S</item>
+        <item>T</item>
+        <item>U</item>
+        <item>V</item>
+        <item>W</item>
+        <item>X</item>
+        <item>Y</item>
+        <item>Z</item>
+    </string-array>
+    <string name="file_name_timetable_attributes" translatable="false">timetable_attributes.txt</string>
+    <string name="file_name_timetable" translatable="false">timetable</string>
+    <string name="file_name_subjects" translatable="false">subjects.txt</string>
+    <string name="file_name_teachers" translatable="false">teachers.txt</string>
+    <string name="file_name_places" translatable="false">teaching_places.txt</string>
+    <string name="file_name_lessons" translatable="false">lessons.txt</string>
+    <string name="folder_name_timetable" translatable="false">timetable</string>
+    <string name="pref_key_current_timetable_filename" translatable="false">key_current_timetable_filename</string>
+    <string name="folder_name_timetables" translatable="false">timetables</string>
+    <string name="edit_subject_lessons_edit_title">Lessons</string>
+    <string name="edit_subject_button_add_lesson">Add another lesson</string>
+    <string name="Week">Week</string>
+    <string name="lesson_day">Day</string>
+    <string name="lesson_time">Time</string>
+    <string name="lesson_place">Place</string>
+    <string name="lesson_week">Week</string>
+    <string name="lesson_delete">Delete</string>
+    <string name="lesson_period">Period</string>
 </resources>

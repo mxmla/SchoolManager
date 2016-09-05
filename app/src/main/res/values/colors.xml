@@ -170,6 +170,8 @@
     <color name="color_settings_accent">@color/colorAccent</color>
     <color name="color_settings_appbar">@color/colorPrimary</color>
 
+    <color name="color_button_delete">@color/red</color>
+    <color name="color_button_delete_light">@color/red_300</color>
 
     <color name="color_circle_stroke_color">#6B6B6B</color>
     

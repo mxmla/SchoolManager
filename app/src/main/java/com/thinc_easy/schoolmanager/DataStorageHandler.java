@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -35,6 +36,882 @@ import java.util.Scanner;
  * Created by M on 02.02.2016.
  */
 public class DataStorageHandler {
+
+    public static void RegisterSubject(Context context, String ttFolderName,
+                                   String sName, String sAbbrev,
+                                   String tName, String tAbbrev, String color1, String color2,
+                                   String[][] Lessons){
+        if (isExternalStorageWritable(context)) {
+            System.out.println("Storage is writable.");
+            String subjectID = RegisterSubjectEntry(context, ttFolderName, sName, sAbbrev, tName, tAbbrev, color1, color2);
+            System.out.println("ID: " + subjectID);
+
+            // create entry in lessons.txt, timetable_a(/b..).txt, timetable_attributes.txt for all subject lessons
+            AddLessons(context, ttFolderName, subjectID, Lessons);
+
+            // TODO create all tt notifications for lessons
+        }
+    }
+
+    public static String RegisterSubjectEntry(Context context, String ttFolderName,
+                                   String sName, String sAbbrev,
+                                   String tName, String tAbbrev, String color1, String color2){
+
+        String subjectID = "[null]";
+        String[] newDataArray = {sName, sAbbrev, tName, tAbbrev, color1, color2};
+        File ttFolder = new File(context.getExternalFilesDir(null), ttFolderName);
+
+        if (ttFolder.isDirectory()){
+            String subjectsFileName = context.getResources().getString(R.string.file_name_subjects);
+            String subjectsFilePath = ttFolderName + "/" + subjectsFileName;
+
+            File subjectsFile = new File(ttFolder, subjectsFileName);
+
+            if (subjectsFile.exists()){
+                String[][] subjectsArray = toArray(context, subjectsFilePath);
+                int Rows = nmbrRowsCols(context, subjectsFilePath)[0];
+                int Cols = nmbrRowsCols(context, subjectsFilePath)[1];
+
+                if (newDataArray.length + 1 > Cols) {
+                    String[][] SubjectsArray2 = new String[Rows][newDataArray.length + 1];
+                    for (int r1 = 0; r1 < Rows; r1++){
+                        for (int c1 = 0; c1 < Cols; c1++){
+                            SubjectsArray2[r1][c1] = (subjectsArray[r1][c1] == null || subjectsArray[r1][c1].equals("")) ? "[none]" : subjectsArray[r1][c1];
+                        }
+                        for (int c2 = 0; c2 < (newDataArray.length + 1 - Cols); c2++){
+                            SubjectsArray2[r1][Cols + c2] = "";
+                        }
+                    }
+                    subjectsArray = SubjectsArray2;
+                    Cols = newDataArray.length + 1;
+                }
+
+                int maxID = 0;
+                for (int r = 0; r < Rows; r++){
+                    String sThisID = subjectsArray[r][0];
+                    if (isStringNumeric(sThisID)){
+                        int thisID = Integer.parseInt(sThisID);
+                        if (thisID > maxID) maxID = thisID;
+                    }
+                }
+                int idInt = maxID + 1;
+                String ID = String.valueOf(idInt);
+                final int length = ID.length();
+                for (int s = 0; s < (4 - length); s++){
+                    ID = "0" + ID;
+                }
+
+                String[][] SubjectsArray3 = new String[Rows + 1][Cols];
+                for (int r2 = 0; r2 < Rows; r2++){
+                    for (int c3 = 0; c3 < Cols; c3++){
+                        SubjectsArray3[r2][c3] = (subjectsArray[r2][c3] == null || subjectsArray[r2][c3].equals("")) ? "[none]" : subjectsArray[r2][c3];
+                    }
+                }
+
+                SubjectsArray3[Rows][0] = ID;
+                for (int c4 = 0; c4 < newDataArray.length; c4++){
+                    SubjectsArray3[Rows][c4 + 1] = (newDataArray[c4] == null || newDataArray[c4].equals("")) ? "[none]" : newDataArray[c4];
+                }
+                subjectsArray = SubjectsArray3;
+                Rows++;
+
+                subjectID = ID;
+                writeToCSVFile(context, subjectsFile, subjectsArray, Rows, Cols, "New RegisterSubjectEntry");
+            } else {
+
+                subjectID = "0001";
+                int Rows = 1;
+                int Cols = newDataArray.length + 1;
+                String[][] subjectsArray = new String[Rows][Cols];
+                subjectsArray[0][0] = subjectID;
+                for (int d = 0; d < newDataArray.length; d++)
+                    subjectsArray[0][d + 1] = (newDataArray[d] == null || newDataArray[d].equals("")) ? "[none]" : newDataArray[d];
+
+                writeToCSVFile(context, subjectsFile, subjectsArray, Rows, Cols, "New RegisterSubjectEntry");
+            }
+        }
+
+        return subjectID;
+    }
+
+    public static void EditSubject(Context context, String ttFolderName,
+                            String subjectID, String sName, String sAbbrev,
+                            String tName, String tAbbrev, String color1, String color2,
+                            String[][] Lessons){
+        if (isExternalStorageWritable(context)) {
+            EditSubjectEntry(context, ttFolderName, subjectID, sName, sAbbrev, tName, tAbbrev, color1, color2);
+
+            // delete all subject lessons from lessons.txt, timetable_a(/b..).txt, timetable_attributes.txt
+            RemoveSubjectFromLessonsTxt(context, ttFolderName, subjectID, false);
+            RefreshTtAttributes(context, ttFolderName);
+
+            // create entry in lessons.txt, timetable_a(/b..).txt, timetable_attributes.txt for all subject lessons
+            AddLessons(context, ttFolderName, subjectID, Lessons);
+
+            // TODO edit all tt notifications for lessons
+        }
+    }
+
+    public static void EditSubjectEntry(Context context, String ttFolderName,
+                                   String subjectID, String sName, String sAbbrev,
+                                   String tName, String tAbbrev, String color1, String color2){
+
+        String[] newDataArray = {subjectID, sName, sAbbrev, tName, tAbbrev, color1, color2};
+        File ttFolder = new File(context.getExternalFilesDir(null), ttFolderName);
+
+        if (ttFolder.isDirectory()){
+            String subjectsFileName = context.getResources().getString(R.string.file_name_subjects);
+            String subjectsFilePath = ttFolderName + "/" + subjectsFileName;
+
+            File subjectsFile = new File(ttFolder, subjectsFileName);
+            String[][] subjectsArray = {{""}};
+            int fileRows = 0;
+            int fileCols = 0;
+            int subjectRow = -1;
+
+            if (subjectsFile.exists()){
+                subjectsArray = toArray(context, subjectsFilePath);
+                final int[] rc = nmbrRowsCols(context, subjectsFilePath);
+                fileRows = rc[0];
+                fileCols = rc[1];
+
+                for (int r = 0; r < fileRows; r++){
+                    if (subjectsArray[r][0].equals(subjectID)) subjectRow = r;
+                }
+            } else {
+                subjectsArray = new String[1][newDataArray.length];
+                fileRows = 1;
+                fileCols = newDataArray.length;
+                subjectRow = 0;
+            }
+
+            if (subjectRow < 0){
+                int cDif = 0;
+                if (fileCols < newDataArray.length) cDif = newDataArray.length - fileCols;
+
+                String[][] subjectsArray2 = new String[fileRows+1][fileCols + cDif];
+
+                for (int r = 0; r < fileRows; r++){
+                    for (int c = 0; c < fileCols; c++)
+                        subjectsArray2[r][c] = (subjectsArray[r][c] == null || subjectsArray[r][c].equals("")) ? "[none]" : subjectsArray[r][c];
+                    for (int cd = 0; cd < cDif; cd++) subjectsArray[r][fileCols+cd] = "";
+                }
+
+                subjectsArray = subjectsArray2;
+                subjectRow = fileRows;
+
+                fileRows++;
+                fileCols = fileCols + cDif;
+            }
+
+            for (int cn = 0; cn < newDataArray.length; cn++) subjectsArray[subjectRow][cn] = (newDataArray[cn] == null || newDataArray[cn].equals("")) ? "[none]" : newDataArray[cn];
+
+            writeToCSVFile(context, subjectsFile, subjectsArray, fileRows, fileCols, "new EditSubjectEntry");
+        }
+    }
+
+    public static void RemoveSubjectfromSubjectsTxt(Context context, String ttFolderName, String subjectID){
+        File ttFolder = new File(context.getExternalFilesDir(null), ttFolderName);
+
+        if (ttFolder.isDirectory()) {
+            String subjectsFileName = context.getString(R.string.file_name_subjects);
+            String subjectsFilePath = ttFolderName + "/" + subjectsFileName;
+
+            String[][] myArray = toArray(context, subjectsFilePath);
+            int Rows = nmbrRowsCols(context, subjectsFilePath)[0];
+            int Cols = nmbrRowsCols(context, subjectsFilePath)[1];
+            File file = new File(context.getExternalFilesDir(null), subjectsFilePath);
+
+            if (file.exists()) {
+                int countA = 0;
+                String[][] newArray = new String[0][0];
+                if (Rows > 0) {
+                    for (int is = 0; is < Rows; is++) {
+                        String thisSID = myArray[is][0];
+                        if (!thisSID.equals(subjectID)) {
+                            String[][] transitionArray = new String[countA + 1][Cols];
+                            for (int r = 0; r < countA; r++) {
+                                for (int c = 0; c < Cols; c++) {
+                                    transitionArray[r][c] = newArray[r][c];
+                                }
+                            }
+                            for (int c = 0; c < Cols; c++) {
+                                transitionArray[countA][c] = (myArray[is][c] == null || myArray[is][c].equals("")) ? "[none]" : myArray[is][c];
+                            }
+                            newArray = transitionArray;
+                            countA++;
+                        }
+                    }
+                }
+
+                myArray = newArray;
+                Rows = countA;
+
+                writeToCSVFile(context, file, myArray, Rows, Cols, "deleteSubjectFromLessonsTxt");
+            }
+        }
+    }
+
+    public static void AddLessons(Context context, String ttFolderName, String subjectID, String[][] Lessons){
+        File ttFolder = new File(context.getExternalFilesDir(null), ttFolderName);
+
+        if (ttFolder.isDirectory()){
+            String lessonsFileName = context.getResources().getString(R.string.file_name_lessons);
+            String lessonsFilePath = ttFolderName + "/" + lessonsFileName;
+
+            for (int i = 0; i < Lessons.length; i++){
+                String lessonID = "[none]";
+                String[] newDataArray = new String[Lessons[i].length];
+
+                for (int c = 0; c < Lessons[i].length; c++){
+                    newDataArray[c] = (Lessons[i][c] == null || Lessons[i][c].equals("")) ? "[none]" : Lessons[i][c];
+                }
+
+                File lessonsFile = new File(ttFolder, lessonsFileName);
+
+                if (lessonsFile.exists()){
+                    String[][] lessonsArray = toArray(context, lessonsFilePath);
+                    int Rows = nmbrRowsCols(context, lessonsFilePath)[0];
+                    int Cols = nmbrRowsCols(context, lessonsFilePath)[1];
+                    System.out.println("Rows: "+Rows+", Cols: "+Cols);
+                    System.out.println("Rows - 1, 0: "+lessonsArray[Rows - 1][0]);
+
+                    if (newDataArray.length + 1 > Cols) {
+                        System.out.println("newDataArray.length + 1 > Cols");
+                        String[][] LessonsArray2 = new String[Rows][newDataArray.length + 1];
+                        for (int r1 = 0; r1 < Rows; r1++){
+                            for (int c1 = 0; c1 < Cols; c1++){
+                                LessonsArray2[r1][c1] = lessonsArray[r1][c1];
+                            }
+                            for (int c2 = 0; c2 < (newDataArray.length - Cols); c2++){
+                                LessonsArray2[r1][Cols + c2] = "[none]";
+                            }
+                        }
+                        lessonsArray = LessonsArray2;
+                        Cols = newDataArray.length + 1;
+                    }
+
+                    // go through array and find largest lesson id of this subject
+                    int maxID = 0;
+                    for (int r = 0; r < Rows; r++){
+                        String sThisID = lessonsArray[r][0];
+
+                        for (int c = 0; c < Cols; c++)
+                            System.out.println("lessonsArray: "+r+", "+c+": "+((lessonsArray[r][c] == null) ? "null!!" : lessonsArray[r][c]));
+
+                        if (sThisID.length() >= 8) {
+                            String sTSubjectID = sThisID.substring(0, 4);
+                            if (sTSubjectID.equals(subjectID)) {
+
+                                String sTLessonID = sThisID.substring(4, 8);
+                                System.out.println("sThisID!!!! = "+sThisID);
+                                System.out.println("sTLessonID!!!! = "+sTLessonID);
+                                if (isStringNumeric(sTLessonID)) {
+                                    int thisID = Integer.parseInt(sTLessonID);
+                                    if (thisID > maxID) maxID = thisID;
+                                }
+                            }
+                        }
+                    }
+                    int idInt = maxID + 1;
+                    System.out.println("maxID!!!! = "+maxID);
+                    System.out.println("idInt!!!! = "+idInt);
+                    String ID = String.valueOf(idInt);
+                    final int length = ID.length();
+                    for (int s = 0; s < (4 - length); s++){
+                        ID = "0" + ID;
+                    }
+                    ID = subjectID + ID;
+                    System.out.println("subjectID!!!! = "+subjectID);
+                    System.out.println("ID!!!! = "+ID);
+
+                    String[][] LessonsArray3 = new String[Rows + 1][Cols];
+                    for (int r2 = 0; r2 < Rows; r2++){
+                        for (int c3 = 0; c3 < Cols; c3++){
+                            LessonsArray3[r2][c3] = (lessonsArray[r2][c3] == null || lessonsArray[r2][c3].equals("")) ? "[none]" : lessonsArray[r2][c3];
+                        }
+                    }
+
+                    LessonsArray3[Rows][0] = ID;
+                    for (int c4 = 0; c4 < newDataArray.length; c4++){
+                        LessonsArray3[Rows][c4 + 1] = (newDataArray[c4] == null || newDataArray[c4].equals("")) ? "[none]" : newDataArray[c4];
+                    }
+                    lessonsArray = LessonsArray3;
+                    Rows++;
+
+                    lessonID = ID;
+                    writeToCSVFile(context, lessonsFile, lessonsArray, Rows, Cols, "New AddLesson");
+                } else {
+                    String[][] lessonsArray = new String[1][newDataArray.length + 1];
+
+                    lessonID = subjectID + "0001";
+                    lessonsArray[0][0] = lessonID;
+                    for (int d = 0; d < newDataArray.length; d++)
+                        lessonsArray[0][d+1] = (newDataArray[d] == null || newDataArray[d].equals("")) ? "[none]" : newDataArray[d];
+
+                    writeToCSVFile(context, lessonsFile, lessonsArray, 1, newDataArray.length+1, "New AddLesson");
+                }
+
+                if (!lessonID.equals("[none]")){
+                    String sTime = "[none]";
+                    String eTime = "[none]";
+                    if (newDataArray[2].equals("true")){
+                        sTime = newDataArray[5];
+                        eTime = newDataArray[6];
+                    } else {
+                        String sPeriod = newDataArray[3];
+                        String ePeriod = newDataArray[4];
+
+                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                        if (isStringNumeric(sPeriod)) sTime = prefs.getString("pref_key_period"+sPeriod+"_start", "[none]");
+                        if (isStringNumeric(ePeriod)) eTime = prefs.getString("pref_key_period"+ePeriod+"_end", "[none]");
+                    }
+                    if (!sTime.equals("[none]") && !eTime.equals("[none]")){
+                        // make timetable_attributes entry if necessary
+                        LessonCheckTtAttributes(context, ttFolderName, newDataArray[0], newDataArray[1], sTime, eTime);
+
+                        // get subject abbrev
+                        final String[] subjectInfo = SubjectInfo(context, ttFolderName, subjectID);
+                        String subjectAbbrev = subjectInfo[1];
+                        String subjectColor1 = subjectInfo[4];
+                        String subjectColor2 = subjectInfo[5];
+
+                        // make timetable_a/b/.. entry
+                        if (subjectInfo != null && !subjectAbbrev.equals("[none]")
+                                && !subjectColor1.equals("[none]") && !subjectColor2.equals("[none]")) {
+
+                            AddLessonToTimetables(context, ttFolderName, newDataArray[0], lessonID, newDataArray[1], sTime, eTime,
+                                    subjectAbbrev, subjectColor1, subjectColor2, newDataArray[7], newDataArray[2]);
+                        }
+                        // TODO make Notifications entry
+                    }
+                }
+            }
+        }
+    }
+
+    public static void RemoveSubjectFromLessonsTxt(Context context, String ttFolderName, String subjectID){
+        RemoveSubjectFromLessonsTxt(context, ttFolderName, subjectID, true);
+    }
+
+    public static void RemoveSubjectFromLessonsTxt(Context context, String ttFolderName, String subjectID, boolean refreshTtAttr){
+        File ttFolder = new File(context.getExternalFilesDir(null), ttFolderName);
+
+        if (ttFolder.isDirectory()) {
+            String lessonsFileName = context.getString(R.string.file_name_lessons);
+            String lessonsFilePath = ttFolderName + "/" + lessonsFileName;
+
+            String[][] myArray = toArray(context, lessonsFilePath);
+            int Rows = nmbrRowsCols(context, lessonsFilePath)[0];
+            int Cols = nmbrRowsCols(context, lessonsFilePath)[1];
+            File file = new File(context.getExternalFilesDir(null), lessonsFilePath);
+
+            if (file.exists()) {
+                int countA = 0;
+                String[][] newArray = new String[0][0];
+                if (Rows > 0) {
+                    for (int is = 0; is < Rows; is++) {
+                        String thisSID = myArray[is][0].substring(0, 4);
+                        if (!thisSID.equals(subjectID)) {
+                            String[][] transitionArray = new String[countA + 1][Cols];
+                            for (int r = 0; r < countA; r++) {
+                                for (int c = 0; c < Cols; c++) {
+                                    transitionArray[r][c] = newArray[r][c];
+                                }
+                            }
+                            for (int c = 0; c < Cols; c++) {
+                                transitionArray[countA][c] = myArray[is][c];
+                            }
+                            newArray = transitionArray;
+                            countA++;
+                        }
+                    }
+                }
+
+                myArray = newArray;
+                Rows = countA;
+
+                writeToCSVFile(context, file, myArray, Rows, Cols, "deleteSubjectFromLessonsTxt");
+                if (refreshTtAttr) RefreshTtAttributes(context, ttFolderName);
+                RemoveSubjectFromTimetables(context, ttFolderName, subjectID);
+            }
+        }
+    }
+
+    public static void LessonCheckTtAttributes(Context context, String ttFolderName, String lAB, String day, String timeStart, String timeEnd){
+        final String ttAttrFileName = ttFolderName+"/"+context.getResources().getString(R.string.file_name_timetable_attributes);
+        File ttAttr = new File(context.getExternalFilesDir(null), ttAttrFileName);
+
+        if (ttAttr.exists()){
+            String[][] attrArray = toArray(context, ttAttrFileName);
+            final int[] fileRowsCols = nmbrRowsCols(context, ttAttrFileName);
+            int fileRows = fileRowsCols[0];
+            int fileCols = fileRowsCols[1];
+
+            String[] ABs = lAB.split("/");
+            for (int ab = 0; ab < ABs.length; ab++) {
+                String thisAB = ABs[ab];
+                boolean foundAB = false;
+                String timeDif = "[none]";
+
+                for (int r = 0; r < fileRows; r++) {
+                    if (attrArray[r][0].equals(thisAB)) {
+                        foundAB = true;
+
+                        // register day if necessary
+                        if (isStringNumeric(day)) {
+                            int dayThis = Integer.parseInt(day);
+
+                            if (isStringNumeric(attrArray[r][5])) {
+                                int firstDay = Integer.parseInt(attrArray[r][5]);
+
+                                // if this day is earlier than the registered first day, register this one as first day
+                                if (dayThis < firstDay) {
+                                    attrArray[r][5] = day;
+                                    attrArray[r][6] = "1";
+
+                                } else if (dayThis == firstDay) {
+                                    // if day equals the existing first day, it is refered to by 1 more lesson
+                                    if (isStringNumeric(attrArray[r][6])) {
+                                        int ref = Integer.parseInt(attrArray[r][6]);
+                                        ref++;
+                                        attrArray[r][6] = String.valueOf(ref);
+                                    } else {
+                                        attrArray[r][6] = "1";
+                                    }
+                                }
+                            } else {
+                                attrArray[r][5] = day;
+                                attrArray[r][6] = "1";
+                            }
+
+                            // do the same for the last day of week
+                            if (isStringNumeric(attrArray[r][7])) {
+                                int lastDay = Integer.parseInt(attrArray[r][7]);
+
+                                // if this day is later than the registered last day, register this one as first day
+                                if (dayThis > lastDay) {
+                                    attrArray[r][7] = day;
+                                    attrArray[r][8] = "1";
+
+                                } else if (dayThis == lastDay) {
+                                    // if day equals the existing last day, it is refered to by 1 more lesson
+                                    if (isStringNumeric(attrArray[r][8])) {
+                                        int ref = Integer.parseInt(attrArray[r][8]);
+                                        ref++;
+                                        attrArray[r][8] = String.valueOf(ref);
+                                    } else {
+                                        attrArray[r][8] = "1";
+                                    }
+                                }
+                            } else {
+                                attrArray[r][7] = day;
+                                attrArray[r][8] = "1";
+                            }
+                        }
+
+                        // register start time if necessary
+                        String[] sSplit = timeStart.split(":");
+                        String sHour = "[none]";
+                        String sMinute = "[none]";
+                        if (sSplit.length >= 2){
+                            System.out.println("sSplit  >= 2: "+sSplit[0]+", "+sSplit[1]);
+                            sHour = sSplit[0];
+                            sMinute = sSplit[1];
+                        }
+
+                        if (isStringNumeric(sHour) && isStringNumeric(sMinute)){
+                            int h = Integer.parseInt(sHour);
+                            int m = Integer.parseInt(sMinute);
+                            int time = h * 60 + m;
+                            System.out.println("time = "+time);
+
+                            String sAttr = attrArray[r][1];
+
+                            if (isStringNumeric(sAttr)) {
+                                int aTime = Integer.parseInt(sAttr);
+
+                                // if this time is earlier than the registered first time, register this one as first time
+                                if (time < aTime) {
+                                    attrArray[r][1] = String.valueOf(time);
+                                    attrArray[r][2] = "1";
+
+                                } else if (time == aTime) {
+                                    // if time equals the existing earliest time, it is refered to by 1 more lesson
+                                    if (isStringNumeric(attrArray[r][2])) {
+                                        int ref = Integer.parseInt(attrArray[r][2]);
+                                        ref++;
+                                        attrArray[r][2] = String.valueOf(ref);
+                                    } else {
+                                        attrArray[r][2] = "1";
+                                    }
+                                }
+                            } else {
+                                attrArray[r][1] = String.valueOf(time);
+                                attrArray[r][2] = "1";
+                            }
+                        }
+
+                        // register end time if necessary
+                        String[] eSplit = timeEnd.split(":");
+                        String eHour = "[none]";
+                        String eMinute = "[none]";
+                        if (eSplit.length >= 2){
+                            eHour = eSplit[0];
+                            eMinute = eSplit[1];
+                        }
+
+                        if (isStringNumeric(eHour) && isStringNumeric(eMinute)){
+                            int h = Integer.parseInt(eHour);
+                            int m = Integer.parseInt(eMinute);
+                            int time = h * 60 + m;
+
+                            String eAttr = attrArray[r][3];
+                            if (isStringNumeric(eAttr)) {
+                                int aTime = Integer.parseInt(eAttr);
+
+                                // if this time is later than the registered latest time, register this one as latest time
+                                if (time > aTime) {
+                                    attrArray[r][3] = String.valueOf(time);
+                                    attrArray[r][4] = "1";
+
+                                } else if (time == aTime) {
+                                    // if time equals the existing earliest time, it is refered to by 1 more lesson
+                                    if (isStringNumeric(attrArray[r][4])) {
+                                        int ref = Integer.parseInt(attrArray[r][4]);
+                                        ref++;
+                                        attrArray[r][4] = String.valueOf(ref);
+                                    } else {
+                                        attrArray[r][4] = "1";
+                                    }
+                                }
+                            } else {
+                                attrArray[r][3] = String.valueOf(time);
+                                attrArray[r][4] = "1";
+                            }
+                        }
+
+                        // register minimum and maximum time length if necessary
+                        if (isStringNumeric(sHour) && isStringNumeric(sMinute) && isStringNumeric(eHour) && isStringNumeric(eMinute)){
+                            int hS = Integer.parseInt(sHour);
+                            int mS = Integer.parseInt(sMinute);
+                            int timeS = hS * 60 + mS;
+
+                            int hE = Integer.parseInt(eHour);
+                            int mE = Integer.parseInt(eMinute);
+                            int timeE = hE * 60 + mE;
+
+                            int time = ((timeE - timeS) >= 0) ? (timeE - timeS) : (timeS - timeE);
+                            timeDif = String.valueOf(time);
+
+                            String minAttr = attrArray[r][9];
+                            System.out.println(timeS+", "+timeE+", "+timeDif+", "+minAttr);
+
+                            if (isStringNumeric(minAttr)) {
+                                System.out.println("String is numeric: minAttr");
+                                int aTime = Integer.parseInt(minAttr);
+
+                                // if this time is earlier than the registered first time, register this one as first time
+                                if (time < aTime || aTime == 0) {
+                                    attrArray[r][9] = timeDif;
+                                    attrArray[r][10] = "1";
+
+                                } else if (time == aTime) {
+                                    // if time equals the existing earliest time, it is refered to by 1 more lesson
+                                    if (isStringNumeric(attrArray[r][10])) {
+                                        int ref = Integer.parseInt(attrArray[r][10]);
+                                        ref++;
+                                        attrArray[r][10] = String.valueOf(ref);
+                                    } else {
+                                        attrArray[r][10] = "1";
+                                    }
+                                }
+                            } else {
+                                attrArray[r][9] = timeDif;
+                                attrArray[r][10] = "1";
+                            }
+
+                            // for max time
+                            String maxAttr = attrArray[r][11];
+
+                            if (isStringNumeric(maxAttr)) {
+                                int aTime = Integer.parseInt(maxAttr);
+
+                                if (time > aTime || aTime == 0) {
+                                    attrArray[r][11] = timeDif;
+                                    attrArray[r][12] = "1";
+
+                                } else if (time == aTime) {
+                                    if (isStringNumeric(attrArray[r][12])) {
+                                        int ref = Integer.parseInt(attrArray[r][12]);
+                                        ref++;
+                                        attrArray[r][12] = String.valueOf(ref);
+                                    } else {
+                                        attrArray[r][12] = "1";
+                                    }
+                                }
+                            } else {
+                                attrArray[r][11] = timeDif;
+                                attrArray[r][12] = "1";
+                            }
+                        }
+                    }
+                }
+                if (!foundAB) {
+                    String[] alphabet = context.getResources().getStringArray(R.array.alphabet);
+                    boolean isInAlphabet = false;
+                    for (int abc = 0; abc < alphabet.length; abc++) {
+                        if (thisAB.equals(alphabet[abc])) isInAlphabet = true;
+                    }
+
+                    if (isInAlphabet) {
+                        int colsDiff = 0;
+                        if (fileCols < 9) colsDiff = 9 - fileCols;
+                        String[][] attrArray2 = new String[fileRows + 1][fileCols + colsDiff];
+
+                        for (int rows = 0; rows < fileRows; rows++) {
+                            for (int c = 0; c < fileCols; c++) {
+                                attrArray2[rows][c] = (attrArray[rows][c] == null || attrArray[rows][c].equals("")) ? "[none]" : attrArray[rows][c];
+                            }
+                            for (int c = 0; c < colsDiff; c++) {
+                                attrArray2[rows][fileCols + c] = "";
+                            }
+                        }
+                        attrArray2[fileRows][0] = thisAB;
+                        attrArray2[fileRows][1] = timeStart;
+                        attrArray2[fileRows][2] = "1";
+                        attrArray2[fileRows][3] = timeEnd;
+                        attrArray2[fileRows][4] = "1";
+                        attrArray2[fileRows][5] = day;
+                        attrArray2[fileRows][6] = "1";
+                        attrArray2[fileRows][7] = day;
+                        attrArray2[fileRows][8] = "1";
+                        attrArray2[fileRows][9] = timeDif;
+                        attrArray2[fileRows][10] = "1";
+                        attrArray2[fileRows][11] = timeDif;
+                        attrArray2[fileRows][12] = "1";
+
+                        attrArray = attrArray2;
+                        fileRows++;
+                        fileCols = fileCols + colsDiff;
+                    }
+                }
+            }
+            writeToCSVFile(context, ttAttr, attrArray, fileRows, fileCols, "new LessonCheckTtAttributes");
+        }
+    }
+
+    public static void RefreshTtAttributes(Context context, String ttFolderName){
+        File topFolder = new File(context.getExternalFilesDir(null), ttFolderName);
+        String timetableFilePrefix = context.getResources().getString(R.string.file_name_timetable);
+
+        if (topFolder.isDirectory()){
+            // go through all files in tt folder and search for timetable files
+            for (File file : topFolder.listFiles()){
+                String fName = file.getName();
+                if (fName.startsWith(timetableFilePrefix)){
+                    String[] split = fName.split("_");
+                    if (split.length >= 2 && split[0].equals(context.getResources().getString(R.string.file_name_timetable)) && split[1].length() == 1){
+                        String AB = split[1].toUpperCase().replace(" ", "").replace(".txt", "");
+
+                        // extract the important data from the timetable file
+                        String[][] fileArray = toArray(context, ttFolderName+"/"+fName);
+                        for (int r = 0; r < fileArray.length; r++){
+                            if (fileArray[r].length >=3) {
+                                LessonCheckTtAttributes(context, ttFolderName, AB, fileArray[r][1], fileArray[r][2], fileArray[r][3]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static void AddLessonToTimetables(Context context, String ttFolderName, String lAB, String lessonID,
+                                             String day, String timeStart, String timeEnd, String Abbrev,
+                                             String color1, String color2, String Room, String custom){
+
+        File topFolder = new File(context.getExternalFilesDir(null), ttFolderName);
+        int numberColumns = 9;
+
+        if (topFolder.isDirectory()){
+            String[] ABs = lAB.split("/");
+
+            for (String thisAB : ABs) {
+                String AB = thisAB.replace(" ","").toLowerCase();
+                String ttFileName = ttFolderName + "/" + context.getResources().getString(R.string.file_name_timetable) + "_" + AB + ".txt";
+
+                File ttFile = new File(context.getExternalFilesDir(null), ttFileName);
+                String[][] ttArray = {{""}};
+                int fileRows = 0;
+                int fileCols = 0;
+                int lessonRow = -1;
+
+                if (ttFile.exists()){
+                    System.out.println("tt_file exists");
+                    ttArray = toArray(context, ttFileName);
+                    final int[] rc = nmbrRowsCols(context, ttFileName);
+                    fileRows = rc[0];
+                    fileCols = rc[1];
+
+                    for (int r = 0; r < fileRows; r++){
+                        if (ttArray[r][0].substring(0, 8).equals(lessonID)) lessonRow = r;
+                    }
+                } else {
+                    System.out.println("tt_file des not exist");
+                    ttArray = new String[1][9];
+                    fileRows = 1;
+                    fileCols = 9;
+                    lessonRow = 0;
+                }
+
+                if (lessonRow < 0){
+                    System.out.println("lesson row < 0");
+                    int cDif = 0;
+                    if (fileCols < numberColumns) cDif = numberColumns - fileCols;
+
+                    String[][] ttArray2 = new String[fileRows+1][fileCols + cDif];
+
+                    for (int r = 0; r < fileRows; r++){
+                        for (int c = 0; c < fileCols; c++) ttArray2[r][c] = (ttArray[r][c] == null || ttArray[r][c].equals("")) ? "[none]" : ttArray[r][c];
+                        for (int cd = 0; cd < cDif; cd++) ttArray2[r][fileCols+cd] = "";
+                    }
+
+                    ttArray = ttArray2;
+                    lessonRow = fileRows;
+
+                    fileRows++;
+                    fileCols = fileCols + cDif;
+                }
+                System.out.println("tt_file assign "+fileRows+", "+fileCols);
+                final String[] tSArray = timeStart.split(":");
+                final String[] tEArray = timeEnd.split(":");
+                String timeStartMinutes = "0";
+                String timeEndMinutes = "0";
+                if (tSArray.length>=2 && isStringNumeric(tSArray[0]) && isStringNumeric(tSArray[1]))
+                    timeStartMinutes = String.valueOf((Integer.parseInt(tSArray[0]) * 60) + Integer.parseInt(tSArray[1]));
+
+                if (tEArray.length>=2 && isStringNumeric(tEArray[0]) && isStringNumeric(tEArray[1]))
+                    timeEndMinutes = String.valueOf((Integer.parseInt(tEArray[0]) * 60) + Integer.parseInt(tEArray[1]));
+
+                ttArray[lessonRow][0] = lessonID;
+                ttArray[lessonRow][1] = day;
+                ttArray[lessonRow][2] = timeStartMinutes;
+                ttArray[lessonRow][3] = timeEndMinutes;
+                ttArray[lessonRow][4] = Abbrev;
+                ttArray[lessonRow][5] = color1;
+                ttArray[lessonRow][6] = color2;
+                ttArray[lessonRow][7] = Room;
+                ttArray[lessonRow][8] = custom;
+
+                writeToCSVFile(context, ttFile, ttArray, fileRows, fileCols, "new AddLessonToTimetables");
+            }
+        }
+    }
+
+    public static void RemoveSubjectFromTimetables(Context context, String ttFolderName, String subjectID){
+        File topFolder = new File(context.getExternalFilesDir(null), ttFolderName);
+
+        if (topFolder.isDirectory()){
+            for (File file : topFolder.listFiles()){
+                String fileName = file.getName();
+                String[] split = fileName.split("_");
+                if (split.length >= 2 && split[0].equals(context.getResources().getString(R.string.file_name_timetable))){
+                    String[][] ttArray = toArray(context, ttFolderName + "/" + fileName);
+                    final int[] rc = nmbrRowsCols(context, ttFolderName + "/" + fileName);
+                    int Rows = rc[0];
+                    int Cols = rc[1];
+
+                    for (int r = 0; r < Rows; r++){
+                        if (ttArray[r][0].startsWith(subjectID)){
+                             String[][] ttArray2 = new String[Rows - 1][Cols];
+
+                            for (int nr = 0; nr < r; nr++){
+                                for (int c = 0; c < Cols; c++) ttArray2[nr][c] = (ttArray[nr][c] == null || ttArray[nr][c].equals("")) ? "[none]" : ttArray[nr][c];
+                            }
+
+                            for (int nr2 = r; nr2 < Rows - 1; nr2++){
+                                for (int c = 0; c < Cols; c++) ttArray2[nr2][c] = (ttArray[nr2+1][c] == null || ttArray[nr2+1][c].equals("")) ? "[none]" : ttArray[nr2+1][c];
+                            }
+
+                            ttArray = ttArray2;
+                            Rows = Rows - 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static String[] SubjectInfo(Context context, String ttFolderName, String subjectID){
+        String subjectName = "[none]";
+        String subjectAbbrev = "[none]";
+        String teacherName = "[none]";
+        String teacherAbbrev = "[none]";
+        String color1 = "[none]";
+        String color2 = "[none]";
+
+        String subjectsFilePath = ttFolderName+"/"+context.getResources().getString(R.string.file_name_subjects);
+        System.out.println(subjectsFilePath);
+        File subjectsFile = new File(context.getExternalFilesDir(null), subjectsFilePath);
+
+        if (subjectsFile.exists()) {
+            String[][] subjectsArray = toArray(context, subjectsFilePath);
+            final int[] rc = nmbrRowsCols(context, subjectsFilePath);
+            int Rows = rc[0];
+            int Cols = rc[1];
+            System.out.println("FILE EXISTS: "+rc[0]+", "+rc[1]);
+
+            if (Cols >= 7) {
+                for (int r = 0; r < Rows; r++) {
+                    System.out.println("Equals? "+subjectsArray[r][0]+", "+subjectID);
+                    if (subjectsArray[r][0].equals(subjectID)){
+                        System.out.println("EQUALS!: "+subjectsArray[r][0]+", "+subjectID);
+                        subjectName = subjectsArray[r][1];
+                        subjectAbbrev = subjectsArray[r][2];
+                        teacherName = subjectsArray[r][3];
+                        teacherAbbrev = subjectsArray[r][4];
+                        color1 = subjectsArray[r][5];
+                        color2 = subjectsArray[r][6];
+                    }
+                }
+            }
+        }
+
+        String[] subjectInfo = {subjectName, subjectAbbrev, teacherName, teacherAbbrev, color1, color2};
+        return subjectInfo;
+    }
+
+    public static String[][] SubjectLessons(Context context, String ttFolderName, String subjectID){
+        String lessonsFilePath = ttFolderName+"/"+context.getResources().getString(R.string.file_name_lessons);
+        File lessonsFile = new File(context.getExternalFilesDir(null), lessonsFilePath);
+
+        String[][] lessons = new String[][] {{"[none]"}};
+
+        if (lessonsFile.exists()) {
+            String[][] lessonsArray = toArray(context, lessonsFilePath);
+            final int[] rc = nmbrRowsCols(context, lessonsFilePath);
+            int Rows = rc[0];
+            int Cols = rc[1];
+
+            ArrayList<String[]> subjectLessons = new ArrayList<>();
+            for (int i = 0; i < Rows; i++){
+                if (lessonsArray[i][0].length() >= 4 && lessonsArray[i][0].substring(0, 4).equals(subjectID)) {
+                    subjectLessons.add(lessonsArray[i]);
+                }
+            }
+
+            String[][] lArray2 = new String[subjectLessons.size()][];
+            for (int i = 0; i < subjectLessons.size(); i++) {
+                String[] row = subjectLessons.get(i);
+                lArray2[i] = row;
+            }
+
+            lessons = lArray2;
+        }
+
+        return lessons;
+    }
 
 
 
@@ -1442,7 +2319,10 @@ public class DataStorageHandler {
             for (int t = 0; t < Rows; t++){
                 boolean dataCorrect = true;
                 for (int c = 0; c < Cols; c++){
-                    if (myArray[t][c] == null) dataCorrect = false;
+                    if (myArray[t][c] == null) {
+                        dataCorrect = false;
+                        Log.e("Null error", "This value == null: " + caller + ". Row: " + t + ", Col: " + c);
+                    }
                 }
 
                 if (dataCorrect){
@@ -1450,6 +2330,7 @@ public class DataStorageHandler {
                     for (int c1 = 1; c1 < Cols; c1++){
                         line = line + "," + myArray[t][c1];
                     }
+                    System.out.println("write to "+file.getName()+" by "+caller+": "+line);
                     //Toast.makeText(context, "write "+ line, Toast.LENGTH_SHORT).show();
                     buf.write(line);
                     buf.newLine();

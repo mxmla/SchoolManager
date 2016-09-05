@@ -411,4 +411,18 @@
     <string name="card_app_update_subtitle">SchoolManager</string>
     <string name="card_app_update_content">Wir empfehlen, die App auf die neuste Version zu updaten, damit du von den neuen Funktionen und Leistungsverbesserungen profitieren kannst.</string>
     <string name="card_app_update_button">Jetzt updaten</string>
+    <string name="new_timetable_settings_title">Stundenplan-Einstellungen</string>
+    <string name="new_timetable_subjects_title">Fächer</string>
+    <string name="new_timetable_settings_a_b_cycle">A/B-Wochenzyklus</string>
+    <string name="new_timetable_settings_number_of_weeks">Anzahl untersch. Wochen</string>
+    <string name="new_timetable_settings_a_b_preview">Vorschau: </string>
+    <string name="edit_subject_lessons_edit_title">Unterricht</string>
+    <string name="edit_subject_button_add_lesson">Weitere Stunde hinzufügen</string>
+    <string name="Week">Woche</string>
+    <string name="lesson_day">Tag</string>
+    <string name="lesson_time">Zeit</string>
+    <string name="lesson_place">Ort</string>
+    <string name="lesson_week">Woche</string>
+    <string name="lesson_delete">Entfernen</string>
+    <string name="lesson_period">Stunde</string>
 </resources>

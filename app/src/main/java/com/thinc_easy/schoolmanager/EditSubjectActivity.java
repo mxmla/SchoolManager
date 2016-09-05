@@ -60,7 +60,6 @@ public class EditSubjectActivity extends ActionBarActivity implements DialogColo
 			mCustomSubjectFragment = getSupportFragmentManager().findFragmentByTag(CustomSubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG);
 
 			subjectsToAddNames = getIntent().getExtras().getStringArrayList("subjects_to_add_names");
-			subjectsToAdd = getIntent().getExtras().getIntegerArrayList("subjects_to_add");
 			thisSubject = 0;
 
 			if (getIntent().hasExtra("first_subject") && getIntent().getExtras().getInt("first_subject") >= 0){
@@ -74,6 +73,7 @@ public class EditSubjectActivity extends ActionBarActivity implements DialogColo
 				Bundle args = new Bundle();
 				args.putString("subject_name", subjectsToAddNames.get(thisSubject));
 				args.putString("caller", "NewTimetable");
+				args.putString("action", "new_timetable");
 				mCustomSubjectFragment.setArguments(args);
 
 				FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -244,7 +244,7 @@ public class EditSubjectActivity extends ActionBarActivity implements DialogColo
 	
 	// when called by SubjectFragment
 	public void CallEditSubjectFragment(String sName){
-		mEditSubjectFragment = new EditSubjectFragment();
+		/*mEditSubjectFragment = new EditSubjectFragment();
 		Bundle args = new Bundle();
         args.putString("caller", "SubjectFragment");
         args.putString("subject", sName);
@@ -252,7 +252,26 @@ public class EditSubjectActivity extends ActionBarActivity implements DialogColo
 		
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.add(R.id.container, mEditSubjectFragment, EditSubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG).addToBackStack(null);
-		transaction.commit();
+		transaction.commit();*/
+
+		mCustomSubjectFragment = getSupportFragmentManager().findFragmentByTag(CustomSubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG);
+
+		String subjectID = "[none]";
+		if (getIntent().getExtras().containsKey("subjectID"))
+			subjectID = getIntent().getExtras().getString("subjectID", "[none]");
+
+		if (mCustomSubjectFragment == null){
+			mCustomSubjectFragment = new CustomSubjectFragment();
+			Bundle args = new Bundle();
+			args.putString("caller", "SubjectFragment");
+			args.putString("action", "edit_subject");
+			args.putString("subjectID", subjectID);
+			mCustomSubjectFragment.setArguments(args);
+
+			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+			transaction.add(R.id.container, mCustomSubjectFragment, CustomSubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG);
+			transaction.commit();
+		}
 	}
 	
 
