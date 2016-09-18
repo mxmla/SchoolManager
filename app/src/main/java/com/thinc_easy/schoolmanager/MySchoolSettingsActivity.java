@@ -26,7 +26,7 @@ public class MySchoolSettingsActivity extends ActionBarActivity {
         getDelegate().installViewFactory();
         getDelegate().onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notification_settings);
+        setContentView(R.layout.activity_my_school_settings);
 
         final Context mContext = this;
 

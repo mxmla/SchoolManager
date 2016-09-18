@@ -1,14 +1,17 @@
 package com.thinc_easy.schoolmanager;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
@@ -20,6 +23,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.SslErrorHandler;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -79,6 +85,7 @@ public class MySchoolFragment extends Fragment {
         return v;
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void loadURL(){
         String[][] AllSchoolsURLs = DataStorageHandler.toArray(getActivity(), "schools/AllSchoolsURLs.txt", true);
 
@@ -94,16 +101,10 @@ public class MySchoolFragment extends Fragment {
                         tvNoSchool.setVisibility(View.GONE);
                         goToSettings.setVisibility(View.GONE);
                         webView.setVisibility(View.VISIBLE);
-                        webView.setWebViewClient(new WebViewClient(){
-                            @Override
-                            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error){
-                                handler.proceed();
-                            }
-                        });
                         webView.getSettings().setJavaScriptEnabled(true);
                         webView.getSettings().setBuiltInZoomControls(true);
                         webView.getSettings().setDisplayZoomControls(false);
-                        webView.getSettings().setSupportMultipleWindows(true);
+                        webView.getSettings().setSupportMultipleWindows(false);
 
                         webView.getSettings().setLoadWithOverviewMode(true);
                         webView.getSettings().setUseWideViewPort(true);
@@ -121,6 +122,67 @@ public class MySchoolFragment extends Fragment {
                             }
                         }, 500);
                         //webView.loadData(url, "text/html; charset=UTF-8", null);
+                        webView.clearView();
+                        webView.measure(100, 100);
+                        webView.setWebViewClient(new WebViewClient(){
+                            /*@Override
+                            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error){
+                                handler.proceed();
+                            }*/
+
+                            @Override
+                            public boolean shouldOverrideUrlLoading(WebView view, String url){
+                                if (url.endsWith(".pdf") && !url.contains("https://docs.google.com/gview?embedded=true&url=")){
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.google.com/gview?embedded=true&url="+url)));
+                                    //view.loadUrl("https://docs.google.com/gview?embedded=true&url="+url);
+                                } else {
+                                    view.loadUrl(url);
+                                }
+                                return false;
+                            }
+                            @Override
+                            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                                Log.i("WEB_VIEW", "error code:" + errorCode);
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(failingUrl)));
+                                super.onReceivedError(view, errorCode, description, failingUrl);
+                            }
+
+
+                        });
+                        webView.setWebChromeClient(new WebChromeClient(){
+                            @Override
+                            public boolean onCreateWindow(WebView view, boolean dialog, boolean userGesture, Message resultMsg)
+                            {
+                                /*WebView newWebView = new WebView(getContext());
+                                addView(newWebView);
+                                WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
+                                transport.setWebView(newWebView);
+                                resultMsg.sendToTarget();*/
+                                WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
+                                transport.setWebView(webView);
+                                resultMsg.sendToTarget();
+                                return true;
+                            }
+                        });
+                        webView.setOnKeyListener(new View.OnKeyListener() {
+                            @Override
+                            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                                if(event.getAction() == KeyEvent.ACTION_DOWN) {
+                                    WebView webView = (WebView) v;
+
+                                    switch(keyCode) {
+                                        case KeyEvent.KEYCODE_BACK:
+                                            if(webView.canGoBack()) {
+                                                webView.goBack();
+                                                return true;
+                                            }
+                                            break;
+                                    }
+                                }
+
+                                return false;
+                            }
+                        });
                         foundURL = true;
                         Toast.makeText(getActivity(), "Loading...", Toast.LENGTH_LONG).show();
                     }

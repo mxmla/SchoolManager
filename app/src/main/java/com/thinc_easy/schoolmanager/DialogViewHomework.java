@@ -5,9 +5,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,6 +54,7 @@ public class DialogViewHomework extends DialogFragment {
     private String title, content, subject, date, done, isDone;
     private String[] mDayNames;
     private int[] dayInts = {2, 3, 4, 5, 6, 7, 1};
+    private String ttFolder, homeworkFilepath;
 
 
     public void onAttach(Activity activity){
@@ -65,6 +68,10 @@ public class DialogViewHomework extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_view_homework, null);
         builder.setView(view);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        ttFolder = prefs.getString(getActivity().getResources().getString(R.string.pref_key_current_timetable_filename), "[none]");
+        homeworkFilepath = ttFolder + "/" + getActivity().getResources().getString(R.string.file_name_homework);
 
         fragmentName = "DialogViewHomework";
         // Obtain the shared Tracker instance.
@@ -83,8 +90,14 @@ public class DialogViewHomework extends DialogFragment {
         bEdit = (Button) view.findViewById(R.id.buttonEdit);
         bStatus = (Button) view.findViewById(R.id.buttonStatus);
 
-        String[][] hwArray = toArray(getActivity(), "Homework.txt");
-        int hwCols = nmbrRowsCols(getActivity(), "Homework.txt")[0];
+        subject = "-";
+        date = "-";
+        title = "-";
+        content = "-";
+        done = "-";
+
+        String[][] hwArray = toArray(getActivity(), homeworkFilepath);
+        int hwCols = nmbrRowsCols(getActivity(), homeworkFilepath)[0];
         for (int h = 0; h < hwCols; h++){
             if (hwArray[h][0].equals(ID)){
                 subject = hwArray[h][1];
@@ -95,10 +108,13 @@ public class DialogViewHomework extends DialogFragment {
             }
         }
 
+        final String[] subjectInfo = DataStorageHandler.SubjectInfo(getActivity(), ttFolder, subject);
+        final String subjectName = subjectInfo[0];
+
         content = content.replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",");
         tvContent.setText(content);
         tvTitle.setText(title.replace("[comma]", ","));
-        tvSubject.setText(subject.replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ","));
+        tvSubject.setText(subjectName.replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ","));
 
         SimpleDateFormat dateFormatL = new SimpleDateFormat(getResources().getString(R.string.date_formatter_local));
         SimpleDateFormat dateFormatG = new SimpleDateFormat(getResources().getString(R.string.date_formatter_general));
@@ -170,9 +186,11 @@ public class DialogViewHomework extends DialogFragment {
 
     public void hwDone(String ID, boolean done){
         //Toast.makeText(getActivity(), "hwDone: "+ID+", "+String.valueOf(done), Toast.LENGTH_SHORT).show();
-        File file = new File(getActivity().getExternalFilesDir(null), "Homework.txt");
-        String[][] hwArray = toArray(getActivity(), "Homework.txt");
-        int hwRows = nmbrRowsCols(getActivity(), "Homework.txt")[0];
+        File file = new File(getActivity().getExternalFilesDir(null), homeworkFilepath);
+        String[][] hwArray = toArray(getActivity(), homeworkFilepath);
+        final int[] rc = nmbrRowsCols(getActivity(), homeworkFilepath);
+        final int hwRows = rc[0];
+        final int hwCols = rc[1];
         int thisRow = -1;
         for (int r = 0; r < hwRows; r++){
             if (ID.equals(hwArray[r][0])) thisRow = r;
@@ -182,23 +200,7 @@ public class DialogViewHomework extends DialogFragment {
             if (done) hwArray[thisRow][5] = "yes";
             if (!done) hwArray[thisRow][5] = "no";
 
-            // write data to file
-            try{
-                BufferedWriter buf = new BufferedWriter(new FileWriter(file));
-                for (int t = 0; t < hwRows; t++){
-                    if (hwArray[t][0].equals(null) == false & hwArray[t][1].equals(null) == false & hwArray[t][2].equals(null) == false & hwArray[t][3].equals(null) == false){
-                        buf.write(hwArray[t][0] + "," + hwArray[t][1] + "," + hwArray[t][2] + "," + hwArray[t][3] + "," + hwArray[t][4] + "," + hwArray[t][5]);
-                        buf.newLine();
-                    }else{
-                        Toast.makeText(getActivity(), "CANNOT save data:" + hwArray[t][0] + "," + hwArray[t][1] + "," + hwArray[t][2] + "," + hwArray[t][3], Toast.LENGTH_SHORT).show();
-                    }
-                }
-                buf.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            DataStorageHandler.writeToCSVFile(getActivity(), file, hwArray, hwRows, hwCols, "DialogViewHomework");
         }
         communicator.onDialogMessageDoneClicked();
     }

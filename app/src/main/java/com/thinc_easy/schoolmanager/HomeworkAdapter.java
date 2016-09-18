@@ -2,7 +2,9 @@ package com.thinc_easy.schoolmanager;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +36,8 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.MyView
     private Context context;
     private String listType;
     private String[] ctrlDone;
+    private SharedPreferences prefs;
+    private String ttFolder, homework_filepath;
 
     public HomeworkAdapter(Context context, List<InformationHomeworkFull> data, String listType){
         this.context = context;
@@ -50,6 +54,11 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.MyView
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        ttFolder = prefs.getString(context.getResources().getString(R.string.pref_key_current_timetable_filename), "[none]");
+        homework_filepath = ttFolder + "/" + context.getResources().getString(R.string.file_name_homework);
+
         communicator = (Communicator) parent.getContext();
         if (listType.equals("hwFull")){
             view = inflater.inflate(R.layout.homework_row_full, parent, false);
@@ -121,19 +130,21 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.MyView
     }
 
     public void hwDone(String ID, boolean done){
-        File file = new File(context.getExternalFilesDir(null), "Homework.txt");
-        String[][] hwArray = toArray(context, "Homework.txt");
-        int hwRows = nmbrRowsCols(context, "Homework.txt")[0];
+        File file = new File(context.getExternalFilesDir(null), homework_filepath);
+        String[][] hwArray = toArray(context, homework_filepath);
+        final int[] hwRowsCols = nmbrRowsCols(context, homework_filepath);
         int thisRow = -1;
-        for (int r = 0; r < hwRows; r++){
+        for (int r = 0; r < hwRowsCols[0]; r++){
             if (ID.equals(hwArray[r][0])) thisRow = r;
         }
         if (thisRow > -1){
             if (done) hwArray[thisRow][5] = "yes";
             if (!done) hwArray[thisRow][5] = "no";
 
+            DataStorageHandler.writeToCSVFile(context, file, hwArray, hwRowsCols[0], hwRowsCols[1], "HomeworkAdapter");
+
             // write data to file
-            try{
+            /*try{
                 BufferedWriter buf = new BufferedWriter(new FileWriter(file));
                 for (int t = 0; t < hwRows; t++){
                     if (hwArray[t][0].equals(null) == false & hwArray[t][1].equals(null) == false & hwArray[t][2].equals(null) == false & hwArray[t][3].equals(null) == false){
@@ -148,7 +159,7 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.MyView
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
     }
 

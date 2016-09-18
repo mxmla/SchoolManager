@@ -35,7 +35,7 @@ public class DialogColorChooser extends DialogFragment implements View.OnClickLi
 			"orange_light", "orange_dark", "red_light", "red_dark", "black", "white", "gray_light", "gray_dark"};
     private String[] colorNames = {"red", "pink", "purple", "deep_purple", "indigo", "blue",
             "light_blue", "cyan", "teal", "green", "light_green", "lime", "yellow", "amber",
-            "ornge", "deep_orange", "brown", "grey", "blue_grey", "black", "white"};
+            "orange", "deep_orange", "brown", "grey", "blue_grey", "black", "white"};
     private int[] colorInts = {0xffF44336, 0xffE91E63, 0xff9C27B0, 0xff673AB7, 0xff3F51B5, 0xff2196F3,
             0xff03A9F4, 0xff00BCD4, 0xff009688, 0xff4CAF50, 0xff8BC34A, 0xffCDDC39,
             0xffFFEB3B, 0xffFFC107, 0xffFF9800, 0xffFF5722, 0xff795548, 0xff9E9E9E, 0xff607D8B, 0xff000000, 0xffFFFFFF};

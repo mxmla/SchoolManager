@@ -2,8 +2,10 @@ package com.thinc_easy.schoolmanager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -54,10 +56,11 @@ public class HomeworkFragment extends Fragment{
     private static GradientDrawable[] icons;
     private static int[] colorInt;
     private static int[] textColorInt;
+    private String ttFolder, homeworkFilepath;
 
     private String[] colorNames = {"red", "pink", "purple", "deep_purple", "indigo", "blue",
             "light_blue", "cyan", "teal", "green", "light_green", "lime", "yellow", "amber",
-            "ornge", "deep_orange", "brown", "grey", "blue_grey", "black", "white"};
+            "orange", "deep_orange", "brown", "grey", "blue_grey", "black", "white"};
     private int[] colorInts = {0xffF44336, 0xffE91E63, 0xff9C27B0, 0xff673AB7, 0xff3F51B5, 0xff2196F3,
             0xff03A9F4, 0xff00BCD4, 0xff009688, 0xff4CAF50, 0xff8BC34A, 0xffCDDC39,
             0xffFFEB3B, 0xffFFC107, 0xffFF9800, 0xffFF5722, 0xff795548, 0xff9E9E9E, 0xff607D8B, 0xff000000, 0xffFFFFFF};
@@ -79,6 +82,10 @@ public class HomeworkFragment extends Fragment{
         SimpleDateFormat form = new SimpleDateFormat(getActivity().getResources().getString(R.string.date_formatter_general));
         SimpleDateFormat formatter = new SimpleDateFormat(getActivity().getResources().getString(R.string.date_formatter_local));
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        ttFolder = prefs.getString(getResources().getString(R.string.pref_key_current_timetable_filename), "[none]");
+        homeworkFilepath = ttFolder + "/" + getResources().getString(R.string.file_name_homework);
+
         /*
         fabPlus = (FloatingActionButton) v.findViewById(R.id.fab);
 
@@ -89,10 +96,10 @@ public class HomeworkFragment extends Fragment{
             }
         });*/
 
-        String[][] subjectsArray = ((HomeworkActivity) getActivity()).toArray(getActivity(), "Subjects.txt");
-        int[] sNumberRowsCols = ((HomeworkActivity) getActivity()).nmbrRowsCols(getActivity(), "Subjects.txt");
-        String[][] hwArray = ((HomeworkActivity) getActivity()).toArray(getActivity(), "Homework.txt");
-        int[] numberRowsCols = ((HomeworkActivity) getActivity()).nmbrRowsCols(getActivity(), "Homework.txt");
+        //String[][] subjectsArray = ((HomeworkActivity) getActivity()).toArray(getActivity(), "Subjects.txt");
+        //int[] sNumberRowsCols = ((HomeworkActivity) getActivity()).nmbrRowsCols(getActivity(), "Subjects.txt");
+        String[][] hwArray = ((HomeworkActivity) getActivity()).toArray(getActivity(), homeworkFilepath);
+        int[] numberRowsCols = ((HomeworkActivity) getActivity()).nmbrRowsCols(getActivity(), homeworkFilepath);
         ID = new String[numberRowsCols[0]];
         subjectNames = new String[numberRowsCols[0]];
         date = new String[numberRowsCols[0]];
@@ -108,18 +115,23 @@ public class HomeworkFragment extends Fragment{
 
         for (int i = 0; i < numberRowsCols[0]; i++){
             ID[i] = hwArray[i][0];
-            subjectNames[i] = hwArray[i][1];
+            String subjectID = hwArray[i][1];
             title[i] = hwArray[i][3];
             content[i] = hwArray[i][4];
             done[i] = hwArray[i][5];
 
-            for (int s = 0; s < sNumberRowsCols[0]; s++){
+            /*for (int s = 0; s < sNumberRowsCols[0]; s++){
                 if (subjectsArray[s][0].equals(subjectNames[i])){
                     subjectAbbrev[i] = subjectsArray[s][1];
                     subjectBgColors[i] = subjectsArray[s][24];
                     subjectTextColors[i] = subjectsArray[s][25];
                 }
-            }
+            }*/
+            final String[] subjectInfo = DataStorageHandler.SubjectInfo(getActivity(), ttFolder, subjectID.substring(0,4));
+            subjectNames[i] = subjectInfo[0];
+            subjectAbbrev[i] = subjectInfo[1];
+            subjectBgColors[i] = subjectInfo[4];
+            subjectTextColors[i] = subjectInfo[5];
 
             colorInt[i] = 0xffFFFFFF;
             textColorInt[i] = 0xff000000;

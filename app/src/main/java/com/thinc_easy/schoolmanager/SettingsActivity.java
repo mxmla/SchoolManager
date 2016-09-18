@@ -68,15 +68,21 @@ public class SettingsActivity extends ActionBarActivity {
                 .replace(R.id.container, new SettingsFragment())
                 .commit();
 
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         spChanged = new SharedPreferences.OnSharedPreferenceChangeListener() {
                     @Override
                     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                        UpdateNotificationsAfterSettingsChanged(mContext, key);
+                        //UpdateNotificationsAfterSettingsChanged(mContext, key);
                         //Toast.makeText(mContext, "sharedPrefs changed.", Toast.LENGTH_SHORT).show();
+
+                        if (key.toString().startsWith("pref_key_period")){
+                            String currentTtFolder = prefs.getString(getResources().getString(R.string.pref_key_current_timetable_filename), "[none]");
+                            if (!currentTtFolder.equals("[none]"))
+                                DataStorageHandler.PeriodTimingChange(getApplicationContext(), currentTtFolder);
+                        }
                     }
                 };
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         prefs.registerOnSharedPreferenceChangeListener(spChanged);
     }
 

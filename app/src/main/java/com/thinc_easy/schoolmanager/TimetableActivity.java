@@ -3,11 +3,20 @@ package com.thinc_easy.schoolmanager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -23,6 +32,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +59,7 @@ public class TimetableActivity extends ActionBarActivity
      */
     private Toolbar toolbar;
     private CharSequence mTitle;
+	private int tt_app_bar_color;
     private CharSequence mDrawerTitle;
 	private String[] mActivityTitles;
     private DrawerLayout mDrawerLayout;
@@ -58,22 +69,39 @@ public class TimetableActivity extends ActionBarActivity
     
 	private Fragment mLessonFragment;
 	private Fragment mSubjectsListFragment;
+	private CoordinatorLayout cl_timetable;
 
 	public boolean isLessonFragmentActive;
 	public boolean isSubjectsListFragmentActive;
+	private String ttFolder, homeworkFilepath;
+	private File homeworkFile;
+	private String currentLessonID, currentDateWeek;
+	private View bottom_sheet_shader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timetable);
 
+		cl_timetable = (CoordinatorLayout) findViewById(R.id.cl_timetable);
+
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
+
+		tt_app_bar_color = getResources().getColor(R.color.color_timetable_appbar);
 
 		getSupportActionBar().setDisplayShowHomeEnabled(true);
 		drawerFragment = (NavigationDrawerFragment1)
 				getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer_1);
 		drawerFragment.setUp(R.id.fragment_navigation_drawer_1, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
+
+
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		ttFolder = prefs.getString(getResources().getString(R.string.pref_key_current_timetable_filename), "[none]");
+		homeworkFilepath = ttFolder + "/" + getResources().getString(R.string.file_name_homework);
+		homeworkFile = new File(getExternalFilesDir(null), homeworkFilepath);
+
+		bottom_sheet_shader = (View) findViewById(R.id.bottom_sheet_shader);
 
         Fragment mTimetableFragment = getSupportFragmentManager().findFragmentByTag
 				(TimetableFragment.DEFAULT_EDIT_FRAGMENT_TAG);
@@ -83,49 +111,6 @@ public class TimetableActivity extends ActionBarActivity
 		mTitle = getResources().getString(R.string.title_activity_timetable);
 
 		//FloatingActionButton();
-        
-        
-        /*mTitle = mDrawerTitle = getTitle();
-		mActivityTitles = getResources().getStringArray(R.array.activity_titles);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        
-        // set a custom shadow that overlays the main content when the drawer opens
-        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        // set up the drawer's list view with items and click listener
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, mActivityTitles));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        
-        // enable ActionBar app icon to behave as action to toggle nav drawer
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        
-        // ActionBarDrawerToggle ties together the the proper interactions
-        // between the sliding drawer and the action bar app icon
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  // host Activity
-                mDrawerLayout,         // DrawerLayout object
-				toolbar,  // nav drawer image to replace 'Up' caret
-                R.string.drawer_open,  // "open drawer" description for accessibility
-                R.string.drawer_close  // "close drawer" description for accessibility
-                ) {
-            public void onDrawerClosed(View view) {
-                getSupportActionBar().setTitle(mTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            public void onDrawerOpened(View drawerView) {
-                getSupportActionBar().setTitle(mDrawerTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-		
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        if (savedInstanceState == null) {
-            selectItem(1);
-        } */
 
 		// You can be pretty confident that the intent will not be null here.
 		Intent intent = getIntent();
@@ -134,11 +119,11 @@ public class TimetableActivity extends ActionBarActivity
 		// Get the extras (if there are any)
 		Bundle extras = intent.getExtras();
 		if (extras != null) {
-			if (extras.containsKey("action")) {
+			if (extras.containsKey("action") && extras.containsKey("lessonID") && extras.containsKey("date_week")) {
 				if (getIntent().getExtras().getString("action").equals("lesson")){
-					int dayInt = getIntent().getExtras().getInt("dayInt");
-					int periodInt = getIntent().getExtras().getInt("periodInt");
-					LessonFragment(dayInt, periodInt);
+					String lessonID = getIntent().getExtras().getString("lessonID");
+					String dateWeek = getIntent().getExtras().getString("date_week");
+					LessonFragment(lessonID, dateWeek);
 					intentLesson = true;
 				}
 			}
@@ -157,49 +142,104 @@ public class TimetableActivity extends ActionBarActivity
 
     @Override
     public void onBackPressed(){
-		// You can be pretty confident that the intent will not be null here.
-		Intent intent = getIntent();
-		boolean intentLesson = false;
+		if (isLessonFragmentActive) {
+			getSupportActionBar().setBackgroundDrawable(new ColorDrawable(tt_app_bar_color));
 
-		// Get the extras (if there are any)
-		Bundle extras = intent.getExtras();
-		if (extras != null) {
-			if (extras.containsKey("caller") && extras.containsKey("action")) {
-				if (getIntent().getExtras().getString("caller").equals("home") && getIntent().getExtras().getString("action").equals("lesson")){
-					Intent i = new Intent(this, MainActivity.class);
-					startActivityForResult(i, 0);
-					intentLesson = true;
+
+			// You can be pretty confident that the intent will not be null here.
+			Intent intent = getIntent();
+			boolean intentLesson = false;
+
+			// Get the extras (if there are any)
+			Bundle extras = intent.getExtras();
+			if (extras != null) {
+				if (extras.containsKey("caller") && extras.containsKey("action")) {
+					if (getIntent().getExtras().getString("caller").equals("home") && getIntent().getExtras().getString("action").equals("lesson")) {
+						Intent i = new Intent(this, MainActivity.class);
+						startActivityForResult(i, 0);
+						intentLesson = true;
+					}
 				}
 			}
-		}
-		if (!intentLesson) {
+			if (!intentLesson) {
+				super.onBackPressed();
+				// turn on the NavDrawer image. This Method is called in lower-level fragments.
+				//mDrawerToggle.setDrawerIndicatorEnabled(true);
+			}
+		} else {
 			super.onBackPressed();
 			// turn on the NavDrawer image. This Method is called in lower-level fragments.
 			//mDrawerToggle.setDrawerIndicatorEnabled(true);
 		}
     }
 
-    public void LessonFragment(int dayInt, int periodInt){
+    public void LessonFragment(String lessonID, String date_week){
+		/*BottomSheetDialogFragment bottomSheetDialogFragment = new LessonFragment();
+		bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());*/
+		currentLessonID = lessonID;
+		currentDateWeek = date_week;
+
     	mLessonFragment = getSupportFragmentManager().findFragmentByTag
 				(LessonFragment.DEFAULT_EDIT_FRAGMENT_TAG);
 
 		isLessonFragmentActive = true;
-		drawerFragment.upArrow();
+		//drawerFragment.upArrow();
 		
 		//mDrawerToggle.setDrawerIndicatorEnabled(false);
 		//mDrawerToggle.setHomeAsUpIndicator(getV7DrawerToggleDelegate().getThemeUpIndicator());
 
 		mLessonFragment = new LessonFragment();
 		Bundle args = new Bundle();
-        args.putInt("dayInt", dayInt);
-        args.putInt("periodInt", periodInt);
+        args.putString("lessonID", lessonID);
+        args.putString("date_week", date_week);
         args.putString("caller", "Timetable");
         mLessonFragment.setArguments(args);
 		
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		transaction.add(R.id.container, mLessonFragment,
+		transaction.replace(R.id.container_bottom_sheet_lesson, mLessonFragment,
 				LessonFragment.DEFAULT_EDIT_FRAGMENT_TAG).addToBackStack(null);
 		transaction.commit();
+
+		bottom_sheet_shader.setVisibility(View.VISIBLE);
+
+		/*FrameLayout containerBS = (FrameLayout) findViewById(R.id.container_bottom_sheet_lesson);
+		float bs_elevation = getResources().getDimension(R.dimen.lesson_bottom_sheet_televation);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			containerBS.setElevation(bs_elevation);
+		}
+
+		View bottomSheet = findViewById(R.id.container_bottom_sheet_lesson);
+		BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+
+		int peek_height = (int) (getResources().getDimension(R.dimen.lesson_bottom_sheet_peek_height) + 0.5f);
+		bottomSheetBehavior.setPeekHeight(peek_height);
+		bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+		bottomSheetBehavior.setHideable(true);
+
+		final View v_appbar_shadow = (View) findViewById(R.id.v_appbar_shadow);
+
+		bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+			@Override
+			public void onStateChanged(@NonNull View bottomSheet, int newState) {
+				if (newState == BottomSheetBehavior.STATE_EXPANDED){
+					// update the actionbar to show the up carat/affordance
+					getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+					getSupportActionBar().setTitle(getString(R.string.title_fragment_lesson));
+					v_appbar_shadow.setVisibility(View.VISIBLE);
+
+				} else {
+					getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+					drawerFragment.noUpArrow();
+					getSupportActionBar().setTitle(mTitle);
+					v_appbar_shadow.setVisibility(View.GONE);
+				}
+			}
+
+			@Override
+			public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+			}
+		});*/
     }
 
 	public void endLessonFragment(){
@@ -208,6 +248,32 @@ public class TimetableActivity extends ActionBarActivity
 		isLessonFragmentActive = false;
 
 		getSupportActionBar().setTitle(mTitle);
+		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(tt_app_bar_color));
+		bottom_sheet_shader.setVisibility(View.GONE);
+	}
+
+	public void extendLessonFragment(){
+		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+		drawerFragment.upArrow();
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+		isLessonFragmentActive = true;
+		bottom_sheet_shader.setVisibility(View.VISIBLE);
+	}
+
+	public void collapseLessonFragment(){
+		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+		drawerFragment.noUpArrow();
+		isLessonFragmentActive = true;
+
+		getSupportActionBar().setTitle(mTitle);
+		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(tt_app_bar_color));
+		bottom_sheet_shader.setVisibility(View.VISIBLE);
+	}
+
+	public void resumeLessonFragment(){
+		isLessonFragmentActive = true;
+		bottom_sheet_shader.setVisibility(View.VISIBLE);
 	}
 
 	public void SubjectsListFragment(){
@@ -374,123 +440,6 @@ public class TimetableActivity extends ActionBarActivity
 			}
 		});
 	}*/
-    
-    public String getPeriodName(String day, String period){		
-		String[][] myArray = toArray(this, "Periods.txt");
-		int Rows = nmbrRowsCols(this, "Periods.txt")[0];
-		int Cols = nmbrRowsCols(this, "Periods.txt")[1];
-		String sName = "-";
-		File file = new File(getExternalFilesDir(null), "Periods.txt");
-		
-		if (file.length() > 0){
-			for (int ab = 0; ab < Rows; ab++){
-				if (myArray[ab][0].equals(day) & myArray[ab][1].equals(period)){
-					sName = myArray[ab][2];
-				}
-			}
-		}
-
-		return sName;
-	}
-    
-    public String getPeriodNameFromAbbrev(String abbrev){		
-		String[][] myArray = toArray(this, "Periods.txt");
-		int Rows = nmbrRowsCols(this, "Periods.txt")[0];
-		int Cols = nmbrRowsCols(this, "Periods.txt")[1];
-		String sName = "-";
-		File file = new File(getExternalFilesDir(null), "Periods.txt");
-		
-		if (file.length() > 0){
-			for (int ab = 0; ab < Rows; ab++){
-				if (myArray[ab][0].equals(abbrev)){
-					sName = myArray[ab][2];
-				}
-			}
-		}
-
-		return sName;
-	}
-    
-    public String[] getSubjectInfoFromAbbrev(Context context, String sAbbrev){		
-		String[][] myArray = toArray(context, "Subjects.txt");
-		int Rows = nmbrRowsCols(context, "Subjects.txt")[0];
-		int Cols = nmbrRowsCols(context, "Subjects.txt")[1];
-		String[] sArray = new String[Cols];
-		int row = 0;
-		boolean existsSubject = false;
-		
-		for (int a = 0; a < Rows; a++){
-			if (myArray[a][1].equals(sAbbrev)){
-		        row = a;
-				existsSubject = true;
-			}
-		}
-		if (existsSubject = true){
-			for (int b = 0; b < Cols; b++){
-				sArray[b] = myArray[row][b];
-			}
-		}
-		
-		return sArray;
-	}
-    
-    public String getPeriodAbbrev(String sName){		
-		String[][] myArray = toArray(this, "Subjects.txt");
-		int Rows = nmbrRowsCols(this, "Subjects.txt")[0];
-		int Cols = nmbrRowsCols(this, "Subjects.txt")[1];
-		String sAbbrev = "-";
-		File file = new File(getExternalFilesDir(null), "Subjects.txt");
-		
-		if (file.length() > 0){
-			for (int ab = 0; ab < Rows; ab++){
-				if (myArray[ab][0].equals(sName)){
-					sAbbrev = myArray[ab][1];
-				}
-			}
-		}
-
-		return sAbbrev;
-	}
-    
-    public String[] getPeriodColors(String sName){		
-		String[][] myArray = toArray(this, "Subjects.txt");
-		int Rows = nmbrRowsCols(this, "Subjects.txt")[0];
-		int Cols = nmbrRowsCols(this, "Subjects.txt")[1];
-		String[] sColor = {"-", "-"};
-		File file = new File(getExternalFilesDir(null), "Subjects.txt");
-		
-		if (file.length() > 0){
-			for (int ab = 0; ab < Rows; ab++){
-				if (myArray[ab][0].equals(sName)){
-					sColor[0] = myArray[ab][24];
-					sColor[1] = myArray[ab][25];
-				}
-			}
-		}
-
-		return sColor;
-	}
-
-    public String[] getFieldInfo(String field){
-        String[][] myArray = toArray(this, "TtFields.txt");
-        int Rows = nmbrRowsCols(this, "TtFields.txt")[0];
-        int Cols = nmbrRowsCols(this, "TtFields.txt")[1];
-        String[] fieldInfo = new String[4];
-        File file = new File(getExternalFilesDir(null), "TtFields.txt");
-
-        if (file.length() > 0){
-            for (int f = 0; f < Rows; f++){
-                if (myArray[f][0].equals(field)){
-                    fieldInfo[0] = myArray[f][1];
-                    fieldInfo[1] = myArray[f][2];
-                    fieldInfo[2] = myArray[f][3];
-                    fieldInfo[3] = myArray[f][4];
-                }
-            }
-        }
-
-        return fieldInfo;
-    }
 
 	public void fabHomeworkClicked(){
 		showEditHwDialog();
@@ -500,9 +449,49 @@ public class TimetableActivity extends ActionBarActivity
 		showViewHwDialog(ID);
 	}
 
+	public void onDialogMessageViewHomework(boolean edit, String ID){
+        /*FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, new HomeworkFragment(), HomeworkFragment.DEFAULT_EDIT_FRAGMENT_TAG);
+        transaction.commit();*/
+		updateViews();
+
+		if (edit){
+			showEditHwDialogForExistingHw(ID);
+		}
+	}
+
+	@Override
+	public void onDialogMessageDeleteHomework(String ID) {
+		deleteHomework(this, ID);
+		updateViews();
+	}
+
+	@Override
+	public void onDialogMessageDoneClicked() {
+		updateViews();
+	}
+
+	@Override
+	public void onDialogMessageHomework(String title, String content, String subject, String date, String lessonID) {
+		DataStorageHandler.createHomework(this, ttFolder, subject, date, title, content, lessonID);
+
+		updateViews();
+	}
+
+	@Override
+	public void onDialogMessageUpdateHomework(String ID, String title, String content, String subject, String date, String done, String lessonID) {
+		DataStorageHandler.updateHomework(this, ttFolder, ID, subject, date, title, content, done, lessonID);
+
+        /*FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, new HomeworkFragment(), HomeworkFragment.DEFAULT_EDIT_FRAGMENT_TAG);
+        transaction.commit();*/
+
+		updateViews();
+	}
+
 	public void showEditHwDialogForExistingHw(String ID){
 		Bundle args = new Bundle();
-		args.putString("caller", "Homework");
+		args.putString("caller", "Timetable");
 		args.putBoolean("existing", true);
 		args.putString("subject", "-");
 		args.putString("ID", ID);
@@ -514,7 +503,7 @@ public class TimetableActivity extends ActionBarActivity
 
 	public void showViewHwDialog(String ID){
 		Bundle args = new Bundle();
-		args.putString("caller", "Homework");
+		args.putString("caller", "Timetable");
 		args.putString("ID", ID);
 		FragmentManager manager = getSupportFragmentManager();
 		DialogViewHomework myDialog = new DialogViewHomework();
@@ -524,7 +513,7 @@ public class TimetableActivity extends ActionBarActivity
 
 	public void showEditHwDialog(){
 		Bundle args = new Bundle();
-		args.putString("caller", "Homework");
+		args.putString("caller", "Timetable");
 		args.putBoolean("existing", false);
 		args.putString("subject", "-");
 		args.putString("ID", "-");
@@ -534,128 +523,78 @@ public class TimetableActivity extends ActionBarActivity
 		myDialog.show(manager, "myDialog");
 	}
 
-	@Override
-	public void onDialogMessageHomework(String title, String content, String subject, String date) {
-		createHomework(this, subject, date, title, content);
-
-		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		transaction.replace(R.id.container, new MainFragment(), MainFragment.DEFAULT_EDIT_FRAGMENT_TAG);
-		transaction.commit();
+	public void showEditHwDialog(String subjectID, String date){
+		Bundle args = new Bundle();
+		args.putString("caller", "Timetable");
+		args.putBoolean("existing", false);
+		args.putString("subject", subjectID);
+		args.putString("date", date);
+		args.putString("ID", "-");
+		FragmentManager manager = getSupportFragmentManager();
+		DialogEditHomework myDialog = new DialogEditHomework();
+		myDialog.setArguments(args);
+		myDialog.show(manager, "myDialog");
 	}
 
-	@Override
-	public void onDialogMessageUpdateHomework(String ID, String title, String content, String subject, String date, String done) {
-		updateHomework(this, ID, subject, date, title, content, done);
+	public void deleteHomework(Context context, String ID){
+		final String[] backupArray = DataStorageHandler.deleteHomeworkGetBackupArray(this, ttFolder, ID);
 
-		/*FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		transaction.replace(R.id.container, new MainFragment(), MainFragment.DEFAULT_EDIT_FRAGMENT_TAG);
-		transaction.commit();*/
+		final Context fContext = context;
+		final String fID = backupArray[0];
+		final String fSubject = backupArray[1];
+		final String fDate = backupArray[2];
+		final String fTitle = backupArray[3];
+		final String fContent = backupArray[4];
+		final String fDone = backupArray[5];
+		final String fLessonID = backupArray[6];
+
+		Snackbar
+				.make(cl_timetable, R.string.snackbar_homework_deleted, Snackbar.LENGTH_LONG)
+				.setAction(R.string.snackbar_homework_deleted_action, new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						deleteUndo(fContext, fID, fSubject, fDate, fTitle, fContent, fDone, fLessonID);
+					}
+				})
+				.show();
 	}
 
-	public void onDialogMessageViewHomework(boolean edit, String ID){
-		/*FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		transaction.replace(R.id.container, new MainFragment(), MainFragment.DEFAULT_EDIT_FRAGMENT_TAG);
-		transaction.commit();
-		if (edit){
-			showEditHwDialogForExistingHw(ID);
-		}*/
-	}
+	public void deleteUndo(Context context, String ID, String subject, String date, String hTitle, String hContent, String done, String lessonID){
+		String[][] myArray = DataStorageHandler.toArray(context, homeworkFilepath);
+		int Rows = nmbrRowsCols(context, homeworkFilepath)[0];
+		int Cols = 7;
 
-	@Override
-	public void onDialogMessageDeleteHomework(String ID) {
-
-	}
-
-	@Override
-	public void onDialogMessageDoneClicked() {
-
-	}
-
-	public void createHomework(Context context, String subject, String date, String hTitle, String hContent){
-		String[][] myArray = toArray(context, "Homework.txt");
-		int Rows = nmbrRowsCols(context, "Homework.txt")[0];
-		int Cols = 6;
-
-		File file = new File(getExternalFilesDir(null), "Homework.txt");
-
-		// get the new ID
-		int maxID = -1;
-		for (int i1 = 0; i1 < Rows; i1++){
-			int thisID = Integer.valueOf(myArray[i1][0]);
-			if (thisID > maxID) maxID = thisID;
-		}
-		int ID = maxID + 1;
-
-		// Save data to myArray
-		String[][] myArray2 = new String[Rows + 1][Cols];
-		for (int r = 0; r < Rows; r++) {
-			for (int c = 0; c < Cols; c++) {
-				myArray2[r][c] = myArray[r][c];
-			}
-		}
-		myArray2[Rows][0] = String.valueOf(ID);
-		myArray2[Rows][1] = subject;
-		myArray2[Rows][2] = date;
-		myArray2[Rows][3] = hTitle;
-		myArray2[Rows][4] = hContent;
-		myArray2[Rows][5] = "no";
-		myArray = myArray2;
-		Rows++;
-
-		// write data to file
-		try{
-			BufferedWriter buf = new BufferedWriter(new FileWriter(file));
-			for (int t = 0; t < Rows; t++){
-				if (myArray[t][0] != null & myArray[t][1] != null & myArray[t][2] != null & myArray[t][3] != null){
-					buf.write(myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3] + "," + myArray[t][4] + "," + myArray[t][5]);
-					buf.newLine();
-				}else{
-					Toast.makeText(this, "CANNOT save data:" + myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3], Toast.LENGTH_SHORT).show();
-				}
-			}
-			buf.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void updateHomework(Context context, String ID, String subject, String date, String hTitle, String hContent, String done) {
-		String[][] myArray = toArray(context, "Homework.txt");
-		int Rows = nmbrRowsCols(context, "Homework.txt")[0];
-		int Cols = 6;
-
-		File file = new File(getExternalFilesDir(null), "Homework.txt");
+		File file = new File(getExternalFilesDir(null), homeworkFilepath);
 
 
 		// Save data to myArray
+		String[][] newArray = new String[Rows+1][Cols];
 		for (int r = 0; r < Rows; r++) {
-			if (myArray[r][0].equals(ID)) {
-				myArray[r][1] = subject;
-				myArray[r][2] = date;
-				myArray[r][3] = hTitle;
-				myArray[r][4] = hContent;
-				myArray[r][5] = done;
-			}
+			for (int c = 0; c < myArray[r].length; c++) newArray[r][c] = myArray[r][c];
+			for (int c = myArray[r].length; c < Cols; c++) newArray[r][c] = "[none]";
 		}
+		newArray[Rows][0] = ID;
+		newArray[Rows][1] = subject;
+		newArray[Rows][2] = date;
+		newArray[Rows][3] = hTitle;
+		newArray[Rows][4] = hContent;
+		newArray[Rows][5] = done;
+		newArray[Rows][6] = lessonID;
 
-		// write data to file
-		try{
-			BufferedWriter buf = new BufferedWriter(new FileWriter(file));
-			for (int t = 0; t < Rows; t++){
-				if (myArray[t][0] != null & myArray[t][1] != null & myArray[t][2] != null & myArray[t][3] != null){
-					buf.write(myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3] + "," + myArray[t][4] + "," + myArray[t][5]);
-					buf.newLine();
-				}else{
-					Toast.makeText(this, "CANNOT save data:" + myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3], Toast.LENGTH_SHORT).show();
-				}
-			}
-			buf.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		Rows = Rows + 1;
+
+		myArray = newArray;
+
+		DataStorageHandler.writeToCSVFile(this, file, myArray, Rows, Cols, "TimetableActivity deleteUndo");
+
+
+		updateViews();
+		//Snackbar.make(fabCoordinator, R.string.snackbar_homework_deleted_restored, Snackbar.LENGTH_SHORT).show();
+	}
+
+	private void updateViews(){
+		if (isLessonFragmentActive){
+			LessonFragment(currentLessonID, currentDateWeek);
 		}
 	}
 

@@ -1,12 +1,18 @@
 package com.thinc_easy.schoolmanager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.text.TextUtilsCompat;
+import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +21,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,11 +49,13 @@ public class SubjectFragment extends Fragment{
 			"orange_light", "orange_dark", "red_light", "red_dark", "black", "white", "gray_light", "gray_dark"};
     private String[] colorNames = {"red", "pink", "purple", "deep_purple", "indigo", "blue",
             "light_blue", "cyan", "teal", "green", "light_green", "lime", "yellow", "amber",
-            "ornge", "deep_orange", "brown", "grey", "blue_grey", "black", "white"};
+            "orange", "deep_orange", "brown", "grey", "blue_grey", "black", "white"};
     private int[] colorInts = {0xffF44336, 0xffE91E63, 0xff9C27B0, 0xff673AB7, 0xff3F51B5, 0xff2196F3,
             0xff03A9F4, 0xff00BCD4, 0xff009688, 0xff4CAF50, 0xff8BC34A, 0xffCDDC39,
             0xffFFEB3B, 0xffFFC107, 0xffFF9800, 0xffFF5722, 0xff795548, 0xff9E9E9E, 0xff607D8B, 0xff000000, 0xffFFFFFF};
 	private Button edit;
+    private String ttFolder;
+    private SharedPreferences prefs;
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,89 +73,33 @@ public class SubjectFragment extends Fragment{
         mDayIDs = getResources().getStringArray(R.array.DayIDs);
         mDayNames = getResources().getStringArray(R.array.DayNames);
 
-        String abbrev = getArguments().getString("abbrev");
-        SubjectArray = ((EditSubjectActivity) getActivity()).getSubjectInfoFromAbbrev(getActivity(), abbrev);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        ttFolder = prefs.getString(getActivity().getResources().getString(R.string.pref_key_current_timetable_filename), "[none]");
+        //subjectsFilepath = ttFolder + "/" + getActivity().getResources().getString(R.string.file_name_lessons);
+
+        final String ID = getArguments().getString("ID");
+        SubjectArray = DataStorageHandler.SubjectInfo(getActivity(), ttFolder, ID);
         tvSubjectName = (TextView) v.findViewById(R.id.tvSubjectName);
         setUpTvSubjectName(v);
         
         tvSubject = (TextView) v.findViewById(R.id.tvSubject);
         tvTeacher = (TextView) v.findViewById(R.id.tvTeacher);
-        tvPeriod1 = (TextView) v.findViewById(R.id.tvPeriod1);
-        tvPeriod2 = (TextView) v.findViewById(R.id.tvPeriod2);
-        tvPeriod3 = (TextView) v.findViewById(R.id.tvPeriod3);
-        tvPeriod4 = (TextView) v.findViewById(R.id.tvPeriod4);
-        tvPeriod5 = (TextView) v.findViewById(R.id.tvPeriod5);
-        tr1 = (TableRow) v.findViewById(R.id.tr1);
-        tr2 = (TableRow) v.findViewById(R.id.tr2);
-        tr3 = (TableRow) v.findViewById(R.id.tr3);
-        tr4 = (TableRow) v.findViewById(R.id.tr4);
-        tr5 = (TableRow) v.findViewById(R.id.tr5);
         //flTitle = (FrameLayout) v.findViewById(R.id.FrameLayoutTitle);
         edit = (Button) v.findViewById(R.id.edit);
-        
-        tvSubject.setText(SubjectArray[0].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + " (" + SubjectArray[1].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + ")");
-        tvTeacher.setText(SubjectArray[2].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",").replace("[null]", "")
-                + " (" + SubjectArray[3].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",").replace("[null]", "") + ")");
-        
-        if (SubjectArray[4].equals("-")){
-        	tr1.setVisibility(View.GONE);
-        } else {
-            String day = "";
-            for (int i = 0; i < mDayIDs.length; i++){
-                if (mDayIDs[i].equals(SubjectArray[4])) day = mDayNames[i];
-            }
-            String r = "";
-            if (SubjectArray[19] != null) r = " (" + SubjectArray[19].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + ")";
-        	tvPeriod1.setText(day + ", " + SubjectArray[9] + ". - " + SubjectArray[14] + ". " + getResources().getString(R.string.period) + r);
-        }
-        if (SubjectArray[5].equals("-")){
-        	tr2.setVisibility(View.GONE);
-        } else {
-            String day = "";
-            for (int i = 0; i < mDayIDs.length; i++){
-                if (mDayIDs[i].equals(SubjectArray[5])) day = mDayNames[i];
-            }
-            String r = "";
-            if (SubjectArray[20] != null) r = " (" + SubjectArray[20].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + ")";
-        	tvPeriod2.setText(day + ", " + SubjectArray[10] + ". - " + SubjectArray[15] + ". " + getResources().getString(R.string.period) + r);
-        }
-        if (SubjectArray[6].equals("-")){
-        	tr3.setVisibility(View.GONE);
-        } else {
-            String day = "";
-            for (int i = 0; i < mDayIDs.length; i++){
-                if (mDayIDs[i].equals(SubjectArray[6])) day = mDayNames[i];
-            }
-            String r ="";
-            if (SubjectArray[21] != null) r = " (" + SubjectArray[21].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + ")";
-        	tvPeriod3.setText(day + ", " + SubjectArray[11] + ". - " + SubjectArray[16] + ". " + getResources().getString(R.string.period) + r);
-        }
-        if (SubjectArray[7].equals("-")){
-        	tr4.setVisibility(View.GONE);
-    	} else {
-            String day = "";
-            for (int i = 0; i < mDayIDs.length; i++){
-                if (mDayIDs[i].equals(SubjectArray[7])) day = mDayNames[i];
-            }
-            String r = "";
-            if (SubjectArray[22] != null) r = " (" + SubjectArray[22].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + ")";
-            tvPeriod4.setText(day + ", " + SubjectArray[12] + ". - " + SubjectArray[17] + ". " + getResources().getString(R.string.period) + r);
-        }
-        if (SubjectArray[8].equals("-")){
-        	tr5.setVisibility(View.GONE);
-        } else {
-            String day = "";
-            for (int i = 0; i < mDayIDs.length; i++){
-                if (mDayIDs[i].equals(SubjectArray[8])) day = mDayNames[i];
-            }
-            String r = "";
-            if (SubjectArray[23] != null) r = " (" + SubjectArray[23].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + ")";
-        	tvPeriod5.setText(day + ", " + SubjectArray[13] + ". - " + SubjectArray[18] + ". " + getResources().getString(R.string.period) + r);
-        }
+
+        String subject = SubjectArray[0].replace("[comma]", ",").replace("[none]","").replace("[null]","");
+        String sAbr = SubjectArray[1].replace("[comma]", ",").replace("[none]","").replace("[null]","");
+        tvSubject.setText((sAbr.equals("")) ? subject : subject+" (" +sAbr+ ")");
+
+        String teacher = SubjectArray[2].replace("[comma]", ",").replace("[none]","").replace("[null]","");
+        String tAbbrev = SubjectArray[3].replace("[comma]", ",").replace("[none]","").replace("[null]","");
+        tvTeacher.setText((tAbbrev.equals("")) ? teacher : teacher+" ("+tAbbrev+ ")");
+
         
     	int colorInt = 0xffFFFFFF;
     	for (int i = 0; i < colorNames.length; i++){
-    		if (colorNames[i].equals(SubjectArray[24])){
+    		if (colorNames[i].equals(SubjectArray[4])){
     			colorInt = colorInts[i];
     		}
     	}
@@ -155,16 +109,25 @@ public class SubjectFragment extends Fragment{
         
         int textColorInt = 0xff000000;
     	for (int i = 0; i < colorNames.length; i++){
-    		if (colorNames[i].equals(SubjectArray[25])){
+    		if (colorNames[i].equals(SubjectArray[5])){
     			textColorInt = colorInts[i];
     		}
     	}
     	tvSubjectName.setTextColor(textColorInt);
+
+        setUpLessons(v, ID);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            edit.setBackgroundTintList(getActivity().getResources().getColorStateList(R.color.button_color_state_list));
+            edit.setTextColor(getActivity().getResources().getColor(R.color.TextDarkBg));
+        } else {
+            edit.setTextColor(getActivity().getResources().getColor(R.color.colorAccent));
+        }
     	
     	edit.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				((EditSubjectActivity)getActivity()).CallEditSubjectFragment(SubjectArray[0]);
+				((EditSubjectActivity)getActivity()).CallEditSubjectFragment(ID);
 			}
 		});
 
@@ -179,8 +142,11 @@ public class SubjectFragment extends Fragment{
     }
 
     private void setUpTvSubjectName(View v){
-    	tvSubjectName.setText(SubjectArray[0].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ","));
+    	tvSubjectName.setText(SubjectArray[0].replace("[comma]", ",").replace("[none]", "").replace("[null]", ""));
     	tvSubjectName.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Regular.ttf"));
+        tvSubjectName.setSingleLine(true);
+        tvSubjectName.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        tvSubjectName.setSelected(true);
         //tvSubjectName.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Thin.ttf"));
         //hTextSize = 64;
         //tvSubjectName.setTextSize(hTextSize);
@@ -191,6 +157,107 @@ public class SubjectFragment extends Fragment{
         	tvSubjectName.setTextSize(hTextSize);
         }*/
     }
+
+    private void setUpLessons(View v, String subjectID){
+        CardView cv = (CardView) v.findViewById(R.id.card_lessons);
+        LinearLayout ll = (LinearLayout) v.findViewById(R.id.ll_subject_lessons);
+
+        final String[][] subjectLessons = DataStorageHandler.SubjectLessons(getActivity(), ttFolder, subjectID);
+        boolean isLesson = false;
+        int count = 1;
+        if (subjectLessons != null && subjectLessons.length > 0){
+            isLesson = true;
+            for (int r = 0; r < subjectLessons.length; r++){
+                final String AB = subjectLessons[r][1];
+                final String day = subjectLessons[r][2];
+                final String custom = subjectLessons[r][3];
+                final String periodF = subjectLessons[r][4];
+                final String periodT = subjectLessons[r][5];
+                final String timeS = subjectLessons[r][6];
+                final String timeE = subjectLessons[r][7];
+                final String place = subjectLessons[r][8];
+                ll.addView(lesson_element(count, AB, day, custom, periodF, periodT, timeS, timeE, place));
+                count++;
+            }
+
+        }
+        if (isLesson) {
+            final int card_margin = (int) (getActivity().getResources().getDimension(R.dimen.card_margin)+0.5f);
+            LinearLayout.LayoutParams cvlp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            cvlp.setMargins(card_margin, card_margin, card_margin, card_margin);
+            cv.setLayoutParams(cvlp);
+
+            LinearLayout.LayoutParams lllp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            ll.setLayoutParams(lllp);
+        } else {
+            cv.setVisibility(View.GONE);
+        }
+    }
+
+    private LinearLayout lesson_element(int count, String AB, String day, String custom, String pF, String pT, String timeS, String timeE, String place){
+        LinearLayout ll = new LinearLayout(getActivity());
+        ll.setOrientation(LinearLayout.HORIZONTAL);
+        ll.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                (int) (getActivity().getResources().getDimension(R.dimen.list_1_line_row_height)+0.5f)));
+
+        ll.addView(tv_period(count, AB, day));
+        ll.addView(tv_lesson(custom, pF, pT, timeS, timeE, place));
+
+        return ll;
+    }
+
+    private TextView tv_period(int count, String AB, String day){
+        TextView tv = new TextView(getActivity());
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        lp.setMargins(0,0,(int) (getActivity().getResources().getDimension(R.dimen.card_padding)+0.5f),0);
+        tv.setLayoutParams(lp);
+        tv.setGravity(Gravity.CENTER_VERTICAL);
+        tv.setTextColor(getActivity().getResources().getColor(R.color.SecondaryText));
+        tv.setSingleLine(true);
+        final String number = String.valueOf(count);
+
+        String text = "";
+
+        if (DataStorageHandler.isStringNumeric(day) && Integer.parseInt(day) < mDayNames.length)
+            text = text+mDayNames[Integer.parseInt(day)];
+
+        if (AB != null && !AB.replace("[none]","").replace("[null]","").equals(""))
+            text = text+" ("+AB.replace("[none]","").replace("[null]","")+")";
+        tv.setText(text);
+
+        return tv;
+    }
+
+    private TextView tv_lesson(String custom, String pF, String pT, String timeS, String timeE, String place){
+        TextView tv = new TextView(getActivity());
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        //lp.setMargins(0,0,(int) (getActivity().getResources().getDimension(R.dimen.card_padding)+0.5f),0);
+        tv.setLayoutParams(lp);
+        tv.setGravity(Gravity.CENTER_VERTICAL);
+        tv.setTextColor(getActivity().getResources().getColor(R.color.Text));
+        tv.setSingleLine(true);
+        tv.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        tv.setSelected(true);
+
+        String text = "";
+
+        String timing = "";
+        if (custom.equals("true")){
+            if (timeS != null & timeE != null) timing = timeS+" - "+timeE;
+        } else {
+            final String period = getActivity().getResources().getString(R.string.period);
+            if (pF != null) timing = (pT != null && !pT.equals(pF)) ? period+" "+pF+" - "+pT : period+" "+pF;
+        }
+        text = (!text.equals("")) ? text+" |  "+timing : timing;
+
+        if (!place.replace("[none]","").replace("[null]","").equals(""))
+            text = text+"  |  "+place.replace("[none]","").replace("[null]","");
+
+        tv.setText(text);
+
+        return tv;
+    }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

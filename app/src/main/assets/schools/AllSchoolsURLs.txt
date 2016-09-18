@@ -288,3 +288,4 @@
 020300020003,1,tlss0f7oh09iv1cdbqte87tu3f
 021500030001,1,http://www.escola-ginestalmachado.net/
 021600020001,1,http://www.lcd.lu/
+020300010006,1,http://www2.warwick.ac.uk/fac/soc/

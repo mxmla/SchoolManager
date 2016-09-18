@@ -12,6 +12,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -79,6 +81,8 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
     private int mOpenMainActivityCount;
     public final int mHowOftenUntilShareApp = 25;
     private String KEY_OPEN_MAIN_ACTIVITY_COUNT = "open_main_activity_count";
+    private String ttFolder;
+    private CoordinatorLayout cl_main;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,13 +100,14 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
         NavigationDrawerFragment1 drawerFragment = (NavigationDrawerFragment1)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer_1);
         drawerFragment.setUp(R.id.fragment_navigation_drawer_1, (DrawerLayout)findViewById(R.id.drawer_layout), toolbar);
+
+        cl_main = (CoordinatorLayout) findViewById(R.id.cl_main);
 		
 		Fragment mMainFragment = getSupportFragmentManager().findFragmentByTag
                 (MainFragment.DEFAULT_EDIT_FRAGMENT_TAG);
 
         mShareAppFragment = getSupportFragmentManager().findFragmentByTag
                 (ShareAppFragment.DEFAULT_EDIT_FRAGMENT_TAG);
-
 
         startService(new Intent(this, NotificationService.class));
 
@@ -153,12 +158,13 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
         String pref_NotificationMethodUpdated = "NotificationMethodUpdated";
         String pref_NotificationUpdate2016_05_20 = "NotificationUpdate20160520";
         String pref_checkTtFieldsTxt2016_05_28 = "CheckTtFieldsTxt20160528";
+        String pref_strorage_method_updated_2016_09_13 = "storage_method_updated_20160913";
 
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         mOpenMainActivityCount = Integer.valueOf(readFromPreferences(this, KEY_OPEN_MAIN_ACTIVITY_COUNT, "0"));
 
-        if (!prefs.getBoolean(pref_NotificationMethodUpdated, false) || mOpenMainActivityCount%10 == 0) {
+        /*if (!prefs.getBoolean(pref_NotificationMethodUpdated, false) || mOpenMainActivityCount%10 == 0) {
             DataStorageHandler.changeNotificationMethod(this);
         }
 
@@ -168,6 +174,18 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
 
         if (!prefs.getBoolean(pref_checkTtFieldsTxt2016_05_28, false)){
             DataStorageHandler.checkTtFieldsTxt(this);
+        }*/
+
+        if (!prefs.getBoolean(pref_strorage_method_updated_2016_09_13, false)){
+            File fSubjectsOld = new File(getExternalFilesDir(null), "Subjects.txt");
+            File folderTimetablesNew  = new File(getExternalFilesDir(null), getResources().getString(R.string.folder_name_timetables));
+            if (fSubjectsOld.exists() && !folderTimetablesNew.exists()){
+                DataStorageHandler.updateStorageMethod20160913(this);
+                prefs.edit().putBoolean(pref_strorage_method_updated_2016_09_13, true);
+            } else {
+                final String dismissedNewFeatureABWeeksKey = "dismissed_new_feature_ab_weeks";
+                prefs.edit().putBoolean(dismissedNewFeatureABWeeksKey, true).apply();
+            }
         }
 
         saveToPreferences(this, KEY_OPEN_MAIN_ACTIVITY_COUNT, String.valueOf(mOpenMainActivityCount + 1));
@@ -178,6 +196,9 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
         }*/
 
         updateDayNamesToIDs();
+
+        ttFolder = prefs.getString(getResources().getString(R.string.pref_key_current_timetable_filename), "[none]");
+        //DataStorageHandler.RefreshTtAttributes(this, ttFolder);
 
         
 		
@@ -222,7 +243,7 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
 
     public void showEditHwDialogForExistingHw(String ID){
         Bundle args = new Bundle();
-        args.putString("caller", "Homework");
+        args.putString("caller", "Timetable");
         args.putBoolean("existing", true);
         args.putString("subject", "-");
         args.putString("ID", ID);
@@ -234,7 +255,7 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
 
     public void showViewHwDialog(String ID){
         Bundle args = new Bundle();
-        args.putString("caller", "Homework");
+        args.putString("caller", "Timetable");
         args.putString("ID", ID);
         FragmentManager manager = getSupportFragmentManager();
         DialogViewHomework myDialog = new DialogViewHomework();
@@ -244,7 +265,7 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
 
     public void showEditHwDialog(){
         Bundle args = new Bundle();
-        args.putString("caller", "Homework");
+        args.putString("caller", "Timetable");
         args.putBoolean("existing", false);
         args.putString("subject", "-");
         args.putString("ID", "-");
@@ -254,22 +275,96 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
         myDialog.show(manager, "myDialog");
     }
 
-    @Override
-    public void onDialogMessageHomework(String title, String content, String subject, String date) {
-        createHomework(this, subject, date, title, content);
+    public void showEditHwDialog(String subjectID, String date){
+        Bundle args = new Bundle();
+        args.putString("caller", "Timetable");
+        args.putBoolean("existing", false);
+        args.putString("subject", subjectID);
+        args.putString("date", date);
+        args.putString("ID", "-");
+        FragmentManager manager = getSupportFragmentManager();
+        DialogEditHomework myDialog = new DialogEditHomework();
+        myDialog.setArguments(args);
+        myDialog.show(manager, "myDialog");
+    }
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, new MainFragment(), MainFragment.DEFAULT_EDIT_FRAGMENT_TAG);
-        transaction.commit();
+    public void deleteHomework(Context context, String ID){
+        final String[] backupArray = DataStorageHandler.deleteHomeworkGetBackupArray(this, ttFolder, ID);
+
+        final Context fContext = context;
+        final String fID = backupArray[0];
+        final String fSubject = backupArray[1];
+        final String fDate = backupArray[2];
+        final String fTitle = backupArray[3];
+        final String fContent = backupArray[4];
+        final String fDone = backupArray[5];
+        final String fLessonID = backupArray[6];
+
+        Snackbar
+                .make(cl_main, R.string.snackbar_homework_deleted, Snackbar.LENGTH_LONG)
+                .setAction(R.string.snackbar_homework_deleted_action, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        deleteUndo(fContext, fID, fSubject, fDate, fTitle, fContent, fDone, fLessonID);
+                    }
+                })
+                .show();
+    }
+
+    public void deleteUndo(Context context, String ID, String subject, String date, String hTitle, String hContent, String done, String lessonID){
+        final String homeworkFilepath = ttFolder + "/" + getResources().getString(R.string.file_name_homework);
+        String[][] myArray = DataStorageHandler.toArray(context, homeworkFilepath);
+        int Rows = nmbrRowsCols(context, homeworkFilepath)[0];
+        int Cols = 7;
+
+        File file = new File(getExternalFilesDir(null), homeworkFilepath);
+
+
+        // Save data to myArray
+        String[][] newArray = new String[Rows+1][Cols];
+        for (int r = 0; r < Rows; r++) {
+            for (int c = 0; c < myArray[r].length; c++) newArray[r][c] = myArray[r][c];
+            for (int c = myArray[r].length; c < Cols; c++) newArray[r][c] = "[none]";
+        }
+        newArray[Rows][0] = ID;
+        newArray[Rows][1] = subject;
+        newArray[Rows][2] = date;
+        newArray[Rows][3] = hTitle;
+        newArray[Rows][4] = hContent;
+        newArray[Rows][5] = done;
+        newArray[Rows][6] = lessonID;
+
+        Rows = Rows + 1;
+
+        myArray = newArray;
+
+        DataStorageHandler.writeToCSVFile(this, file, myArray, Rows, Cols, "TimetableActivity deleteUndo");
+
+
+        refreshMainFragment();
+        //Snackbar.make(fabCoordinator, R.string.snackbar_homework_deleted_restored, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onDialogMessageUpdateHomework(String ID, String title, String content, String subject, String date, String done) {
-        updateHomework(this, ID, subject, date, title, content, done);
+    public void onDialogMessageHomework(String title, String content, String subject, String date, String lessonID) {
+        DataStorageHandler.createHomework(this, ttFolder, subject, date, title, content, lessonID);
+        refreshMainFragment();
+        /*createHomework(this, subject, date, title, content);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, new MainFragment(), MainFragment.DEFAULT_EDIT_FRAGMENT_TAG);
-        transaction.commit();
+        transaction.commit();*/
+    }
+
+    @Override
+    public void onDialogMessageUpdateHomework(String ID, String title, String content, String subject, String date, String done, String lessonID) {
+        DataStorageHandler.updateHomework(this, ttFolder, ID, subject, date, title, content, done, lessonID);
+        refreshMainFragment();
+        /*updateHomework(this, ID, subject, date, title, content, done);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, new MainFragment(), MainFragment.DEFAULT_EDIT_FRAGMENT_TAG);
+        transaction.commit();*/
     }
 
     public void onDialogMessageViewHomework(boolean edit, String ID){
@@ -359,69 +454,6 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
                 myArray[r][4] = hContent;
                 myArray[r][5] = done;
             }
-        }
-
-        // write data to file
-        try{
-            BufferedWriter buf = new BufferedWriter(new FileWriter(file));
-            for (int t = 0; t < Rows; t++){
-                if (myArray[t][0] != null & myArray[t][1] != null & myArray[t][2] != null & myArray[t][3] != null){
-                    buf.write(myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3] + "," + myArray[t][4] + "," + myArray[t][5]);
-                    buf.newLine();
-                }else{
-                    Toast.makeText(this, "CANNOT save data:" + myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3], Toast.LENGTH_SHORT).show();
-                }
-            }
-            buf.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void deleteHomework(Context context, String ID){
-        String[][] myArray = toArray(context, "Homework.txt");
-        int Rows = nmbrRowsCols(context, "Homework.txt")[0];
-        int Cols = 6;
-
-        File file = new File(getExternalFilesDir(null), "Homework.txt");
-
-        //Generate temporary backup array
-        String[] backupArray = new String[6];
-
-        //Remove data from myArray
-        int removableRow = -1;
-        for (int r = 0; r < Rows; r++) {
-            if (myArray[r][0].equals(ID)){
-                removableRow = r;
-                backupArray[0] = myArray[r][0];
-                backupArray[1] = myArray[r][1];
-                backupArray[2] = myArray[r][2];
-                backupArray[3] = myArray[r][3];
-                backupArray[4] = myArray[r][4];
-                backupArray[5] = myArray[r][5];
-            }
-        }
-        if (removableRow >= 0) {
-            String[][] newArray = new String[myArray.length - 1][6];
-            for (int i1 = 0; i1 < removableRow; i1++){
-                newArray[i1][0] = myArray[i1][0];
-                newArray[i1][1] = myArray[i1][1];
-                newArray[i1][2] = myArray[i1][2];
-                newArray[i1][3] = myArray[i1][3];
-                newArray[i1][4] = myArray[i1][4];
-                newArray[i1][5] = myArray[i1][5];
-            }
-            for (int i2 = removableRow + 1; i2 < myArray.length; i2++){
-                newArray[i2-1][0] = myArray[i2][0];
-                newArray[i2-1][1] = myArray[i2][1];
-                newArray[i2-1][2] = myArray[i2][2];
-                newArray[i2-1][3] = myArray[i2][3];
-                newArray[i2-1][4] = myArray[i2][4];
-                newArray[i2-1][5] = myArray[i2][5];
-            }
-            myArray = newArray;
         }
 
         // write data to file

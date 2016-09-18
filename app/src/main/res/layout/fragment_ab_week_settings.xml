@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/BackgroundColor"
+    tools:context="com.thinc_easy.schoolmanager.ABWeekSettingsFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/card_margin">
+
+        <LinearLayout
+            style="@style/CardContent"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/introText"
+                android:text="@string/pref_ab_week_settings_text"
+                style="@style/IntroductiveText"
+                android:gravity="top|start"/>
+
+            <android.support.v7.widget.CardView
+                style="@style/Card"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                custom:cardElevation="2dp"
+                custom:cardUseCompatPadding="true" >
+                <LinearLayout
+                    android:paddingTop="@dimen/card_padding"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <Switch
+                        android:id="@+id/ab_switch_a_b_week"
+                        style="@style/CardContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/new_timetable_settings_a_b_cycle"/>
+
+                    <LinearLayout
+                        style="@style/CardContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/ab_tvNumberABWeeks"
+                            style="@style/CardContentText"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/new_timetable_settings_number_of_weeks"/>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <Button
+                                android:id="@+id/ab_bABNrPickDown"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:layout_gravity="center_vertical"
+                                android:text="-"/>
+                            <EditText
+                                android:id="@+id/ab_etNrPick"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_horizontal"
+                                android:inputType="number"
+                                android:ems="2"
+                                android:text="2"/>
+                            <Button
+                                android:id="@+id/ab_bABNrPickUp"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:layout_gravity="center_vertical"
+                                android:text="+"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/CardContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/ab_tvABPreviewTitle"
+                            style="@style/CardContentText"
+                            android:paddingRight="@dimen/card_padding"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/new_timetable_settings_a_b_preview"/>
+
+                        <ScrollView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/ab_tvABPreview"
+                                style="@style/CardContentText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="A | B"/>
+                        </ScrollView>
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_active_ab"
+                style="@style/Card"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                custom:cardElevation="2dp"
+                custom:cardUseCompatPadding="true" >
+                <LinearLayout
+                    android:id="@+id/ll_active_ab"
+                    android:paddingTop="@dimen/card_padding"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+                    <TextView
+                        style="@style/CardTitle"
+                        android:text="@string/pref_ab_week_settings_currently_active"/>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <Button
+                android:id="@+id/bSaveABSelection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginTop="@dimen/card_padding"
+                android:layout_marginBottom="@dimen/card_padding"
+                android:text="@string/save"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

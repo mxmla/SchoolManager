@@ -47,6 +47,8 @@ public class EditSubjectActivity extends ActionBarActivity implements DialogColo
 	ArrayList<String> subjectsToAddNames;
 	private Drawable mActionBarBackgroundDrawable;
 	private int headerHeight;
+	private SharedPreferences prefs;
+	private String ttFolder;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +58,12 @@ public class EditSubjectActivity extends ActionBarActivity implements DialogColo
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
-		if (getIntent().getExtras().getString("caller").equals("NewTimetable") && getIntent().getExtras().getString("subjects").equals("true")){
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		ttFolder = prefs.getString(getResources().getString(R.string.pref_key_current_timetable_filename), "[none]");
+
+		Bundle extras = getIntent().getExtras();
+		if (extras.containsKey("caller") && extras.getString("caller").equals("NewTimetable")
+				&& extras.containsKey("subjects") && extras.getString("subjects").equals("true")){
 			mCustomSubjectFragment = getSupportFragmentManager().findFragmentByTag(CustomSubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG);
 
 			subjectsToAddNames = getIntent().getExtras().getStringArrayList("subjects_to_add_names");
@@ -99,7 +106,8 @@ public class EditSubjectActivity extends ActionBarActivity implements DialogColo
 			}*/
 		}
 
-		if (getIntent().getExtras().getString("caller").equals("NewTimetable") && getIntent().getExtras().getString("subjects").equals("false")){
+		if (extras.containsKey("caller") && extras.getString("caller").equals("NewTimetable") &&
+				extras.containsKey("subjects") && extras.getString("subjects").equals("false")){
 			if (mCustomSubjectsOrNotFragment == null){
 				mCustomSubjectsOrNotFragment = new CustomSubjectsOrNotFragment();
 
@@ -109,9 +117,9 @@ public class EditSubjectActivity extends ActionBarActivity implements DialogColo
 			}
 		}
 
-		Bundle extras = getIntent().getExtras();
-		if (extras.containsKey("action")){
-			if (extras.getString("action").equals("add_subject")){
+
+		if (extras.containsKey("action")) {
+			if (extras.getString("action").equals("add_subject")) {
 				mCustomSubjectFragment = new CustomSubjectFragment();
 				Bundle args = new Bundle();
 				args.putString("caller", getIntent().getExtras().getString("caller"));
@@ -121,23 +129,25 @@ public class EditSubjectActivity extends ActionBarActivity implements DialogColo
 				FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 				transaction.replace(R.id.container, mCustomSubjectFragment, CustomSubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG);
 				transaction.commit();
-			}
-		} else if (getIntent().getExtras().getString("caller").equals("Timetable")){
-			mSubjectFragment = getSupportFragmentManager().findFragmentByTag
-					(SubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG);
-			
-			String abbrev = getIntent().getExtras().getString("abbrev");
-			if (mSubjectFragment == null){
-				mSubjectFragment = new SubjectFragment();
-				Bundle args = new Bundle();
-		        args.putString("abbrev", abbrev);
-		        args.putString("caller", "Timetable");
-		        mSubjectFragment.setArguments(args);
-				
-				FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-				transaction.add(R.id.container, mSubjectFragment, 
-						SubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG);
-				transaction.commit();
+			} else if (extras.getString("action").equals("view_subject") && extras.containsKey("subjectID")) {
+				mSubjectFragment = getSupportFragmentManager().findFragmentByTag
+						(SubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG);
+
+				String ID = getIntent().getExtras().getString("subjectID");
+				if (mSubjectFragment == null) {
+					mSubjectFragment = new SubjectFragment();
+					Bundle args = new Bundle();
+					args.putString("ID", ID);
+					mSubjectFragment.setArguments(args);
+
+					FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+					transaction.add(R.id.container, mSubjectFragment,
+							SubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG);
+					transaction.commit();
+				}
+			} else if (extras.getString("action").equals("edit_subject") && extras.containsKey("subjectID")){
+				final String ID = extras.getString("subjectID");
+				CallEditSubjectFragment(ID);
 			}
 		}
 		
@@ -243,7 +253,7 @@ public class EditSubjectActivity extends ActionBarActivity implements DialogColo
 	}
 	
 	// when called by SubjectFragment
-	public void CallEditSubjectFragment(String sName){
+	public void CallEditSubjectFragment(String subjectID){
 		/*mEditSubjectFragment = new EditSubjectFragment();
 		Bundle args = new Bundle();
         args.putString("caller", "SubjectFragment");
@@ -256,42 +266,41 @@ public class EditSubjectActivity extends ActionBarActivity implements DialogColo
 
 		mCustomSubjectFragment = getSupportFragmentManager().findFragmentByTag(CustomSubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG);
 
-		String subjectID = "[none]";
+		/*String subjectID = "[none]";
 		if (getIntent().getExtras().containsKey("subjectID"))
-			subjectID = getIntent().getExtras().getString("subjectID", "[none]");
+			subjectID = getIntent().getExtras().getString("subjectID", "[none]");*/
 
-		if (mCustomSubjectFragment == null){
-			mCustomSubjectFragment = new CustomSubjectFragment();
-			Bundle args = new Bundle();
-			args.putString("caller", "SubjectFragment");
-			args.putString("action", "edit_subject");
-			args.putString("subjectID", subjectID);
-			mCustomSubjectFragment.setArguments(args);
+		mCustomSubjectFragment = new CustomSubjectFragment();
+		Bundle args = new Bundle();
+		args.putString("caller", "SubjectFragment");
+		args.putString("action", "edit_subject");
+		args.putString("subjectID", subjectID);
+		mCustomSubjectFragment.setArguments(args);
 
-			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-			transaction.add(R.id.container, mCustomSubjectFragment, CustomSubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG);
-			transaction.commit();
-		}
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		transaction.add(R.id.container, mCustomSubjectFragment, CustomSubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG);
+		transaction.commit();
 	}
 	
 
 
 
 
-	public void menuActionDeleteSubject(String subject){
-		showDeleteSubjectConfirmDialog(subject);
+	public void menuActionDeleteSubject(String subjectID){
+		showDeleteSubjectConfirmDialog(subjectID);
 	}
 
 	@Override
-	public void onDialogMessageDeleteConfirm(boolean delete, String subject) {
+	public void onDialogMessageDeleteConfirm(boolean delete, String subjectID) {
 		if (delete){
-			deleteSubject(this, subject);
+			deleteSubject(this, subjectID);
 		}
 	}
 
-	public void showDeleteSubjectConfirmDialog(String subject){
+	public void showDeleteSubjectConfirmDialog(String subjectID){
 		Bundle args = new Bundle();
-		args.putString("subject", subject);
+		args.putString("subject", subjectID);
+		args.putString("ttFolder", ttFolder);
 		FragmentManager manager = getSupportFragmentManager();
 		DialogDeleteSubjectConfirm myDialog = new DialogDeleteSubjectConfirm();
 		myDialog.setArguments(args);
@@ -300,8 +309,8 @@ public class EditSubjectActivity extends ActionBarActivity implements DialogColo
 
 
 
-	public void deleteSubject(Context context, String subject){
-		DataStorageHandler.deleteSubject(context, subject);
+	public void deleteSubject(Context context, String subjectID){
+		DataStorageHandler.DeleteSubject(context, ttFolder, subjectID);
 
 		Intent i = new Intent(this,
 				TimetableActivity.class);

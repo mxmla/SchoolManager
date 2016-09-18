@@ -2,9 +2,11 @@ package com.thinc_easy.schoolmanager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,17 +43,16 @@ public class SubjectsListFragment extends Fragment {
     ListView listViewSubjects;
     private TextView slSectionTitleText, slSectionTitleButton;
 
-    private static String[] subjectNames;
-    private static String[] subjectAbbrev;
-    private static String[] subjectBgColors;
-    private static String[] subjectTextColors;
+    private static String[] subjectNames, subjectAbbrev, subjectBgColors, subjectTextColors, subjectIDs;
     private GradientDrawable gd;
     private static GradientDrawable[] icons;
     private static int[] colorInt;
+    private String ttFolder, subjects_filepath;
+    private SharedPreferences prefs;
 
     private String[] colorNames = {"red", "pink", "purple", "deep_purple", "indigo", "blue",
             "light_blue", "cyan", "teal", "green", "light_green", "lime", "yellow", "amber",
-            "ornge", "deep_orange", "brown", "grey", "blue_grey", "black", "white"};
+            "orange", "deep_orange", "brown", "grey", "blue_grey", "black", "white"};
     private int[] colorInts = {0xffF44336, 0xffE91E63, 0xff9C27B0, 0xff673AB7, 0xff3F51B5, 0xff2196F3,
             0xff03A9F4, 0xff00BCD4, 0xff009688, 0xff4CAF50, 0xff8BC34A, 0xffCDDC39,
             0xffFFEB3B, 0xffFFC107, 0xffFF9800, 0xffFF5722, 0xff795548, 0xff9E9E9E, 0xff607D8B, 0xff000000, 0xffFFFFFF};
@@ -66,6 +67,10 @@ public class SubjectsListFragment extends Fragment {
         SchoolManager application = (SchoolManager) getActivity().getApplication();
         mTracker = application.getDefaultTracker();
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        ttFolder = prefs.getString(getActivity().getResources().getString(R.string.pref_key_current_timetable_filename), "[none]");
+        subjects_filepath = ttFolder + "/" + getActivity().getResources().getString(R.string.file_name_subjects);
+
         slSectionTitleText = (TextView) v.findViewById(R.id.slSectionTitleText);
         slSectionTitleButton = (TextView) v.findViewById(R.id.slSectionTitleButton);
 
@@ -73,18 +78,20 @@ public class SubjectsListFragment extends Fragment {
         slSectionTitleButton.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf"));
         slSectionTitleButton.setTextColor(getActivity().getResources().getColor(R.color.color_timetable));
 
-        String[][] subjectsArray = ((TimetableActivity) getActivity()).toArray(getActivity(), "Subjects.txt");
-        int[] numberRowsCols = ((TimetableActivity) getActivity()).nmbrRowsCols(getActivity(), "Subjects.txt");
+        String[][] subjectsArray = ((TimetableActivity) getActivity()).toArray(getActivity(), subjects_filepath);
+        int[] numberRowsCols = ((TimetableActivity) getActivity()).nmbrRowsCols(getActivity(), subjects_filepath);
+        subjectIDs = new String[numberRowsCols[0]];
         subjectNames = new String[numberRowsCols[0]];
         subjectAbbrev = new String[numberRowsCols[0]];
         subjectBgColors = new String[numberRowsCols[0]];
         subjectTextColors = new String[numberRowsCols[0]];
         colorInt = new int[numberRowsCols[0]];
         for (int i = 0; i < numberRowsCols[0]; i++){
-            subjectNames[i] = subjectsArray[i][0];
-            subjectAbbrev[i] = subjectsArray[i][1];
-            subjectBgColors[i] = subjectsArray[i][24];
-            subjectTextColors[i] = subjectsArray[i][25];
+            subjectIDs[i] = subjectsArray[i][0];
+            subjectNames[i] = subjectsArray[i][1];
+            subjectAbbrev[i] = subjectsArray[i][2];
+            subjectBgColors[i] = subjectsArray[i][5];
+            subjectTextColors[i] = subjectsArray[i][6];
         }
 
         for (int i2 = 0; i2 < subjectBgColors.length; i2++){
@@ -133,9 +140,10 @@ public class SubjectsListFragment extends Fragment {
 
             @Override
             public void onClick(View view, int position) {
-                if(!subjectAbbrev[position].equals(null) && !subjectAbbrev[position].equals("-")) {
+                if(!subjectIDs[position].equals(null) && !subjectIDs[position].equals("[none]")) {
                     Bundle args = new Bundle();
-                    args.putString("abbrev", subjectAbbrev[position]);
+                    args.putString("subjectID", subjectIDs[position]);
+                    args.putString("action", "view_subject");
                     args.putString("caller", "Timetable");
 
                     Intent i0 = new Intent(getActivity(), EditSubjectActivity.class);

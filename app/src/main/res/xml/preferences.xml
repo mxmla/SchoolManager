@@ -142,7 +142,27 @@
                 android:defaultValue="18:15"/>
 
         </PreferenceScreen>
+
+        <Preference
+            android:title="@string/pref_ab_week_title"
+            android:summary="@string/pref_ab_week_summary" >
+
+            <intent android:action="com.thinc_easy.schoolmanager.ABWEEKSETTINGSACTIVITY" >
+                <extra android:name="caller" android:value="settings" />
+            </intent>
+        </Preference>
+
+        <Preference
+            android:title="@string/pref_new_timetable_title"
+            android:summary="@string/pref_new_timetable_summary" >
+
+            <intent android:action="com.thinc_easy.schoolmanager.NEWTIMETABLEACTIVITY" >
+                <extra android:name="caller" android:value="settings" />
+            </intent>
+        </Preference>
     </PreferenceCategory>
+
+
 
     <PreferenceCategory
         android:title="@string/pref_title_my_school"

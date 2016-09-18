@@ -10,6 +10,110 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/status_bar_underlay" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/status_bar_placeholder"
+        android:layout_marginTop="?actionBarSize" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llWeekIndicator"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/timetable_week_indicator_height"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:background="@drawable/custom_bg">
+
+                <ImageButton
+                    android:id="@+id/ib_go_to_today"
+                    android:layout_width="@dimen/timetable_week_element_width_height"
+                    android:layout_height="@dimen/timetable_week_element_width_height"
+                    android:padding="@dimen/timetable_week_element_padding"
+                    android:src="@drawable/ic_today_black_24dp"
+                    android:background="@drawable/custom_bg"
+                    android:clickable="true"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tvWeekDates"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/CardContentText"
+                        android:ellipsize="marquee"
+                        android:text="5.9.16 - 11.9.16"/>
+                    <TextView
+                        android:id="@+id/tvWeekAB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/CardContentText"
+                        android:textColor="@color/SecondaryText"
+                        android:ellipsize="marquee"
+                        android:text="Week: A"/>
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/ib_chevron_left"
+                    android:layout_width="@dimen/timetable_week_element_width_height"
+                    android:layout_height="@dimen/timetable_week_element_width_height"
+                    android:padding="@dimen/timetable_week_element_padding"
+                    android:src="@drawable/ic_chevron_left_black_24dp"
+                    android:background="@drawable/custom_bg"
+                    android:clickable="true"/>
+
+                <ImageButton
+                    android:id="@+id/ib_chevron_right"
+                    android:layout_width="@dimen/timetable_week_element_width_height"
+                    android:layout_height="@dimen/timetable_week_element_width_height"
+                    android:padding="@dimen/timetable_week_element_padding"
+                    android:src="@drawable/ic_chevron_right_black_24dp"
+                    android:background="@drawable/custom_bg"
+                    android:clickable="true"/>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider_week_indicator"
+                style="@style/DividersStyle"
+                android:layout_margin="0dp" />
+
+            <ViewAnimator
+                android:id="@+id/vaDays"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:id="@+id/tt_shadow_top"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/card_dropshadow_height"
+                android:background="@drawable/toolbar_dropshadow"
+                android:rotation="180" />
+
+            <ViewAnimator
+                android:id="@+id/vaTimetable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></ViewAnimator>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/card_dropshadow_height"
+                android:background="@drawable/toolbar_dropshadow"
+                android:layout_alignParentTop="true" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/timetable_scrollview_padding_bottom" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!--
     <LinearLayout
         android:id="@+id/LinearLayout1"
         android:layout_width="match_parent"
@@ -835,6 +939,7 @@
             android:background="@drawable/toolbar_dropshadow"
             android:layout_alignParentTop="true" />
     </LinearLayout>
+    -->
 
     <View
         android:layout_width="match_parent"

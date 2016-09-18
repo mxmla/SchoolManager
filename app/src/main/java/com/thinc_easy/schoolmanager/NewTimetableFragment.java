@@ -352,68 +352,7 @@ public class NewTimetableFragment extends Fragment {
 		}
 
 
-		int maxVal = 0;
-		String topFolder = getResources().getString(R.string.folder_name_timetables);
-		File top = new File(getActivity().getExternalFilesDir(null), topFolder);
-		if (top.isDirectory()) {
-			System.out.println("top.isDirectory");
-			for (File file : top.listFiles()) {
-				System.out.println("file");
-				if (file.isDirectory()) {
-					String name = file.getName();
-					System.out.println("file.isDirectory: "+name);
-					String[] nSplit = name.split("_");
-					if (nSplit.length >= 2) {
-						final String sNumber = nSplit[1];
-						System.out.println("sNumber = "+sNumber);
-						if (DataStorageHandler.isStringNumeric(sNumber)) {
-							int thisValue = 0;
-							try {
-								thisValue = Integer.parseInt(sNumber);
-							} catch (NumberFormatException nfe) {
-								System.out.println("Could not parse " + nfe);
-							}
-
-							if (thisValue > maxVal) maxVal = thisValue;
-						}
-					}
-				}
-			}
-		}
-
-		Calendar now = Calendar.getInstance();
-		String date = DataStorageHandler.formatDateGeneralFormat(getActivity(), now);
-
-		folder = topFolder + "/" + getResources().getString(R.string.folder_name_timetable)
-				+ "_" + String.valueOf(maxVal+1) + "_" + date;
-		File ttFolder = new File(getActivity().getExternalFilesDir(null), folder);
-		ttFolder.mkdirs();
-
-		String filename = getResources().getString(R.string.file_name_timetable_attributes);
-
-		File attrFile = new File(ttFolder, filename);
-		int fileRows = numbrAB;
-		int fileCols = 13;
-		String[][] ttAtr = new String[fileRows][fileCols];
-
-		for (int f = 0; f < fileRows; f++){
-			ttAtr[f][0] = alphabet[f];
-			ttAtr[f][1] = "[none]";
-			ttAtr[f][2] = "[none]";
-			ttAtr[f][3] = "[none]";
-			ttAtr[f][4] = "[none]";
-			ttAtr[f][5] = "[none]";
-			ttAtr[f][6] = "[none]";
-			ttAtr[f][7] = "[none]";
-			ttAtr[f][8] = "[none]";
-			ttAtr[f][9] = "[none]";
-			ttAtr[f][10] = "[none]";
-			ttAtr[f][11] = "[none]";
-			ttAtr[f][12] = "[none]";
-		}
-
-		DataStorageHandler.writeToCSVFile(getActivity(), attrFile, ttAtr, fileRows, fileCols, "NewTimetableFragment");
-		prefs.edit().putString(getResources().getString(R.string.pref_key_current_timetable_filename), folder).apply();
+		final String newFolder = DataStorageHandler.setUpNewTimetableReturnTtFolderPath(getActivity(), numbrAB);
 	}
 
 

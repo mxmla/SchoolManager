@@ -9,7 +9,8 @@
     <TextView
         android:id="@+id/tvSubjectName"
         style="@style/ExtendedToolbarTitleStyle"
-        android:text="Mathematics" />
+        android:text="Mathematics"
+        android:ellipsize="marquee"/>
 
     <ScrollView
         android:id="@+id/ScrollView1"
@@ -88,138 +89,19 @@
                 custom:cardUseCompatPadding="true" >
 
                 <LinearLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical" >
 
                     <TextView
                         android:id="@+id/TextView02"
                         style="@style/CardTitle"
-                        android:text="@string/period" />
+                        android:text="@string/subject_lessons" />
 
-                    <TableLayout
-                        style="@style/CardContent" >
-
-                        <TableRow
-                            android:id="@+id/tr1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" >
-
-                            <TextView
-                                android:id="@+id/tvD1"
-                                style="@style/CardContentText"
-                                android:textColor="@color/SecondaryText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="20dp"
-                                android:layout_marginRight="@dimen/card_padding"
-                                android:text="@string/PeriodNr1" />
-
-                            <TextView
-                                android:id="@+id/tvPeriod1"
-                                style="@style/CardContentText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="20dp"
-                                android:layout_marginBottom="@dimen/card_padding"
-                                android:text="TextView" />
-
-                        </TableRow>
-
-                        <TableRow
-                            android:id="@+id/tr2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" >
-
-                            <TextView
-                                android:id="@+id/tvD5"
-                                style="@style/CardContentText"
-                                android:textColor="@color/SecondaryText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="20dp"
-                                android:layout_marginRight="@dimen/card_padding"
-                                android:text="@string/PeriodNr2" />
-
-                            <TextView
-                                android:id="@+id/tvPeriod2"
-                                style="@style/CardContentText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="20dp"
-                                android:layout_marginBottom="@dimen/card_padding"
-                                android:text="TextView" />
-
-                        </TableRow>
-
-                        <TableRow
-                            android:id="@+id/tr3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" >
-
-                            <TextView
-                                android:id="@+id/tvN2"
-                                style="@style/CardContentText"
-                                android:textColor="@color/SecondaryText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="20dp"
-                                android:layout_marginRight="@dimen/card_padding"
-                                android:text="@string/PeriodNr3" />
-
-                            <TextView
-                                android:id="@+id/tvPeriod3"
-                                style="@style/CardContentText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="20dp"
-                                android:layout_marginBottom="@dimen/card_padding"
-                                android:text="TextView" />
-
-                        </TableRow>
-
-                        <TableRow
-                            android:id="@+id/tr4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" >
-
-                            <TextView
-                                android:id="@+id/tvN1"
-                                style="@style/CardContentText"
-                                android:textColor="@color/SecondaryText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="20dp"
-                                android:layout_marginRight="@dimen/card_padding"
-                                android:text="@string/PeriodNr4" />
-
-                            <TextView
-                                android:id="@+id/tvPeriod4"
-                                style="@style/CardContentText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="20dp"
-                                android:layout_marginBottom="@dimen/card_padding"
-                                android:text="TextView" />
-
-                        </TableRow>
-
-                        <TableRow
-                            android:id="@+id/tr5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" >
-
-                            <TextView
-                                android:id="@+id/tvN3"
-                                style="@style/CardContentText"
-                                android:textColor="@color/SecondaryText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="20dp"
-                                android:layout_marginRight="@dimen/card_padding"
-                                android:text="@string/PeriodNr5" />
-
-                            <TextView
-                                android:id="@+id/tvPeriod5"
-                                style="@style/CardContentText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="20dp"
-                                android:layout_marginBottom="@dimen/card_padding"
-                                android:text="TextView" />
-
-                        </TableRow>
-                    </TableLayout>
+                    <LinearLayout
+                        android:id="@+id/ll_subject_lessons"
+                        style="@style/CardContent"
+                        android:orientation="vertical"></LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 

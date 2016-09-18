@@ -53,22 +53,25 @@ public class DialogDeleteSubjectConfirm extends DialogFragment {
         bYes = (Button) view.findViewById(R.id.buttonYes);
         bNo = (Button) view.findViewById(R.id.buttonNo);
 
-        subject = getArguments().getString("subject");
-        title = subject.replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",") + " " + getResources().getString(R.string.dialog_delete_subject_confirm_title);
+        final String subjectID = getArguments().getString("subject");
+        final String ttFolder = getArguments().getString("ttFolder");
+        final String[] subjectInfo = DataStorageHandler.SubjectInfo(getActivity(), ttFolder, subjectID);
+        subject = subjectInfo[0];
+        title = subject.replace("[comma]", ",").replace("[none]", "").replace("[null]", "") + " " + getResources().getString(R.string.dialog_delete_subject_confirm_title);
 
         tvTitle.setText(title.replace("[comma]", ","));
 
         bYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                communicator.onDialogMessageDeleteConfirm(true, subject);
+                communicator.onDialogMessageDeleteConfirm(true, subjectID);
                 dismiss();
             }
         });
         bNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                communicator.onDialogMessageDeleteConfirm(false, subject);
+                communicator.onDialogMessageDeleteConfirm(false, subjectID);
                 dismiss();
             }
         });

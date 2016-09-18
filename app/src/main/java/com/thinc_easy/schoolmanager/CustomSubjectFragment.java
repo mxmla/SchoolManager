@@ -96,7 +96,7 @@ public class CustomSubjectFragment extends Fragment{
 			"orange_light", "orange_dark", "red_light", "red_dark", "black", "white", "gray_light", "gray_dark"};
     private String[] colorNames = {"red", "pink", "purple", "deep_purple", "indigo", "blue",
             "light_blue", "cyan", "teal", "green", "light_green", "lime", "yellow", "amber",
-            "ornge", "deep_orange", "brown", "grey", "blue_grey", "black", "white"};
+            "orange", "deep_orange", "brown", "grey", "blue_grey", "black", "white"};
     private int[] colorInts = {0xffF44336, 0xffE91E63, 0xff9C27B0, 0xff673AB7, 0xff3F51B5, 0xff2196F3,
             0xff03A9F4, 0xff00BCD4, 0xff009688, 0xff4CAF50, 0xff8BC34A, 0xffCDDC39,
             0xffFFEB3B, 0xffFFC107, 0xffFF9800, 0xffFF5722, 0xff795548, 0xff9E9E9E, 0xff607D8B, 0xff000000, 0xffFFFFFF};
@@ -155,6 +155,9 @@ public class CustomSubjectFragment extends Fragment{
 		setUpLessonsCard(v);
 		setUpNextButton(v);
 
+		Color = "light_green";
+		Textcolor = "black";
+
 		if (getArguments() != null && getArguments().containsKey("action") &&
 				getArguments().getString("action").equals("edit_subject") && getArguments().containsKey("subjectID")){
 			loadData(getArguments().getString("subjectID"));
@@ -164,12 +167,8 @@ public class CustomSubjectFragment extends Fragment{
 			setUpFirstLesson();
 
 		} else {
-			//setUpFirstLesson();
-			loadData("0001");
+			setUpFirstLesson();
 		}
-
-		Color = "light_green";
-		Textcolor = "black";
         
         return v;
     }
@@ -362,6 +361,9 @@ public class CustomSubjectFragment extends Fragment{
 			mNextButton.setText(getActivity().getResources().getString(R.string.Next));
 		} else if (getArguments() != null && getArguments().containsKey("caller")
 				&& getArguments().getString("caller").equals("Timetable")){
+			mNextButton.setText(getActivity().getResources().getString(R.string.save));
+		} else if (getArguments() != null && getArguments().containsKey("action") &&
+				getArguments().getString("action").equals("edit_subject")){
 			mNextButton.setText(getActivity().getResources().getString(R.string.save));
 		}
 
@@ -1003,9 +1005,9 @@ public class CustomSubjectFragment extends Fragment{
 					tvHMDiv.setTextColor(getResources().getColor(R.color.Disabled));
 					tvHMDiv2.setTextColor(getResources().getColor(R.color.Disabled));
 					if (alCustomTimeList.size() > _intID){
-						alCustomTimeList.set(_intID, true);
+						alCustomTimeList.set(_intID, false);
 					} else {
-						alCustomTimeList.add(true);
+						alCustomTimeList.add(false);
 					}
 				} else if (i == rbCustom.getId()){
 					tvPeriod.setTextColor(getResources().getColor(R.color.Disabled));
@@ -1030,9 +1032,9 @@ public class CustomSubjectFragment extends Fragment{
 					tvHMDiv.setTextColor(getResources().getColor(R.color.Text));
 					tvHMDiv2.setTextColor(getResources().getColor(R.color.Text));
 					if (alCustomTimeList.size() > _intID){
-						alCustomTimeList.set(_intID, false);
+						alCustomTimeList.set(_intID, true);
 					} else {
-						alCustomTimeList.add(false);
+						alCustomTimeList.add(true);
 					}
 				}
 			}
@@ -1654,8 +1656,10 @@ public class CustomSubjectFragment extends Fragment{
 				int thisLessonInt = alLessonInts.get(lesson);
 
 				String sABs = "";
+				boolean isAB = false;
 				for (CheckBox checkBox : alABsList.get(thisLessonInt)){
 					if (checkBox.isChecked()){
+						isAB = true;
 						if (sABs == null || sABs.equals("")){
 							sABs = checkBox.getText().toString().replace(" ","");
 						} else {
@@ -1664,55 +1668,57 @@ public class CustomSubjectFragment extends Fragment{
 					}
 				}
 
-				String sDay = alDayList.get(thisLessonInt);
+				if (isAB) {
+					String sDay = alDayList.get(thisLessonInt);
 
-				boolean bCustomTime = (boolean) alCustomTimeList.get(thisLessonInt);
-				String sCustomTime = String.valueOf(bCustomTime);
+					boolean bCustomTime = (boolean) alCustomTimeList.get(thisLessonInt);
+					String sCustomTime = String.valueOf(bCustomTime);
 
-				String sPeriodFrom = alPeriodFList.get(thisLessonInt).getText().toString().replace(" ", "");
-				if (sPeriodFrom == null || sPeriodFrom.equals("")) sPeriodFrom = "[null]";
+					String sPeriodFrom = alPeriodFList.get(thisLessonInt).getText().toString().replace(" ", "");
+					if (sPeriodFrom == null || sPeriodFrom.equals("")) sPeriodFrom = "[null]";
 
-				String sPeriodTo = alPeriodTList.get(thisLessonInt).getText().toString().replace(" ", "");
-				if (sPeriodTo == null || sPeriodTo.equals("")) sPeriodTo = "[null]";
+					String sPeriodTo = alPeriodTList.get(thisLessonInt).getText().toString().replace(" ", "");
+					if (sPeriodTo == null || sPeriodTo.equals("")) sPeriodTo = "[null]";
 
-				if (DataStorageHandler.isStringNumeric(sPeriodFrom) && DataStorageHandler.isStringNumeric(sPeriodTo) &&
-						Integer.parseInt(sPeriodFrom) > Integer.parseInt(sPeriodTo)){
-					final String sFOld = sPeriodFrom;
-					sPeriodFrom = sPeriodTo;
-					sPeriodTo = sFOld;
+					if (DataStorageHandler.isStringNumeric(sPeriodFrom) && DataStorageHandler.isStringNumeric(sPeriodTo) &&
+							Integer.parseInt(sPeriodFrom) > Integer.parseInt(sPeriodTo)) {
+						final String sFOld = sPeriodFrom;
+						sPeriodFrom = sPeriodTo;
+						sPeriodTo = sFOld;
+					}
+
+					String sTimeStartH = alTimeStartHList.get(thisLessonInt).getText().toString().replace(" ", "");
+					if (sTimeStartH == null || sTimeStartH.equals("")) sTimeStartH = "[null]";
+
+					String sTimeStartM = alTimeStartMList.get(thisLessonInt).getText().toString().replace(" ", "");
+					if (sTimeStartM == null || sTimeStartM.equals("")) sTimeStartM = "[null]";
+
+					String sTimeEndH = alTimeEndHList.get(thisLessonInt).getText().toString().replace(" ", "");
+					if (sTimeEndH == null || sTimeEndH.equals("")) sTimeEndH = "[null]";
+
+					String sTimeEndM = alTimeEndMList.get(thisLessonInt).getText().toString().replace(" ", "");
+					if (sTimeEndM == null || sTimeEndM.equals("")) sTimeEndM = "[null]";
+
+					if (DataStorageHandler.isStringNumeric(sTimeStartH) && DataStorageHandler.isStringNumeric(sTimeStartM) &&
+							DataStorageHandler.isStringNumeric(sTimeEndH) && DataStorageHandler.isStringNumeric(sTimeEndM) &&
+							(Integer.parseInt(sTimeStartH) > Integer.parseInt(sTimeEndH) ||
+									(Integer.parseInt(sTimeStartH) == Integer.parseInt(sTimeEndH) && Integer.parseInt(sTimeStartM) > Integer.parseInt(sTimeEndM)))) {
+						final String sTSHOld = sTimeStartH;
+						final String sTSMOld = sTimeStartM;
+						sTimeStartH = sTimeEndH;
+						sTimeStartM = sTimeEndM;
+						sTimeEndH = sTSHOld;
+						sTimeEndM = sTSMOld;
+					}
+
+					String sTimeStart = sTimeStartH + ":" + sTimeStartM;
+					String sTimeEnd = sTimeEndH + ":" + sTimeEndM;
+
+					String sPlace = alPlaceList.get(thisLessonInt).getText().toString().replace(",", "[comma]");
+					if (sPlace == null || sPlace.equals("")) sPlace = "[null]";
+
+					LessonsList.add(new String[]{sABs, sDay, sCustomTime, sPeriodFrom, sPeriodTo, sTimeStart, sTimeEnd, sPlace});
 				}
-
-				String sTimeStartH = alTimeStartHList.get(thisLessonInt).getText().toString().replace(" ", "");
-				if (sTimeStartH == null || sTimeStartH.equals("")) sTimeStartH = "[null]";
-
-				String sTimeStartM = alTimeStartMList.get(thisLessonInt).getText().toString().replace(" ", "");
-				if (sTimeStartM == null || sTimeStartM.equals("")) sTimeStartM = "[null]";
-
-				String sTimeEndH = alTimeEndHList.get(thisLessonInt).getText().toString().replace(" ", "");
-				if (sTimeEndH == null || sTimeEndH.equals("")) sTimeEndH = "[null]";
-
-				String sTimeEndM = alTimeEndMList.get(thisLessonInt).getText().toString().replace(" ", "");
-				if (sTimeEndM == null || sTimeEndM.equals("")) sTimeEndM = "[null]";
-
-				if (DataStorageHandler.isStringNumeric(sTimeStartH) && DataStorageHandler.isStringNumeric(sTimeStartM) &&
-						DataStorageHandler.isStringNumeric(sTimeEndH) && DataStorageHandler.isStringNumeric(sTimeEndM) &&
-						(Integer.parseInt(sTimeStartH) > Integer.parseInt(sTimeEndH) ||
-								(Integer.parseInt(sTimeStartH) == Integer.parseInt(sTimeEndH) && Integer.parseInt(sTimeStartM) > Integer.parseInt(sTimeEndM)))){
-					final String sTSHOld = sTimeStartH;
-					final String sTSMOld = sTimeStartM;
-					sTimeStartH = sTimeEndH;
-					sTimeStartM = sTimeEndM;
-					sTimeEndH = sTSHOld;
-					sTimeEndM = sTSMOld;
-				}
-
-				String sTimeStart = sTimeStartH + ":" + sTimeStartM;
-				String sTimeEnd = sTimeEndH + ":" + sTimeEndM;
-
-				String sPlace = alPlaceList.get(thisLessonInt).getText().toString().replace(",", "[comma]");
-				if (sPlace == null || sPlace.equals("")) sPlace = "[null]";
-
-				LessonsList.add(new String[] {sABs, sDay, sCustomTime, sPeriodFrom, sPeriodTo, sTimeStart, sTimeEnd, sPlace});
 			}
 
 			//LessonsList.add(new String[] {"A", Day1, "false", Period11, Period12, "-", "-", Room1});
@@ -1744,6 +1750,12 @@ public class CustomSubjectFragment extends Fragment{
 							TimetableActivity.class);
 					startActivityForResult(i, 0);
 				}
+			} else if (getArguments() != null && getArguments().containsKey("action") &&
+					getArguments().getString("action").equals("edit_subject")) {
+				Intent i = new Intent(getActivity(),
+						TimetableActivity.class);
+				startActivityForResult(i, 0);
+
 			} else {
 				((EditSubjectActivity)getActivity()).NextSubject();
 			}

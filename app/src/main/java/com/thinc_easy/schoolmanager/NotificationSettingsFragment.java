@@ -69,9 +69,14 @@ public class NotificationSettingsFragment extends Fragment {
     private void saveData(){
         Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.toast_saved), Toast.LENGTH_LONG).show();
         String timeString = et1.getText().toString();
+        boolean notify = true;
+        int beforeTime = 0;
+        boolean oWChRooms = false;
+        boolean waitFPrev = false;
 
         if (rb1.isChecked()) {
             prefs.edit().putBoolean("pref_key_notification_never", true).apply();
+            notify = false;
         } else if (rb2.isChecked()) {
             prefs.edit().putBoolean("pref_key_notification_never", false).apply();
 
@@ -79,21 +84,30 @@ public class NotificationSettingsFragment extends Fragment {
 
             if (DataStorageHandler.isStringNumeric(timeString)) {
                 prefs.edit().putInt("pref_key_notification_time", Integer.parseInt(timeString)).apply();
+                beforeTime = Integer.parseInt(timeString);
             }
+            notify = true;
         }
 
         if (cb1.isChecked()) {
             prefs.edit().putBoolean("pref_key_notification_wait_for_previous", true).apply();
+            waitFPrev = true;
         } else {
             prefs.edit().putBoolean("pref_key_notification_wait_for_previous", false).apply();
+            waitFPrev = false;
         }
         if (cb2.isChecked()) {
             prefs.edit().putBoolean("pref_key_notification_only_if_change_rooms", true).apply();
+            oWChRooms = true;
         } else {
             prefs.edit().putBoolean("pref_key_notification_only_if_change_rooms", false).apply();
+            oWChRooms = false;
         }
 
-        DataStorageHandler.updateActiveTtNotificationsTxt(getActivity().getApplicationContext());
+        //DataStorageHandler.updateActiveTtNotificationsTxt(getActivity().getApplicationContext());
+        String currentTtFolder = prefs.getString(getActivity().getResources().getString(R.string.pref_key_current_timetable_filename), "[none]");
+        if (!currentTtFolder.equals("[none]"))
+            DataStorageHandler.NotificationsPrefChange(getActivity(), currentTtFolder, notify, beforeTime, oWChRooms, waitFPrev);
     }
 
     private void initialSetup(){

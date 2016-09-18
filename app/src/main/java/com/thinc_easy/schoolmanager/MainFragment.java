@@ -33,6 +33,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,6 +78,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class MainFragment extends Fragment {
@@ -99,7 +101,7 @@ public class MainFragment extends Fragment {
             tvSchoolChallengeSubtitle, tvScoolChallengeCounter;
     private View vNowColor, vNextColor;
     private CardView nowLessonCard, nextLessonCard, tomorrowLessonsCard, createTtCard, shareAppCard,
-            cvNewFeature, cvAddedSchools, mySchoolUpdatedCard, cSchoolChallenge, cAppUpdate;
+            cvNewFeature, cvAddedSchools, mySchoolUpdatedCard, cSchoolChallenge, cAppUpdate, cvNewFeatureABWeeks;
     RelativeLayout rlNews, ttSectionTitle;
     private LinearLayout llSchoolChallengeCounter;
     private View vSchoolChallengeCounter;
@@ -128,7 +130,9 @@ public class MainFragment extends Fragment {
             0xffFFEB3B, 0xffFFC107, 0xffFF9800, 0xffFF5722, 0xff795548, 0xff9E9E9E, 0xff607D8B, 0xff000000, 0xffFFFFFF};
     private String strng;
     private SharedPreferences prefs;
-	
+    private String ttFolder, timetable_filepath;
+    private String[] allABs;
+
 	// This value is defined and consumed by app code, so any value will work.
     // There's no significance to this sample using 0.
     public static final int REQUEST_CODE = 0;
@@ -145,6 +149,10 @@ public class MainFragment extends Fragment {
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mUserClickedDontShare = Boolean.valueOf(readFromPreferences(getActivity(), KEY_USER_CLICKED_DONT_SHARE, "false"));
+
+        ttFolder = prefs.getString(getActivity().getResources().getString(R.string.pref_key_current_timetable_filename), "[none]");
+        allABs = DataStorageHandler.AllABs(getActivity(), ttFolder);
+        timetable_filepath = ttFolder + "/" + getActivity().getResources().getString(R.string.file_name_timetable);
 
         fragmentName = "MainFragment";
         // Obtain the shared Tracker instance.
@@ -196,6 +204,7 @@ public class MainFragment extends Fragment {
         bSchoolChallengeInviteFriends = (Button) v.findViewById(R.id.bSchoolChallengeInviteFriends);
         cAppUpdate = (CardView) v.findViewById(R.id.AppUpdateCard);
         bAppUpdate = (Button) v.findViewById(R.id.bGoToUpdateApp);
+        cvNewFeatureABWeeks = (CardView) v.findViewById(R.id.IntroducingABWeeksCard);
         //bRefresh = (Button) v.findViewById(R.id.bRefresh);
         isEndOfDay = true;
         isNextLesson = false;
@@ -228,6 +237,7 @@ public class MainFragment extends Fragment {
         storeSchoolInDatabase();
         schoolChallengeCard(v);
         appUpdateCard();
+        newFeatureABWeeksCard(v);
 
         /*bRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -381,7 +391,8 @@ public class MainFragment extends Fragment {
                 && cvAddedSchools.getVisibility() == View.GONE
                 && mySchoolUpdatedCard.getVisibility() == View.GONE
                 && cSchoolChallenge.getVisibility() == View.GONE
-                && cAppUpdate.getVisibility() == View.GONE){
+                && cAppUpdate.getVisibility() == View.GONE
+                && cvNewFeatureABWeeks.getVisibility() == View.GONE){
             rlNews.setVisibility(View.GONE);
         } else {
             rlNews.setVisibility(View.VISIBLE);
@@ -526,417 +537,337 @@ public class MainFragment extends Fragment {
         nowHour = calNow.get(Calendar.HOUR_OF_DAY);
         nowMinute = calNow.get(Calendar.MINUTE);
         nowDayOfWeek = calNow.get(Calendar.DAY_OF_WEEK);
-
-        SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
-        String p1start = (shared.getString("pref_key_period1_start", "07:55"));
-        String p1end = (shared.getString("pref_key_period1_end", "08:40"));
-        String p2start = (shared.getString("pref_key_period2_start", "8:40"));
-        String p2end = (shared.getString("pref_key_period2_end", "09:25"));
-        String p3start = (shared.getString("pref_key_period3_start", "09:45"));
-        String p3end = (shared.getString("pref_key_period3_end", "10:30"));
-        String p4start = (shared.getString("pref_key_period4_start", "10:35"));
-        String p4end = (shared.getString("pref_key_period4_end", "11:20"));
-        String p5start = (shared.getString("pref_key_period5_start", "11:40"));
-        String p5end = (shared.getString("pref_key_period5_end", "12:25"));
-        String p6start = (shared.getString("pref_key_period6_start", "12:25"));
-        String p6end = (shared.getString("pref_key_period6_end", "13:10"));
-        String p7start = (shared.getString("pref_key_period7_start", "13:45"));
-        String p7end = (shared.getString("pref_key_period7_end", "14:30"));
-        String p8start = (shared.getString("pref_key_period8_start", "14:30"));
-        String p8end = (shared.getString("pref_key_period8_end", "15:15"));
-        String p9start = (shared.getString("pref_key_period9_start", "15:15"));
-        String p9end = (shared.getString("pref_key_period9_end", "16:00"));
-        String p10start = (shared.getString("pref_key_period10_start", "16:00"));
-        String p10end = (shared.getString("pref_key_period10_end", "16:45"));
-        String p11start = (shared.getString("pref_key_period11_start", "16:45"));
-        String p11end = (shared.getString("pref_key_period11_end", "17:30"));
-        String p12start = (shared.getString("pref_key_period12_start", "17:30"));
-        String p12end = (shared.getString("pref_key_period12_end", "18:15"));
-
-        String[] times = {p1start, p1end, p2start, p2end, p3start, p3end, p4start, p4end, p5start, p5end, p6start, p6end,
-                p7start, p7end, p8start, p8end, p9start, p9end, p10start, p10end, p11start, p11end, p12start, p12end};
-        String[] timesStart = {p1start, p2start, p3start, p4start, p5start, p6start, p7start, p8start, p9start, p10start, p11start, p12start};
-        String[] timesEnd = {p1end, p2end, p3end, p4end, p5end, p6end, p7end, p8end, p9end, p10end, p11end, p12end};
-
-        int hp1s=0, hp1e=0, hp2s=0, hp2e=0, hp3s=0, hp3e=0, hp4s=0, hp4e=0, hp5s=0, hp5e=0, hp6s=0, hp6e=0, hp7s=0, hp7e=0, hp8s=0, hp8e=0,
-                hp9s=0, hp9e=0, hp10s=0, hp10e=0, hp11s=0, hp11e=0, hp12s=0, hp12e=0;
-        int mp1s=0, mp1e=0, mp2s=0, mp2e=0, mp3s=0, mp3e=0, mp4s=0, mp4e=0, mp5s=0, mp5e=0, mp6s=0, mp6e=0, mp7s=0, mp7e=0, mp8s=0, mp8e=0,
-                mp9s=0, mp9e=0, mp10s=0, mp10e=0, mp11s=0, mp11e=0, mp12s=0, mp12e=0;
-
-        int[] hourInts = {hp1s, hp1e, hp2s, hp2e, hp3s, hp3e, hp4s, hp4e, hp5s, hp5e, hp6s, hp6e, hp7s, hp7e, hp8s, hp8e,
-                hp9s, hp9e, hp10s, hp10e, hp11s, hp11e, hp12s, hp12e};
-        int[] minuteInts = {mp1s, mp1e, mp2s, mp2e, mp3s, mp3e, mp4s, mp4e, mp5s, mp5e, mp6s, mp6e, mp7s, mp7e, mp8s, mp8e,
-                mp9s, mp9e, mp10s, mp10e, mp11s, mp11e, mp12s, mp12e};
-        int[] hourIntsStart = {hp1s, hp2s, hp3s, hp4s, hp5s, hp6s, hp7s, hp8s, hp9s, hp10s, hp11s, hp12s};
-        int[] minuteIntsStart = {mp1s, mp2s, mp3s, mp4s, mp5s, mp6s, mp7s, mp8s, mp9s, mp10s, mp11s, mp12s};
+        final int nowTimeMinutes = nowHour * 60 + nowMinute;
 
         int[] periodNumbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
         int[] dayNumbers = {2, 3, 4, 5, 6, 7, 1};
         String[] mDayNames = getActivity().getResources().getStringArray(R.array.DayIDs);
+        int dayNow = 0;
+        for (int d = 0; d < dayNumbers.length; d++){
+            if (dayNumbers[d] == nowDayOfWeek) dayNow = d;
+        }
+
+        final int nowABint = DataStorageHandler.getCurrentAB(getActivity(), ttFolder, calNow);
+        final String nowAB = (nowABint < allABs.length) ? allABs[nowABint] : allABs[0];
+        final String nowTtFilepath = timetable_filepath + "_" + nowAB + ".txt";
+        final String[][] tt_array = DataStorageHandler.TimetableLessons(getActivity(), ttFolder, nowAB);
 
         isLesson = false;
+        beforeDayStart = false;
+        if (tt_array.length > 0) beforeDayStart = true;
+        dayEnd = true;
 
-        for (int i = 0; i < timesStart.length; i++) {
-            int nowTimeMinutes = nowHour * 60 + nowMinute;
+        for (int i = 0; i < tt_array.length; i++) {
+            if (tt_array[i].length >= 9 && DataStorageHandler.isStringNumeric(tt_array[i][1]) &&
+                    Integer.parseInt(tt_array[i][1]) == dayNow &&
+                    DataStorageHandler.isStringNumeric(tt_array[i][2]) &&
+                    DataStorageHandler.isStringNumeric(tt_array[i][3]) && tt_array[i][0].length()>=4) {
 
-            String[] timeStartSplit = timesStart[i].split(":");
-            int hS = Integer.valueOf(timeStartSplit[0]);
-            int mS = Integer.valueOf(timeStartSplit[1]);
-            int timeSminutes = hS * 60 + mS;
+                final int timeSminutes = Integer.parseInt(tt_array[i][2]);
+                final int timeEminutes = Integer.parseInt(tt_array[i][3]);
 
-            String[] timeEndSplit = timesEnd[i].split(":");
-            int hE = Integer.valueOf(timeEndSplit[0]);
-            int mE = Integer.valueOf(timeEndSplit[1]);
-            int timeEminutes = hE * 60 + mE;
+                if (timeSminutes <= nowTimeMinutes & nowTimeMinutes <= timeEminutes) {
+                    isLesson = true;
+                    beforeDayStart = false;
+                    dayEnd = false;
 
-            if (timeSminutes <= nowTimeMinutes & nowTimeMinutes <= timeEminutes) {
-                nowPeriod = periodNumbers[i];
-                isLesson = true;
-            }
-            if (i + 1 < timesStart.length) {
-                String[] timeStartNextSplit = timesStart[i + 1].split(":");
-                int hSN = Integer.valueOf(timeStartNextSplit[0]);
-                int mSN = Integer.valueOf(timeStartNextSplit[1]);
-                int timeSNminutes = hSN * 60 + mSN;
-                if (timeEminutes <= nowTimeMinutes & nowTimeMinutes <= timeSNminutes){
-                    breakNextLesson = periodNumbers[i+1];
+                    nowRoom = tt_array[i][7].replace("[none]","").replace("[null]","");
+                    nowSubjectAbbrev = tt_array[i][4];
+
+                    final String[] subjectInfo = DataStorageHandler.SubjectInfo(getActivity(), ttFolder, tt_array[i][0].substring(0,4));
+                    nowTeacher = subjectInfo[2];
+                    nowSubjectName = subjectInfo[0];
+                    if (nowSubjectName.equals("-")) isLesson = false;
+
+                    final String custom = tt_array[i][8];
+                    final String lessonID = tt_array[i][0];
+                    final String color1 = tt_array[i][5];
+                    final String color2 = tt_array[i][6];
+
+                    setUpNowLessonCard(v, lessonID, nowSubjectName, nowSubjectAbbrev, nowRoom, nowTeacher, color1, color2, timeSminutes, timeEminutes, custom);
+
+
+                    nowLessonCard.setVisibility(View.VISIBLE);
+
+                    final String date_week = DataStorageHandler.formatDateGeneralFormat(getActivity(), Calendar.getInstance());
+                    nowLessonCard.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Bundle args = new Bundle();
+                            args.putString("caller", "home");
+                            args.putString("action", "lesson");
+                            args.putString("date_week", date_week);
+                            args.putString("lessonID", lessonID);
+
+                            Intent i = new Intent(getActivity(), TimetableActivity.class);
+                            i.putExtras(args);
+                            startActivityForResult(i, 0);
+                        }
+                    });
+
+                } else if (timeSminutes > nowTimeMinutes || nowTimeMinutes < timeEminutes){
+                    dayEnd = false;
+
+                } else if (timeSminutes < nowTimeMinutes || nowTimeMinutes > timeEminutes){
+                    beforeDayStart = false;
+
                 }
             }
         }
 
-        int nowTimeMinutes = nowHour * 60 + nowMinute;
-
-        String[] timeLastPEndSplit = p12end.split(":");
-        int hLPE = Integer.valueOf(timeLastPEndSplit[0]);
-        int mLPE = Integer.valueOf(timeLastPEndSplit[1]);
-        int timeLPEminutes = hLPE * 60 + mLPE;
-        if (timeLPEminutes < nowTimeMinutes){
-            dayEnd = true;
-        }
-
-        String[] timeFirstPStartSplit = p1start.split(":");
-        int hFPS = Integer.valueOf(timeFirstPStartSplit[0]);
-        int mFPS = Integer.valueOf(timeFirstPStartSplit[1]);
-        int timeFPSminutes = hFPS * 60 + mFPS;
-        if (timeFPSminutes > nowTimeMinutes){
-            beforeDayStart = true;
-        }
-
-        for (int i3 = 0; i3 < dayNumbers.length; i3++) {
-            if (nowDayOfWeek == dayNumbers[i3]) {
-                nowDayInt = i3;
-                nowDayName = mDayNames[i3];
-            }
-        }
-
-        nowSubjectName = ((MainActivity) getActivity()).getSubjectFromPeriod(getActivity(), nowDayName, String.valueOf(nowPeriod));
-        if (nowSubjectName.equals("-")) isLesson = false;
-
-        if (isLesson) {
-
-            TextView tvTitle = (TextView) v.findViewById(R.id.CardNowLessonTitle);
-            //LinearLayout llTitle = (LinearLayout) v.findViewById(R.id.CardNowLessonHeaderBar);
-
-            tvTitle.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Regular.ttf"));
-
-
-            String[] subjectInfo = ((MainActivity) getActivity()).getSubjectInfo(getActivity(), nowSubjectName);
-
-            nowTeacher = subjectInfo[2];
-            nowSubjectAbbrev = subjectInfo[1];
-
-            if (nowDayName.equals(subjectInfo[4]) && !subjectInfo[9].equals("-") && Integer.valueOf(subjectInfo[9]) <= nowPeriod && !subjectInfo[14].equals("-") && nowPeriod <= Integer.valueOf(subjectInfo[14])) {
-                nowRoom = subjectInfo[19];
-                nowPeriodTo = subjectInfo[14];
-                nowPeriodFrom = subjectInfo[9];
-            }
-            if (nowDayName.equals(subjectInfo[5]) && !subjectInfo[10].equals("-") && Integer.valueOf(subjectInfo[10]) <= nowPeriod && !subjectInfo[15].equals("-") && nowPeriod <= Integer.valueOf(subjectInfo[15])) {
-                nowRoom = subjectInfo[20];
-                nowPeriodTo = subjectInfo[15];
-                nowPeriodFrom = subjectInfo[10];
-            }
-            if (nowDayName.equals(subjectInfo[6]) && !subjectInfo[11].equals("-") && Integer.valueOf(subjectInfo[11]) <= nowPeriod && !subjectInfo[16].equals("-") && nowPeriod <= Integer.valueOf(subjectInfo[16])) {
-                nowRoom = subjectInfo[21];
-                nowPeriodTo = subjectInfo[16];
-                nowPeriodFrom = subjectInfo[11];
-            }
-            if (nowDayName.equals(subjectInfo[7]) && !subjectInfo[12].equals("-") && Integer.valueOf(subjectInfo[12]) <= nowPeriod && !subjectInfo[17].equals("-") && nowPeriod <= Integer.valueOf(subjectInfo[17])) {
-                nowRoom = subjectInfo[22];
-                nowPeriodTo = subjectInfo[17];
-                nowPeriodFrom = subjectInfo[12];
-            }
-            if (nowDayName.equals(subjectInfo[8]) && !subjectInfo[13].equals("-") && Integer.valueOf(subjectInfo[13]) <= nowPeriod && !subjectInfo[18].equals("-") && nowPeriod <= Integer.valueOf(subjectInfo[18])) {
-                nowRoom = subjectInfo[23];
-                nowPeriodTo = subjectInfo[18];
-                nowPeriodFrom = subjectInfo[13];
-            }
-
-            String nowColor = subjectInfo[24];
-
-            int colorInt = 0xffFFFFFF;
-            for (int i = 0; i < colorNames.length; i++) {
-                if (colorNames[i].equals(nowColor)) {
-                    colorInt = colorInts[i];
-                }
-            }
-            /*((GradientDrawable)vNowColor.getBackground()).setColor(colorInt);
-            if (nowColor.equals("white")){
-                ((GradientDrawable)vNowColor.getBackground()).setStroke(1, 0xff000000);
-            }*/
-
-            final float scale = getActivity().getResources().getDisplayMetrics().density;
-            int bounds = (int) (56 * scale + 0.5f);
-
-            GradientDrawable gd = new GradientDrawable();
-            gd.setShape(1);
-            gd.setColor(colorInt);
-            gd.setBounds(0, 0, bounds, bounds);
-            gd.setSize(bounds, bounds);
-
-            if (colorInt == 0xffFFFFFF){
-                gd.setStroke(5, 0xff000000);
-            } else {
-                gd.setStroke(5, 0x00FFFFFF);
-            }
-            vNowColor.setBackgroundDrawable(gd);
-            //vNowColor.setBackgroundColor(colorInt);
-
-            String nowTextColor = subjectInfo[25];
-
-            int tColorInt = 0xffFFFFFF;
-            for (int i = 0; i < colorNames.length; i++) {
-                if (colorNames[i].equals(nowTextColor)) {
-                    tColorInt = colorInts[i];
-                }
-            }
-
-            tvNowSubjectName.setText(nowSubjectName.replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ","));
-            tvNowRoom.setText(nowRoom.replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ","));
-            tvNowTeacher.setText(nowTeacher.replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",").replace("[null]",""));
-            tvNowSubjectAbbrev.setText(nowSubjectAbbrev.replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ","));
-            tvNowSubjectAbbrev.setTextColor(tColorInt);
-            tvNowSubjectAbbrev.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf"));
-
-            String periods = getActivity().getResources().getString(R.string.period)+" "+nowPeriodFrom+" - "+nowPeriodTo;
-            if (nowPeriodFrom != null && nowPeriodTo != null && nowPeriodFrom.equals(nowPeriodTo))
-                periods = getActivity().getResources().getString(R.string.periods)+" "+nowPeriodFrom;
-            tvNowPeriods.setText(periods);
-            TextView CardNowLessonTitle = (TextView) v.findViewById(R.id.CardNowLessonTitle);
-            CardNowLessonTitle.setText(getActivity().getResources().getString(R.string.NowSubject));
-
-            String timeNowFrom = "";
-            String timeNowTo = "";
-            for (int p = 0; p < periodNumbers.length; p++){
-                if (nowPeriodFrom != null && DataStorageHandler.isStringNumeric(nowPeriodFrom) && Integer.valueOf(nowPeriodFrom) == periodNumbers[p]) timeNowFrom = timesStart[p];
-                if (nowPeriodTo != null && DataStorageHandler.isStringNumeric(nowPeriodTo) && Integer.valueOf(nowPeriodTo) == periodNumbers[p]) timeNowTo = timesEnd[p];
-            }
-            tvNowTimes.setText(DataStorageHandler.formatTime(timeNowFrom)+" - "+DataStorageHandler.formatTime(timeNowTo));
-
-            nowLessonCard.setVisibility(View.VISIBLE);
-
-            nowLessonCard.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle args = new Bundle();
-                    args.putString("caller", "home");
-                    args.putString("action", "lesson");
-                    args.putInt("dayInt", nowDayInt);
-                    args.putInt("periodInt", nowPeriod - 1);
-
-                    Intent i = new Intent(getActivity(), TimetableActivity.class);
-                    i.putExtras(args);
-                    startActivityForResult(i, 0);
-                }
-            });
-
-        } else {
+        if (!isLesson) {
             nowLessonCard.setVisibility(View.GONE);
         }
     }
 
+    private void setUpNowLessonCard(View v, String lessonID, String sName, String sAbbrev, String place, String teacher,
+                                    String color1, String color2, int timeSminutes, int timeEminutes, String custom){
+
+        tvNowSubjectName.setText(sName.replace("[none]", "").replace("[null]", "").replace("[comma]", ","));
+
+        place = place.replace("[none]", "").replace("[null]", "").replace("[comma]", ",");
+        if (!place.equals("")) {
+            tvNowRoom.setText(place);
+        } else {
+            tvNowRoom.setText("--");
+            tvNowRoom.setTextColor(getActivity().getResources().getColor(R.color.SecondaryText));
+        }
+
+        teacher = teacher.replace("[none]", "").replace("[null]", "").replace("[comma]", ",");
+        if (!teacher.equals("")) {
+            tvNowTeacher.setText(teacher);
+        } else {
+            tvNowTeacher.setText("--");
+            tvNowTeacher.setTextColor(getActivity().getResources().getColor(R.color.SecondaryText));
+        }
+
+        TextView tvTitle = (TextView) v.findViewById(R.id.CardNowLessonTitle);
+        tvTitle.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Regular.ttf"));
+
+
+        final float scale = getActivity().getResources().getDisplayMetrics().density;
+        int bounds = (int) (56 * scale + 0.5f);
+
+        int colorInt = 0xff000000;
+        for (int c = 0; c < colorNames.length; c++){
+            if (colorNames[c].equals(color1)) colorInt = colorInts[c];
+        }
+        GradientDrawable gd = new GradientDrawable();
+        gd.setShape(1);
+        gd.setColor(colorInt);
+        gd.setBounds(0, 0, bounds, bounds);
+        gd.setSize(bounds, bounds);
+
+        if (colorInt == 0xffFFFFFF){
+            gd.setStroke(5, 0xff000000);
+        } else {
+            gd.setStroke(5, 0x00FFFFFF);
+        }
+        vNowColor.setBackgroundDrawable(gd);
+
+
+        int tColorInt = 0xffFFFFFF;
+        for (int c = 0; c < colorNames.length; c++) {
+            if (colorNames[c].equals(color2)) tColorInt = colorInts[c];
+        }
+        tvNowSubjectAbbrev.setText(sAbbrev.replace("[none]", "").replace("[null]", "").replace("[comma]", ","));
+        tvNowSubjectAbbrev.setTextColor(tColorInt);
+        tvNowSubjectAbbrev.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf"));
+
+
+        String timeS = String.valueOf(timeSminutes / 60) + ":" + String.valueOf(timeSminutes%60);
+        timeS = DataStorageHandler.formatTime(timeS);
+
+        String timeE = String.valueOf(timeEminutes / 60) + ":" + String.valueOf(timeEminutes%60);
+        timeE = DataStorageHandler.formatTime(timeE);
+
+        if (custom.equals("true")){
+            tvNowPeriods.setText(timeS+" - "+timeE);
+            tvNowTimes.setText("");
+            tvNowTimes.setVisibility(View.GONE);
+
+        } else {
+            final String[] lesson_array = DataStorageHandler.LessonInfo(getActivity(), ttFolder, lessonID);
+            final String pF = lesson_array[3];
+            final String pT = lesson_array[4];
+
+            tvNowPeriods.setText(getActivity().getResources().getString(R.string.period)+" "+pF+" - "+pT);
+            tvNowTimes.setText(timeS+" - "+timeE);
+        }
+    }
+
     private void NextSubject(View v){
-        SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
-        String p1start = (shared.getString("pref_key_period1_start", "07:55"));
-        String p1end = (shared.getString("pref_key_period1_end", "08:40"));
-        String p2start = (shared.getString("pref_key_period2_start", "8:40"));
-        String p2end = (shared.getString("pref_key_period2_end", "09:25"));
-        String p3start = (shared.getString("pref_key_period3_start", "09:45"));
-        String p3end = (shared.getString("pref_key_period3_end", "10:30"));
-        String p4start = (shared.getString("pref_key_period4_start", "10:35"));
-        String p4end = (shared.getString("pref_key_period4_end", "11:20"));
-        String p5start = (shared.getString("pref_key_period5_start", "11:40"));
-        String p5end = (shared.getString("pref_key_period5_end", "12:25"));
-        String p6start = (shared.getString("pref_key_period6_start", "12:25"));
-        String p6end = (shared.getString("pref_key_period6_end", "13:10"));
-        String p7start = (shared.getString("pref_key_period7_start", "13:45"));
-        String p7end = (shared.getString("pref_key_period7_end", "14:30"));
-        String p8start = (shared.getString("pref_key_period8_start", "14:30"));
-        String p8end = (shared.getString("pref_key_period8_end", "15:15"));
-        String p9start = (shared.getString("pref_key_period9_start", "15:15"));
-        String p9end = (shared.getString("pref_key_period9_end", "16:00"));
-        String p10start = (shared.getString("pref_key_period10_start", "16:00"));
-        String p10end = (shared.getString("pref_key_period10_end", "16:45"));
-        String p11start = (shared.getString("pref_key_period11_start", "16:45"));
-        String p11end = (shared.getString("pref_key_period11_end", "17:30"));
-        String p12start = (shared.getString("pref_key_period12_start", "17:30"));
-        String p12end = (shared.getString("pref_key_period12_end", "18:15"));
-        String[] timesStart = {p1start, p2start, p3start, p4start, p5start, p6start, p7start, p8start, p9start, p10start, p11start, p12start};
-        String[] timesEnd = {p1end, p2end, p3end, p4end, p5end, p6end, p7end, p8end, p9end, p10end, p11end, p12end};
-
-        final int[] periodNumbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-
         isNextLesson = false;
-        if (isLesson && nowPeriodTo != null && DataStorageHandler.isStringNumeric(nowPeriodTo) && Integer.valueOf(nowPeriodTo) < 12) {
-            nextPeriodSearchStart = Integer.valueOf(nowPeriodTo) + 1;
-            isNextLesson = true;
-        }
-        if (!isLesson && nowPeriod > 0) {
-            nextPeriodSearchStart = Integer.valueOf(nowPeriod) + 1;
-            isNextLesson = true;
-        }
-        if (!isLesson && nowPeriod == -1 && beforeDayStart == true) {
-            nextPeriodSearchStart = 1;
-            isNextLesson = true;
-        }
-        if (!isLesson && nowPeriod == -1 && breakNextLesson > 0) {
-            nextPeriodSearchStart = breakNextLesson;
-            isNextLesson = true;
-        }
-        if (dayEnd) isNextLesson = false;
 
-        nextPeriodStart = 0;
-        if (isNextLesson){
-            boolean already = false;
-            for (int p = nextPeriodSearchStart; p <= 12; p++) {
-                String pSName = ((MainActivity) getActivity()).getSubjectFromPeriod(getActivity(), nowDayName, String.valueOf(p));
-                if (!already && !pSName.equals("-") && !pSName.equals("") && !pSName.equals(null)) {
-                    nextPeriodStart = p;
-                    already = true;
+        if (!dayEnd) {
+            Calendar calNow = Calendar.getInstance();
+            nowHour = calNow.get(Calendar.HOUR_OF_DAY);
+            nowMinute = calNow.get(Calendar.MINUTE);
+            nowDayOfWeek = calNow.get(Calendar.DAY_OF_WEEK);
+            final int nowTimeMinutes = nowHour * 60 + nowMinute;
+
+            final int[] periodNumbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+            int[] dayNumbers = {2, 3, 4, 5, 6, 7, 1};
+            int dayNow = 0;
+            for (int d = 0; d < dayNumbers.length; d++){
+                if (dayNumbers[d] == nowDayOfWeek) dayNow = d;
+            }
+
+            final int nowABint = DataStorageHandler.getCurrentAB(getActivity(), ttFolder, calNow);
+            final String nowAB = (nowABint < allABs.length) ? allABs[nowABint] : allABs[0];
+            final String[][] tt_array = DataStorageHandler.TimetableLessons(getActivity(), ttFolder, nowAB);
+
+            int earliest_row = -1;
+            int earliest_tSMin = -1;
+
+            for (int i = 0; i < tt_array.length; i++){
+                if (tt_array[i].length >= 9 && DataStorageHandler.isStringNumeric(tt_array[i][1]) &&
+                        Integer.parseInt(tt_array[i][1]) == dayNow &&
+                        DataStorageHandler.isStringNumeric(tt_array[i][2]) &&
+                        DataStorageHandler.isStringNumeric(tt_array[i][3]) && tt_array[i][0].length()>=4) {
+                    final int timeSminutes = Integer.parseInt(tt_array[i][2]);
+                    final int timeEminutes = Integer.parseInt(tt_array[i][3]);
+
+                    if (nowTimeMinutes <= timeSminutes && nowTimeMinutes <= timeEminutes) {
+                        isNextLesson = true;
+                        System.out.println("Now: "+nowTimeMinutes+", then: "+timeSminutes);
+
+                        if (earliest_row >= 0 && earliest_tSMin >= 0){
+                            if (timeSminutes < earliest_tSMin){
+                                earliest_row = i;
+                                earliest_tSMin = timeSminutes;
+                            }
+
+                        } else {
+                            earliest_row = i;
+                            earliest_tSMin = timeSminutes;
+                        }
+                    }
                 }
             }
 
-            if (0 < nextPeriodStart && nextPeriodStart <= 12) {
-                nextSubjectName = ((MainActivity) getActivity()).getSubjectFromPeriod(getActivity(), nowDayName, String.valueOf(nextPeriodStart));
+            if (isNextLesson && earliest_row >= 0 && earliest_tSMin >= 0){
+                final int r = earliest_row;
 
-                String[] subjectInfo = ((MainActivity) getActivity()).getSubjectInfo(getActivity(), nextSubjectName);
+                final String lessonID = tt_array[r][0];
+                final String[] subjectInfo = DataStorageHandler.SubjectInfo(getActivity(), ttFolder, lessonID.substring(0,4));
 
+                nextSubjectName = subjectInfo[0];
+                if (nextSubjectName.equals("-")) isNextLesson = false;
                 nextTeacher = subjectInfo[2];
-                String nextSubjectAbbrev = subjectInfo[1];
+                final String nextSubjectAbbrev = tt_array[r][4];
+                final String place = tt_array[r][7];
+                final String color1 = tt_array[r][5];
+                final String color2 = tt_array[r][6];
+                final int timeSminutes = Integer.parseInt(tt_array[r][2]);
+                final int timeEminutes = Integer.parseInt(tt_array[r][3]);
+                final String custom = tt_array[r][8];
 
-                String nextPeriodFrom = "";
+                setUpNextLessonCard(v, lessonID, nextSubjectName, nextSubjectAbbrev, place, nextTeacher,
+                        color1, color2, timeSminutes, timeEminutes, custom);
 
-                if (nowDayName.equals(subjectInfo[4]) && !subjectInfo[9].equals("-") && Integer.valueOf(subjectInfo[9]) <= nextPeriodStart && !subjectInfo[14].equals("-") && nextPeriodStart <= Integer.valueOf(subjectInfo[14])) {
-                    nextRoom = subjectInfo[19];
-                    nextPeriodTo = subjectInfo[14];
-                    nextPeriodFrom = subjectInfo[9];
-                }
-                if (nowDayName.equals(subjectInfo[5]) && !subjectInfo[10].equals("-") && Integer.valueOf(subjectInfo[10]) <= nextPeriodStart && !subjectInfo[15].equals("-") && nextPeriodStart <= Integer.valueOf(subjectInfo[15])) {
-                    nextRoom = subjectInfo[20];
-                    nextPeriodTo = subjectInfo[15];
-                    nextPeriodFrom = subjectInfo[10];
-                }
-                if (nowDayName.equals(subjectInfo[6]) && !subjectInfo[11].equals("-") && Integer.valueOf(subjectInfo[11]) <= nextPeriodStart && !subjectInfo[16].equals("-") && nextPeriodStart <= Integer.valueOf(subjectInfo[16])) {
-                    nextRoom = subjectInfo[21];
-                    nextPeriodTo = subjectInfo[16];
-                    nextPeriodFrom = subjectInfo[11];
-                }
-                if (nowDayName.equals(subjectInfo[7]) && !subjectInfo[12].equals("-") && Integer.valueOf(subjectInfo[12]) <= nextPeriodStart && !subjectInfo[17].equals("-") && !subjectInfo[17].equals("-") && nextPeriodStart <= Integer.valueOf(subjectInfo[17])) {
-                    nextRoom = subjectInfo[22];
-                    nextPeriodTo = subjectInfo[17];
-                    nextPeriodFrom = subjectInfo[12];
-                }
-                if (nowDayName.equals(subjectInfo[8]) && !subjectInfo[13].equals("-") && Integer.valueOf(subjectInfo[13]) <= nextPeriodStart && !subjectInfo[18].equals("-") && nextPeriodStart <= Integer.valueOf(subjectInfo[18])) {
-                    nextRoom = subjectInfo[23];
-                    nextPeriodTo = subjectInfo[18];
-                    nextPeriodFrom = subjectInfo[13];
-                }
 
-                String nextColor = subjectInfo[24];
+                nextLessonCard.setVisibility(View.VISIBLE);
 
-                int colorInt = 0xffFFFFFF;
-                for (int i = 0; i < colorNames.length; i++) {
-                    if (colorNames[i].equals(nextColor)) {
-                        colorInt = colorInts[i];
+                final String date_week = DataStorageHandler.formatDateGeneralFormat(getActivity(), Calendar.getInstance());
+                nextLessonCard.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle args = new Bundle();
+                        args.putString("caller", "home");
+                        args.putString("action", "lesson");
+                        args.putString("date_week", date_week);
+                        args.putString("lessonID", lessonID);
+
+                        Intent i = new Intent(getActivity(), TimetableActivity.class);
+                        i.putExtras(args);
+                        startActivityForResult(i, 0);
                     }
-                }
-
-                final float scale = getActivity().getResources().getDisplayMetrics().density;
-                int bounds = (int) (56 * scale + 0.5f);
-
-                GradientDrawable gd = new GradientDrawable();
-                gd.setShape(1);
-                gd.setColor(colorInt);
-                gd.setBounds(0, 0, bounds, bounds);
-                gd.setSize(bounds, bounds);
-
-                if (colorInt == 0xffFFFFFF){
-                    gd.setStroke(5, 0xff000000);
-                } else {
-                    gd.setStroke(5, 0x00FFFFFF);
-                }
-                vNextColor.setBackgroundDrawable(gd);
-                //vNextColor.setBackgroundColor(colorInt);
-
-                String nextTextColor = subjectInfo[25];
-
-                int tColorInt = 0xffFFFFFF;
-                for (int i = 0; i < colorNames.length; i++) {
-                    if (colorNames[i].equals(nextTextColor)) {
-                        tColorInt = colorInts[i];
-                    }
-                }
-
-                tvNextSubjectName.setText(nextSubjectName.replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ","));
-                tvNextRoom.setText(nextRoom.replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ","));
-                tvNextTeacher.setText(nextTeacher.replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ",").replace("[null]", ""));
-                tvNextSubjectAbbrev.setText(nextSubjectAbbrev.replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ","));
-                tvNextSubjectAbbrev.setTextColor(tColorInt);
-                tvNextSubjectAbbrev.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf"));
-
-                String periods = getActivity().getResources().getString(R.string.period)+" "+nextPeriodFrom+" - "+nextPeriodTo;
-                if (nextPeriodFrom != null && nextPeriodTo != null &&
-                        nextPeriodFrom.equals(nextPeriodTo)) periods = getActivity().getResources().getString(R.string.periods)+" "+nextPeriodFrom;
-                tvNextPeriods.setText(periods);
-                TextView CardNextLessonTitle = (TextView) v.findViewById(R.id.CardNextLessonTitle);
-                CardNextLessonTitle.setText(getActivity().getResources().getString(R.string.NextSubject));
-
-                String timeNextFrom = "";
-                String timeNextTo = "";
-                for (int p = 0; p < periodNumbers.length; p++){
-                    if (nextPeriodFrom != null && DataStorageHandler.isStringNumeric(nextPeriodFrom) && Integer.valueOf(nextPeriodFrom) == periodNumbers[p]) timeNextFrom = timesStart[p];
-                    if (nextPeriodTo != null && DataStorageHandler.isStringNumeric(nextPeriodTo) && Integer.valueOf(nextPeriodTo) == periodNumbers[p]) timeNextTo = timesEnd[p];
-                }
-                tvNextTimes.setText(DataStorageHandler.formatTime(timeNextFrom)+" - "+DataStorageHandler.formatTime(timeNextTo));
-
-            } else {
-                isNextLesson = false;
+                });
             }
-        } else {
-            isNextLesson = false;
         }
 
-        if (isNextLesson){
-            nextLessonCard.setVisibility(View.VISIBLE);
-
-            nextLessonCard.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle args = new Bundle();
-                    args.putString("caller", "home");
-                    args.putString("action", "lesson");
-                    args.putInt("dayInt", nowDayInt);
-                    args.putInt("periodInt", nextPeriodStart-1);
-
-                    Intent i = new Intent(getActivity(), TimetableActivity.class);
-                    i.putExtras(args);
-                    startActivityForResult(i, 0);
-                }
-            });
-        } else {
+        if (!isNextLesson){
             nextLessonCard.setVisibility(View.GONE);
         }
+    }
+
+    private void setUpNextLessonCard(View v, String lessonID, String sName, String sAbbrev, String place, String teacher,
+                                     String color1, String color2, int timeSminutes, int timeEminutes, String custom){
+        System.out.println(lessonID+": "+sName+", "+timeSminutes+", "+timeEminutes);
+
+        int colorInt = 0xffFFFFFF;
+        for (int i = 0; i < colorNames.length; i++) {
+            if (colorNames[i].equals(color1)) {
+                colorInt = colorInts[i];
+            }
+        }
+        final float scale = getActivity().getResources().getDisplayMetrics().density;
+        int bounds = (int) (56 * scale + 0.5f);
+        GradientDrawable gd = new GradientDrawable();
+        gd.setShape(1);
+        gd.setColor(colorInt);
+        gd.setBounds(0, 0, bounds, bounds);
+        gd.setSize(bounds, bounds);
+        if (colorInt == 0xffFFFFFF){
+            gd.setStroke(5, 0xff000000);
+        } else {
+            gd.setStroke(5, 0x00FFFFFF);
+        }
+        vNextColor.setBackgroundDrawable(gd);
+
+        int tColorInt = 0xffFFFFFF;
+        for (int i = 0; i < colorNames.length; i++) {
+            if (colorNames[i].equals(color2)) {
+                tColorInt = colorInts[i];
+            }
+        }
+        tvNextSubjectAbbrev.setText(sAbbrev.replace("[none]","").replace("[null]","").replace("[comma]", ","));
+        tvNextSubjectAbbrev.setTextColor(tColorInt);
+        tvNextSubjectAbbrev.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf"));
+
+        tvNextSubjectName.setText(sName.replace("[none]","").replace("[null]","").replace("[comma]", ","));
+
+        place = place.replace("[none]","").replace("[null]","").replace("[comma]", ",");
+        if (!place.equals("")) {
+            tvNextRoom.setText(place);
+        } else {
+            tvNextRoom.setText("--");
+            tvNextRoom.setTextColor(getActivity().getResources().getColor(R.color.SecondaryText));
+        }
+
+        teacher = teacher.replace("[none]","").replace("[null]","").replace("[comma]", ",");
+        if (!teacher.equals("")) {
+            tvNextTeacher.setText(teacher);
+        } else {
+            tvNextTeacher.setText("--");
+            tvNextTeacher.setTextColor(getActivity().getResources().getColor(R.color.SecondaryText));
+        }
+
+        TextView CardNextLessonTitle = (TextView) v.findViewById(R.id.CardNextLessonTitle);
+        CardNextLessonTitle.setText(getActivity().getResources().getString(R.string.NextSubject));
+
+
+        String timeS = String.valueOf(timeSminutes / 60) + ":" + String.valueOf(timeSminutes%60);
+        timeS = DataStorageHandler.formatTime(timeS);
+
+        String timeE = String.valueOf(timeEminutes / 60) + ":" + String.valueOf(timeEminutes%60);
+        timeE = DataStorageHandler.formatTime(timeE);
+
+        if (custom.equals("true")){
+            tvNextPeriods.setText(timeS+" - "+timeE);
+            tvNextTimes.setText("");
+            tvNextTimes.setVisibility(View.GONE);
+
+        } else {
+            final String[] lesson_array = DataStorageHandler.LessonInfo(getActivity(), ttFolder, lessonID);
+            final String pF = lesson_array[3];
+            final String pT = lesson_array[4];
+
+            tvNextPeriods.setText(getActivity().getResources().getString(R.string.period)+" "+pF+" - "+pT);
+            tvNextTimes.setText(timeS+" - "+timeE);
+        }
+
     }
 
     private void hideNextLessonCard(View v){
@@ -949,19 +880,22 @@ public class MainFragment extends Fragment {
         } else {
             tomorrowLessonsCard.setVisibility(View.VISIBLE);
 
-            String[] dayNames = getActivity().getResources().getStringArray(R.array.DayIDs);
-            int tomorrowDayInt = 0;
-            String tomorrowDayName = "-";
-            for (int j = 0; j < dayNames.length; j++){
-                if (dayNames[j].equals(nowDayName)){
-                    if (j+1 < dayNames.length) {
-                        tomorrowDayInt = j + 1;
-                    } else {
-                        tomorrowDayInt = 0;
-                    }
+
+            Calendar calNow = Calendar.getInstance();
+            nowHour = calNow.get(Calendar.HOUR_OF_DAY);
+            nowMinute = calNow.get(Calendar.MINUTE);
+            nowDayOfWeek = calNow.get(Calendar.DAY_OF_WEEK);
+
+            int[] dayNumbers = {2, 3, 4, 5, 6, 7, 1};
+
+            int dayID = -1;
+
+            for (int i3 = 0; i3 < dayNumbers.length; i3++) {
+                if (nowDayOfWeek == dayNumbers[i3]) {
+                    nowDayInt = i3;
+                    dayID = i3;
                 }
             }
-            tomorrowDayName = dayNames[tomorrowDayInt];
 
             LinearLayout bRow1 = (LinearLayout) v.findViewById(R.id.buttonRow1);
             LinearLayout bRow2 = (LinearLayout) v.findViewById(R.id.buttonRow2);
@@ -971,7 +905,22 @@ public class MainFragment extends Fragment {
             bRow2.setVisibility(View.VISIBLE);
             bRow3.setVisibility(View.VISIBLE);
 
-            String[][] tomorrowSubjects = ((MainActivity) getActivity()).ADaysSubjects(getActivity(), tomorrowDayName);
+
+            final int nowABint = DataStorageHandler.getCurrentAB(getActivity(), ttFolder, Calendar.getInstance());
+            final String nowAB = (nowABint < allABs.length) ? allABs[nowABint] : allABs[0];
+            final String[][] tt_array = DataStorageHandler.TimetableLessons(getActivity(), ttFolder, nowAB);
+
+            ArrayList<String[]> lessons_list = new ArrayList<>();
+            for (int l = 0; l < tt_array.length; l++){
+                if (tt_array[l].length >= 9 && DataStorageHandler.isStringNumeric(tt_array[l][1]) &&
+                        Integer.parseInt(tt_array[l][1]) == dayID) lessons_list.add(tt_array[l]);
+            }
+            String[][] tomorrow_lessons = new String[lessons_list.size()][];
+            for (int s = 0; s < lessons_list.size(); s++){
+                tomorrow_lessons[s] = lessons_list.get(s);
+            }
+
+
             bTS1 = (Button) v.findViewById(R.id.button1);
             bTS2 = (Button) v.findViewById(R.id.button2);
             bTS3 = (Button) v.findViewById(R.id.button3);
@@ -994,20 +943,22 @@ public class MainFragment extends Fragment {
 
             boolean[] buttonUsed = new boolean[15];
 
-            for (int i = 0; i < tomorrowSubjects.length; i++){
+            for (int i = 0; i < tomorrow_lessons.length; i++){
                 int colorInt = 0xffFFFFFF;
                 for (int i2 = 0; i2 < colorNames.length; i2++){
-                    if (colorNames[i2].equals(tomorrowSubjects[i][2])){
+                    if (colorNames[i2].equals(tomorrow_lessons[i][5])){
                         colorInt = colorInts[i2];
                     }
                 }
+                System.out.println("color: "+tomorrow_lessons[i][5]+", "+colorInt);
 
                 int textColorInt = 0xff000000;
                 for (int i3 = 0; i3 < colorNames.length; i3++){
-                    if (colorNames[i3].equals(tomorrowSubjects[i][3])){
+                    if (colorNames[i3].equals(tomorrow_lessons[i][6])){
                         textColorInt = colorInts[i3];
                     }
                 }
+                System.out.println("text color: "+tomorrow_lessons[i][6]+", "+textColorInt);
 
                 final float scale = getActivity().getResources().getDisplayMetrics().density;
                 int bounds = (int) (56 * scale + 0.5f);
@@ -1023,21 +974,23 @@ public class MainFragment extends Fragment {
                 }
                 tSButtons[i].setBackgroundDrawable(gd);
 
-                tSButtons[i].setText(tomorrowSubjects[i][1].replace("[newline]", System.getProperty("line.separator")).replace("[comma]", ","));
+                tSButtons[i].setText(tomorrow_lessons[i][4].replace("[none]","").replace("[null]", "").replace("[comma]", ","));
                 tSButtons[i].setTextColor(textColorInt);
-                tSButtons[i].setTextSize(14);
+                tSButtons[i].setTextSize(TypedValue.COMPLEX_UNIT_PX, getActivity().getResources().getDimension(R.dimen.subject_circle_small_text_size));
                 tSButtons[i].setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Medium.ttf"));
 
-                final int finalPeriodStartInt = Integer.parseInt(tomorrowSubjects[i][4]) - 1;
-                final int finalTomorrowDayInt = tomorrowDayInt;
+                Calendar tomorrow = Calendar.getInstance();
+                tomorrow.add(Calendar.DAY_OF_YEAR, 1);
+                final String lessonID = tomorrow_lessons[i][0];
+                final String date_week = DataStorageHandler.formatDateGeneralFormat(getActivity(), tomorrow);
                 tSButtons[i].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Bundle extras = new Bundle();
                         extras.putString("caller", "home");
                         extras.putString("action", "lesson");
-                        extras.putInt("dayInt", finalTomorrowDayInt);
-                        extras.putInt("periodInt", finalPeriodStartInt);
+                        extras.putString("date_week", date_week);
+                        extras.putString("lessonID", lessonID);
                         Intent i = new Intent(getActivity(), TimetableActivity.class);
                         i.putExtras(extras);
                         startActivityForResult(i, 0);
@@ -1047,12 +1000,12 @@ public class MainFragment extends Fragment {
                 buttonUsed[i] = true;
             }
 
-            if (tomorrowSubjects.length <= 0){
+            if (tomorrow_lessons.length <= 0){
                 tomorrowLessonsCard.setVisibility(View.GONE);
                 isTomorrowSubjects = false;
             } else {
-                if (tomorrowSubjects.length < 11) bRow3.setVisibility(View.GONE);
-                if (tomorrowSubjects.length < 6) bRow2.setVisibility(View.GONE);
+                if (tomorrow_lessons.length < 11) bRow3.setVisibility(View.GONE);
+                if (tomorrow_lessons.length < 6) bRow2.setVisibility(View.GONE);
 
                 for (int i25 = 0; i25 < buttonUsed.length; i25++){
                     if (!buttonUsed[i25]) tSButtons[i25].setVisibility(View.INVISIBLE);
@@ -1215,13 +1168,10 @@ public class MainFragment extends Fragment {
         //TextView homeworkCardTitle = (TextView) v.findViewById(R.id.CardHomeworkTitle);
         TextView homeworkCardDueTomorrow = (TextView) v.findViewById(R.id.CardHomeworkDueTomorrow);
 
-        SimpleDateFormat form = new SimpleDateFormat(getActivity().getResources().getString(R.string.date_formatter_general));
-        SimpleDateFormat formatter = new SimpleDateFormat(getActivity().getResources().getString(R.string.date_formatter_local));
+        final String homework_filepath = ttFolder + "/" + getActivity().getResources().getString(R.string.file_name_homework);
+        final String[][] hwArray = ((MainActivity) getActivity()).toArray(getActivity(), homework_filepath);
+        final int[] numberRowsCols = ((MainActivity) getActivity()).nmbrRowsCols(getActivity(), homework_filepath);
 
-        String[][] subjectsArray = ((MainActivity) getActivity()).toArray(getActivity(), "Subjects.txt");
-        int[] sNumberRowsCols = ((MainActivity) getActivity()).nmbrRowsCols(getActivity(), "Subjects.txt");
-        String[][] hwArray = ((MainActivity) getActivity()).toArray(getActivity(), "Homework.txt");
-        int[] numberRowsCols = ((MainActivity) getActivity()).nmbrRowsCols(getActivity(), "Homework.txt");
         String[] ID = new String[numberRowsCols[0]];
         String[] subjectNames = new String[numberRowsCols[0]];
         String[] date = new String[numberRowsCols[0]];
@@ -1242,12 +1192,15 @@ public class MainFragment extends Fragment {
             content[i] = hwArray[i][4];
             done[i] = hwArray[i][5];
 
-            for (int s = 0; s < sNumberRowsCols[0]; s++){
-                if (subjectsArray[s][0].equals(subjectNames[i])){
-                    subjectAbbrev[i] = subjectsArray[s][1];
-                    subjectBgColors[i] = subjectsArray[s][24];
-                    subjectTextColors[i] = subjectsArray[s][25];
-                }
+            if (hwArray[i][1].length() >= 4) {
+                final String[] subjectInfo = DataStorageHandler.SubjectInfo(getActivity(), ttFolder, hwArray[i][1].substring(0,4));
+                subjectAbbrev[i] = subjectInfo[1];
+                subjectBgColors[i] = subjectInfo[4];
+                subjectTextColors[i] = subjectInfo[5];
+            } else {
+                subjectAbbrev[i] = "-";
+                subjectBgColors[i] = "[none]";
+                subjectTextColors[i] = "[none]";
             }
 
             colorInt[i] = 0xffFFFFFF;
@@ -1258,14 +1211,12 @@ public class MainFragment extends Fragment {
             }
 
             String dateUnForm = hwArray[i][2];
-            java.util.Date d1 = null;
-            try {
-                d1 = form.parse(dateUnForm);
-                date[i] = formatter.format(d1);
-            } catch (java.text.ParseException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+
+            Date d1 = DataStorageHandler.getDateFromGeneralDateFormat(getActivity(), dateUnForm);
+            Calendar cL = new GregorianCalendar();
+            cL.setTime(d1);
+            date[i] = DataStorageHandler.formatDateLocalFormat(getActivity(), cL);
+
 
         }
 
@@ -1284,9 +1235,8 @@ public class MainFragment extends Fragment {
         }
 
         Calendar cal = Calendar.getInstance();
-        int today = cal.get(Calendar.DAY_OF_YEAR);
-        cal.set(Calendar.DAY_OF_YEAR, today + 1);
-        String tomorrow = form.format(cal.getTime());
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+        String tomorrow = DataStorageHandler.formatDateGeneralFormat(getActivity(), cal);
 
         boolean[] yesOrNo = new boolean[date.length];
         int howMany = 0;
@@ -1354,7 +1304,7 @@ public class MainFragment extends Fragment {
             List<InformationHomeworkFull> myData = getData(ID, subjectNames, subjectAbbrev, date, title, content, done, subjectBgColors, textColorInt, icons);
             RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recyclerViewHomeworkSmall);
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), dividerPaddingLeft, dividerPaddingRight));
-            recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(verticalSpacing, listPaddingTop, listPaddingBottom));
+            if (myData.size()>1) recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(verticalSpacing, listPaddingTop, listPaddingBottom));
             adapter = new HomeworkAdapter(getActivity(), myData, "hwSmall");
             int viewHeight = (adapter.getItemCount() * (listPaddingTop + listPaddingBottom + adapterItemSize + verticalSpacing + getActivity().obtainStyledAttributes(new int[]{android.R.attr.listDivider}).getDrawable(0).getIntrinsicHeight()));
             recyclerView.getLayoutParams().height = viewHeight;
@@ -1363,6 +1313,7 @@ public class MainFragment extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(((MainActivity)getActivity())));
 
             isHomeworkTomorrow = true;
+            homeworkCard.setVisibility(View.VISIBLE);
         }
     }
 
@@ -1397,10 +1348,13 @@ public class MainFragment extends Fragment {
         }
 
         if (isCreateTimetable) {
-            int rows = ((MainActivity) getActivity()).nmbrRowsCols(getActivity(), "Periods.txt")[0];
-            int cols = ((MainActivity) getActivity()).nmbrRowsCols(getActivity(), "Periods.txt")[1];
+            final String subjects_filepath = ttFolder + "/" + getActivity().getResources().getString(R.string.file_name_subjects);
+            int rows = ((MainActivity) getActivity()).nmbrRowsCols(getActivity(), subjects_filepath)[0];
+            int cols = ((MainActivity) getActivity()).nmbrRowsCols(getActivity(), subjects_filepath)[1];
+            int rowsOld = ((MainActivity) getActivity()).nmbrRowsCols(getActivity(), "Periods.txt")[0];
+            int colsOld = ((MainActivity) getActivity()).nmbrRowsCols(getActivity(), "Periods.txt")[1];
 
-            if (rows > 0 && cols > 0) {
+            if ((rows > 0 && cols > 0) || (rowsOld > 0 && colsOld > 0)) {
                 createTtCard.setVisibility(View.GONE);
                 isCreateTimetable = false;
             } else {
@@ -1514,6 +1468,45 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), MySchoolSettingsActivity.class);
+                startActivityForResult(i, 0);
+            }
+        });
+    }
+
+    private void newFeatureABWeeksCard(View v){
+        Button bNewFeatureDismiss = (Button) v.findViewById(R.id.bDismissNewFeatureABWeeks);
+        Button bNewFeatureGoTo = (Button) v.findViewById(R.id.bGoToNewFeatureABWeeks);
+
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+
+        final String dismissedNewFeatureABWeeksKey = "dismissed_new_feature_ab_weeks";
+
+        if (prefs.contains(dismissedNewFeatureABWeeksKey)) {
+            if (prefs.getBoolean(dismissedNewFeatureABWeeksKey, false)) cvNewFeatureABWeeks.setVisibility(View.GONE);
+        }
+        NewsSectionShowHide();
+
+        bNewFeatureDismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cvNewFeatureABWeeks.setVisibility(View.GONE);
+                NewsSectionShowHide();
+
+                prefs.edit().putBoolean(dismissedNewFeatureABWeeksKey, true).apply();
+            }
+        });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            bNewFeatureGoTo.setBackgroundTintList(getActivity().getResources().getColorStateList(R.color.button_color_state_list));
+            bNewFeatureGoTo.setTextColor(getActivity().getResources().getColor(R.color.TextDarkBg));
+        } else {
+            bNewFeatureGoTo.setTextColor(getActivity().getResources().getColor(R.color.colorAccent));
+        }
+
+        bNewFeatureGoTo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), ABWeekSettingsActivity.class);
                 startActivityForResult(i, 0);
             }
         });

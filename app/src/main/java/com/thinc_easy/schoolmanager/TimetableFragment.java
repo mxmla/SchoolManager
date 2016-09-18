@@ -1,28 +1,54 @@
 package com.thinc_easy.schoolmanager;
 
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Point;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.StateListDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableLayout.LayoutParams;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewAnimator;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 public class TimetableFragment extends Fragment {
@@ -61,7 +87,7 @@ public class TimetableFragment extends Fragment {
 			"orange_light", "orange_dark", "red_light", "red_dark", "black", "white", "gray_light", "gray_dark"};
     private String[] colorNames = {"red", "pink", "purple", "deep_purple", "indigo", "blue",
             "light_blue", "cyan", "teal", "green", "light_green", "lime", "yellow", "amber",
-            "ornge", "deep_orange", "brown", "grey", "blue_grey", "black", "white"};
+            "orange", "deep_orange", "brown", "grey", "blue_grey", "black", "white"};
 	private String selected, which, whichFragment;
 	private int[] dayInts = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
 								3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4};
@@ -77,6 +103,22 @@ public class TimetableFragment extends Fragment {
 	private long PeriodsAndBreaksLengthOverall;
 	private View viewBreak1, viewBreak2, viewBreak3, viewBreak4, viewBreak5, viewBreak6, viewBreak7, viewBreak8, viewBreak9;
 	private View[] viewsBreaks = {viewBreak1, viewBreak2, viewBreak3, viewBreak4, viewBreak5, viewBreak6, viewBreak7, viewBreak8, viewBreak9};
+
+	private SharedPreferences prefs;
+	private String ttFolder, showAllDaysPref;
+	private String[] dayAbbrevs, allABs;
+	private ViewAnimator vaDays, vaTimetable;
+	private ImageButton ibLeft, ibRight, ibGoToToday;
+	private int column_division, column_min_width, lesson_min_height, height_days, abbrev_place_padding,
+			timetable_period_time_height, timetable_period_time_lines_height, timetable_period_time_lines_left_part,
+			timetable_period_divider_width, timetable_periods_padding_right;
+	private int color_days_text, color_time_lines, color_divider_periods, color_timetable_periods_text, color_timetable_period_times_text;
+	private float text_size_days, text_size_lesson_abbrev, text_size_lesson_place, text_size_lesson_time,
+			timetable_periods_textsize, timetable_period_times_textsize;
+	private int firstDayOfWeek, currentABPosition, number_of_periods;
+	private boolean showPeriodDivider, showHoursInsteadOfPeriods;
+	private Animation slide_in_left, slide_out_right, slide_in_right, slide_out_left;
+	private Calendar active_week_day;
 	
 	
     @Override
@@ -96,18 +138,818 @@ public class TimetableFragment extends Fragment {
 		int ttColor = ((TimetableActivity) getActivity()).getResources().getColor(R.color.color_timetable_appbar);
 		((TimetableActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ttColor));
 
+		prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-        nmbrPeriods = 10;
+        /*nmbrPeriods = 10;
         
         tableLayout = (TableLayout) v.findViewById(R.id.TableLayout);
 //        tableLayout.setVisibility(4);
         findViews(v);
         setUpButtons(v);
         setUpDaysNumbers(v);
-        setUpRowHeights(v);
+        setUpRowHeights(v);*/
+
+		setUpTimetables(v);
         
         return v;
     }
+
+	private void setUpTimetables(View v){
+
+		getTtFolderName();
+		getAllABs();
+		getAllUniversalConstants();
+
+		currentABPosition = DataStorageHandler.getCurrentAB(getActivity(), ttFolder, Calendar.getInstance());
+
+		setUpAnimators(v);
+		setUpWeekIndicator(v, Calendar.getInstance(), currentABPosition);
+		addViewsToAnimators(currentABPosition);
+	}
+
+	private void getAllUniversalConstants(){
+		final float dp = getActivity().getResources().getDisplayMetrics().density;
+		column_division = (int) (getActivity().getResources().getDimension(R.dimen.timetable_column_division) + 0.5f);
+		color_days_text = getActivity().getResources().getColor(R.color.color_timetable_days_text);
+		text_size_days = getActivity().getResources().getDimension(R.dimen.timetable_days_textsize);
+		color_timetable_periods_text = getActivity().getResources().getColor(R.color.color_timetable_periods_text);
+		timetable_periods_textsize = getActivity().getResources().getDimension(R.dimen.timetable_periods_textsize);
+		color_timetable_period_times_text = getActivity().getResources().getColor(R.color.color_timetable_period_times_text);
+		timetable_period_times_textsize = getActivity().getResources().getDimension(R.dimen.timetable_period_times_textsize);
+		height_days = (int) (getActivity().getResources().getDimension(R.dimen.timetable_days_height) + 0.5f);
+		dayAbbrevs = getActivity().getResources().getStringArray(R.array.DayAbbreviations);
+		column_min_width = (int) (getActivity().getResources().getDimension(R.dimen.timetable_column_min_width) + 0.5f);
+		lesson_min_height = (int) (getActivity().getResources().getDimension(R.dimen.timetable_lesson_min_height) + 0.5f);
+
+		showAllDaysPref = prefs.getString("timetable_show_all_days", "false");
+		number_of_periods = 12;
+
+		text_size_lesson_abbrev = getActivity().getResources().getDimension(R.dimen.timetable_lesson_title_textsize);
+		text_size_lesson_place = getActivity().getResources().getDimension(R.dimen.timetable_lesson_place_textsize);
+		text_size_lesson_time = getActivity().getResources().getDimension(R.dimen.timetable_lesson_time_textsize);
+
+		abbrev_place_padding = (int) (getActivity().getResources().getDimension(R.dimen.timetable_abbrev_place_padding) + 0.5f);
+		timetable_period_time_height = (int) (getActivity().getResources().getDimension(R.dimen.timetable_period_time_height) + 0.5f);
+
+		color_time_lines = getActivity().getResources().getColor(R.color.color_time_lines);
+		timetable_period_time_lines_height = (int) (getActivity().getResources().getDimension(R.dimen.timetable_period_time_lines_height) + 0.5f);
+		timetable_period_time_lines_left_part = (int) (getActivity().getResources().getDimension(R.dimen.timetable_period_time_lines_left_part) + 0.5f);
+
+		color_divider_periods = getActivity().getResources().getColor(R.color.color_divider_periods);
+		timetable_period_divider_width = (int) (getActivity().getResources().getDimension(R.dimen.timetable_period_divider_width) + 0.5f);
+		showPeriodDivider = prefs.getBoolean("timetable_show_period_divider", false);
+
+		timetable_periods_padding_right = (int) (getActivity().getResources().getDimension(R.dimen.timetable_periods_padding_right) + 0.5f);
+
+		showHoursInsteadOfPeriods = prefs.getBoolean("timetable_show_hours_instead_of_periods", false);
+	}
+
+	private void getAllABs(){
+		Calendar c = Calendar.getInstance();
+		firstDayOfWeek = c.getFirstDayOfWeek();
+
+		allABs = DataStorageHandler.AllABs(getActivity(), ttFolder);
+	}
+
+	private void getTtFolderName(){
+		if (getArguments() != null && getArguments().containsKey("tt_folder")){
+			ttFolder = getArguments().getString("tt_folder");
+		} else {
+			ttFolder = prefs.getString(getResources().getString(R.string.pref_key_current_timetable_filename), "[none]");
+		}
+	}
+
+	private void setUpWeekIndicator(final View v, final Calendar cal, final int currentAB){
+		active_week_day = (Calendar) cal.clone();
+
+		TextView tvWeekDates = (TextView) v.findViewById(R.id.tvWeekDates);
+		TextView tvWeekAB = (TextView) v.findViewById(R.id.tvWeekAB);
+		LinearLayout llWeekIndicator = (LinearLayout) v.findViewById(R.id.llWeekIndicator);
+
+		llWeekIndicator.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent i = new Intent(getActivity(), ABWeekSettingsActivity.class);
+				i.putExtra("caller", "timetable");
+				startActivityForResult(i, 0);
+			}
+		});
+
+		tvWeekDates.setTypeface(Typeface.createFromAsset(getActivity().getResources().getAssets(), "Roboto-Bold.ttf"));
+		tvWeekDates.setSingleLine(true);
+		tvWeekDates.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+		tvWeekDates.setSelected(true);
+		tvWeekAB.setSingleLine(true);
+		tvWeekAB.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+		tvWeekAB.setSelected(true);
+		tvWeekAB.setText(getActivity().getResources().getString(R.string.timetable_week_indicator_week) + " " + allABs[currentAB]);
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			final ColorStateList cslIcon = getActivity().getResources().getColorStateList(R.color.color_state_list_icon);
+			ibGoToToday.setImageTintList(cslIcon);
+			ibLeft.setImageTintList(cslIcon);
+			ibRight.setImageTintList(cslIcon);
+		}
+
+		final Calendar[] cals = firstAndLastDayOfWeek(cal);
+		final Calendar calFirst = cals[0];
+		final Calendar calLast = cals[1];
+
+		String weekDates = DataStorageHandler.formatDateLocalFormat(getActivity(), calFirst) + " - "
+				+ DataStorageHandler.formatDateLocalFormat(getActivity(), calLast);
+
+		if (isCurrentWeek(calFirst, calLast)) {
+			weekDates = weekDates + " (" + getActivity().getResources().getString(R.string.timetable_week_indicator_current_week) + ")";
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+				ibGoToToday.setImageTintList(getActivity().getResources().getColorStateList(R.color.color_state_list_disabled));
+			}
+		}
+
+		tvWeekDates.setText(weekDates);
+
+		final int allABsLength = allABs.length;
+
+		ibLeft.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				vaDays.setInAnimation(slide_in_left);
+				vaDays.setOutAnimation(slide_out_right);
+				vaTimetable.setInAnimation(slide_in_left);
+				vaTimetable.setOutAnimation(slide_out_right);
+
+				vaTimetable.showPrevious();
+				vaDays.showPrevious();
+				Calendar newC = cal;
+				newC.add(Calendar.WEEK_OF_YEAR, -1);
+				int nextAB = currentAB - 1;
+				if (nextAB < 0) nextAB = allABsLength + nextAB;
+				setUpWeekIndicator(v, newC, nextAB);
+			}
+		});
+
+		ibRight.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				vaDays.setInAnimation(slide_in_right);
+				vaDays.setOutAnimation(slide_out_left);
+				vaTimetable.setInAnimation(slide_in_right);
+				vaTimetable.setOutAnimation(slide_out_left);
+
+				vaTimetable.showNext();
+				vaDays.showNext();
+				Calendar newC = cal;
+				newC.add(Calendar.WEEK_OF_YEAR, 1);
+				int nextAB = currentAB + 1;
+				if (nextAB >= allABsLength) nextAB = 0 + (nextAB - allABsLength);
+				setUpWeekIndicator(v, newC, nextAB);
+			}
+		});
+
+		ibGoToToday.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				vaDays.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+				vaDays.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+				vaTimetable.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+				vaTimetable.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+
+				vaTimetable.setDisplayedChild(0);
+				vaDays.setDisplayedChild(0);
+				Calendar newC = Calendar.getInstance();
+				int nextAB = currentABPosition;
+				setUpWeekIndicator(v, newC, nextAB);
+			}
+		});
+	}
+
+	private Calendar[] firstAndLastDayOfWeek(Calendar calDay){
+		Calendar calFirst = calDay;
+		calFirst.set(Calendar.DAY_OF_WEEK, calDay.getFirstDayOfWeek());
+		calFirst.set(Calendar.HOUR_OF_DAY, 0);
+		calFirst.set(Calendar.MINUTE, 0);
+		calFirst.set(Calendar.SECOND, 0);
+		calFirst.set(Calendar.MILLISECOND, 0);
+
+		Calendar calLast = (Calendar) calFirst.clone();
+		calLast.add(Calendar.WEEK_OF_YEAR, 1);
+		calLast.add(Calendar.MILLISECOND, -1);
+
+		return new Calendar[] {calFirst, calLast};
+	}
+
+	boolean isCurrentWeek(Calendar calFirst, Calendar calLast){
+		boolean isCW = false;
+
+		Date now = Calendar.getInstance().getTime();
+		Date first = calFirst.getTime();
+		Date last = calLast.getTime();
+		if (first.before(now) && now.before(last)) isCW = true;
+
+		return isCW;
+	}
+
+	private void setUpAnimators(View v){
+		vaDays = (ViewAnimator) v.findViewById(R.id.vaDays);
+		vaTimetable = (ViewAnimator) v.findViewById(R.id.vaTimetable);
+
+		// setMeasureAllChildren -> false so that va height will be adjusted for each child separately
+		vaDays.setMeasureAllChildren(false);
+		vaTimetable.setMeasureAllChildren(false);
+
+		slide_in_left = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_in_left);
+		slide_out_right = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_out_right);
+
+		slide_in_right = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_in_right);
+		slide_out_left = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_out_left);
+
+		vaDays.setInAnimation(slide_in_left);
+		vaDays.setOutAnimation(slide_out_right);
+
+		vaTimetable.setInAnimation(slide_in_left);
+		vaTimetable.setOutAnimation(slide_out_right);
+
+		ibGoToToday = (ImageButton) v.findViewById(R.id.ib_go_to_today);
+		ibLeft = (ImageButton) v.findViewById(R.id.ib_chevron_left);
+		ibRight = (ImageButton) v.findViewById(R.id.ib_chevron_right);
+	}
+
+	private void addViewsToAnimators(final int currentAB){
+		final int[] constantsNow = timetable_constants(currentAB);
+		final int[] dayRange = getDayRange(constantsNow);
+
+		vaDays.addView(rl_days(constantsNow, dayRange));
+		vaTimetable.addView(rl_timetable(currentAB, constantsNow, dayRange));
+
+		ibGoToToday.setEnabled(false);
+		ibLeft.setEnabled(false);
+		ibRight.setEnabled(false);
+
+		Thread loadTimetables = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				for (int i1 = currentAB + 1; i1 < allABs.length; i1++){
+					final int[] constantsThen = timetable_constants(i1);
+					final int[] dayRangeThen = getDayRange(constantsThen);
+					final RelativeLayout days = rl_days(constantsThen, dayRangeThen);
+					final RelativeLayout tt = rl_timetable(i1, constantsThen, dayRangeThen);
+
+					getActivity().runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							vaDays.addView(days);
+							vaTimetable.addView(tt);
+						}
+					});
+				}
+
+				for (int i2 = 0; i2 < currentAB; i2++){
+					final int[] constantsThen = timetable_constants(i2);
+					final int[] dayRangeThen = getDayRange(constantsThen);
+					final RelativeLayout days = rl_days(constantsThen,dayRangeThen);
+					final RelativeLayout tt = rl_timetable(i2, constantsThen, dayRangeThen);
+
+					getActivity().runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							vaDays.addView(days);
+							vaTimetable.addView(tt);
+						}
+					});
+				}
+
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						ibGoToToday.setEnabled(true);
+						ibLeft.setEnabled(true);
+						ibRight.setEnabled(true);
+					}
+				});
+			}
+		});
+		loadTimetables.start();
+	}
+
+	private int[] timetable_constants(int ABint){
+		final String thisAB = allABs[ABint];
+		final String[] tt_attributes = DataStorageHandler.TimetableAttributes(getActivity(), ttFolder, thisAB);
+
+		// Get earliest day
+		final String sMin_day = tt_attributes[5];
+		int min_day = 0;
+		if (showAllDaysPref.equals("show_all") || showAllDaysPref.equals("show_weekdays")){
+			min_day = 0;
+		} else if (DataStorageHandler.isStringNumeric(sMin_day)){
+			min_day = Integer.parseInt(sMin_day);
+		}
+
+		// Get latest day
+		final String sMax_day = tt_attributes[7];
+		int max_day = 0;
+		if (DataStorageHandler.isStringNumeric(sMax_day)) max_day = Integer.parseInt(sMax_day);
+		if (showAllDaysPref.equals("show_all") && max_day < 6){
+			max_day = 6;
+		} else if (showAllDaysPref.equals("show_weekdays") && max_day < 4){
+			max_day = 4;
+		}
+
+		// Get earliest time
+		final String sMin_time = tt_attributes[1];
+		int min_time = 0;
+		if (DataStorageHandler.isStringNumeric(sMin_time)) min_time = Integer.parseInt(sMin_time);
+		// Get latest time
+		final String sMax_time = tt_attributes[3];
+		int max_time = 0;
+		if (DataStorageHandler.isStringNumeric(sMax_time)) max_time = Integer.parseInt(sMax_time);
+
+		// Get longest lesson
+		final String sMin_time_length = tt_attributes[9];
+		int min_time_length = 0;
+		if (DataStorageHandler.isStringNumeric(sMin_time_length)) min_time_length = Integer.parseInt(sMin_time_length);
+		// Get shortest lesson
+		final String sMax_time_length = tt_attributes[11];
+		int max_time_length = 0;
+		if (DataStorageHandler.isStringNumeric(sMax_time_length)) max_time_length = Integer.parseInt(sMax_time_length);
+
+		// Get column_size
+		WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		int screen_width = size.x;
+		int screen_height = size.y;
+		int column_size = screen_width /(max_day - min_day + 2);
+		if (column_size < column_min_width) column_size = column_min_width;
+
+		// Get height_time_ratio
+		int height_time_ratio = lesson_min_height / 30;
+		if (min_time_length != 0) height_time_ratio = lesson_min_height / min_time_length;
+		System.out.println("height_time_ratio: "+height_time_ratio);
+		// Set timetable height to minimum of 3/4 times the screen height
+		if ((max_time - min_time) > 0 && (height_time_ratio * (max_time - min_time)) < (screen_height * 3/4))
+			height_time_ratio = (screen_height*3/4) / (max_time - min_time);
+
+
+		// Get lesson_element_width
+		int lesson_element_width = column_size - column_division;
+
+		return new int[] {min_day, max_day, min_time, max_time, min_time_length, max_time_length, column_size, height_time_ratio, lesson_element_width};
+	}
+
+	private int[] getDayRange(int[] constants){
+		final int min_day = constants[0];
+		final int max_day = constants[1];
+
+		int f = 0;
+		int[] origRange = new int[] {2,3,4,5,6,7,1};
+		for (int i = 0; i < origRange.length; i++){
+			if (origRange[i] == firstDayOfWeek) f = i;
+		}
+
+		ArrayList<Integer> newRange = new ArrayList<>();
+		for (int n = f; n < origRange.length; n++){
+			newRange.add(n);
+		}
+
+		for (int n = 0; n < f; n++){
+			newRange.add(n);
+		}
+
+		for (int r = 0; r < newRange.size(); r++){
+			if (newRange.get(r) < min_day || newRange.get(r) > max_day){
+				newRange.remove(r);
+			}
+		}
+
+		int[] range = new int[newRange.size()];
+		for (int a = 0; a < newRange.size(); a++) range[a] = newRange.get(a);
+
+		return range;
+	}
+
+	private RelativeLayout rl_days(int[] constants, int[] dayRange){
+		final int column_size = constants[6];
+
+		RelativeLayout rl = new RelativeLayout(getActivity());
+		rl.setId(1000 + 0);
+		rl.setGravity(Gravity.LEFT | Gravity.BOTTOM);
+		rl.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height_days));
+
+
+		for (int d = 0; d < dayRange.length; d++){
+			rl.addView(tv_day(dayRange[d], dayRange, column_size));
+		}
+
+		return rl;
+	}
+
+	private TextView tv_day(int day, int[] dayRange, int column_size){
+		TextView tv = new TextView(getActivity());
+		tv.setId(1001 + day);
+		tv.setTextColor(color_days_text);
+		// TODO
+		tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, text_size_days);
+		tv.setText(dayAbbrevs[day]);
+		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams((int) column_size, ViewGroup.LayoutParams.WRAP_CONTENT);
+		int days_before = day;
+		for (int d = 0; d < dayRange.length; d++){
+			if (dayRange[d] == day) days_before = d;
+		}
+		lp.setMargins((days_before + 1) * column_size, 0, 0, 0);
+		tv.setLayoutParams(lp);
+		tv.setGravity(Gravity.CENTER_HORIZONTAL);
+		//tv.setTypeface(Typeface.createFromAsset(getActivity().getResources().getAssets(), "Roboto-Medium.ttf"));
+
+		return tv;
+	}
+
+	private RelativeLayout rl_timetable(int ABint, int[] constants, int[] dayRange){
+		final int min_time = constants[2];
+		final int max_time = constants[3];
+		final int height_time_ratio = constants[7];
+
+		RelativeLayout rl = new RelativeLayout(getActivity());
+		rl.setId(500 + ABint);
+		final int timetable_height = height_time_ratio * (max_time-min_time);
+		System.out.println("timetable_height: "+timetable_height);
+		rl.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, timetable_height));
+		rl.setBackgroundColor(getActivity().getResources().getColor(R.color.color_timetable_area_background));
+
+
+		if (!showHoursInsteadOfPeriods) {
+			ArrayList<Integer> activeTimesS = new ArrayList<>();
+			ArrayList<Integer> activeTimesE = new ArrayList<>();
+
+			for (int p = 1; p <= number_of_periods; p++){
+				String from = prefs.getString("pref_key_period"+p+"_start", "[none]");
+				String to = prefs.getString("pref_key_period"+p+"_end", "[none]");
+
+				String[] fsplit = from.split(":");
+				String[] tsplit = to.split(":");
+				if (fsplit.length >= 2 && tsplit.length >= 2){
+					String fh = fsplit[0];
+					String fm = fsplit[1];
+					String th = tsplit[0];
+					String tm = tsplit[1];
+
+					if (DataStorageHandler.isStringNumeric(fh) && DataStorageHandler.isStringNumeric(fm)
+							&& DataStorageHandler.isStringNumeric(th) && DataStorageHandler.isStringNumeric(tm)){{
+						int fromH = Integer.parseInt(fh);
+						int fromM = Integer.parseInt(fm);
+						int toH = Integer.parseInt(th);
+						int toM = Integer.parseInt(tm);
+
+						int f = fromH * 60 + fromM;
+						int t = toH * 60 + toM;
+						if (t < f){
+							int nT = f;
+							f = t;
+							t = nT;
+						}
+
+						if (min_time <= f && t <= max_time){
+							rl.addView(tv_period(f, t, p, constants));
+							activeTimesS.add(f);
+							activeTimesE.add(t);
+						}
+					}}
+				}
+			}
+
+			for (int times = 0; times < activeTimesS.size() && times < activeTimesE.size(); times++) {
+				final int sThis = activeTimesS.get(times);
+				final int eThis = activeTimesE.get(times);
+
+				if (times > 0 && sThis <= activeTimesE.get(times - 1)) {
+					// Do nothing! Do not add as it's the same time as the previous's end time
+
+				} else {
+					if (sThis > min_time) rl.addView(v_time_line(sThis, false, constants));
+					rl.addView(tv_period_time(sThis, false, true, constants));
+				}
+
+				if (times < activeTimesE.size() - 1 && eThis >= activeTimesS.get(times + 1)) {
+					rl.addView(v_time_line(eThis, true, constants));
+					rl.addView(v_time_line_left_part(eThis, constants));
+					rl.addView(tv_period_time(eThis, true, false, constants));
+
+				} else {
+					rl.addView(v_time_line(eThis, false, constants));
+					rl.addView(tv_period_time(eThis, false, false, constants));
+				}
+			}
+		} else {
+			final int min_dist = 10;
+
+			for (int hour = 0; hour < 24; hour++){
+				final int minute = hour * 60;
+				if (min_time <= hour && hour <= max_time){
+
+					rl.addView(v_time_line(minute, true, constants));
+
+					if (minute <= min_time + min_dist || minute >= max_time - min_dist) {
+						rl.addView(tv_period_time(minute, false, true, constants));
+					} else {
+						rl.addView(tv_period_time(minute, true, true, constants));
+					}
+				}
+			}
+		}
+
+		rl.addView(v_periods_divider(constants));
+
+		String AB = allABs[ABint];
+		final String[][] timetable_lessons = DataStorageHandler.TimetableLessons(getActivity(), ttFolder, AB);
+
+		if (timetable_lessons != null) {
+			for (int tl = 0; tl < timetable_lessons.length; tl++) {
+				if (timetable_lessons[tl].length >= 9){
+					boolean valid = true;
+					for (int c = 0; c < 7; c++){
+						if (timetable_lessons[tl][c] == null ||
+								timetable_lessons[tl][c].replace("[none]", "").replace("[null", "").replace(" ", "").equals("")) valid = false;
+					}
+					if (!DataStorageHandler.isStringNumeric(timetable_lessons[tl][1]) ||
+							!DataStorageHandler.isStringNumeric(timetable_lessons[tl][2]) ||
+							!DataStorageHandler.isStringNumeric(timetable_lessons[tl][3])) valid = false;
+
+					if (valid){
+						rl.addView(lesson_element(timetable_lessons[tl], constants, dayRange, tl));
+					}
+				}
+			}
+		}
+
+		return rl;
+	}
+
+	private TextView tv_period(int from, int to, int pNumber, int[] constants){
+		final int min_time = constants[2];
+		final int height_time_ratio = constants[7];
+		final int element_width = constants[8];
+
+		final int period_length = to - from;
+		final int element_height = period_length * height_time_ratio;
+		final int margin_top = (from - min_time) * height_time_ratio;
+		final int width = element_width - timetable_periods_padding_right;
+
+		TextView tv = new TextView(getActivity());
+		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(width, element_height);
+		lp.setMargins(0, margin_top, 0, 0);
+		tv.setLayoutParams(lp);
+		tv.setGravity(Gravity.CENTER);
+		tv.setText(String.valueOf(pNumber));
+		tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, timetable_periods_textsize);
+		tv.setTextColor(color_timetable_periods_text);
+
+		return tv;
+	}
+
+    private TextView tv_period_time(int time, boolean shared, boolean startOfP, int[] constants){
+        final int min_time = constants[2];
+        final int height_time_ratio = constants[7];
+        final int element_width = constants[8];
+
+        int margin_top = (time - min_time) * height_time_ratio;
+
+		TextView tv = new TextView(getActivity());
+
+		if (shared) {
+			margin_top = margin_top - (timetable_period_time_height /2);
+			tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+		} else if (!startOfP) {
+			margin_top = margin_top - timetable_period_time_height;
+			tv.setGravity(Gravity.BOTTOM | Gravity.RIGHT);
+		} else {
+			tv.setGravity(Gravity.TOP | Gravity.RIGHT);
+		}
+
+		final int width = element_width - timetable_periods_padding_right;
+
+		final int h = (int) (time / 60);
+		final int m = time % 60;
+		String hour = String.valueOf(h);
+		//if (hour.length() < 2) hour = "0" + hour;
+		String minute = String.valueOf(m);
+		if (minute.length() < 2) minute = "0" + minute;
+		final String sTime = hour + ":" + minute;
+
+		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(width, timetable_period_time_height);
+		lp.setMargins(0, margin_top, 0, 0);
+		tv.setLayoutParams(lp);
+        tv.setText(String.valueOf(sTime));
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, timetable_period_times_textsize);
+        tv.setTextColor(color_timetable_period_times_text);
+		tv.setAlpha(0.54f);
+
+        return tv;
+    }
+
+	private View v_time_line(int time, boolean shared, int[] constants){
+		final int min_time = constants[2];
+		final int column_size = constants[6];
+		final int height_time_ratio = constants[7];
+
+		final int margin_top = height_time_ratio * (time - min_time);
+
+		View v = new View(getActivity());
+		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, timetable_period_time_lines_height);
+		if (shared){
+			final int margin_left = column_size - timetable_periods_padding_right;
+			lp.setMargins(margin_left, margin_top, 0, 0);
+		} else {
+			lp.setMargins(0, margin_top, 0, 0);
+		}
+		v.setLayoutParams(lp);
+		v.setBackgroundColor(color_time_lines);
+
+		return v;
+	}
+
+	private View v_time_line_left_part(int time, int[] constants){
+		final int min_time = constants[2];
+		final int height_time_ratio = constants[7];
+
+		final int margin_top = height_time_ratio * (time - min_time);
+
+		View v = new View(getActivity());
+		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(timetable_period_time_lines_left_part, timetable_period_time_lines_height);
+		lp.setMargins(0, margin_top, 0, 0);
+		v.setLayoutParams(lp);
+		v.setBackgroundColor(color_time_lines);
+
+		return v;
+	}
+
+	private View v_periods_divider(int[] constants){
+		final int column_size = constants[6];
+		final int margin_left = column_size - (timetable_period_divider_width/2) - (timetable_periods_padding_right/2);
+
+		View v = new View(getActivity());
+		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(timetable_period_divider_width, ViewGroup.LayoutParams.MATCH_PARENT);
+		lp.setMargins(margin_left, 0, 0, 0);
+		v.setLayoutParams(lp);
+		v.setBackgroundColor(color_divider_periods);
+
+		return v;
+	}
+
+	private RelativeLayout lesson_element(String[] lesson, int[] constants, int[] dayRange, int row){
+		final int min_time = constants[2];
+		final int column_size = constants[6];
+		final int height_time_ratio = constants[7];
+		final int lesson_element_width = constants[8];
+
+		final String ID = lesson[0];
+		final int day = Integer.parseInt(lesson[1]);
+		final int timeStart = Integer.parseInt(lesson[2]);
+		final int timeEnd = Integer.parseInt(lesson[3]);
+		final String abbrev = lesson[4];
+		final String color1 = lesson[5];
+		final String color2 = lesson[6];
+		final String place = lesson[7];
+		final String custom = lesson[8];
+
+		final int lesson_length = timeEnd - timeStart;
+		final int element_height = lesson_length * height_time_ratio;
+
+		int days_before = 0;
+		for (int d = 0; d < dayRange.length; d++){
+			if (dayRange[d] == day) days_before = d;
+		}
+		final int margin_left = (days_before + 1) * (column_size + (column_division / 2));
+
+		final int margin_top = (timeStart - min_time) * height_time_ratio;
+
+		RelativeLayout rl = new RelativeLayout(getActivity());
+		rl.setId(500 + row);
+		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(lesson_element_width, element_height);
+		lp.setMargins(margin_left, margin_top, 0, 0);
+		rl.setLayoutParams(lp);
+		rl.setClickable(true);
+		rl.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				final String date = DataStorageHandler.formatDateGeneralFormat(getActivity(), active_week_day);
+				((TimetableActivity) getActivity()).LessonFragment(ID, date);
+			}
+		});
+
+		int colorInt = 0xdd000000;
+		int color2Int = 0xffFFFFFF;
+		for (int c = 0; c < colorNames.length; c++){
+			if (color1.equals(colorNames[c])) colorInt = colorInts[c];
+			if (color2.equals(colorNames[c])) color2Int = colorInts[c];
+		}
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+			/*Drawable bg = getActivity().getResources().getDrawable(R.drawable.custom_bg);
+			bg.setColorFilter(colorInt, null);
+			rl.setBackground(bg);
+			*/
+			StateListDrawable states = new StateListDrawable();
+			states.addState(new int[] {android.R.attr.state_pressed}, new ColorDrawable(getResources().getColor(R.color.colorHightlight)));
+			states.addState(new int[] {android.R.attr.state_selected}, new ColorDrawable(getResources().getColor(R.color.colorHightlight)));
+			states.addState(new int[] { }, new ColorDrawable(colorInt));
+			rl.setBackground(states);
+		} else {
+			rl.setBackgroundColor(colorInt);
+		}
+
+		if (custom.equals("true")){
+			rl.addView(tv_time_start(timeStart, color2Int));
+			rl.addView(tv_time_end(timeEnd, color2Int));
+		}
+		rl.addView(ll_lesson_abbrev_place(abbrev, place, color2Int));
+
+		return rl;
+	}
+
+	private LinearLayout ll_lesson_abbrev_place(String abbrev, String place, int color2){
+		LinearLayout ll = new LinearLayout(getActivity());
+		ll.setOrientation(LinearLayout.VERTICAL);
+		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		lp.addRule(RelativeLayout.CENTER_VERTICAL);
+		ll.setLayoutParams(lp);
+		ll.setGravity(Gravity.CENTER_HORIZONTAL);
+
+		ll.addView(tv_abbrev(abbrev, color2));
+		ll.addView(tv_place(place, color2));
+
+		return ll;
+	}
+
+	private TextView tv_abbrev(String abbrev, int color2){
+		TextView tv = new TextView(getActivity());
+		tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, text_size_lesson_abbrev);
+		tv.setTextColor(color2);
+		tv.setText(abbrev.replace(" ", "").replace("[none]", "").replace("[comma]", ","));
+		tv.setSingleLine(true);
+		tv.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+		tv.setSelected(true);
+		tv.setGravity(Gravity.CENTER_HORIZONTAL);
+		tv.setTypeface(Typeface.createFromAsset(getActivity().getResources().getAssets(), "Roboto-Medium.ttf"));
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		tv.setLayoutParams(lp);
+
+		return tv;
+	}
+
+	private TextView tv_place(String place, int color2){
+		TextView tv = new TextView(getActivity());
+		tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, text_size_lesson_place);
+		tv.setTextColor(color2);
+		tv.setText(place.replace("[none]", "").replace("[null]", "").replace("[comma]", ","));
+		tv.setSingleLine(true);
+		tv.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+		tv.setSelected(true);
+		tv.setGravity(Gravity.CENTER_HORIZONTAL);
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		lp.setMargins(0, -1 * abbrev_place_padding, 0, 0);
+		tv.setLayoutParams(lp);
+
+		return tv;
+	}
+
+	private TextView tv_time_start(int timeStart, int color2){
+		TextView tv = new TextView(getActivity());
+		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+		tv.setLayoutParams(lp);
+
+		String h = String.valueOf((int) (timeStart / 60));
+		String m = String.valueOf((int) (timeStart % 60));
+		if (m.length() < 2) m = "0" + m;
+		String time = h+":"+m;
+
+		tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, text_size_lesson_time);
+		tv.setTextColor(color2);
+		tv.setText(time);
+		tv.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+		tv.setGravity(Gravity.CENTER_HORIZONTAL);
+
+		return tv;
+	}
+
+	private TextView tv_time_end(int timeEnd, int color2){
+		TextView tv = new TextView(getActivity());
+		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+		tv.setLayoutParams(lp);
+
+		String h = String.valueOf((int) (timeEnd / 60));
+		String m = String.valueOf((int) (timeEnd % 60));
+		if (m.length() < 2) m = "0" + m;
+		String time = h+":"+m;
+
+		tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, text_size_lesson_time);
+		tv.setTextColor(color2);
+		tv.setText(time);
+		tv.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+		tv.setGravity(Gravity.CENTER_HORIZONTAL);
+
+		return tv;
+	}
 
     @Override
     public void onResume(){
@@ -119,7 +961,7 @@ public class TimetableFragment extends Fragment {
 		mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 	}
 
-    private void findViews(View v){
+    /*private void findViews(View v){
     	bM1 = (Button) v.findViewById(R.id.Button01);
     	bM2 = (Button) v.findViewById(R.id.Button06);
     	bM3 = (Button) v.findViewById(R.id.Button11);
@@ -382,94 +1224,94 @@ public class TimetableFragment extends Fragment {
 
     	// c http://www.mkyong.com/java/how-to-calculate-date-time-difference-in-java/
 		//HH converts hour in 24 hours format (0-23), day calculation
-		/*SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-
-		Date p1s = null;
-		Date p1e = null;
-		Date p2s = null;
-		Date p2e = null;
-		Date p3s = null;
-		Date p3e = null;
-		Date p4s = null;
-		Date p4e = null;
-		Date p5s = null;
-		Date p5e = null;
-		Date p6s = null;
-		Date p6e = null;
-		Date p7s = null;
-		Date p7e = null;
-		Date p8s = null;
-		Date p8e = null;
-		Date p9s = null;
-		Date p9e = null;
-		Date p10s = null;
-		Date p10e = null;
-		Date p11s = null;
-		Date p11e = null;
-		Date p12s = null;
-		Date p12e = null;
-
-		try {
-			p1s = format.parse(p1start);
-			p1e = format.parse(p1end);
-			p2s = format.parse(p2start);
-			p2e = format.parse(p2end);
-			p3s = format.parse(p3start);
-			p3e = format.parse(p3end);
-			p4s = format.parse(p4start);
-			p4e = format.parse(p4end);
-			p5s = format.parse(p5start);
-			p5e = format.parse(p5end);
-			p6s = format.parse(p6start);
-			p6e = format.parse(p6end);
-			p7s = format.parse(p7start);
-			p7e = format.parse(p7end);
-			p8s = format.parse(p8start);
-			p8e = format.parse(p8end);
-			p9s = format.parse(p9start);
-			p9e = format.parse(p9end);
-			p10s = format.parse(p10start);
-			p10e = format.parse(p10end);
-			p11s = format.parse(p11start);
-			p11e = format.parse(p11end);
-			p12s = format.parse(p12start);
-			p12e = format.parse(p12end);*/
-
-			//in milliseconds
-			/*pLength1 = p1e.getTime() - p1s.getTime();
-			pLength2 = p2e.getTime() - p2s.getTime();
-			pLength3 = p3e.getTime() - p3s.getTime();
-			pLength4 = p4e.getTime() - p4s.getTime();
-			pLength5 = p5e.getTime() - p5s.getTime();
-			pLength6 = p6e.getTime() - p6s.getTime();
-			pLength7 = p7e.getTime() - p7s.getTime();
-			pLength8 = p8e.getTime() - p8s.getTime();
-			pLength9 = p9e.getTime() - p9s.getTime();
-			pLength10 = p10e.getTime() - p10s.getTime();
-			pLength11 = p11e.getTime() - p11s.getTime();
-			pLength12 = p12e.getTime() - p12s.getTime();
-
-			PeriodsAndBreaksLengthOverall = p12e.getTime() - p1s.getTime();
-
-			bLength1 = p2e.getTime() - p1e.getTime();
-			bLength2 = p3e.getTime() - p2e.getTime();
-			bLength3 = p4e.getTime() - p3e.getTime();
-			bLength4 = p5e.getTime() - p4e.getTime();
-			bLength5 = p6e.getTime() - p5e.getTime();
-			bLength6 = p7e.getTime() - p6e.getTime();
-			bLength7 = p8e.getTime() - p7e.getTime();
-			bLength8 = p9e.getTime() - p8e.getTime();
-			bLength9 = p10e.getTime() - p9e.getTime();
-			bLength10 = p11e.getTime() - p10e.getTime();
-			bLength11 = p12e.getTime() - p11e.getTime();*/
-
+//		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+//
+//		Date p1s = null;
+//		Date p1e = null;
+//		Date p2s = null;
+//		Date p2e = null;
+//		Date p3s = null;
+//		Date p3e = null;
+//		Date p4s = null;
+//		Date p4e = null;
+//		Date p5s = null;
+//		Date p5e = null;
+//		Date p6s = null;
+//		Date p6e = null;
+//		Date p7s = null;
+//		Date p7e = null;
+//		Date p8s = null;
+//		Date p8e = null;
+//		Date p9s = null;
+//		Date p9e = null;
+//		Date p10s = null;
+//		Date p10e = null;
+//		Date p11s = null;
+//		Date p11e = null;
+//		Date p12s = null;
+//		Date p12e = null;
+//
+//		try {
+//			p1s = format.parse(p1start);
+//			p1e = format.parse(p1end);
+//			p2s = format.parse(p2start);
+//			p2e = format.parse(p2end);
+//			p3s = format.parse(p3start);
+//			p3e = format.parse(p3end);
+//			p4s = format.parse(p4start);
+//			p4e = format.parse(p4end);
+//			p5s = format.parse(p5start);
+//			p5e = format.parse(p5end);
+//			p6s = format.parse(p6start);
+//			p6e = format.parse(p6end);
+//			p7s = format.parse(p7start);
+//			p7e = format.parse(p7end);
+//			p8s = format.parse(p8start);
+//			p8e = format.parse(p8end);
+//			p9s = format.parse(p9start);
+//			p9e = format.parse(p9end);
+//			p10s = format.parse(p10start);
+//			p10e = format.parse(p10end);
+//			p11s = format.parse(p11start);
+//			p11e = format.parse(p11end);
+//			p12s = format.parse(p12start);
+//			p12e = format.parse(p12end);
+//
+//			//in milliseconds
+//			//pLength1 = p1e.getTime() - p1s.getTime();
+//			pLength2 = p2e.getTime() - p2s.getTime();
+//			pLength3 = p3e.getTime() - p3s.getTime();
+//			pLength4 = p4e.getTime() - p4s.getTime();
+//			pLength5 = p5e.getTime() - p5s.getTime();
+//			pLength6 = p6e.getTime() - p6s.getTime();
+//			pLength7 = p7e.getTime() - p7s.getTime();
+//			pLength8 = p8e.getTime() - p8s.getTime();
+//			pLength9 = p9e.getTime() - p9s.getTime();
+//			pLength10 = p10e.getTime() - p10s.getTime();
+//			pLength11 = p11e.getTime() - p11s.getTime();
+//			pLength12 = p12e.getTime() - p12s.getTime();
+//
+//			PeriodsAndBreaksLengthOverall = p12e.getTime() - p1s.getTime();
+//
+//			bLength1 = p2e.getTime() - p1e.getTime();
+//			bLength2 = p3e.getTime() - p2e.getTime();
+//			bLength3 = p4e.getTime() - p3e.getTime();
+//			bLength4 = p5e.getTime() - p4e.getTime();
+//			bLength5 = p6e.getTime() - p5e.getTime();
+//			bLength6 = p7e.getTime() - p6e.getTime();
+//			bLength7 = p8e.getTime() - p7e.getTime();
+//			bLength8 = p9e.getTime() - p8e.getTime();
+//			bLength9 = p10e.getTime() - p9e.getTime();
+//			bLength10 = p11e.getTime() - p10e.getTime();
+//			bLength11 = p12e.getTime() - p11e.getTime();
+//
 //			long diffSeconds = diff / 1000 % 60;
 //			long diffMinutes = diff / (60 * 1000) % 60;
 //			long diffHours = diff / (60 * 60 * 1000) % 24;
 //			long diffDays = diff / (24 * 60 * 60 * 1000);
-		/*} catch (Exception e) {
-			e.printStackTrace();
-		}*/
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 
 		// c stackoverflow.com/questions/3224193/...
 		//for (int i = 0; i < TableRows.length; i++){
@@ -540,6 +1382,6 @@ public class TimetableFragment extends Fragment {
     	int dif = g2 - g1;
     	
     	return dif;
-    }
+    }*/
 
 }

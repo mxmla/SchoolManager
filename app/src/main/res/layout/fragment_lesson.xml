@@ -1,38 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.thinc_easy.schoolmanager.LessonFragment" >
 
-    <View
-        android:id="@+id/status_bar_placeholder"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/status_bar_underlay" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?actionBarSize"
-        android:layout_below="@id/status_bar_placeholder"
-        android:background="@color/BackgroundColor" />
-
-    <ScrollView
-        android:id="@+id/ScrollView1"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/NestedScrollView1"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?actionBarSize"
-        android:layout_below="@id/status_bar_placeholder" >
+        android:background="@color/color_lesson_bottom_sheet_background"
+        app:layout_behavior="@string/bottom_sheet_behavior"
+        app:behavior_peekHeight="@dimen/lesson_bottom_sheet_peek_height">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/lesson_bottom_sheet_list_margin_top_bottom">
 
-            <Button
+            <!--<Button
                 android:id="@+id/subject_circle"
                 android:layout_width="@dimen/subject_circle_large"
                 android:layout_height="@dimen/subject_circle_large"
@@ -41,89 +29,227 @@
                 android:layout_marginBottom="@dimen/card_margin"
                 android:layout_marginTop="@dimen/card_margin"
                 android:layout_gravity="center_horizontal"
-                android:background="@android:color/transparent" />
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/card_general"
-                style="@style/Card"
-                custom:cardElevation="2dp"
-                custom:cardUseCompatPadding="true" >
-                <LinearLayout
-                    android:layout_width="fill_parent"
+                android:background="@android:color/transparent" />-->
+            
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lesson_bottom_sheet_header_height"
+                android:layout_marginLeft="@dimen/lesson_bottom_sheet_text_margin_left"
+                android:layout_marginRight="@dimen/lesson_bottom_sheet_margin_left_right"
+                android:paddingTop="16dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:id="@+id/tv_bottom_sheet_header"
+                    style="@style/TextStyleHeadline"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" >
+                    android:text="Mathematics (Ma)"
+                    android:ellipsize="marquee" />
 
-                    <TextView
-                        android:id="@+id/tvD2"
-                        style="@style/CardTitle"
-                        android:text="@string/general" />
+                <TextView
+                    android:id="@+id/tv_bottom_sheet_subheader"
+                    style="@style/SecondaryTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:textSize="@dimen/lesson_bottom_sheet_text_size_content"
+                    android:text="Wednesday, 23.8.2015"
+                    android:ellipsize="marquee"
+                    android:layout_below="@id/tv_bottom_sheet_header"/>
 
-                    <LinearLayout
-                        style="@style/CardContent"
-                        android:orientation="vertical" >
-
-                        <TextView
-                            style="@style/CardContentText"
-                            android:textColor="@color/SecondaryText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="20dp"
-                            android:text="@string/subject" />
-
-                        <TextView
-                            android:id="@+id/tvSubjectName"
-                            style="@style/CardContentText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="20dp"
-                            android:layout_marginBottom="@dimen/card_padding"
-                            android:text="TextView" />
-
-                        <TextView
-                            android:id="@+id/tvD4"
-                            style="@style/CardContentText"
-                            android:textColor="@color/SecondaryText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="20dp"
-                            android:text="@string/period" />
-
-                        <TextView
-                            android:id="@+id/tvPeriod"
-                            style="@style/CardContentText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="20dp"
-                            android:layout_marginBottom="@dimen/card_padding"
-                            android:text="TextView" />
-
-                        <TextView
-                            android:id="@+id/tvD3"
-                            style="@style/CardContentText"
-                            android:textColor="@color/SecondaryText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="20dp"
-                            android:text="@string/Teacher" />
-
-                        <TextView
-                            android:id="@+id/tvTeacher"
-                            style="@style/CardContentText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="20dp"
-                            android:layout_marginBottom="@dimen/card_padding"
-                            android:text="TextView" />
-
-                    </LinearLayout>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </RelativeLayout>
 
             <View
+                style="@style/DividersStyle"
+                android:layout_marginLeft="@dimen/lesson_bottom_sheet_text_margin_left"
+                android:layout_marginBottom="0dp"
+                android:layout_marginRight="0dp"/>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="176dp" />
+                android:layout_height="@dimen/lesson_bottom_sheet_list_row_height"
+                android:layout_marginLeft="@dimen/lesson_bottom_sheet_text_margin_left"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/b_view_subject"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/lesson_bottom_sheet_list_row_height"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/lesson_bottom_sheet_text_size_content"
+                    android:text="@string/lesson_view_subject"
+                    android:background="@drawable/custom_bg"
+                    android:gravity="center_vertical"/>
+
+                <TextView
+                    android:id="@+id/b_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/lesson_bottom_sheet_list_row_height"
+                    android:layout_marginLeft="@dimen/card_padding"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/lesson_bottom_sheet_text_size_content"
+                    android:text="@string/lesson_edit"
+                    android:background="@drawable/custom_bg"
+                    android:gravity="center_vertical"/>
+            </LinearLayout>
+
+            <View
+                style="@style/DividersStyle"
+                android:layout_marginLeft="@dimen/lesson_bottom_sheet_text_margin_left"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="0dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lesson_bottom_sheet_list_row_height">
+                <TextView
+                    android:id="@+id/tv_lesson_place"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/lesson_bottom_sheet_text_margin_left"
+                    android:textSize="@dimen/lesson_bottom_sheet_text_size_content"
+                    android:textColor="@color/color_lesson_bottom_sheet_text_content"
+                    android:ellipsize="end"
+                    android:text="Medium Text" />
+
+                <ImageView
+                    android:layout_width="@dimen/lesson_bottom_sheet_icon_width_height"
+                    android:layout_height="@dimen/lesson_bottom_sheet_icon_width_height"
+                    android:layout_marginLeft="@dimen/lesson_bottom_sheet_list_margin_left_right"
+                    android:layout_centerVertical="true"
+                    android:alpha="0.56"
+                    android:src="@drawable/ic_place_black_48dp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lesson_bottom_sheet_list_row_height">
+                <TextView
+                    android:id="@+id/tv_lesson_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/lesson_bottom_sheet_text_margin_left"
+                    android:textSize="@dimen/lesson_bottom_sheet_text_size_content"
+                    android:textColor="@color/color_lesson_bottom_sheet_text_content"
+                    android:ellipsize="end"
+                    android:text="Medium Text" />
+
+                <ImageView
+                    android:layout_width="@dimen/lesson_bottom_sheet_icon_width_height"
+                    android:layout_height="@dimen/lesson_bottom_sheet_icon_width_height"
+                    android:layout_marginLeft="@dimen/lesson_bottom_sheet_list_margin_left_right"
+                    android:layout_centerVertical="true"
+                    android:alpha="0.56"
+                    android:src="@drawable/ic_schedule_black_48dp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lesson_bottom_sheet_list_row_height">
+                <TextView
+                    android:id="@+id/tv_lesson_teacher"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/lesson_bottom_sheet_text_margin_left"
+                    android:textSize="@dimen/lesson_bottom_sheet_text_size_content"
+                    android:textColor="@color/color_lesson_bottom_sheet_text_content"
+                    android:ellipsize="end"
+                    android:text="Medium Text" />
+
+                <ImageView
+                    android:layout_width="@dimen/lesson_bottom_sheet_icon_width_height"
+                    android:layout_height="@dimen/lesson_bottom_sheet_icon_width_height"
+                    android:layout_marginLeft="@dimen/lesson_bottom_sheet_list_margin_left_right"
+                    android:layout_centerVertical="true"
+                    android:alpha="0.56"
+                    android:src="@drawable/ic_person_black_48dp"/>
+            </RelativeLayout>
         </LinearLayout>
-    </ScrollView>
+
+            <View
+                style="@style/DividersStyle"
+                android:layout_marginRight="0dp"
+                android:layout_marginLeft="@dimen/lesson_bottom_sheet_text_margin_left" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lesson_bottom_sheet_title_height"
+                android:layout_marginLeft="@dimen/lesson_bottom_sheet_text_margin_left"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/lesson_bottom_sheet_text_size_title"
+                android:textColor="@color/color_lesson_bottom_sheet_text_title"
+                android:text="@string/card_homework_title"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_homework"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lesson_bottom_sheet_list_row_height"
+                android:visibility="gone">
+                <ImageView
+                    android:layout_width="@dimen/lesson_bottom_sheet_icon_width_height"
+                    android:layout_height="@dimen/lesson_bottom_sheet_icon_width_height"
+                    android:layout_marginLeft="@dimen/lesson_bottom_sheet_list_margin_left_right"
+                    android:layout_marginTop="16dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentTop="true"
+                    android:alpha="0.56"
+                    android:src="@drawable/ic_assignment_black_24dp"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_homework"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/lesson_bottom_sheet_text_margin_left"
+                    android:orientation="vertical"/>
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/v_divider_homework"
+                style="@style/DividersStyle"
+                android:layout_marginLeft="@dimen/lesson_bottom_sheet_text_margin_left"
+                android:layout_marginRight="0dp"
+                android:visibility="gone"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_add_homework"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lesson_bottom_sheet_list_row_height"
+                android:layout_marginBottom="@dimen/lesson_bottom_sheet_list_row_height"
+                android:background="@drawable/custom_bg"
+                android:clickable="true">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/lesson_bottom_sheet_text_margin_left"
+                    android:textSize="@dimen/lesson_bottom_sheet_text_size_content"
+                    android:textColor="@color/colorAccent"
+                    android:text="@string/lesson_add_homework" />
+
+                <ImageView
+                    android:layout_width="@dimen/lesson_bottom_sheet_icon_width_height"
+                    android:layout_height="@dimen/lesson_bottom_sheet_icon_width_height"
+                    android:layout_marginLeft="@dimen/lesson_bottom_sheet_list_margin_left_right"
+                    android:layout_centerVertical="true"
+                    android:alpha="0.56"
+                    android:src="@drawable/ic_add_black_48dp"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
     <View
+        android:id="@+id/v_appbar_shadow"
         android:layout_width="match_parent"
         android:layout_height="@dimen/appbar_dropshadow_height"
         android:background="@drawable/toolbar_dropshadow"
-        android:layout_marginTop="?actionBarSize"
-        android:layout_below="@id/status_bar_placeholder" />
+        android:visibility="gone"/>
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

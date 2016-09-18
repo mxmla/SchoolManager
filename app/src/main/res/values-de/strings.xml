@@ -67,6 +67,8 @@
         <item>Mi</item>
         <item>Do</item>
         <item>Fr</item>
+        <item>Sa</item>
+        <item>So</item>
     </string-array>
     <string-array name="DayNames">
         <item>Montag</item>
@@ -191,7 +193,7 @@
     <string name="NowSubject">Jetzt</string>
     <string name="NextSubject">Nächstes</string>
     <string name="TomorrowSubjects">Fächer morgen</string>
-    <string name="title_fragment_lesson">Stunde</string>
+    <string name="title_fragment_lesson">Unterricht</string>
     <string name="title_fragment_subject">Fach</string>
     <string name="title_fragment_edit_subject">Fach bearbeiten</string>
     <string name="title_fragment_timetable">Stundenplan</string>
@@ -425,4 +427,18 @@
     <string name="lesson_week">Woche</string>
     <string name="lesson_delete">Entfernen</string>
     <string name="lesson_period">Stunde</string>
+    <string name="timetable_week_indicator_week">Woche:</string>
+    <string name="timetable_week_indicator_current_week">diese Woche</string>
+    <string name="lesson_view_subject">Fach ansehen</string>
+    <string name="lesson_edit">Bearbeiten</string>
+    <string name="lesson_add_homework">Aufgabe hinzufügen</string>
+    <string name="subject_lessons">Unterricht</string>
+    <string name="pref_ab_week_settings_text">Abwechselnde Wochen (A/B-Wochen)</string>
+    <string name="pref_ab_week_settings_currently_active">Aktuelle Woche</string>
+    <string name="pref_ab_week_title">Wochenzyklus (A/B-Wochen)</string>
+    <string name="pref_ab_week_summary">Einstellungen für einen wöchentlich wechsenden Stundenplan.</string>
+    <string name="pref_new_timetable_title">Neuer Stundenplan</string>
+    <string name="pref_new_timetable_summary">Neuen Stundenplan erstellen. Deaktiviert den bestehenden Plan.</string>
+    <string name="feature_ab_weeks">Wochenzyklen (A/B-Wochen)</string>
+    <string name="card_introducing_ab_weeks_text">Hey, wir haben die App aktualisiert! Unter den vielen neuen Verbesserungen is eine neue Funktion, die dir ermöglicht, sogenannte Wochenzyklen (\"A/B-Wochen\") zu erstellen.\n\nHast du zum Beispiel einen Unterricht nur alle zwei Wochen? Dann aktiviere einfach A/B-Wochen in den Einstellungen!</string>
 </resources>

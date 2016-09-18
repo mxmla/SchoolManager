@@ -67,6 +67,8 @@
         <item>We</item>
         <item>Th</item>
         <item>Fr</item>
+        <item>Sa</item>
+        <item>Su</item>
     </string-array>
     <string-array name="DayNames">
         <item>Monday</item>
@@ -415,4 +417,18 @@
     <string name="lesson_week">Week</string>
     <string name="lesson_delete">Delete</string>
     <string name="lesson_period">Period</string>
+    <string name="timetable_week_indicator_week">Week:</string>
+    <string name="timetable_week_indicator_current_week">this week</string>
+    <string name="lesson_view_subject">View subject</string>
+    <string name="lesson_edit">Edit</string>
+    <string name="lesson_add_homework">Add task</string>
+    <string name="subject_lessons">Lessons</string>
+    <string name="pref_ab_week_settings_text">Alternating weeks (A/B weeks)</string>
+    <string name="pref_ab_week_settings_currently_active">Current week</string>
+    <string name="pref_ab_week_summary">Have a weekly alternating schedule? Adjust your timetble accordingly.</string>
+    <string name="pref_ab_week_title">Week cycle ("A/B weeks")</string>
+    <string name="pref_new_timetable_title">New timetable</string>
+    <string name="pref_new_timetable_summary">Create a new timetable. This deactivates your current one.</string>
+    <string name="feature_ab_weeks">Week cycles</string>
+    <string name="card_introducing_ab_weeks_text">Hey we\'ve updated the app! Amongst several improvements is a new feature that enables you to create so-called week cycles (or \"A/B-Weeks\").\n\nFor example: do you have a class only every other week? Then simply enable week cycles in the settings!</string>
 </resources>
