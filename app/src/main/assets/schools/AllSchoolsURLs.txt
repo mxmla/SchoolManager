@@ -289,3 +289,6 @@
 021500030001,1,http://www.escola-ginestalmachado.net/
 021600020001,1,http://www.lcd.lu/
 020300010006,1,http://www2.warwick.ac.uk/fac/soc/
+020104010034,1,http://pius-gymnasium.de/
+020101010033,1,http://www.gsgberenbostel.de/
+020104010035,1,http://www.krupp-gymnasium.de/

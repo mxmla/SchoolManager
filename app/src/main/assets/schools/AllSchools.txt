@@ -1,3 +1,6 @@
+020104010034,Bischöfliches Pius-Gymnasium Aachen,0
+020101010033,Geschwister-Scholl-Gymnasium Berenbostel,0
+020104010035,Europaschule Krupp-Gymnasium,0
 020300010006,Uni Warwick Faculty of Social Sciences,0
 021600020001,Lycée classique de Diekirch,0
 021500030001,Escola Secundária Dr. Ginestal Machado,0
