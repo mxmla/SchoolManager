@@ -61,7 +61,7 @@
 020104010001,1,http://www.ausbildung-und-studium.de/koeln
 060104010001,1,http://www.ghanaedudirectory.com/Search/Details/14365
 020101010002,1,http://gaussschule-braunschweig.de/
-020300010001,1,http://www.wbs.ac.uk/
+020300010001,1,https://my.wbs.ac.uk/-/academic/homepage/
 020101020002,1,http://www.jungmannschule.de/
 050101010001,1,https://www.nwafh.med.sa/en/GeneralServices/BritishSchool/Pages/default.aspx
 050202030001,1,http://www.kolejteknologialpha.edu.my/
