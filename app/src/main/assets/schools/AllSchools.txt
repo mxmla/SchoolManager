@@ -1,3 +1,4 @@
+020104010036,Hans-Böckler-Berufskolleg Münster,0
 020104010034,Bischöfliches Pius-Gymnasium Aachen,0
 020101010033,Geschwister-Scholl-Gymnasium Berenbostel,0
 020104010035,Europaschule Krupp-Gymnasium,0

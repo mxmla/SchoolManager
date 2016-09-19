@@ -292,3 +292,4 @@
 020104010034,1,http://pius-gymnasium.de/
 020101010033,1,http://www.gsgberenbostel.de/
 020104010035,1,http://www.krupp-gymnasium.de/
+020104010036,1,http://www.hbbk-muenster.de/
