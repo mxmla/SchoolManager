@@ -105,9 +105,6 @@ public class MySchoolFragment extends Fragment {
                         webView.getSettings().setBuiltInZoomControls(true);
                         webView.getSettings().setDisplayZoomControls(false);
                         webView.getSettings().setSupportMultipleWindows(false);
-
-                        webView.getSettings().setLoadWithOverviewMode(true);
-                        webView.getSettings().setUseWideViewPort(true);
                         /*
                         webView.getSettings().setDomStorageEnabled(true);
                         webView.setPadding(0, 0, 0, 0);
@@ -124,6 +121,9 @@ public class MySchoolFragment extends Fragment {
                         //webView.loadData(url, "text/html; charset=UTF-8", null);
                         webView.clearView();
                         webView.measure(100, 100);
+                        webView.getSettings().setUseWideViewPort(true);
+                        webView.getSettings().setLoadWithOverviewMode(true);
+
                         webView.setWebViewClient(new WebViewClient(){
                             /*@Override
                             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error){
