@@ -886,12 +886,16 @@ public class MainFragment extends Fragment {
             nowMinute = calNow.get(Calendar.MINUTE);
             nowDayOfWeek = calNow.get(Calendar.DAY_OF_WEEK);
 
+            Calendar calTom = (Calendar) calNow.clone();
+            calTom.add(Calendar.DAY_OF_YEAR, 1);
+            int tomDayOfWeek = calTom.get(Calendar.DAY_OF_WEEK);
+
             int[] dayNumbers = {2, 3, 4, 5, 6, 7, 1};
 
             int dayID = -1;
 
             for (int i3 = 0; i3 < dayNumbers.length; i3++) {
-                if (nowDayOfWeek == dayNumbers[i3]) {
+                if (tomDayOfWeek == dayNumbers[i3]) {
                     nowDayInt = i3;
                     dayID = i3;
                 }
