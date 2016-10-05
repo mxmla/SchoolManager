@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -15,11 +16,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by wassm on 2016-07-02.
  */
-public class MySchoolActivity extends ActionBarActivity {
+public class MySchoolActivity extends ActionBarActivity implements DialogAdInfo.AdInfoDialogListener{
     public static final int NOTIFICATION_ID = 1;
     Fragment mMySchoolFragment;
 
@@ -30,6 +39,12 @@ public class MySchoolActivity extends ActionBarActivity {
     private int mOpenMySchoolActivityCount;
     public final int mHowOftenUntilShareApp = 25;
     private String KEY_OPEN_MY_SCHOOL_ACTIVITY_COUNT = "open_my_school_activity_count";
+    private Context context;
+    private SharedPreferences prefs;
+    private InterstitialAd mInterstitialAd;
+    private final int daysAdFree = 14;
+    boolean adClicked;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +66,14 @@ public class MySchoolActivity extends ActionBarActivity {
                 (MySchoolFragment.DEFAULT_EDIT_FRAGMENT_TAG);
 
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        context = this;
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         mOpenMySchoolActivityCount = Integer.valueOf(readFromPreferences(this, KEY_OPEN_MY_SCHOOL_ACTIVITY_COUNT, "0"));
         saveToPreferences(this, KEY_OPEN_MY_SCHOOL_ACTIVITY_COUNT, String.valueOf(mOpenMySchoolActivityCount + 1));
 
+        //prefs.edit().putString("last_time_ad_clicked", "[none]").apply();
+        showAdIfNecessary();
 
         if (mMySchoolFragment == null) {
             mMySchoolFragment = new MySchoolFragment();
@@ -65,6 +83,70 @@ public class MySchoolActivity extends ActionBarActivity {
                     MySchoolFragment.DEFAULT_EDIT_FRAGMENT_TAG);
             transaction.commit();
         }
+    }
+
+    private void showAdIfNecessary(){
+        boolean showAd = false;
+        adClicked = false;
+        if (prefs.contains("last_time_ad_clicked")) {
+            String dateOld = prefs.getString("last_time_ad_clicked", "[none]");
+            Date dOld = DataStorageHandler.getDateFromGeneralDateFormat(context, dateOld);
+            if (dOld != null){
+                Calendar cTimeAgo = Calendar.getInstance();
+                cTimeAgo.add(Calendar.DAY_OF_YEAR, -daysAdFree);
+                Date dTimeAgo = cTimeAgo.getTime();
+                if (dOld.before(dTimeAgo)) showAd = true;
+            } else {
+                showAd = true;
+            }
+        } else {
+            showAd = true;
+        }
+
+        if (showAd) {
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId("ca-app-pub-9138088263014683/8547242853");
+
+            mInterstitialAd.setAdListener(new AdListener() {
+                @Override
+                public void onAdLeftApplication() {
+                    System.out.println("onAdLeftApplication");
+                    super.onAdLeftApplication();
+                    String date = DataStorageHandler.formatDateGeneralFormat(context, Calendar.getInstance());
+                    prefs.edit().putString("last_time_ad_clicked", date).apply();
+                    adClicked = true;
+                }
+                @Override
+                public void onAdLoaded(){
+                    super.onAdLoaded();
+                    DialogFragment dialogAdInfo = new DialogAdInfo();
+                    dialogAdInfo.show(getSupportFragmentManager(), "adInfo");
+                }
+                @Override
+                public void onAdClosed(){
+                    super.onAdClosed();
+                    if (adClicked) Toast.makeText(context, getResources().getString(R.string.toast_ads_removed), Toast.LENGTH_LONG).show();
+                }
+            });
+
+            requestNewInterstitial();
+        }
+    }
+
+    @Override
+    public void onDialogPause(DialogFragment dialog) {
+        showInterstitialAd();
+    }
+
+    public void showInterstitialAd() {
+        mInterstitialAd.show();
+    }
+
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
     }
 
     @Override

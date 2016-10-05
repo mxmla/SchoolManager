@@ -10,6 +10,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -26,6 +27,10 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -34,10 +39,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 
 
-public class HomeworkActivity extends ActionBarActivity implements DialogEditHomework.Communicator, DialogViewHomework.Communicator, HomeworkAdapter.Communicator{
+public class HomeworkActivity extends ActionBarActivity implements DialogEditHomework.Communicator, DialogViewHomework.Communicator,
+        HomeworkAdapter.Communicator, DialogAdInfo.AdInfoDialogListener{
 
     private Toolbar toolbar;
     private NavigationDrawerFragment1 drawerFragment;
@@ -48,6 +55,11 @@ public class HomeworkActivity extends ActionBarActivity implements DialogEditHom
     private CoordinatorLayout fabCoordinator;
     private String ttFolder, homeworkFilepath;
     private File homeworkFile;
+    private Context context;
+    private SharedPreferences prefs;
+    private InterstitialAd mInterstitialAd;
+    private final int daysAdFree = 14;
+    boolean adClicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +76,13 @@ public class HomeworkActivity extends ActionBarActivity implements DialogEditHom
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        context = this;
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         ttFolder = prefs.getString(getResources().getString(R.string.pref_key_current_timetable_filename), "[none]");
         homeworkFilepath = ttFolder + "/" + getResources().getString(R.string.file_name_homework);
         homeworkFile = new File(getExternalFilesDir(null), homeworkFilepath);
+
+        showAdIfNecessary();
 
         /*Fragment mHomeworkFragment = getSupportFragmentManager().findFragmentByTag
                 (HomeworkFragment.DEFAULT_EDIT_FRAGMENT_TAG);
@@ -82,7 +97,7 @@ public class HomeworkActivity extends ActionBarActivity implements DialogEditHom
             transaction.commit();
         }*/
 
-        tabLayout = (TabLayout) findViewById(R.id.TabLayout);
+                tabLayout = (TabLayout) findViewById(R.id.TabLayout);
         viewPager = (ViewPager) findViewById(R.id.pager);
 
         pagerAdapter = new HomeworkPagerAdapter(getSupportFragmentManager());
@@ -103,6 +118,70 @@ public class HomeworkActivity extends ActionBarActivity implements DialogEditHom
         });
 
         fabCoordinator = (CoordinatorLayout) findViewById(R.id.fabCoordinator);
+    }
+
+    private void showAdIfNecessary(){
+        boolean showAd = false;
+        adClicked = false;
+        if (prefs.contains("last_time_ad_clicked")) {
+            String dateOld = prefs.getString("last_time_ad_clicked", "[none]");
+            Date dOld = DataStorageHandler.getDateFromGeneralDateFormat(context, dateOld);
+            if (dOld != null){
+                Calendar cTimeAgo = Calendar.getInstance();
+                cTimeAgo.add(Calendar.DAY_OF_YEAR, -daysAdFree);
+                Date dTimeAgo = cTimeAgo.getTime();
+                if (dOld.before(dTimeAgo)) showAd = true;
+            } else {
+                showAd = true;
+            }
+        } else {
+            showAd = true;
+        }
+
+        if (showAd) {
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId("ca-app-pub-9138088263014683/8826444457");
+
+            mInterstitialAd.setAdListener(new AdListener() {
+                @Override
+                public void onAdLeftApplication() {
+                    System.out.println("onAdLeftApplication");
+                    super.onAdLeftApplication();
+                    String date = DataStorageHandler.formatDateGeneralFormat(context, Calendar.getInstance());
+                    prefs.edit().putString("last_time_ad_clicked", date).apply();
+                    adClicked = true;
+                }
+                @Override
+                public void onAdLoaded(){
+                    super.onAdLoaded();
+                    DialogFragment dialogAdInfo = new DialogAdInfo();
+                    dialogAdInfo.show(getSupportFragmentManager(), "adInfo");
+                }
+                @Override
+                public void onAdClosed(){
+                    super.onAdClosed();
+                    if (adClicked) Toast.makeText(context, getResources().getString(R.string.toast_ads_removed), Toast.LENGTH_LONG).show();
+                }
+            });
+
+            requestNewInterstitial();
+        }
+    }
+
+    @Override
+    public void onDialogPause(DialogFragment dialog) {
+        showInterstitialAd();
+    }
+
+    public void showInterstitialAd() {
+        mInterstitialAd.show();
+    }
+
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
     }
 
     @Override

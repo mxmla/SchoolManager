@@ -226,100 +226,105 @@ public class TimetableFragment extends Fragment {
 		TextView tvWeekAB = (TextView) v.findViewById(R.id.tvWeekAB);
 		LinearLayout llWeekIndicator = (LinearLayout) v.findViewById(R.id.llWeekIndicator);
 
-		llWeekIndicator.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Intent i = new Intent(getActivity(), ABWeekSettingsActivity.class);
-				i.putExtra("caller", "timetable");
-				startActivityForResult(i, 0);
-			}
-		});
+		if (prefs.getBoolean("pref_key_show_week_selector", true)) {
 
-		tvWeekDates.setTypeface(Typeface.createFromAsset(getActivity().getResources().getAssets(), "Roboto-Bold.ttf"));
-		tvWeekDates.setSingleLine(true);
-		tvWeekDates.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-		tvWeekDates.setSelected(true);
-		tvWeekAB.setSingleLine(true);
-		tvWeekAB.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-		tvWeekAB.setSelected(true);
-		tvWeekAB.setText(getActivity().getResources().getString(R.string.timetable_week_indicator_week) + " " + allABs[currentAB]);
+			llWeekIndicator.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					Intent i = new Intent(getActivity(), ABWeekSettingsActivity.class);
+					i.putExtra("caller", "timetable");
+					startActivityForResult(i, 0);
+				}
+			});
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			final ColorStateList cslIcon = getActivity().getResources().getColorStateList(R.color.color_state_list_icon);
-			ibGoToToday.setImageTintList(cslIcon);
-			ibLeft.setImageTintList(cslIcon);
-			ibRight.setImageTintList(cslIcon);
-		}
+			tvWeekDates.setTypeface(Typeface.createFromAsset(getActivity().getResources().getAssets(), "Roboto-Bold.ttf"));
+			tvWeekDates.setSingleLine(true);
+			tvWeekDates.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+			tvWeekDates.setSelected(true);
+			tvWeekAB.setSingleLine(true);
+			tvWeekAB.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+			tvWeekAB.setSelected(true);
+			tvWeekAB.setText(getActivity().getResources().getString(R.string.timetable_week_indicator_week) + " " + allABs[currentAB]);
 
-		final Calendar[] cals = firstAndLastDayOfWeek(cal);
-		final Calendar calFirst = cals[0];
-		final Calendar calLast = cals[1];
-
-		String weekDates = DataStorageHandler.formatDateLocalFormat(getActivity(), calFirst) + " - "
-				+ DataStorageHandler.formatDateLocalFormat(getActivity(), calLast);
-
-		if (isCurrentWeek(calFirst, calLast)) {
-			weekDates = weekDates + " (" + getActivity().getResources().getString(R.string.timetable_week_indicator_current_week) + ")";
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-				ibGoToToday.setImageTintList(getActivity().getResources().getColorStateList(R.color.color_state_list_disabled));
+				final ColorStateList cslIcon = getActivity().getResources().getColorStateList(R.color.color_state_list_icon);
+				ibGoToToday.setImageTintList(cslIcon);
+				ibLeft.setImageTintList(cslIcon);
+				ibRight.setImageTintList(cslIcon);
 			}
+
+			final Calendar[] cals = firstAndLastDayOfWeek(cal);
+			final Calendar calFirst = cals[0];
+			final Calendar calLast = cals[1];
+
+			String weekDates = DataStorageHandler.formatDateLocalFormat(getActivity(), calFirst) + " - "
+					+ DataStorageHandler.formatDateLocalFormat(getActivity(), calLast);
+
+			if (isCurrentWeek(calFirst, calLast)) {
+				weekDates = weekDates + " (" + getActivity().getResources().getString(R.string.timetable_week_indicator_current_week) + ")";
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+					ibGoToToday.setImageTintList(getActivity().getResources().getColorStateList(R.color.color_state_list_disabled));
+				}
+			}
+
+			tvWeekDates.setText(weekDates);
+
+			final int allABsLength = allABs.length;
+
+			ibLeft.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					vaDays.setInAnimation(slide_in_left);
+					vaDays.setOutAnimation(slide_out_right);
+					vaTimetable.setInAnimation(slide_in_left);
+					vaTimetable.setOutAnimation(slide_out_right);
+
+					vaTimetable.showPrevious();
+					vaDays.showPrevious();
+					Calendar newC = cal;
+					newC.add(Calendar.WEEK_OF_YEAR, -1);
+					int nextAB = currentAB - 1;
+					if (nextAB < 0) nextAB = allABsLength + nextAB;
+					setUpWeekIndicator(v, newC, nextAB);
+				}
+			});
+
+			ibRight.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					vaDays.setInAnimation(slide_in_right);
+					vaDays.setOutAnimation(slide_out_left);
+					vaTimetable.setInAnimation(slide_in_right);
+					vaTimetable.setOutAnimation(slide_out_left);
+
+					vaTimetable.showNext();
+					vaDays.showNext();
+					Calendar newC = cal;
+					newC.add(Calendar.WEEK_OF_YEAR, 1);
+					int nextAB = currentAB + 1;
+					if (nextAB >= allABsLength) nextAB = 0 + (nextAB - allABsLength);
+					setUpWeekIndicator(v, newC, nextAB);
+				}
+			});
+
+			ibGoToToday.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					vaDays.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+					vaDays.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+					vaTimetable.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+					vaTimetable.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+
+					vaTimetable.setDisplayedChild(0);
+					vaDays.setDisplayedChild(0);
+					Calendar newC = Calendar.getInstance();
+					int nextAB = currentABPosition;
+					setUpWeekIndicator(v, newC, nextAB);
+				}
+			});
+		} else {
+			llWeekIndicator.setVisibility(View.GONE);
 		}
-
-		tvWeekDates.setText(weekDates);
-
-		final int allABsLength = allABs.length;
-
-		ibLeft.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				vaDays.setInAnimation(slide_in_left);
-				vaDays.setOutAnimation(slide_out_right);
-				vaTimetable.setInAnimation(slide_in_left);
-				vaTimetable.setOutAnimation(slide_out_right);
-
-				vaTimetable.showPrevious();
-				vaDays.showPrevious();
-				Calendar newC = cal;
-				newC.add(Calendar.WEEK_OF_YEAR, -1);
-				int nextAB = currentAB - 1;
-				if (nextAB < 0) nextAB = allABsLength + nextAB;
-				setUpWeekIndicator(v, newC, nextAB);
-			}
-		});
-
-		ibRight.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				vaDays.setInAnimation(slide_in_right);
-				vaDays.setOutAnimation(slide_out_left);
-				vaTimetable.setInAnimation(slide_in_right);
-				vaTimetable.setOutAnimation(slide_out_left);
-
-				vaTimetable.showNext();
-				vaDays.showNext();
-				Calendar newC = cal;
-				newC.add(Calendar.WEEK_OF_YEAR, 1);
-				int nextAB = currentAB + 1;
-				if (nextAB >= allABsLength) nextAB = 0 + (nextAB - allABsLength);
-				setUpWeekIndicator(v, newC, nextAB);
-			}
-		});
-
-		ibGoToToday.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				vaDays.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
-				vaDays.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
-				vaTimetable.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
-				vaTimetable.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
-
-				vaTimetable.setDisplayedChild(0);
-				vaDays.setDisplayedChild(0);
-				Calendar newC = Calendar.getInstance();
-				int nextAB = currentABPosition;
-				setUpWeekIndicator(v, newC, nextAB);
-			}
-		});
 	}
 
 	private Calendar[] firstAndLastDayOfWeek(Calendar calDay){
@@ -532,8 +537,8 @@ public class TimetableFragment extends Fragment {
 
 		RelativeLayout rl = new RelativeLayout(getActivity());
 		rl.setId(1000 + 0);
-		rl.setGravity(Gravity.LEFT | Gravity.BOTTOM);
 		rl.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height_days));
+		rl.setGravity(Gravity.BOTTOM | Gravity.LEFT);
 
 
 		for (int d = 0; d < dayRange.length; d++){
@@ -556,6 +561,7 @@ public class TimetableFragment extends Fragment {
 			if (dayRange[d] == day) days_before = d;
 		}
 		lp.setMargins((days_before + 1) * column_size, 0, 0, 0);
+		lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		tv.setLayoutParams(lp);
 		tv.setGravity(Gravity.CENTER_HORIZONTAL);
 		//tv.setTypeface(Typeface.createFromAsset(getActivity().getResources().getAssets(), "Roboto-Medium.ttf"));

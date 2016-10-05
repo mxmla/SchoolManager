@@ -17,6 +17,7 @@ import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -37,6 +38,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -44,10 +49,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 
 public class TimetableActivity extends ActionBarActivity
-		implements DialogEditHomework.Communicator, DialogViewHomework.Communicator{
+		implements DialogEditHomework.Communicator, DialogViewHomework.Communicator, DialogAdInfo.AdInfoDialogListener{
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -78,6 +85,12 @@ public class TimetableActivity extends ActionBarActivity
 	private String currentLessonID, currentDateWeek;
 	private View bottom_sheet_shader;
 
+	private Context context;
+	private SharedPreferences prefs;
+	private InterstitialAd mInterstitialAd;
+	private final int daysAdFree = 14;
+	boolean adClicked;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,10 +109,13 @@ public class TimetableActivity extends ActionBarActivity
 		drawerFragment.setUp(R.id.fragment_navigation_drawer_1, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
 
 
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		context = this;
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		ttFolder = prefs.getString(getResources().getString(R.string.pref_key_current_timetable_filename), "[none]");
 		homeworkFilepath = ttFolder + "/" + getResources().getString(R.string.file_name_homework);
 		homeworkFile = new File(getExternalFilesDir(null), homeworkFilepath);
+
+		showAdIfNecessary();
 
 		bottom_sheet_shader = (View) findViewById(R.id.bottom_sheet_shader);
 
@@ -139,6 +155,70 @@ public class TimetableActivity extends ActionBarActivity
 			}
 		}
     }
+
+	private void showAdIfNecessary(){
+		boolean showAd = false;
+		adClicked = false;
+		if (prefs.contains("last_time_ad_clicked")) {
+			String dateOld = prefs.getString("last_time_ad_clicked", "[none]");
+			Date dOld = DataStorageHandler.getDateFromGeneralDateFormat(context, dateOld);
+			if (dOld != null){
+				Calendar cTimeAgo = Calendar.getInstance();
+				cTimeAgo.add(Calendar.DAY_OF_YEAR, -daysAdFree);
+				Date dTimeAgo = cTimeAgo.getTime();
+				if (dOld.before(dTimeAgo)) showAd = true;
+			} else {
+				showAd = true;
+			}
+		} else {
+			showAd = true;
+		}
+
+		if (showAd) {
+			mInterstitialAd = new InterstitialAd(this);
+			mInterstitialAd.setAdUnitId("ca-app-pub-9138088263014683/2500709250");
+
+			mInterstitialAd.setAdListener(new AdListener() {
+				@Override
+				public void onAdLeftApplication() {
+					System.out.println("onAdLeftApplication");
+					super.onAdLeftApplication();
+					String date = DataStorageHandler.formatDateGeneralFormat(context, Calendar.getInstance());
+					prefs.edit().putString("last_time_ad_clicked", date).apply();
+					adClicked = true;
+				}
+				@Override
+				public void onAdLoaded(){
+					super.onAdLoaded();
+					DialogFragment dialogAdInfo = new DialogAdInfo();
+					dialogAdInfo.show(getSupportFragmentManager(), "adInfo");
+				}
+				@Override
+				public void onAdClosed(){
+					super.onAdClosed();
+					if (adClicked) Toast.makeText(context, getResources().getString(R.string.toast_ads_removed), Toast.LENGTH_LONG).show();
+				}
+			});
+
+			requestNewInterstitial();
+		}
+	}
+
+	@Override
+	public void onDialogPause(DialogFragment dialog) {
+		showInterstitialAd();
+	}
+
+	public void showInterstitialAd() {
+		mInterstitialAd.show();
+	}
+
+	private void requestNewInterstitial() {
+		AdRequest adRequest = new AdRequest.Builder()
+				.build();
+
+		mInterstitialAd.loadAd(adRequest);
+	}
 
     @Override
     public void onBackPressed(){

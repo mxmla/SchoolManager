@@ -441,4 +441,9 @@
     <string name="pref_new_timetable_summary">Neuen Stundenplan erstellen. Deaktiviert den bestehenden Plan.</string>
     <string name="feature_ab_weeks">Wochenzyklen (A/B-Wochen)</string>
     <string name="card_introducing_ab_weeks_text">Hey, wir haben die App aktualisiert! Unter den vielen neuen Verbesserungen is eine neue Funktion, die dir ermöglicht, sogenannte Wochenzyklen (\"A/B-Wochen\") zu erstellen.\n\nHast du zum Beispiel einen Unterricht nur alle zwei Wochen? Dann aktiviere einfach A/B-Wochen in den Einstellungen!</string>
+    <string name="toast_ads_removed">Gatuliere! Werbung ist entfernt worden.</string>
+    <string name="dialog_ad_info_message">Klicke auf die folgende Werbe-Anzeige, und <b>entferne</b> damit <b>jegliche Werbung</b> für 14 Tage.</string>
+    <string name="dialog_ad_info_button_got_it">Alles klar</string>
+    <string name="pref_show_week_selector_title">Wochen-Wähler anzeigen</string>
+    <string name="pref_show_week_selector_summary">Wenn du dies deaktivierst, kannst du nur die aktuelle Woche sehen.</string>
 </resources>

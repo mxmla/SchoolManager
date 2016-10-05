@@ -152,6 +152,12 @@
             </intent>
         </Preference>
 
+        <SwitchPreference
+            android:title="@string/pref_show_week_selector_title"
+            android:summary="@string/pref_show_week_selector_summary"
+            android:key="pref_key_show_week_selector"
+            android:defaultValue="true"/>
+
         <Preference
             android:title="@string/pref_new_timetable_title"
             android:summary="@string/pref_new_timetable_summary" >

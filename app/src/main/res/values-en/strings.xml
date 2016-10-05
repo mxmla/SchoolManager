@@ -431,4 +431,9 @@
     <string name="pref_new_timetable_summary">Create a new timetable. This deactivates your current one.</string>
     <string name="feature_ab_weeks">Week cycles</string>
     <string name="card_introducing_ab_weeks_text">Hey we\'ve updated the app! Amongst several improvements is a new feature that enables you to create so-called week cycles (or \"A/B-Weeks\").\n\nFor example: do you have a class only every other week? Then simply enable week cycles in the settings!</string>
+    <string name="toast_ads_removed">Congrats! Ads have been removed.</string>
+    <string name="dialog_ad_info_message">Click the following ad to <b>remove all ads</b> for 14 days.</string>
+    <string name="dialog_ad_info_button_got_it">Got it</string>
+    <string name="pref_show_week_selector_title">Show week selector</string>
+    <string name="pref_show_week_selector_summary">If you deactivate this, you will only be able to see the current week.</string>
 </resources>
