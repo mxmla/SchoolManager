@@ -164,6 +164,10 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
 
         mOpenMainActivityCount = Integer.valueOf(readFromPreferences(this, KEY_OPEN_MAIN_ACTIVITY_COUNT, "0"));
 
+        if (!prefs.contains("first_registered_use_date") || prefs.getString("first_registered_use_date", "[none]").equals("[none]")){
+            prefs.edit().putString("first_registered_use_date", DataStorageHandler.formatDateGeneralFormat(this, Calendar.getInstance())).apply();
+        }
+
         /*if (!prefs.getBoolean(pref_NotificationMethodUpdated, false) || mOpenMainActivityCount%10 == 0) {
             DataStorageHandler.changeNotificationMethod(this);
         }

@@ -123,19 +123,23 @@ public class HomeworkActivity extends ActionBarActivity implements DialogEditHom
     private void showAdIfNecessary(){
         boolean showAd = false;
         adClicked = false;
-        if (prefs.contains("last_time_ad_clicked")) {
-            String dateOld = prefs.getString("last_time_ad_clicked", "[none]");
-            Date dOld = DataStorageHandler.getDateFromGeneralDateFormat(context, dateOld);
-            if (dOld != null){
-                Calendar cTimeAgo = Calendar.getInstance();
-                cTimeAgo.add(Calendar.DAY_OF_YEAR, -daysAdFree);
-                Date dTimeAgo = cTimeAgo.getTime();
-                if (dOld.before(dTimeAgo)) showAd = true;
-            } else {
+        if (prefs.contains("open_main_activity_count") && Integer.parseInt(prefs.getString("open_main_activity_count", "0"))>10
+                && (!prefs.contains("first_registered_use_date") || !prefs.getString("first_registered_use_date", "[none]").equals(DataStorageHandler.formatDateGeneralFormat(context, Calendar.getInstance())))) {
+
+            if (prefs.contains("last_time_ad_clicked")) {
+                String dateOld = prefs.getString("last_time_ad_clicked", "[none]");
+                Date dOld = DataStorageHandler.getDateFromGeneralDateFormat(context, dateOld);
+                if (dOld != null) {
+                    Calendar cTimeAgo = Calendar.getInstance();
+                    cTimeAgo.add(Calendar.DAY_OF_YEAR, -daysAdFree);
+                    Date dTimeAgo = cTimeAgo.getTime();
+                    if (dOld.before(dTimeAgo)) showAd = true;
+                } else {
+                    showAd = true;
+                }
+            }else{
                 showAd = true;
             }
-        } else {
-            showAd = true;
         }
 
         if (showAd) {
