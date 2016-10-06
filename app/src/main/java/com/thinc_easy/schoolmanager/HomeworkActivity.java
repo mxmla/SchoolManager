@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -123,9 +124,16 @@ public class HomeworkActivity extends ActionBarActivity implements DialogEditHom
     private void showAdIfNecessary(){
         boolean showAd = false;
         adClicked = false;
-        if (prefs.contains("open_main_activity_count") && Integer.parseInt(prefs.getString("open_main_activity_count", "0"))>10
+
+        boolean contains = prefs.contains("open_main_activity_count");
+        System.out.println("Contains open_main_activity_count: "+String.valueOf(contains));
+        if (contains)
+            System.out.println("Main activity count = "+prefs.getInt("open_main_activity_count", 0));
+
+        if (prefs.contains("open_main_activity_count") && prefs.getInt("open_main_activity_count", 0)>10
                 && (!prefs.contains("first_registered_use_date") || !prefs.getString("first_registered_use_date", "[none]").equals(DataStorageHandler.formatDateGeneralFormat(context, Calendar.getInstance())))) {
 
+            System.out.println("WORKING!!");
             if (prefs.contains("last_time_ad_clicked")) {
                 String dateOld = prefs.getString("last_time_ad_clicked", "[none]");
                 Date dOld = DataStorageHandler.getDateFromGeneralDateFormat(context, dateOld);

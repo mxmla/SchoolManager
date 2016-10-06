@@ -162,7 +162,8 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
 
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
-        mOpenMainActivityCount = Integer.valueOf(readFromPreferences(this, KEY_OPEN_MAIN_ACTIVITY_COUNT, "0"));
+        //mOpenMainActivityCount = Integer.parseInt(readFromPreferences(this, KEY_OPEN_MAIN_ACTIVITY_COUNT, "0"));
+        mOpenMainActivityCount = prefs.getInt("open_main_activity_count", 0);
 
         if (!prefs.contains("first_registered_use_date") || prefs.getString("first_registered_use_date", "[none]").equals("[none]")){
             prefs.edit().putString("first_registered_use_date", DataStorageHandler.formatDateGeneralFormat(this, Calendar.getInstance())).apply();
@@ -192,7 +193,8 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
             }
         }
 
-        saveToPreferences(this, KEY_OPEN_MAIN_ACTIVITY_COUNT, String.valueOf(mOpenMainActivityCount + 1));
+        //saveToPreferences(this, KEY_OPEN_MAIN_ACTIVITY_COUNT, String.valueOf(mOpenMainActivityCount + 1));
+        prefs.edit().putInt("open_main_activity_count", mOpenMainActivityCount+1).apply();
         /*if (mOpenMainActivityCount < mHowOftenUntilShareApp){
             saveToPreferences(this, KEY_OPEN_MAIN_ACTIVITY_COUNT, String.valueOf(mOpenMainActivityCount + 1));
         } else if (mOpenMainActivityCount == mHowOftenUntilShareApp){
