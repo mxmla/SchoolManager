@@ -1,3 +1,5 @@
+020102020009,Edith-Stein-Schule Freiburg,0
+020101040003,Heisenberg-Gymnasium Hamburg,0
 020104010036,Hans-Böckler-Berufskolleg Münster,0
 020104010034,Bischöfliches Pius-Gymnasium Aachen,0
 020101010033,Geschwister-Scholl-Gymnasium Berenbostel,0
