@@ -295,3 +295,4 @@
 020104010036,1,http://www.hbbk-muenster.de/
 020102020009,1,http://www.hls.fr.bw.schule.de/hls-freiburg/#{1}
 020101040003,1,http://heisenberg-gymnasium-hamburg.de/
+020300010007,1,http://www2.warwick.ac.uk/fac/arts/
