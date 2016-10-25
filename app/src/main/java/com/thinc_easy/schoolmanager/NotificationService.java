@@ -117,10 +117,10 @@ public class NotificationService extends Service {
         if (thisArray.length >= 6) {
             final String timeInMil = thisArray[0];
             final String lessonID = thisArray[1];
-            final String textName = thisArray[2];
-            final String textTime = thisArray[3];
-            final String textPlace = thisArray[4];
-            final String textTeacher = thisArray[5];
+            final String textName = thisArray[2].replace("[none]", "").replace("[null]", "").replace("[comma]", ",");
+            final String textTime = thisArray[3].replace("[none]", "").replace("[null]", "").replace("[comma]", ",");
+            final String textPlace = thisArray[4].replace("[none]", "").replace("[null]", "").replace("[comma]", ",");
+            final String textTeacher = thisArray[5].replace("[none]", "").replace("[null]", "").replace("[comma]", ",");
 
             String titleLine = textName;
 

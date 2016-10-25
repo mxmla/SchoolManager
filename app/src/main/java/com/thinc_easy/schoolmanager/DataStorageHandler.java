@@ -1355,9 +1355,9 @@ public class DataStorageHandler {
                 }
                 notifTime = lessonSMinutes - before;
 
-                textName = subjectName.replace("[none]", "").replace("[null]", "").replace("[comma]", ",");
+                textName = subjectName;
                 if (!subjectAbbrev.replace("[none]", "").replace("[null]", "").equals(""))
-                    textName = textName + " (" + subjectAbbrev.replace("[none]", "").replace("[null]", "").replace("[comma]", ",") + ")";
+                    textName = textName + " (" + subjectAbbrev + ")";
 
                 timeStart = formatTime(timeStart);
                 timeEnd = formatTime(timeEnd);
@@ -1365,10 +1365,10 @@ public class DataStorageHandler {
                 if (customTime.equals("false")) textTime = textTime + " (" +
                         context.getResources().getString(R.string.period)+" "+periodFrom+" - "+periodTo+")";
 
-                textPlace = place.replace("[none]", "").replace("[null]", "").replace("[comma]", ",");
-                textTeacher = teacherName.replace("[none]", "").replace("[null]", "").replace("[comma]", ",");
+                textPlace = place;
+                textTeacher = teacherName;
                 if (!teacherAbbrev.replace("[none]", "").replace("[null]", "").equals(""))
-                    textTeacher = textTeacher + teacherAbbrev.replace("[none]", "").replace("[null]", "").replace("[comma]", ",");
+                    textTeacher = textTeacher + teacherAbbrev;
 
                 // find row to put this lesson in
                 int row = -1;
