@@ -4,8 +4,10 @@ package com.thinc_easy.schoolmanager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -46,7 +48,8 @@ public class NavigationDrawerFragment1 extends Fragment{
 
     private static String[] titles;
     private GradientDrawable gd;
-    private static GradientDrawable[] icons;
+    //private static GradientDrawable[] icons;
+    private static Drawable[] icons;
 
     public NavigationDrawerFragment1() {
         // Required empty public constructor
@@ -68,7 +71,7 @@ public class NavigationDrawerFragment1 extends Fragment{
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer_1, container, false);
 
         titles = getResources().getStringArray(R.array.activity_titles);
-        int[] colors = {getResources().getColor(R.color.color_home),
+        /*int[] colors = {getResources().getColor(R.color.color_home),
                 getResources().getColor(R.color.color_timetable), getResources().getColor(R.color.color_homework),
                 getResources().getColor(R.color.color_myschool), getResources().getColor(R.color.color_settings)};
         icons = new GradientDrawable[colors.length];
@@ -84,7 +87,24 @@ public class NavigationDrawerFragment1 extends Fragment{
             gd.setColor(colors[i2]);
             gd.mutate();
             icons[i2] = gd;
+        }*/
+
+        Drawable ic_home = getResources().getDrawable(R.drawable.ic_home_black_48dp);
+        Drawable ic_timetable = getResources().getDrawable(R.drawable.ic_view_module_black_48dp);
+        Drawable ic_homework = getResources().getDrawable(R.drawable.ic_assignment_black_48dp);
+        Drawable ic_my_school = getResources().getDrawable(R.drawable.ic_public_black_48dp);
+        Drawable ic_settings = getResources().getDrawable(R.drawable.ic_settings_black_48dp);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            final ColorStateList cslIcon = getActivity().getResources().getColorStateList(R.color.color_state_list_icon);
+            ic_home.setTintList(cslIcon);
+            ic_timetable.setTintList(cslIcon);
+            ic_homework.setTintList(cslIcon);
+            ic_my_school.setTintList(cslIcon);
+            ic_settings.setTintList(cslIcon);
         }
+
+        icons = new Drawable[]{ic_home, ic_timetable, ic_homework, ic_my_school, ic_settings};
 
         recyclerView = (RecyclerView) layout.findViewById(R.id.drawerList);
         adapter = new MyAdapter(getActivity(), getData(), "drawerList");

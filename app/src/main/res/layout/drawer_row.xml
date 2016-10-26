@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/listIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/navigation_drawer_icon_size"
+        android:layout_height="@dimen/navigation_drawer_icon_size"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/navigation_drawer_side_padding" />
 
