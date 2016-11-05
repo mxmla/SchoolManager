@@ -135,6 +135,7 @@
     <dimen name="timetable_column_division">1dp</dimen>
     <dimen name="timetable_column_min_width">30dp</dimen>
     <dimen name="timetable_lesson_min_height">56dp</dimen>
+    <dimen name="timetable_height_other_elements">228dp</dimen>
     <dimen name="timetable_days_textsize">@dimen/card_content_text</dimen>
     <dimen name="timetable_periods_textsize">@dimen/card_content_text</dimen>
     <dimen name="timetable_period_times_textsize">8sp</dimen>

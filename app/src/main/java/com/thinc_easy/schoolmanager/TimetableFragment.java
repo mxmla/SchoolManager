@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -379,7 +380,7 @@ public class TimetableFragment extends Fragment {
 	}
 
 	private void addViewsToAnimators(final int currentAB){
-		final int[] constantsNow = timetable_constants(currentAB);
+		final float[] constantsNow = timetable_constants(currentAB);
 		final int[] dayRange = getDayRange(constantsNow);
 
 		vaDays.addView(rl_days(constantsNow, dayRange));
@@ -393,7 +394,7 @@ public class TimetableFragment extends Fragment {
 			@Override
 			public void run() {
 				for (int i1 = currentAB + 1; i1 < allABs.length; i1++){
-					final int[] constantsThen = timetable_constants(i1);
+					final float[] constantsThen = timetable_constants(i1);
 					final int[] dayRangeThen = getDayRange(constantsThen);
 					final RelativeLayout days = rl_days(constantsThen, dayRangeThen);
 					final RelativeLayout tt = rl_timetable(i1, constantsThen, dayRangeThen);
@@ -408,7 +409,7 @@ public class TimetableFragment extends Fragment {
 				}
 
 				for (int i2 = 0; i2 < currentAB; i2++){
-					final int[] constantsThen = timetable_constants(i2);
+					final float[] constantsThen = timetable_constants(i2);
 					final int[] dayRangeThen = getDayRange(constantsThen);
 					final RelativeLayout days = rl_days(constantsThen,dayRangeThen);
 					final RelativeLayout tt = rl_timetable(i2, constantsThen, dayRangeThen);
@@ -435,7 +436,7 @@ public class TimetableFragment extends Fragment {
 		loadTimetables.start();
 	}
 
-	private int[] timetable_constants(int ABint){
+	private float[] timetable_constants(int ABint){
 		final String thisAB = allABs[ABint];
 		final String[] tt_attributes = DataStorageHandler.TimetableAttributes(getActivity(), ttFolder, thisAB);
 
@@ -485,25 +486,33 @@ public class TimetableFragment extends Fragment {
 		int screen_height = size.y;
 		int column_size = screen_width /(max_day - min_day + 2);
 		if (column_size < column_min_width) column_size = column_min_width;
+		int size_elements_except_timetable = (int) (getActivity().getResources().getDimension(R.dimen.timetable_height_other_elements)+0.5f);
 
 		// Get height_time_ratio
-		int height_time_ratio = lesson_min_height / 30;
+		float height_time_ratio = lesson_min_height / 30;
 		if (min_time_length != 0) height_time_ratio = lesson_min_height / min_time_length;
-		System.out.println("height_time_ratio: "+height_time_ratio);
 		// Set timetable height to minimum of 3/4 times the screen height
-		if ((max_time - min_time) > 0 && (height_time_ratio * (max_time - min_time)) < (screen_height * 3/4))
-			height_time_ratio = (screen_height*3/4) / (max_time - min_time);
+		if ((max_time - min_time) > 0) System.out.println("(max_time - min_time) > 0");
+		if ((height_time_ratio * (max_time - min_time)) < (screen_height - size_elements_except_timetable))
+			System.out.println("(height_time_ratio * (max_time - min_time)) < (screen_height - size_elements_except_timetable)");
+		System.out.println("(height_time_ratio * (max_time - min_time): "+(height_time_ratio * (max_time - min_time)));
+		System.out.println("screen_height: "+screen_height);
+		System.out.println("size_elements_except_timetable: "+size_elements_except_timetable);
+		if ((max_time - min_time) > 0 && (height_time_ratio * (max_time - min_time)) < (screen_height - size_elements_except_timetable))
+			height_time_ratio = (float) (screen_height - size_elements_except_timetable) / (float) (max_time - min_time);
+
+		System.out.println("height_time_ratio: "+height_time_ratio);
 
 
 		// Get lesson_element_width
 		int lesson_element_width = column_size - column_division;
 
-		return new int[] {min_day, max_day, min_time, max_time, min_time_length, max_time_length, column_size, height_time_ratio, lesson_element_width};
+		return new float[] {min_day, max_day, min_time, max_time, min_time_length, max_time_length, column_size, height_time_ratio, lesson_element_width};
 	}
 
-	private int[] getDayRange(int[] constants){
-		final int min_day = constants[0];
-		final int max_day = constants[1];
+	private int[] getDayRange(float[] constants){
+		final int min_day = (int) constants[0];
+		final int max_day = (int) constants[1];
 
 		int f = 0;
 		int[] origRange = new int[] {2,3,4,5,6,7,1};
@@ -532,8 +541,8 @@ public class TimetableFragment extends Fragment {
 		return range;
 	}
 
-	private RelativeLayout rl_days(int[] constants, int[] dayRange){
-		final int column_size = constants[6];
+	private RelativeLayout rl_days(float[] constants, int[] dayRange){
+		final float column_size = constants[6];
 
 		RelativeLayout rl = new RelativeLayout(getActivity());
 		rl.setId(1000 + 0);
@@ -548,7 +557,7 @@ public class TimetableFragment extends Fragment {
 		return rl;
 	}
 
-	private TextView tv_day(int day, int[] dayRange, int column_size){
+	private TextView tv_day(int day, int[] dayRange, float column_size){
 		TextView tv = new TextView(getActivity());
 		tv.setId(1001 + day);
 		tv.setTextColor(color_days_text);
@@ -560,7 +569,7 @@ public class TimetableFragment extends Fragment {
 		for (int d = 0; d < dayRange.length; d++){
 			if (dayRange[d] == day) days_before = d;
 		}
-		lp.setMargins((days_before + 1) * column_size, 0, 0, 0);
+		lp.setMargins((int) ((days_before + 1) * column_size), 0, 0, 0);
 		lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		tv.setLayoutParams(lp);
 		tv.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -569,14 +578,14 @@ public class TimetableFragment extends Fragment {
 		return tv;
 	}
 
-	private RelativeLayout rl_timetable(int ABint, int[] constants, int[] dayRange){
-		final int min_time = constants[2];
-		final int max_time = constants[3];
-		final int height_time_ratio = constants[7];
+	private RelativeLayout rl_timetable(int ABint, float[] constants, int[] dayRange){
+		final int min_time = (int) constants[2];
+		final int max_time = (int) constants[3];
+		final float height_time_ratio = constants[7];
 
 		RelativeLayout rl = new RelativeLayout(getActivity());
 		rl.setId(500 + ABint);
-		final int timetable_height = height_time_ratio * (max_time-min_time);
+		final int timetable_height = (int) (height_time_ratio * (max_time-min_time));
 		System.out.println("timetable_height: "+timetable_height);
 		rl.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, timetable_height));
 		rl.setBackgroundColor(getActivity().getResources().getColor(R.color.color_timetable_area_background));
@@ -689,14 +698,14 @@ public class TimetableFragment extends Fragment {
 		return rl;
 	}
 
-	private TextView tv_period(int from, int to, int pNumber, int[] constants){
-		final int min_time = constants[2];
-		final int height_time_ratio = constants[7];
-		final int element_width = constants[8];
+	private TextView tv_period(int from, int to, int pNumber, float[] constants){
+		final int min_time = (int) constants[2];
+		final float height_time_ratio = constants[7];
+		final int element_width = (int) constants[8];
 
 		final int period_length = to - from;
-		final int element_height = period_length * height_time_ratio;
-		final int margin_top = (from - min_time) * height_time_ratio;
+		final int element_height = (int) (period_length * height_time_ratio);
+		final int margin_top = (int) ((from - min_time) * height_time_ratio);
 		final int width = element_width - timetable_periods_padding_right;
 
 		TextView tv = new TextView(getActivity());
@@ -711,12 +720,12 @@ public class TimetableFragment extends Fragment {
 		return tv;
 	}
 
-    private TextView tv_period_time(int time, boolean shared, boolean startOfP, int[] constants){
-        final int min_time = constants[2];
-        final int height_time_ratio = constants[7];
-        final int element_width = constants[8];
+    private TextView tv_period_time(int time, boolean shared, boolean startOfP, float[] constants){
+        final int min_time = (int) constants[2];
+        final float height_time_ratio = constants[7];
+        final int element_width = (int) constants[8];
 
-        int margin_top = (time - min_time) * height_time_ratio;
+        int margin_top = (int) ((time - min_time) * height_time_ratio);
 
 		TextView tv = new TextView(getActivity());
 
@@ -751,12 +760,12 @@ public class TimetableFragment extends Fragment {
         return tv;
     }
 
-	private View v_time_line(int time, boolean shared, int[] constants){
-		final int min_time = constants[2];
-		final int column_size = constants[6];
-		final int height_time_ratio = constants[7];
+	private View v_time_line(int time, boolean shared, float[] constants){
+		final int min_time = (int) constants[2];
+		final int column_size = (int) constants[6];
+		final float height_time_ratio = constants[7];
 
-		final int margin_top = height_time_ratio * (time - min_time);
+		final int margin_top = (int) (height_time_ratio * (time - min_time));
 
 		View v = new View(getActivity());
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, timetable_period_time_lines_height);
@@ -772,11 +781,11 @@ public class TimetableFragment extends Fragment {
 		return v;
 	}
 
-	private View v_time_line_left_part(int time, int[] constants){
-		final int min_time = constants[2];
-		final int height_time_ratio = constants[7];
+	private View v_time_line_left_part(int time, float[] constants){
+		final int min_time = (int) constants[2];
+		final float height_time_ratio = constants[7];
 
-		final int margin_top = height_time_ratio * (time - min_time);
+		final int margin_top = (int) (height_time_ratio * (time - min_time));
 
 		View v = new View(getActivity());
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(timetable_period_time_lines_left_part, timetable_period_time_lines_height);
@@ -787,9 +796,9 @@ public class TimetableFragment extends Fragment {
 		return v;
 	}
 
-	private View v_periods_divider(int[] constants){
-		final int column_size = constants[6];
-		final int margin_left = column_size - (timetable_period_divider_width/2) - (timetable_periods_padding_right/2);
+	private View v_periods_divider(float[] constants){
+		final float column_size = constants[6];
+		final int margin_left = (int) (column_size - (timetable_period_divider_width/2) - (timetable_periods_padding_right/2));
 
 		View v = new View(getActivity());
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(timetable_period_divider_width, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -800,11 +809,11 @@ public class TimetableFragment extends Fragment {
 		return v;
 	}
 
-	private RelativeLayout lesson_element(String[] lesson, int[] constants, int[] dayRange, int row){
-		final int min_time = constants[2];
-		final int column_size = constants[6];
-		final int height_time_ratio = constants[7];
-		final int lesson_element_width = constants[8];
+	private RelativeLayout lesson_element(String[] lesson, float[] constants, int[] dayRange, int row){
+		final int min_time = (int) constants[2];
+		final float column_size = constants[6];
+		final float height_time_ratio = constants[7];
+		final int lesson_element_width = (int) constants[8];
 
 		final String ID = lesson[0];
 		final int day = Integer.parseInt(lesson[1]);
@@ -817,15 +826,15 @@ public class TimetableFragment extends Fragment {
 		final String custom = lesson[8];
 
 		final int lesson_length = timeEnd - timeStart;
-		final int element_height = lesson_length * height_time_ratio;
+		final int element_height = (int) (lesson_length * height_time_ratio);
 
 		int days_before = 0;
 		for (int d = 0; d < dayRange.length; d++){
 			if (dayRange[d] == day) days_before = d;
 		}
-		final int margin_left = (days_before + 1) * (column_size + (column_division / 2));
+		final int margin_left = (int) ((days_before + 1) * (column_size + (column_division / 2)));
 
-		final int margin_top = (timeStart - min_time) * height_time_ratio;
+		final int margin_top = (int) ((timeStart - min_time) * height_time_ratio);
 
 		RelativeLayout rl = new RelativeLayout(getActivity());
 		rl.setId(500 + row);
