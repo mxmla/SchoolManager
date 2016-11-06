@@ -201,6 +201,14 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
             saveToPreferences(this, KEY_OPEN_MAIN_ACTIVITY_COUNT, "0");
         }*/
 
+        // Change MySchool Uni Warwick faculties to University of Warwick as school.
+        String prefKeySchoolID = getResources().getString(R.string.pref_key_my_school_school_id);
+        String school = prefs.getString(prefKeySchoolID, "[none]");
+        if (school.equals("020300010006") || school.equals("020300010007") || school.equals("020300010008") ||
+                school.equals("020300010009")){
+            prefs.edit().putString(prefKeySchoolID, "020300010010");
+        }
+
         updateDayNamesToIDs();
 
         ttFolder = prefs.getString(getResources().getString(R.string.pref_key_current_timetable_filename), "[none]");

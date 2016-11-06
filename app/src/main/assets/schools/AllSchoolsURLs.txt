@@ -288,13 +288,10 @@
 020300020003,1,tlss0f7oh09iv1cdbqte87tu3f
 021500030001,1,http://www.escola-ginestalmachado.net/
 021600020001,1,http://www.lcd.lu/
-020300010006,1,http://www2.warwick.ac.uk/fac/soc/
 020104010034,1,http://pius-gymnasium.de/
 020101010033,1,http://www.gsgberenbostel.de/
 020104010035,1,http://www.krupp-gymnasium.de/
 020104010036,1,http://www.hbbk-muenster.de/
 020102020009,1,http://www.hls.fr.bw.schule.de/hls-freiburg/#{1}
 020101040003,1,http://heisenberg-gymnasium-hamburg.de/
-020300010007,1,http://www2.warwick.ac.uk/fac/arts/
-020300010008,1,http://www2.warwick.ac.uk/fac/med
-020300010009,1,https://www2.warwick.ac.uk/fac/sci
+020300010010,1,https://start.warwick.ac.uk/

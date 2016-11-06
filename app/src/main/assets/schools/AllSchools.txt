@@ -1,13 +1,10 @@
-020300010009,Uni Warwick Faculty of Science,0
-020300010008,Uni Warwick Medical School,0
-020300010007,Uni Warwick Faculty of Arts,0
+020300010010,University of Warwick,0
 020102020009,Edith-Stein-Schule Freiburg,0
 020101040003,Heisenberg-Gymnasium Hamburg,0
 020104010036,Hans-Böckler-Berufskolleg Münster,0
 020104010034,Bischöfliches Pius-Gymnasium Aachen,0
 020101010033,Geschwister-Scholl-Gymnasium Berenbostel,0
 020104010035,Europaschule Krupp-Gymnasium,0
-020300010006,Uni Warwick Faculty of Social Sciences,0
 021600020001,Lycée classique de Diekirch,0
 021500030001,Escola Secundária Dr. Ginestal Machado,0
 020104010031,Berufskolleg Ostvest Datteln,0
