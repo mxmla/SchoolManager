@@ -148,7 +148,8 @@
     <dimen name="timetable_period_time_height">16dp</dimen>
     <dimen name="timetable_abbrev_place_padding">4dp</dimen>
     <dimen name="timetable_period_time_lines_height">@dimen/divider_height</dimen>
-    <dimen name="timetable_period_time_lines_left_part">16dp</dimen>
+    <dimen name="timetable_period_time_lines_left_part">24dp</dimen>
+    <dimen name="timetable_period_time_lines_left_part_margin_right">32dp</dimen>
     <dimen name="timetable_period_divider_width">0dp</dimen>
     <dimen name="timetable_periods_padding_right">4dp</dimen>
 

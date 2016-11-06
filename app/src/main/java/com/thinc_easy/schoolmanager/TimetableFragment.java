@@ -111,7 +111,7 @@ public class TimetableFragment extends Fragment {
 	private ViewAnimator vaDays, vaTimetable;
 	private ImageButton ibLeft, ibRight, ibGoToToday;
 	private int column_division, column_min_width, lesson_min_height, height_days, abbrev_place_padding,
-			timetable_period_time_height, timetable_period_time_lines_height, timetable_period_time_lines_left_part,
+			timetable_period_time_height, timetable_period_time_lines_height, timetable_period_time_lines_left_part, timetable_period_time_lines_margin_right,
 			timetable_period_divider_width, timetable_periods_padding_right;
 	private int color_days_text, color_time_lines, color_divider_periods, color_timetable_periods_text, color_timetable_period_times_text;
 	private float text_size_days, text_size_lesson_abbrev, text_size_lesson_place, text_size_lesson_time,
@@ -195,6 +195,7 @@ public class TimetableFragment extends Fragment {
 		color_time_lines = getActivity().getResources().getColor(R.color.color_time_lines);
 		timetable_period_time_lines_height = (int) (getActivity().getResources().getDimension(R.dimen.timetable_period_time_lines_height) + 0.5f);
 		timetable_period_time_lines_left_part = (int) (getActivity().getResources().getDimension(R.dimen.timetable_period_time_lines_left_part) + 0.5f);
+		timetable_period_time_lines_margin_right = (int) (getActivity().getResources().getDimension(R.dimen.timetable_period_time_lines_left_part_margin_right) + 0.5f);
 
 		color_divider_periods = getActivity().getResources().getColor(R.color.color_divider_periods);
 		timetable_period_divider_width = (int) (getActivity().getResources().getDimension(R.dimen.timetable_period_divider_width) + 0.5f);
@@ -498,8 +499,12 @@ public class TimetableFragment extends Fragment {
 		System.out.println("(height_time_ratio * (max_time - min_time): "+(height_time_ratio * (max_time - min_time)));
 		System.out.println("screen_height: "+screen_height);
 		System.out.println("size_elements_except_timetable: "+size_elements_except_timetable);
-		if ((max_time - min_time) > 0 && (height_time_ratio * (max_time - min_time)) < (screen_height - size_elements_except_timetable))
-			height_time_ratio = (float) (screen_height - size_elements_except_timetable) / (float) (max_time - min_time);
+
+		if ((max_time - min_time) > 0 && (height_time_ratio * (max_time - min_time)) < (screen_height - size_elements_except_timetable)) {
+			int elements = size_elements_except_timetable;
+			if (!prefs.getBoolean("pref_key_show_week_selector", true)) elements = elements - (int) (getActivity().getResources().getDimension(R.dimen.timetable_week_indicator_height)+0.5f);
+			height_time_ratio = (float) (screen_height - elements) / (float) (max_time - min_time);
+		}
 
 		System.out.println("height_time_ratio: "+height_time_ratio);
 
@@ -784,11 +789,13 @@ public class TimetableFragment extends Fragment {
 	private View v_time_line_left_part(int time, float[] constants){
 		final int min_time = (int) constants[2];
 		final float height_time_ratio = constants[7];
+		final int element_width = (int) constants[8];
 
 		final int margin_top = (int) (height_time_ratio * (time - min_time));
+		final int width = element_width - timetable_period_time_lines_margin_right;
 
 		View v = new View(getActivity());
-		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(timetable_period_time_lines_left_part, timetable_period_time_lines_height);
+		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(width, timetable_period_time_lines_height);
 		lp.setMargins(0, margin_top, 0, 0);
 		v.setLayoutParams(lp);
 		v.setBackgroundColor(color_time_lines);
@@ -826,7 +833,7 @@ public class TimetableFragment extends Fragment {
 		final String custom = lesson[8];
 
 		final int lesson_length = timeEnd - timeStart;
-		final int element_height = (int) (lesson_length * height_time_ratio);
+		final float element_height = (float) lesson_length * height_time_ratio;
 
 		int days_before = 0;
 		for (int d = 0; d < dayRange.length; d++){
@@ -838,7 +845,7 @@ public class TimetableFragment extends Fragment {
 
 		RelativeLayout rl = new RelativeLayout(getActivity());
 		rl.setId(500 + row);
-		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(lesson_element_width, element_height);
+		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(lesson_element_width, (int) element_height);
 		lp.setMargins(margin_left, margin_top, 0, 0);
 		rl.setLayoutParams(lp);
 		rl.setClickable(true);
