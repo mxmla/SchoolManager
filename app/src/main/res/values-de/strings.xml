@@ -407,7 +407,7 @@
     <string name="card_school_challenge_currently">Nutzer\nmomentan</string>
     <string name="card_school_challenge_users">Nutzer</string>
     <string name="invite_friends">Freunde einladen</string>
-    <string name="my_school_add_school_title_text">Füge deine Schule hinzu und sag auch deinen Freunden Bescheid!\nBei 3 Anfragen wird eine Schule in die App aufgenommen.</string>
+    <string name="my_school_add_school_title_text">Füge deine Schule hinzu und sag auch deinen Freunden Bescheid!\nEine Schule wird in die App aufgenommen, sobald sie von 3 Nutzern angefragt wurde.</string>
     <string name="my_school_add_school_title">Schule hinzufügen</string>
     <string name="card_app_update_title">Update verfügbar</string>
     <string name="card_app_update_subtitle">SchoolManager</string>
@@ -446,4 +446,5 @@
     <string name="dialog_ad_info_button_got_it">Alles klar</string>
     <string name="pref_show_week_selector_title">Wochen-Wähler anzeigen</string>
     <string name="pref_show_week_selector_summary">Wenn du dies deaktivierst, kannst du nur die aktuelle Woche sehen.</string>
+    <string name="submit">Einsenden</string>
 </resources>

@@ -397,7 +397,7 @@
     <string name="card_school_challenge_currently">Current\nusers</string>
     <string name="card_school_challenge_users">users</string>
     <string name="invite_friends">Invite friends</string>
-    <string name="my_school_add_school_title_text">Add your school and tell your friends as well!\nA school will be admitted into the app as soon as there are 3 requests.</string>
+    <string name="my_school_add_school_title_text">Add your school and tell your friends as well!\nA school will be admitted into the app as soon as 3 people have requested it.</string>
     <string name="my_school_add_school_title">Add your school</string>
     <string name="card_app_update_title">Update available</string>
     <string name="card_app_update_subtitle">SchoolManager</string>
@@ -436,4 +436,5 @@
     <string name="dialog_ad_info_button_got_it">Got it</string>
     <string name="pref_show_week_selector_title">Show week selector</string>
     <string name="pref_show_week_selector_summary">If you deactivate this, you will only be able to see the current week.</string>
+    <string name="submit">Submit</string>
 </resources>

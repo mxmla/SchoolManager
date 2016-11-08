@@ -190,7 +190,7 @@
                         android:layout_marginTop="@dimen/card_padding"
                         android:layout_marginBottom="@dimen/card_padding"
                         android:layout_gravity="center_horizontal"
-                        android:text="@string/save"/>
+                        android:text="@string/submit"/>
 
                     <TextView
                         android:id="@+id/tvError"
