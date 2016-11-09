@@ -295,3 +295,5 @@
 020102020009,1,http://www.hls.fr.bw.schule.de/hls-freiburg/#{1}
 020101040003,1,http://heisenberg-gymnasium-hamburg.de/
 020300010010,1,https://start.warwick.ac.uk/
+010104070001,1,http://baltimoredesignschool.com/
+020605010002,1,http://www.billrothgymnasium.at/
