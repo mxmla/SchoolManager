@@ -297,3 +297,15 @@
 020300010010,1,https://start.warwick.ac.uk/
 010104070001,1,http://baltimoredesignschool.com/
 020605010002,1,http://www.billrothgymnasium.at/
+020102020010,1,https://hsl.schule/
+020104010037,1,http://www.joseph-koenig-gymnasium.de/
+020103030005,1,http://www.ars-limburg.de/index.php?id=5
+020102020011,1,http://www.asgnsu.hn.bw.schule.de/home/
+020104010038,1,http://www.asrs.de/
+020102020012,1,http://www.aes-ettlingen.de/
+020105020002,1,http://www.schweitzer-oberschule-beeskow.de/seiten/vertret.html
+020102010011,1,http://www.aschweitzer.musin.de/index.php/startseite
+020104010039,1,http://www.alexander-lebenstein-realschule.de/
+020101010034,1,http://www.kgs.wittmund.de/
+060302020001,1,http://www.aliwalhighschool.co.za/
+020103020011,1,https://www.ags-erfurt.de/de/

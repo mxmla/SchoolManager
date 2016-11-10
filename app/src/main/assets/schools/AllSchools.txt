@@ -1,3 +1,15 @@
+020103020011,Andreas-Gordon-Schule Erfurt,0
+060302020001,Aliwal North High School,0
+020101010034,Alexander-von-Humboldt-Schule Wittmund,0
+020104010039,Alexander-Lebenstein-Realschule,0
+020102010011,Mittelschule an der Albert-Schweitzer-Straße,0
+020105020002,Albert-Schweitzer Oberschule Beeskow,0
+020102020012,Albert - Einstein Schule,0
+020104010038,Albert-Schweitzer-Schule Remscheid-Lennep,0
+020102020011,Albert-Schweitzer-Gymnasium Neckarsulm,0
+020103030005,Adolf-Reichwein-Schule Limburg,0
+020104010037,Joseph-König-Gymnasium Haltern am See,0
+020102020010,Heimschule St. Landolin,0
 020605010002,Billrothgymnasium,0
 010104070001,Baltimore Design School,0
 020300010010,University of Warwick,0
