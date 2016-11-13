@@ -1,3 +1,13 @@
+020104020007,BBS Technik 1 Ludwigshafen,0
+020101010035,BBS Rotenburg,0
+020104020006,BBS I - Technik - Kaiserslautern,0
+010104030004,Avonworth High School,0
+010104030003,Avonworth Middle School,0
+020104010041,Annette-von-Droste-Hülshoff-Gymnasium,0
+020103030006,Augustinerschule Friedberg,0
+020101020005,Auguste Viktoria-Schule Itzehoe,0
+020104010040,Archigymnasium Soest,0
+020105010003,Anne-Frank-Gymnasium,0
 020103020011,Andreas-Gordon-Schule Erfurt,0
 060302020001,Aliwal North High School,0
 020101010034,Alexander-von-Humboldt-Schule Wittmund,0

@@ -309,3 +309,13 @@
 020101010034,1,http://www.kgs.wittmund.de/
 060302020001,1,http://www.aliwalhighschool.co.za/
 020103020011,1,https://www.ags-erfurt.de/de/
+020105010003,1,http://www.anne-frank-schule-berlin.de/
+020104010040,1,http://www.archigymnasium.de/joomla/
+020101020005,1,http://www.avs-itzehoe.de/
+020103030006,1,http://augustinerschule.de/
+020104010041,1,http://www.avdge.de/index.php?id=41
+010104030003,1,http://www.edline.net/pages/Avonworth_Middle_School
+010104030004,1,http://www.edline.net/pages/Avonworth_High_School
+020104020006,1,http://www.bbs1-kl.de/
+020101010035,1,http://www.bbs-row.de/bbs/wb/index.php
+020104020007,1,http://www.t1.bbslu.de/
