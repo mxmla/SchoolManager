@@ -447,4 +447,6 @@
     <string name="pref_show_week_selector_title">Wochen-Wähler anzeigen</string>
     <string name="pref_show_week_selector_summary">Wenn du dies deaktivierst, kannst du nur die aktuelle Woche sehen.</string>
     <string name="submit">Einsenden</string>
+    <string name="card_school_challenge_complete_title">School-Challenge abgeschlossen!</string>
+    <string name="card_school_challenge_complete_content">Gratulation!\n\nIhr habt eine Funnktion freigeschaltet, die euch informiert, wenn es Neuigkeiten auf eurer Schul-Website gibt.</string>
 </resources>

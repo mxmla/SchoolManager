@@ -50,6 +50,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.android.gms.vision.text.Line;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -146,7 +147,6 @@ public class MainFragment extends Fragment {
         int hColor = getActivity().getResources().getColor(R.color.color_home_appbar);
         ((MainActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(hColor));
 
-
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mUserClickedDontShare = Boolean.valueOf(readFromPreferences(getActivity(), KEY_USER_CLICKED_DONT_SHARE, "false"));
 
@@ -233,7 +233,7 @@ public class MainFragment extends Fragment {
         NewsSection(v);
         newFeatureCard(v);
         handleUserSchoolIDs();
-        //MySchoolCheckForWebsiteUpdate(v);
+        MySchoolCheckForWebsiteUpdate(v);
         storeSchoolInDatabase();
         schoolChallengeCard(v);
         appUpdateCard();
@@ -401,130 +401,137 @@ public class MainFragment extends Fragment {
 
     private void MySchoolCheckForWebsiteUpdate(View v){
         //TODO "randomly" indicates updated site every now and then
-        Button goToMySchoolUpdated = (Button) v.findViewById(R.id.bGoToMySchoolUpdated);
-        Button dismissMySchoolUpdated = (Button) v.findViewById(R.id.bDismissMySchoolUpdated);
+        if (prefs.contains("MySchoolChallenge-c1-20160818-complete") && prefs.getBoolean("MySchoolChallenge-c1-20160818-complete", false)) {
+            Button goToMySchoolUpdated = (Button) v.findViewById(R.id.bGoToMySchoolUpdated);
+            Button dismissMySchoolUpdated = (Button) v.findViewById(R.id.bDismissMySchoolUpdated);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            goToMySchoolUpdated.setBackgroundTintList(getActivity().getResources().getColorStateList(R.color.button_color_state_list));
-            goToMySchoolUpdated.setTextColor(getActivity().getResources().getColor(R.color.TextDarkBg));
-        } else {
-            goToMySchoolUpdated.setTextColor(getActivity().getResources().getColor(R.color.colorAccent));
-        }
-
-        goToMySchoolUpdated.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), MySchoolActivity.class);
-                startActivityForResult(i, 0);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                goToMySchoolUpdated.setBackgroundTintList(getActivity().getResources().getColorStateList(R.color.button_color_state_list));
+                goToMySchoolUpdated.setTextColor(getActivity().getResources().getColor(R.color.TextDarkBg));
+            } else {
+                goToMySchoolUpdated.setTextColor(getActivity().getResources().getColor(R.color.colorAccent));
             }
-        });
 
-        dismissMySchoolUpdated.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                prefs.edit().putString("website1codeLastTime", strng).apply();
-                mySchoolUpdatedCard.setVisibility(View.GONE);
-                NewsSectionShowHide();
-            }
-        });
+            goToMySchoolUpdated.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getActivity(), MySchoolActivity.class);
+                    startActivityForResult(i, 0);
+                }
+            });
 
-        mySchoolUpdatedCard.setVisibility(View.GONE);
+            dismissMySchoolUpdated.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    prefs.edit().putString("website1codeLastTime", strng).apply();
+                    mySchoolUpdatedCard.setVisibility(View.GONE);
+                    NewsSectionShowHide();
+                }
+            });
 
-        String[][] AllSchoolsURLs = DataStorageHandler.toArray(getActivity(), "schools/AllSchoolsURLs.txt", true);
-        String prefKeySchoolID = getActivity().getResources().getString(R.string.pref_key_my_school_school_id);
-        int whichWebPage = 1;
+            mySchoolUpdatedCard.setVisibility(View.GONE);
 
-        boolean foundURL = false;
-        if (prefs.contains(prefKeySchoolID)) {
-            String schoolID = prefs.getString(prefKeySchoolID, "[none]");
-            if (schoolID != null && !schoolID.equals("[none]")) {
-                for (int i = 0; i < AllSchoolsURLs.length; i++) {
-                    if (AllSchoolsURLs[i][0].equals(schoolID) && AllSchoolsURLs[i][1].equals(String.valueOf(whichWebPage))) {
-                        final String urlString = AllSchoolsURLs[i][2];
+            String[][] AllSchoolsURLs = DataStorageHandler.toArray(getActivity(), "schools/AllSchoolsURLs.txt", true);
+            String prefKeySchoolID = getActivity().getResources().getString(R.string.pref_key_my_school_school_id);
+            int whichWebPage = 1;
 
-                        final MainActivity activityReference = (MainActivity) getActivity();
-                        Thread thread = new Thread(new Runnable() {
-                            @Override
-                            public void run() {
+            boolean foundURL = false;
+            if (prefs.contains(prefKeySchoolID)) {
+                String schoolID = prefs.getString(prefKeySchoolID, "[none]");
+                if (schoolID != null && !schoolID.equals("[none]")) {
+                    for (int i = 0; i < AllSchoolsURLs.length; i++) {
+                        if (AllSchoolsURLs[i][0].equals(schoolID) && AllSchoolsURLs[i][1].equals(String.valueOf(whichWebPage))) {
+                            final String urlString = AllSchoolsURLs[i][2];
 
-                                URL url;
-                                HttpURLConnection urlConnection = null;
-                                StringBuilder stringBuilder = null;
-                                SharedPreferences sharedprefs = PreferenceManager.getDefaultSharedPreferences(activityReference);
-                                try {
-                                    url = new URL(urlString);
+                            final MainActivity activityReference = (MainActivity) getActivity();
+                            Thread thread = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
 
-                                    urlConnection = (HttpURLConnection) url
-                                            .openConnection();
+                                    URL url;
+                                    HttpURLConnection urlConnection = null;
+                                    StringBuilder stringBuilder = null;
+                                    StringBuilder newsBuilder = null;
+                                    SharedPreferences sharedprefs = PreferenceManager.getDefaultSharedPreferences(activityReference);
+                                    try {
+                                        url = new URL(urlString);
 
-                                    InputStream in = urlConnection.getInputStream();
+                                        urlConnection = (HttpURLConnection) url
+                                                .openConnection();
 
-                                    InputStreamReader isw = new InputStreamReader(in);
+                                        InputStream in = urlConnection.getInputStream();
 
-                                    int data = isw.read();
-                                    stringBuilder = new StringBuilder();
-                                    while (data != -1) {
-                                        char current = (char) data;
-                                        data = isw.read();
-                                        stringBuilder.append(current);
-                                    }
+                                        InputStreamReader isw = new InputStreamReader(in);
 
-                                    String string = stringBuilder.toString();
-                                    strng = string;
+                                        int data = isw.read();
+                                        stringBuilder = new StringBuilder();
+                                        while (data != -1) {
+                                            char current = (char) data;
+                                            data = isw.read();
+                                            stringBuilder.append(current);
 
-                                    System.out.println("strng");
-                                    if (sharedprefs.contains("website1codeLastTime")) {
+                                            //if (current )
+                                        }
 
-                                        String oldStrng = sharedprefs.getString("website1codeLastTime", "[none]");
-                                        int compare = string.compareTo(oldStrng);
-                                        if (string.equals(oldStrng) || (-10 <= compare && compare <= 10)) {
+                                        String string = stringBuilder.toString();
+                                        strng = string;
 
-                                            System.out.println("EQUALSSSS");
+                                        System.out.println("strng");
+                                        if (sharedprefs.contains("website1codeLastTime")) {
 
-                                            activityReference.runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    mySchoolUpdatedCard.setVisibility(View.GONE);
+                                            String oldStrng = sharedprefs.getString("website1codeLastTime", "[none]");
+                                            int compare = string.compareTo(oldStrng);
+                                            if (string.equals(oldStrng) || (-100 <= compare && compare <= 100)) {
 
-                                                    NewsSectionShowHide();
-                                                }
-                                            });
+                                                System.out.println("EQUALSSSS");
 
+                                                activityReference.runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        mySchoolUpdatedCard.setVisibility(View.GONE);
+
+                                                        NewsSectionShowHide();
+                                                    }
+                                                });
+
+                                            } else {
+                                                //System.out.println(string);
+                                                System.out.println("Does NOTTT equal: " + String.valueOf(compare));
+                                                //System.out.println(oldStrng);
+
+                                                activityReference.runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        mySchoolUpdatedCard.setVisibility(View.VISIBLE);
+                                                        rlNews.setVisibility(View.VISIBLE);
+                                                    }
+                                                });
+                                            }
                                         } else {
-                                            //System.out.println(string);
-                                            System.out.println("Does NOTTT equal: "+String.valueOf(compare));
-                                            //System.out.println(oldStrng);
+                                            sharedprefs.edit().putString("website1codeLastTime", strng).apply();
+                                        }
 
-                                            activityReference.runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    mySchoolUpdatedCard.setVisibility(View.VISIBLE);
-                                                    rlNews.setVisibility(View.VISIBLE);
-                                                }
-                                            });
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    } finally {
+                                        if (urlConnection != null) {
+                                            urlConnection.disconnect();
                                         }
                                     }
 
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                } finally {
-                                    if (urlConnection != null) {
-                                        urlConnection.disconnect();
-                                    }
                                 }
+                            });
 
-                            }
-                        });
-
-                        thread.start();
+                            thread.start();
+                        }
                     }
                 }
             }
-        }
 
-        if (!foundURL){
-            mySchoolUpdatedCard.setVisibility(View.GONE);
-            NewsSectionShowHide();
+            if (!foundURL) {
+                mySchoolUpdatedCard.setVisibility(View.GONE);
+                NewsSectionShowHide();
+            }
         }
     }
 
@@ -1589,7 +1596,41 @@ public class MainFragment extends Fragment {
                                             final long nrUsers = (long) obj2;
                                             llSchoolChallengeCounter.setVisibility(View.VISIBLE);
                                             vSchoolChallengeCounter.setVisibility(View.VISIBLE);
-                                            tvScoolChallengeCounter.setText(String.valueOf(nrUsers));
+
+                                            if (nrUsers < 10) {
+                                                tvScoolChallengeCounter.setText(String.valueOf(nrUsers));
+                                                prefs.edit().putBoolean("MySchoolChallenge-c1-20160818-complete", false).apply();
+                                                prefs.edit().putBoolean("dismissed_schoolchallenge_completed_card", false).apply();
+                                            } else {
+                                                if (prefs.contains("dismissed_schoolchallenge_completed_card")
+                                                        && prefs.getBoolean("dismissed_schoolchallenge_completed_card", false)){
+                                                    cSchoolChallenge.setVisibility(View.GONE);
+                                                    NewsSectionShowHide();
+                                                } else {
+                                                    LinearLayout llcounter =
+                                                            (LinearLayout) getActivity().findViewById(R.id.CardSchoolChallengeLLCounter);
+                                                    llcounter.setVisibility(View.GONE);
+                                                    View divview =
+                                                            (View) getActivity().findViewById(R.id.CardSchoolChallengeCounterDividerView);
+                                                    divview.setVisibility(View.GONE);
+                                                    TextView cardTitle = (TextView) getActivity().findViewById(R.id.CardSchoolChallengeTitle);
+                                                    cardTitle.setText(getActivity().getResources().getString(R.string.card_school_challenge_complete_title));
+                                                    TextView cardContent = (TextView) getActivity().findViewById(R.id.CardSchoolChallengeContent);
+                                                    cardContent.setText(getActivity().getResources().getString(R.string.card_school_challenge_complete_content));
+                                                    Button dismiss = (Button) getActivity().findViewById(R.id.bSchoolChallengeDismiss);
+                                                    dismiss.setVisibility(View.VISIBLE);
+                                                    dismiss.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View view) {
+                                                            cSchoolChallenge.setVisibility(View.GONE);
+                                                            NewsSectionShowHide();
+                                                            prefs.edit().putBoolean("dismissed_schoolchallenge_completed_card", true).apply();
+                                                        }
+                                                    });
+                                                }
+
+                                                prefs.edit().putBoolean("MySchoolChallenge-c1-20160818-complete", true).apply();
+                                            }
                                             foundValue = true;
                                         }
                                     }

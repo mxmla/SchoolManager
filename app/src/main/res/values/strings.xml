@@ -578,4 +578,6 @@
     <string name="pref_show_week_selector_title">Show week selector</string>
     <string name="pref_show_week_selector_summary">If you deactivate this, you will only be able to see the current week.</string>
     <string name="submit">Submit</string>
+    <string name="card_school_challenge_complete_title">School Challenge complete!</string>
+    <string name="card_school_challenge_complete_content">Congrats!\n\nYou\'ve unlocked a feature that informs you about news on your school\'s website.</string>
 </resources>
