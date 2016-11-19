@@ -315,6 +315,8 @@ public class NewTimetableFragment extends Fragment {
 				if (mSubjectsSelectedNames.size() > 0) {
 					makeFolderSaveFile();
 
+					if (!switchAB.isChecked()) prefs.edit().putBoolean("pref_key_show_week_selector", false).apply();
+
 					Bundle args = new Bundle();
 					args.putString("subjects", "true");
 					args.putInt("first_subject", mFirstSubject);
