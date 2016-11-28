@@ -1,3 +1,22 @@
+020104010043,Helene-Weber-Berufskolleg,0
+020104010042,Berufskolleg Alsdorf,0
+020105030026,Berufliches Schulzentrum e.o. plauen,0
+020105010005,Bertolt-Brecht-Oberschule ,0
+020103030008,Bertolt-Brecht-Schule Darmstadt,0
+020103030007,Bertha-von-Suttner-Schule,0
+020102020013,Bernstorff-Gymnasium,0
+020605010003,Bernoulligymnasium,0
+020105010004,Berlin-Kolleg,0
+020104020009,Berufsbildende Schule Wirtschaft Idar-Oberstein,0
+020105020003,Barnim-Gymnasium Bernau,0
+020105030025,BSZ für Gesundheit und Sozialwesen Chemnitz,0
+020105030024,BSZ Ernährung, Gastgewerbe, Gesundheit Chemnitz,0
+020105030023,BSZ Oelsnitz,0
+020601010003,BRG Landwiedstraße,0
+020605020001,BG/BRG Mattersburg,0
+020102010012,Berufliche Oberschule Friedberg,0
+020603010002,BORG Radstadt,0
+020101010037,BBS Jever,0
 020104020007,BBS Technik 1 Ludwigshafen,0
 020101010035,BBS Rotenburg,0
 020104020006,BBS I - Technik - Kaiserslautern,0
