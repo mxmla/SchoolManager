@@ -7,8 +7,8 @@ android {
         applicationId "com.thinc_easy.schoolmanager"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 193
-        versionName "2.0.X74"
+        versionCode 194
+        versionName "2.0.X75"
         // Enabling multidex support.
         multiDexEnabled true
     }

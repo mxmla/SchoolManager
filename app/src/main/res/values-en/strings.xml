@@ -439,4 +439,8 @@
     <string name="submit">Submit</string>
     <string name="card_school_challenge_complete_title">School Challenge complete!</string>
     <string name="card_school_challenge_complete_content">Congrats!\n\nYou\'ve unlocked a feature that informs you about news on your school\'s website.</string>
+    <string name="rating_question_like_app">Do you like this app?</string>
+    <string name="rating_ask_for_rating">How about rating on the Play Store, then?</string>
+    <string name="rating_button_yes">Ok, sure</string>
+    <string name="rating_button_no">No</string>
 </resources>

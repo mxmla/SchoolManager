@@ -709,6 +709,98 @@
                 </RelativeLayout>
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/RatingCard"
+                    style="@style/Card"
+                    custom:cardElevation="2dp"
+                    custom:cardUseCompatPadding="true"
+                    android:visibility="gone">
+                    <!--android:background="@color/colorPrimary">-->
+
+                    <LinearLayout
+                        style="@style/CardContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/CardContentText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/card_padding"
+                            android:text="@string/rating_question_like_app"
+                            android:textColor="@color/Text"/>
+
+                        <RatingBar
+                            android:id="@+id/ratingbarApp"
+                            android:layout_marginTop="@dimen/card_margin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:stepSize="1.0"
+                            android:numStars="5"
+                            android:layout_gravity="center_horizontal"/>
+
+                        <android.support.v7.widget.ButtonBarLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end">
+                            <Button
+                                android:id="@+id/bRatingOK"
+                                style="?android:attr/buttonBarButtonStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/OK"/>
+                        </android.support.v7.widget.ButtonBarLayout>
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/ReviewAppCard"
+                    style="@style/Card"
+                    custom:cardElevation="2dp"
+                    custom:cardUseCompatPadding="true"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        style="@style/CardContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/CardContentText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/card_padding"
+                            android:text="@string/rating_ask_for_rating"
+                            android:textColor="@color/Text"/>
+
+                        <android.support.v7.widget.ButtonBarLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end">
+                            <Button
+                                android:id="@+id/bReviewNo"
+                                style="?android:attr/buttonBarButtonStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/rating_button_no"
+                                android:textColor="@color/SecondaryText"/>
+                            <Button
+                                android:id="@+id/bReviewOK"
+                                style="?android:attr/buttonBarButtonStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/rating_button_yes" />
+                        </android.support.v7.widget.ButtonBarLayout>
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
                     android:id="@+id/AppUpdateCard"
                     style="@style/Card"
                     android:layout_marginTop="0dp"

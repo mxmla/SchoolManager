@@ -449,4 +449,8 @@
     <string name="submit">Einsenden</string>
     <string name="card_school_challenge_complete_title">School-Challenge abgeschlossen!</string>
     <string name="card_school_challenge_complete_content">Gratulation!\n\nIhr habt eine Funnktion freigeschaltet, die euch informiert, wenn es Neuigkeiten auf eurer Schul-Website gibt.</string>
+    <string name="rating_question_like_app">Gefällt dir diese App?</string>
+    <string name="rating_ask_for_rating">Warum nicht im Play Store bewerten?</string>
+    <string name="rating_button_yes">Ok, klar</string>
+    <string name="rating_button_no">Nein</string>
 </resources>

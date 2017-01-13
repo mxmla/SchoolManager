@@ -27,6 +27,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,6 +43,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -238,6 +240,7 @@ public class MainFragment extends Fragment {
         schoolChallengeCard(v);
         appUpdateCard();
         newFeatureABWeeksCard(v);
+        reviewAppCards(v);
 
         /*bRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1754,6 +1757,80 @@ public class MainFragment extends Fragment {
                 Log.d("FBDB", "SchoolChallenge:DatabaseError: "+databaseError);
             }
         });
+    }
+
+    private void reviewAppCards(View v){
+        int opensCount = 0;
+        if (prefs.contains("reviewAppDismissCountOpensSince")){
+            opensCount = prefs.getInt("reviewAppDismissCountOpensSince", 0);
+        }
+        if (opensCount > 30 || !prefs.contains("reviewAppDismissCountOpensSince")){
+            final CardView cRating = (CardView) v.findViewById(R.id.RatingCard);
+            final RatingBar rbRate = (RatingBar) v.findViewById(R.id.ratingbarApp);
+            Button bRatingOK = (Button) v.findViewById(R.id.bRatingOK);
+
+            final CardView cReview = (CardView) v.findViewById(R.id.ReviewAppCard);
+            final Button bReviewOK = (Button) v.findViewById(R.id.bReviewOK);
+            final Button bReviewNo = (Button) v.findViewById(R.id.bReviewNo);
+
+            cRating.setVisibility(View.VISIBLE);
+            bRatingOK.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    float rating = rbRate.getRating();
+                    if (rating >= 4f){
+                        cRating.setVisibility(View.GONE);
+                        cReview.setVisibility(View.VISIBLE);
+
+                        bReviewOK.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                final String appPackageName = getActivity().getPackageName(); // getPackageName() from Context or Activity object
+                                try {
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                                } catch (android.content.ActivityNotFoundException anfe) {
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                                }
+                                prefs.edit().putInt("reviewAppDismissCountOpensSince", 0).apply();
+
+                                mTracker.send(new HitBuilders.EventBuilder()
+                                        .setCategory("ReviewApp")
+                                        .setAction("Review OK")
+                                        .build());
+                            }
+                        });
+
+                        bReviewNo.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                cReview.setVisibility(View.GONE);
+                                prefs.edit().putInt("reviewAppDismissCountOpensSince", 0).apply();
+
+                                mTracker.send(new HitBuilders.EventBuilder()
+                                        .setCategory("ReviewApp")
+                                        .setAction("Review No")
+                                        .build());
+                            }
+                        });
+
+                        mTracker.send(new HitBuilders.EventBuilder()
+                                .setCategory("ReviewApp")
+                                .setAction("Rating: "+ String.valueOf(rating))
+                                .build());
+
+                    } else if (rating > 1f) {
+                       cRating.setVisibility(View.GONE);
+                        prefs.edit().putInt("reviewAppDismissCountOpensSince", 0).apply();
+                        mTracker.send(new HitBuilders.EventBuilder()
+                                .setCategory("ReviewApp")
+                                .setAction("Rating: "+ String.valueOf(rating))
+                                .build());
+                    }
+                }
+            });
+        } else {
+            prefs.edit().putInt("reviewAppDismissCountOpensSince", opensCount+1).apply();
+        }
     }
 
     private void storeSchoolInDatabase(){
