@@ -104,7 +104,8 @@ public class MainFragment extends Fragment {
             tvSchoolChallengeSubtitle, tvScoolChallengeCounter;
     private View vNowColor, vNextColor;
     private CardView nowLessonCard, nextLessonCard, tomorrowLessonsCard, createTtCard, shareAppCard,
-            cvNewFeature, cvAddedSchools, mySchoolUpdatedCard, cSchoolChallenge, cAppUpdate, cvNewFeatureABWeeks;
+            cvNewFeature, cvAddedSchools, mySchoolUpdatedCard, cSchoolChallenge, cAppUpdate,
+            cvNewFeatureABWeeks, cRating, cReview;
     RelativeLayout rlNews, ttSectionTitle;
     private LinearLayout llSchoolChallengeCounter;
     private View vSchoolChallengeCounter;
@@ -207,6 +208,8 @@ public class MainFragment extends Fragment {
         cAppUpdate = (CardView) v.findViewById(R.id.AppUpdateCard);
         bAppUpdate = (Button) v.findViewById(R.id.bGoToUpdateApp);
         cvNewFeatureABWeeks = (CardView) v.findViewById(R.id.IntroducingABWeeksCard);
+        cRating = (CardView) v.findViewById(R.id.RatingCard);
+        cReview = (CardView) v.findViewById(R.id.ReviewAppCard);
         //bRefresh = (Button) v.findViewById(R.id.bRefresh);
         isEndOfDay = true;
         isNextLesson = false;
@@ -395,7 +398,9 @@ public class MainFragment extends Fragment {
                 && mySchoolUpdatedCard.getVisibility() == View.GONE
                 && cSchoolChallenge.getVisibility() == View.GONE
                 && cAppUpdate.getVisibility() == View.GONE
-                && cvNewFeatureABWeeks.getVisibility() == View.GONE){
+                && cvNewFeatureABWeeks.getVisibility() == View.GONE
+                && cRating.getVisibility() == View.GONE
+                && cReview.getVisibility() == View.GONE){
             rlNews.setVisibility(View.GONE);
         } else {
             rlNews.setVisibility(View.VISIBLE);
@@ -1765,15 +1770,15 @@ public class MainFragment extends Fragment {
             opensCount = prefs.getInt("reviewAppDismissCountOpensSince", 0);
         }
         if (opensCount > 30 || !prefs.contains("reviewAppDismissCountOpensSince")){
-            final CardView cRating = (CardView) v.findViewById(R.id.RatingCard);
             final RatingBar rbRate = (RatingBar) v.findViewById(R.id.ratingbarApp);
             Button bRatingOK = (Button) v.findViewById(R.id.bRatingOK);
 
-            final CardView cReview = (CardView) v.findViewById(R.id.ReviewAppCard);
             final Button bReviewOK = (Button) v.findViewById(R.id.bReviewOK);
             final Button bReviewNo = (Button) v.findViewById(R.id.bReviewNo);
 
             cRating.setVisibility(View.VISIBLE);
+            NewsSectionShowHide();
+
             bRatingOK.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -1781,6 +1786,7 @@ public class MainFragment extends Fragment {
                     if (rating >= 4f){
                         cRating.setVisibility(View.GONE);
                         cReview.setVisibility(View.VISIBLE);
+                        NewsSectionShowHide();
 
                         bReviewOK.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -1804,6 +1810,7 @@ public class MainFragment extends Fragment {
                             @Override
                             public void onClick(View view) {
                                 cReview.setVisibility(View.GONE);
+                                NewsSectionShowHide();
                                 prefs.edit().putInt("reviewAppDismissCountOpensSince", 0).apply();
 
                                 mTracker.send(new HitBuilders.EventBuilder()
@@ -1819,7 +1826,8 @@ public class MainFragment extends Fragment {
                                 .build());
 
                     } else if (rating > 1f) {
-                       cRating.setVisibility(View.GONE);
+                        cRating.setVisibility(View.GONE);
+                        NewsSectionShowHide();
                         prefs.edit().putInt("reviewAppDismissCountOpensSince", 0).apply();
                         mTracker.send(new HitBuilders.EventBuilder()
                                 .setCategory("ReviewApp")
