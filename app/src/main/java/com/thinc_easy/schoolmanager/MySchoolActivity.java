@@ -89,6 +89,7 @@ public class MySchoolActivity extends ActionBarActivity implements DialogAdInfo.
         boolean showAd = false;
         adClicked = false;
         if (prefs.contains("open_main_activity_count") && prefs.getInt("open_main_activity_count", 0)>5
+                && prefs.getInt("open_main_activity_count", 0)%5 == 0
                 && (!prefs.contains("first_registered_use_date") || !prefs.getString("first_registered_use_date", "[none]").equals(DataStorageHandler.formatDateGeneralFormat(context, Calendar.getInstance())))) {
 
             if (prefs.contains("last_time_ad_clicked")) {
