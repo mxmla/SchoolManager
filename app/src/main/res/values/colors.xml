@@ -176,9 +176,11 @@
     <color name="color_timetable_area_background">@color/white</color>
     <color name="color_timetable_days_text">@color/SecondaryText</color>
     <color name="color_timetable_periods_text">@color/Text</color>
-    <color name="color_timetable_period_times_text">@color/SecondaryText</color>
+    <!--<color name="color_timetable_period_times_text">@color/SecondaryText</color>-->
+    <color name="color_timetable_period_times_text">@color/colorPrimaryDark</color>
     <color name="color_timetable_week_indicator_background">@color/white</color>
-    <color name="color_time_lines">#10000000</color>
+    <!--<color name="color_time_lines">#10000000</color>-->
+    <color name="color_time_lines">@color/colorPrimary</color>
     <color name="color_divider_periods">@color/colorPrimary</color>
 
     <color name="color_circle_stroke_color">#6B6B6B</color>
