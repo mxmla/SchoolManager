@@ -109,8 +109,6 @@
     <string name="Cancel">Cancel</string>
     <string name="Color">Color</string>
     <string name="Day">Day</string>
-    <string name="DoublePeriod">Double period</string>
-    <string name="DoublePeriod0102">1.-2.</string>
     <string name="HintNameTeacher">The teacher\'s name</string>
     <string name="HintNameTeacherAbbrev">The teacher\'s shorthand symbol</string>
     <string name="HintRoom">Classroom</string>
@@ -125,11 +123,6 @@
     <string name="OK">OK</string>
     <string name="OtherSubjects">Other subjects</string>
     <string name="Period">Period</string>
-    <string name="PeriodNr1">Period 1</string>
-    <string name="PeriodNr2">Period 2</string>
-    <string name="PeriodNr3">Period 3</string>
-    <string name="PeriodNr4">Period 4</string>
-    <string name="PeriodNr5">Period 5</string>
     <string name="Place">Place</string>
     <string name="Room">Room</string>
     <string name="ScienceSubjects">Science subjects</string>
@@ -200,11 +193,6 @@
     <string name="subject">Subject</string>
     <string name="text">Text</string>
     <string name="thank_you_smiley">Thank you :)</string>
-    <string name="DoublePeriod0304">3.-4.</string>
-    <string name="DoublePeriod0506">5.-6.</string>
-    <string name="DoublePeriod0708">7.-8.</string>
-    <string name="DoublePeriod0910">9.-10.</string>
-    <string name="DoublePeriod1112">11.-12.</string>
     <string name="AddLessons">Add Lessons</string>
     <string name="pref_period10_end_summary">Set the time for the 10th period to end.</string>
     <string name="pref_period11_end">11th period end</string>
@@ -443,4 +431,10 @@
     <string name="rating_ask_for_rating">How about rating on the Play Store, then?</string>
     <string name="rating_button_yes">Ok, sure</string>
     <string name="rating_button_no">No</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
 </resources>

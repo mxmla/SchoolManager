@@ -139,25 +139,13 @@
     <string name="Time">Zeit</string>
     <string name="Day">Tag</string>
     <string name="Period">Stunde</string>
-    <string name="DoublePeriod">Doppelstunde</string>
-    <string name="DoublePeriod0102">1.-2.</string>
-    <string name="DoublePeriod0304">3.-4.</string>
-    <string name="DoublePeriod0506">5.-6.</string>
-    <string name="DoublePeriod0708">7.-8.</string>
-    <string name="DoublePeriod0910">9.-10.</string>
-    <string name="DoublePeriod1112">11.-12.</string>
     <string name="HintNameTeacherAbbrev">Kürzel des Lehrers</string>
     <string name="HintNameTeacher">Name des Lehrers</string>
-    <string name="PeriodNr1">Stunde 1</string>
-    <string name="PeriodNr2">Stunde 2</string>
-    <string name="PeriodNr3">Stunde 3</string>
-    <string name="PeriodNr4">Stunde 4</string>
-    <string name="PeriodNr5">Stunde 5</string>
     <string name="AddLessons">Weitere Stunden</string>
     <string name="Room">Raum</string>
     <string name="HintRoom">Unterrichtsraum</string>
     <string name="Place">Ort</string>
-    <string name="NoSubjects">Sie haben bisher noch keine Fächer erstellt.</string>
+    <string name="NoSubjects">Du hast noch keine Fächer erstellt.</string>
     <string name="menu_delete">Löschen</string>
     <string name="Subjects">Fächer</string>
     <string name="ToastSelectAtLeast1Subject">Wähle mindestens 1 Fach</string>
@@ -400,10 +388,9 @@
     <string name="card_my_school_site_updated_title">Neuigkeiten auf der Schul-Website</string>
     <string name="card_my_school_site_updated_content">Auf der Website deiner Schule hat sich etwas geändert seit du das letzte Mal dort warst!</string>
     <string name="card_school_challenge_title">School-Challenge</string>
-    <string name="card_school_challenge_content">Bekommt insgesamt 10 eurer Mitschüler dazu, die App herunterzuladen und eure Schule in den Einstellungen auszuwählen!
+    <string name="card_school_challenge_content">Um diese Challenge zu gewinnen müssen einfach 10 von euch die App herunterladen und eure Schule in den Einstellungen auswählen!
         \n\n<b>Belohnung:</b>
-        \nEine neue Funktion, die euch wissen lässt, wenn es Neuigkeiten auf eurer Schul-Website gibt.
-    </string>
+        \nEine neue Funktion, die euch wissen lässt, wenn es Neuigkeiten auf eurer Schul-Website gibt.</string>
     <string name="card_school_challenge_currently">Nutzer\nmomentan</string>
     <string name="card_school_challenge_users">Nutzer</string>
     <string name="invite_friends">Freunde einladen</string>
@@ -453,4 +440,10 @@
     <string name="rating_ask_for_rating">Warum nicht im Play Store bewerten?</string>
     <string name="rating_button_yes">Ok, klar</string>
     <string name="rating_button_no">Nein</string>
+    <string name="action_sign_in">Anmelden oder Registrieren</string>
+    <string name="action_sign_in_short">Anmelden</string>
+    <string name="error_field_required">Dieses Feld ist erforderlich</string>
+    <string name="error_incorrect_password">Dieses Passwort is falsch</string>
+    <string name="error_invalid_email">Diese Email-Adresse ist ungültig</string>
+    <string name="error_invalid_password">Dieses Passwort ist zu kurz</string>
 </resources>
