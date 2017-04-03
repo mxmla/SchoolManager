@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="?actionBarSize"
-                android:layout_below="@+id/status_bar_placeholder"/>
+                android:layout_below="@id/status_bar_placeholder"/>
 
             <android.support.design.widget.CoordinatorLayout
                 android:id="@+id/cl_timetable"

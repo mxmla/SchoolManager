@@ -316,7 +316,7 @@ public class SettingsActivity extends ActionBarActivity {
                             buf.write(myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3] + "," + myArray[t][4] + "," + myArray[t][5] + "," + myArray[t][6] + "," + myArray[t][7] + "," + myArray[t][8] + "," + myArray[t][9] + "," + myArray[t][10] + "," + myArray[t][11]);
                             buf.newLine();
                         } else {
-                            Toast.makeText(this, "DON'T write notification:" + myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3], Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "DON'T write notification:" + myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3], Toast.LENGTH_SHORT).show();
                         }
                     }
                     buf.close();
@@ -326,7 +326,7 @@ public class SettingsActivity extends ActionBarActivity {
                     e.printStackTrace();
                 }
             } else {
-                Toast.makeText(this, "Could not set notification. Day name not readable.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Could not set notification. Day name not readable.", Toast.LENGTH_SHORT).show();
             }
         }
     }

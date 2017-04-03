@@ -179,10 +179,10 @@ public class EditSubjectActivity extends ActionBarActivity implements DialogColo
 
     @Override
 	public void onDialogMessage(String message, String which, String whichFragment) {
-    	if (whichFragment == "EditSubjectFragment"){
+    	/*if (whichFragment == "EditSubjectFragment"){
     		Fragment fragment = getSupportFragmentManager().findFragmentByTag(EditSubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG);
         	((EditSubjectFragment) fragment).saveChosenColor(message, which);
-    	}
+    	}*/
     	if (whichFragment == "CustomSubjectFragment"){
     		Fragment fragment = getSupportFragmentManager().findFragmentByTag(CustomSubjectFragment.DEFAULT_EDIT_FRAGMENT_TAG);
         	((CustomSubjectFragment) fragment).saveChosenColor(message, which);

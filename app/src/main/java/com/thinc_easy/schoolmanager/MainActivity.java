@@ -76,6 +76,7 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private Fragment mShareAppFragment;
+    private Fragment mLessonFragment;
     private NavigationDrawerFragment1 drawerFragment;
     public static final String PREF_FILE_NAME = "testpref";
     private int mOpenMainActivityCount;
@@ -83,6 +84,9 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
     private String KEY_OPEN_MAIN_ACTIVITY_COUNT = "open_main_activity_count";
     private String ttFolder;
     private CoordinatorLayout cl_main;
+    private String currentLessonID, currentDateWeek;
+    private View bottom_sheet_shader;
+    public boolean isLessonFragmentActive;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +112,12 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
 
         mShareAppFragment = getSupportFragmentManager().findFragmentByTag
                 (ShareAppFragment.DEFAULT_EDIT_FRAGMENT_TAG);
+
+
+        isLessonFragmentActive = false;
+        bottom_sheet_shader = (View) findViewById(R.id.bottom_sheet_shader);
+
+        mTitle = getResources().getString(R.string.title_activity_main);
 
         startService(new Intent(this, NotificationService.class));
 
@@ -240,6 +250,10 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
         transaction.replace(R.id.container, new MainFragment(),
                 MainFragment.DEFAULT_EDIT_FRAGMENT_TAG);
         transaction.commit();
+
+        if (isLessonFragmentActive){
+            LessonFragment(currentLessonID, currentDateWeek);
+        }
     }
 
     public void fabHomeworkClicked(){
@@ -440,7 +454,7 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
                     buf.write(myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3] + "," + myArray[t][4] + "," + myArray[t][5]);
                     buf.newLine();
                 }else{
-                    Toast.makeText(this, "CANNOT save data:" + myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3], Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "CANNOT save data:" + myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3], Toast.LENGTH_SHORT).show();
                 }
             }
             buf.close();
@@ -478,7 +492,7 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
                     buf.write(myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3] + "," + myArray[t][4] + "," + myArray[t][5]);
                     buf.newLine();
                 }else{
-                    Toast.makeText(this, "CANNOT save data:" + myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3], Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "CANNOT save data:" + myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3], Toast.LENGTH_SHORT).show();
                 }
             }
             buf.close();
@@ -511,7 +525,73 @@ public class MainActivity extends ActionBarActivity implements DialogEditHomewor
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.remove(mShareAppFragment);
             transaction.commit();
+        } else if (isLessonFragmentActive) {
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.color_home_appbar)));
+
+            super.onBackPressed();
+        } else {
+            super.onBackPressed();
+            // turn on the NavDrawer image. This Method is called in lower-level fragments.
+            //mDrawerToggle.setDrawerIndicatorEnabled(true);
         }
+    }
+
+    public void LessonFragment(String lessonID, String date_week){
+        currentLessonID = lessonID;
+        currentDateWeek = date_week;
+
+        mLessonFragment = getSupportFragmentManager().findFragmentByTag
+                (LessonFragment.DEFAULT_EDIT_FRAGMENT_TAG);
+
+        isLessonFragmentActive = true;
+
+        mLessonFragment = new LessonFragment();
+        Bundle args = new Bundle();
+        args.putString("lessonID", lessonID);
+        args.putString("date_week", date_week);
+        args.putString("caller", "Home");
+        mLessonFragment.setArguments(args);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container_bottom_sheet_lesson, mLessonFragment,
+                LessonFragment.DEFAULT_EDIT_FRAGMENT_TAG).addToBackStack(null);
+        transaction.commit();
+
+        bottom_sheet_shader.setVisibility(View.VISIBLE);
+    }
+
+    public void endLessonFragment(){
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        drawerFragment.noUpArrow();
+        isLessonFragmentActive = false;
+
+        getSupportActionBar().setTitle(mTitle);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.color_home_appbar)));
+        bottom_sheet_shader.setVisibility(View.GONE);
+    }
+
+    public void extendLessonFragment(){
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        drawerFragment.upArrow();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        isLessonFragmentActive = true;
+        bottom_sheet_shader.setVisibility(View.VISIBLE);
+    }
+
+    public void collapseLessonFragment(){
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        drawerFragment.noUpArrow();
+        isLessonFragmentActive = true;
+
+        getSupportActionBar().setTitle(mTitle);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.color_home_appbar)));
+        bottom_sheet_shader.setVisibility(View.VISIBLE);
+    }
+
+    public void resumeLessonFragment(){
+        isLessonFragmentActive = true;
+        bottom_sheet_shader.setVisibility(View.VISIBLE);
     }
 
     public String getSubjectFromPeriod(Context context, String day, String period){

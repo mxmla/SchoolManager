@@ -30,7 +30,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.google.android.gms.drive.internal.StringListResponse;
 import com.google.android.gms.vision.text.Line;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -292,7 +291,7 @@ public class ABWeekSettingsFragment extends Fragment {
                 System.out.println(active + ": "+week_a_reference);
                 prefs.edit().putString("week_a_reference", week_a_reference).apply();
 
-                Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.toast_saved), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), getActivity().getResources().getString(R.string.toast_saved), Toast.LENGTH_SHORT).show();
             }
         });
     }

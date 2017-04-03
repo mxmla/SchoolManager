@@ -608,7 +608,9 @@ public class MainFragment extends Fragment {
                     nowLessonCard.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Bundle args = new Bundle();
+                            ((MainActivity) getActivity()).LessonFragment(lessonID, date_week);
+
+                            /*Bundle args = new Bundle();
                             args.putString("caller", "home");
                             args.putString("action", "lesson");
                             args.putString("date_week", date_week);
@@ -616,7 +618,7 @@ public class MainFragment extends Fragment {
 
                             Intent i = new Intent(getActivity(), TimetableActivity.class);
                             i.putExtras(args);
-                            startActivityForResult(i, 0);
+                            startActivityForResult(i, 0);*/
                         }
                     });
 
@@ -788,7 +790,9 @@ public class MainFragment extends Fragment {
                 nextLessonCard.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Bundle args = new Bundle();
+                        ((MainActivity) getActivity()).LessonFragment(lessonID, date_week);
+
+                        /*Bundle args = new Bundle();
                         args.putString("caller", "home");
                         args.putString("action", "lesson");
                         args.putString("date_week", date_week);
@@ -796,7 +800,7 @@ public class MainFragment extends Fragment {
 
                         Intent i = new Intent(getActivity(), TimetableActivity.class);
                         i.putExtras(args);
-                        startActivityForResult(i, 0);
+                        startActivityForResult(i, 0);*/
                     }
                 });
             }
@@ -1005,14 +1009,16 @@ public class MainFragment extends Fragment {
                 tSButtons[i].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Bundle extras = new Bundle();
+                        ((MainActivity) getActivity()).LessonFragment(lessonID, date_week);
+
+                        /*Bundle extras = new Bundle();
                         extras.putString("caller", "home");
                         extras.putString("action", "lesson");
                         extras.putString("date_week", date_week);
                         extras.putString("lessonID", lessonID);
                         Intent i = new Intent(getActivity(), TimetableActivity.class);
                         i.putExtras(extras);
-                        startActivityForResult(i, 0);
+                        startActivityForResult(i, 0);*/
                     }
                 });
 

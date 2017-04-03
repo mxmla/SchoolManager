@@ -184,7 +184,7 @@ public class MySchoolFragment extends Fragment {
                             }
                         });
                         foundURL = true;
-                        Toast.makeText(getActivity(), "Loading...", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getApplicationContext(), "Loading...", Toast.LENGTH_LONG).show();
                     }
                 }
             }

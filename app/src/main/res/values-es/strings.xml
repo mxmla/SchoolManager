@@ -160,4 +160,34 @@
     <string name="my_school_added_new_schools">Nuevas escuelas agregado a MySchool.</string>
     <string name="my_school_button_settings_select_school">¡Llévame allí!</string>
     <string name="my_school_no_school_selected">¡Huy! Todavía no has seleccionado tu escuela.\nPuedes hacerlo en los ajustes ;)</string>
+    <string name="newTimetable">Nuevo horario</string>
+    <string name="new_timetable_choose_subjects_header">Seleccionar asignaturas</string>
+    <string name="new_timetable_choose_subjects_text">Por favor, selleciona las asignaturas que quires que incluir en tu horario de clase\nEn el siguinte paso puedes añadir más detalles a las asignaturas como tus profesores, un tema color para cada asignatura y el tiempo y lugar de tus clases.</string>
+    <string name="new_timetable_custom_subject_name_hint">Introducir título de asignatura</string>
+    <string name="new_timetable_settings_a_b_cycle">A/B ciclo semanal</string>
+    <string name="new_timetable_settings_a_b_preview">Vista previa:</string>
+    <string name="new_timetable_settings_number_of_weeks">Número de semanas</string>
+    <string name="new_timetable_settings_title">Ajustes del horario</string>
+    <string name="new_timetable_subjects_title">Asignaturas</string>
+    <string name="new_tt_done_body">Tu horario ha sido creado.</string>
+    <string name="next_lesson">Clase siguiente</string>
+    <string name="no">No</string>
+    <string name="notifications_pref_never_notify" translatable="false"></string>
+    <string name="own_subjects_title">Asignaturas personalizadas?</string>
+    <string name="period">Período</string>
+    <string name="periods">Períodos</string>
+    <string name="pref_ab_week_settings_currently_active">Semana actual</string>
+    <string name="pref_ab_week_settings_text">Semanas alternas (A/B)</string>
+    <string name="pref_ab_week_summary">¿Tienes un horario que se alterna semanalmente? Ajusta tu horario por eso.</string>
+    <string name="pref_ab_week_title">Ciclo semanal</string>
+    <string name="pref_my_school_country">País</string>
+    <string name="pref_my_school_school">Escuela</string>
+    <string name="pref_my_school_select_school">Selecciona tu escuela</string>
+    <string name="pref_my_school_select_school_description">Selleciona tu escuela para una experiencia personalizada.</string>
+    <string name="pref_my_school_settings_not_in_the_list">Mi escuela no está en la lista.</string>
+    <string name="pref_my_school_settings_text">Por favor, selleciona tu escuela.</string>
+    <string name="pref_my_school_state">Estado/Región</string>
+    <string name="pref_new_timetable_summary">Crear nuevo horario. Eso desactiva el actual.</string>
+    <string name="pref_new_timetable_title">Nuevo horario</string>
+    <string name="pref_notification_lesson_start">Notificaciones de clase</string>
 </resources>

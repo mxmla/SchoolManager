@@ -1,6 +1,8 @@
 package com.thinc_easy.schoolmanager;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -18,6 +20,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -52,6 +55,7 @@ public class LessonFragment extends BottomSheetDialogFragment{
     private Tracker mTracker;
     private String fragmentName;
     private String caller;
+    private ActionBarActivity context;
 	private int hTextSize;
 	private TextView tvSubjectName, tvSubject, tvTeacher, tvPeriod;
 	private String[] SubjectArray;
@@ -104,7 +108,19 @@ public class LessonFragment extends BottomSheetDialogFragment{
         SchoolManager application = (SchoolManager) getActivity().getApplication();
         mTracker = application.getDefaultTracker();
 
-        if (getArguments().containsKey("caller")) caller = getArguments().getString("caller");
+        if (getArguments().containsKey("caller")){
+            caller = getArguments().getString("caller");
+        } else {
+            caller = "Timetable";
+        }
+
+        if (caller.equals("Timetable")){
+            context = ((TimetableActivity) getActivity());
+        } else if (caller.equals("Home")) {
+            context = ((MainActivity) getActivity());
+        } else {
+            context = ((TimetableActivity) getActivity());
+        }
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
@@ -119,7 +135,7 @@ public class LessonFragment extends BottomSheetDialogFragment{
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
                 if (newState == BottomSheetBehavior.STATE_EXPANDED){
-                    ((TimetableActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.title_fragment_lesson));
+                    context.getSupportActionBar().setTitle(getString(R.string.title_fragment_lesson));
                     //((TimetableActivity) getActivity()).getSupportActionBar().setTitle("");
 
                     // needed to indicate that the fragment would
@@ -129,16 +145,34 @@ public class LessonFragment extends BottomSheetDialogFragment{
 //                    ((TimetableActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //                    ((TimetableActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
 
-                    ((TimetableActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(thisColor1));
+                    context.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(thisColor1));
 
-                    ((TimetableActivity) getActivity()).extendLessonFragment();
+                    if (caller.equals("Timetable")) {
+                        ((TimetableActivity) getActivity()).extendLessonFragment();
+                    } else if (caller.equals("Home")){
+                        ((MainActivity) getActivity()).extendLessonFragment();
+                    } else {
+                        ((TimetableActivity) getActivity()).extendLessonFragment();
+                    }
 
                 } else if (newState == BottomSheetBehavior.STATE_HIDDEN){
-                    ((TimetableActivity) getActivity()).endLessonFragment();
+                    if (caller.equals("Timetable")) {
+                        ((TimetableActivity) getActivity()).endLessonFragment();
+                    } else if (caller.equals("Home")){
+                        ((MainActivity) getActivity()).endLessonFragment();
+                    } else {
+                        ((TimetableActivity) getActivity()).endLessonFragment();
+                    }
                     setHasOptionsMenu(false);
 
                 } else if (newState == BottomSheetBehavior.STATE_COLLAPSED){
-                    ((TimetableActivity) getActivity()).collapseLessonFragment();
+                    if (caller.equals("Timetable")) {
+                        ((TimetableActivity) getActivity()).collapseLessonFragment();
+                    } else if (caller.equals("Home")){
+                        ((MainActivity) getActivity()).collapseLessonFragment();
+                    } else {
+                        ((TimetableActivity) getActivity()).collapseLessonFragment();
+                    }
                     setHasOptionsMenu(false);
                 }
             }
@@ -195,7 +229,13 @@ public class LessonFragment extends BottomSheetDialogFragment{
 
     @Override
     public void onPause(){
-        ((TimetableActivity) getActivity()).endLessonFragment();
+        if (caller.equals("Timetable")) {
+            ((TimetableActivity) getActivity()).endLessonFragment();
+        } else if (caller.equals("Home")){
+            ((MainActivity) getActivity()).endLessonFragment();
+        } else {
+            ((TimetableActivity) getActivity()).endLessonFragment();
+        }
         super.onPause();
     }
 
@@ -233,7 +273,7 @@ public class LessonFragment extends BottomSheetDialogFragment{
 
         final String sColor1 = subjectInfo[4];
         final String sColor2 = subjectInfo[5];
-        thisColor1 = ((TimetableActivity) getActivity()).getResources().getColor(R.color.color_timetable_appbar);
+        thisColor1 = (getActivity().getResources().getColor(R.color.color_timetable_appbar));
         thisColor2 = 0xffFFFFFF;
         for (int c = 0; c < colorNames.length; c++){
             if (sColor1.equals(colorNames[c]) && c < colorInts.length && colorInts[c] != 0xffFFFFFF) thisColor1 = colorInts[c];
@@ -355,7 +395,13 @@ public class LessonFragment extends BottomSheetDialogFragment{
         rl_add_homework.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((TimetableActivity) getActivity()).showEditHwDialog(lessonID.substring(0,4), todayDateGeneral);
+                if (caller.equals("Timetable")) {
+                    ((TimetableActivity) getActivity()).showEditHwDialog(lessonID.substring(0,4), todayDateGeneral);
+                } else if (caller.equals("Home")){
+                    ((MainActivity) getActivity()).showEditHwDialog(lessonID.substring(0,4), todayDateGeneral);
+                } else {
+                    ((TimetableActivity) getActivity()).showEditHwDialog(lessonID.substring(0,4), todayDateGeneral);
+                }
             }
         });
     }
@@ -399,7 +445,13 @@ public class LessonFragment extends BottomSheetDialogFragment{
         rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((TimetableActivity) getActivity()).showViewHwDialog(homeworkID);
+                if (caller.equals("Timetable")) {
+                    ((TimetableActivity) getActivity()).showViewHwDialog(homeworkID);
+                } else if (caller.equals("Home")){
+                    ((MainActivity) getActivity()).showViewHwDialog(homeworkID);
+                } else {
+                    ((TimetableActivity) getActivity()).showViewHwDialog(homeworkID);
+                }
             }
         });
 
@@ -450,7 +502,13 @@ public class LessonFragment extends BottomSheetDialogFragment{
                 // called when up arrow in AppBar is pressed
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 getActivity().onBackPressed();
-                ((TimetableActivity) getActivity()).endLessonFragment();
+                if (caller.equals("Timetable")) {
+                    ((TimetableActivity) getActivity()).endLessonFragment();
+                } else if (caller.equals("Home")){
+                    ((MainActivity) getActivity()).endLessonFragment();
+                } else {
+                    ((TimetableActivity) getActivity()).endLessonFragment();
+                }
                 return true;
                 /*if (caller.equals("Timetable")) {
                     Toast.makeText(getActivity(), "return to Timetable", Toast.LENGTH_SHORT).show();
@@ -477,11 +535,23 @@ public class LessonFragment extends BottomSheetDialogFragment{
     public void onResume(){
         super.onResume();
 
-        ((TimetableActivity) getActivity()).resumeLessonFragment();
+        if (caller.equals("Timetable")) {
+            ((TimetableActivity) getActivity()).resumeLessonFragment();
+        } else if (caller.equals("Home")){
+            ((MainActivity) getActivity()).resumeLessonFragment();
+        } else {
+            ((TimetableActivity) getActivity()).resumeLessonFragment();
+        }
         if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-            ((TimetableActivity) getActivity()).extendLessonFragment();
-            ((TimetableActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.title_fragment_lesson));
-            ((TimetableActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(thisColor1));
+            if (caller.equals("Timetable")) {
+                ((TimetableActivity) getActivity()).extendLessonFragment();
+            } else if (caller.equals("Home")){
+                ((MainActivity) getActivity()).extendLessonFragment();
+            } else {
+                ((TimetableActivity) getActivity()).extendLessonFragment();
+            }
+            context.getSupportActionBar().setTitle(getString(R.string.title_fragment_lesson));
+            context.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(thisColor1));
         } else {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         }

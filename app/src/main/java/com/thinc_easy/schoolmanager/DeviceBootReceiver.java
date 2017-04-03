@@ -203,7 +203,7 @@ public class DeviceBootReceiver extends BroadcastReceiver {
                             buf.write(myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3] + "," + myArray[t][4] + "," + myArray[t][5] + "," + myArray[t][6] + "," + myArray[t][7] + "," + myArray[t][8]);
                             buf.newLine();
                         } else {
-                            Toast.makeText(context, "DON'T write notification:" + myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3], Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context.getApplicationContext(), "DON'T write notification:" + myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3], Toast.LENGTH_SHORT).show();
                         }
                     }
                     buf.close();
@@ -213,7 +213,7 @@ public class DeviceBootReceiver extends BroadcastReceiver {
                     e.printStackTrace();
                 }
             } else {
-                Toast.makeText(context, "Could not set notification. Day name not readable.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context.getApplicationContext(), "Could not set notification. Day name not readable.", Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -23,7 +23,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.internal.request.StringParcel;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.database.DataSnapshot;
@@ -501,9 +500,9 @@ public class MySchoolSettingsFragment extends Fragment {
             prefs.edit().putString(prefKeyCountryName, countryName).apply();
             prefs.edit().putString(prefKeySchoolName, schoolName).apply();
 
-            Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.toast_saved), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), getActivity().getResources().getString(R.string.toast_saved), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.toast_school_selection_went_wrong), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), getActivity().getResources().getString(R.string.toast_school_selection_went_wrong), Toast.LENGTH_SHORT).show();
         }
     }
 

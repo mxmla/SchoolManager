@@ -2149,7 +2149,7 @@ public class DataStorageHandler {
                     buf.write(string);
                     buf.newLine();
                 }else{
-                    Toast.makeText(context, "DON'T write:" + myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2], Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context.getApplicationContext(), "DON'T write:" + myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2], Toast.LENGTH_SHORT).show();
                 }
             }
             buf.close();
@@ -2210,7 +2210,7 @@ public class DataStorageHandler {
                             buf.write(myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2]);
                             buf.newLine();
                         }else{
-                            Toast.makeText(context, "DON'T write period:" + myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2], Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context.getApplicationContext(), "DON'T write period:" + myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2], Toast.LENGTH_SHORT).show();
                         }
                     }
                     buf.close();
@@ -2278,7 +2278,7 @@ public class DataStorageHandler {
                         Rows++;
                     }
                 } else {
-                    Toast.makeText(context, "Could not save timetable entry. Day name not readable.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context.getApplicationContext(), "Could not save timetable entry. Day name not readable.", Toast.LENGTH_SHORT).show();
                 }
             }
             try{
@@ -2288,7 +2288,7 @@ public class DataStorageHandler {
                         buf.write(myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3] + "," + myArray[t][4]);
                         buf.newLine();
                     }else{
-                        Toast.makeText(context, "DON'T write period:" + myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3], Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context.getApplicationContext(), "DON'T write period:" + myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3], Toast.LENGTH_SHORT).show();
                     }
                 }
                 buf.close();
@@ -2496,7 +2496,7 @@ public class DataStorageHandler {
                             buf.write(myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3] + "," + myArray[t][4] + "," + myArray[t][5] + "," + myArray[t][6] + "," + myArray[t][7] + "," + myArray[t][8] + "," + myArray[t][9] + "," + myArray[t][10] + "," + myArray[t][11]);
                             buf.newLine();
                         } else {
-                            Toast.makeText(context, "DON'T write notification:" + myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3], Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context.getApplicationContext(), "DON'T write notification:" + myArray[t][0] + "," + myArray[t][1] + "," + myArray[t][2] + "," + myArray[t][3], Toast.LENGTH_SHORT).show();
                         }
                     }
                     buf.close();
@@ -2506,7 +2506,7 @@ public class DataStorageHandler {
                     e.printStackTrace();
                 }
             } else {
-                Toast.makeText(context, "Could not set notification. Day name not readable.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context.getApplicationContext(), "Could not set notification. Day name not readable.", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -3568,7 +3568,7 @@ public class DataStorageHandler {
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             return true;
         }
-        Toast.makeText(context, "external storage currently NOT available", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context.getApplicationContext(), "external storage currently NOT available", Toast.LENGTH_SHORT).show();
         return false;
     }
 

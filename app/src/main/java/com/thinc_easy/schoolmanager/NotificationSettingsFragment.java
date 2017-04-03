@@ -67,7 +67,7 @@ public class NotificationSettingsFragment extends Fragment {
     }
 
     private void saveData(){
-        Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.toast_saved), Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity().getApplicationContext(), getActivity().getResources().getString(R.string.toast_saved), Toast.LENGTH_LONG).show();
         String timeString = et1.getText().toString();
         boolean notify = true;
         int beforeTime = 0;

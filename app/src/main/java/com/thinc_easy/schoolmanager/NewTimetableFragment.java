@@ -329,7 +329,7 @@ public class NewTimetableFragment extends Fragment {
 					i.putExtras(args);
 					startActivityForResult(i, 0);
 				} else {
-					Toast.makeText(getActivity(), getResources().getString(R.string.ToastSelectAtLeast1Subject), Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity().getApplicationContext(), getResources().getString(R.string.ToastSelectAtLeast1Subject), Toast.LENGTH_SHORT).show();
 					/*Bundle args = new Bundle();
 					args.putString("subjects", "false");
 					args.putString("caller", "NewTimetable");

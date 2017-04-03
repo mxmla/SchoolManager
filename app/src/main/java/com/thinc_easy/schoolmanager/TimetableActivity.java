@@ -201,7 +201,7 @@ public class TimetableActivity extends ActionBarActivity
 				@Override
 				public void onAdClosed(){
 					super.onAdClosed();
-					if (adClicked) Toast.makeText(context, getResources().getString(R.string.toast_ads_removed), Toast.LENGTH_LONG).show();
+					if (adClicked) Toast.makeText(context.getApplicationContext(), getResources().getString(R.string.toast_ads_removed), Toast.LENGTH_LONG).show();
 				}
 			});
 
