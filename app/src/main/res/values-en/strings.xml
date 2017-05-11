@@ -258,7 +258,7 @@
     <string name="next_lesson">Next lesson</string>
     <string name="homework_status">Status:</string>
     <string name="date_formatter_local">dd/MM/yy</string>
-    <string name="homework_status_done">DONE</string>
+    <string name="homework_status_done">COMPLETED</string>
     <string name="homework_status_pending">PENDING</string>
     <string name="card_homework_title">Homework</string>
     <string name="card_homework_view_all_button">View all</string>
@@ -267,7 +267,7 @@
     <string name="card_homework_tomorrow_title">Homework tomorrow</string>
     <string name="title_activity_dialog_edit_homework">DialogEditHomework</string>
     <string name="title_fragment_homework_pending">Pending</string>
-    <string name="title_fragment_homework_done">Done</string>
+    <string name="title_fragment_homework_done">Complete</string>
     <string name="delete">Delete</string>
     <string name="snackbar_homework_deleted">Task deleted</string>
     <string name="snackbar_homework_deleted_action">Undo</string>

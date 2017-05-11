@@ -343,7 +343,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="homework_status">Status:</string>
-    <string name="homework_status_done">DONE</string>
+    <string name="homework_status_done">COMPLETED</string>
     <string name="homework_status_pending">PENDING</string>
     <string name="card_homework_title">Homework</string>
     <string name="card_homework_view_all_button">View all</string>
@@ -351,7 +351,7 @@
     <string name="fab_homework_text">Homework</string>
     <string name="card_homework_tomorrow_title">Homework tomorrow</string>
     <string name="title_fragment_homework_pending">Pending</string>
-    <string name="title_fragment_homework_done">Done</string>
+    <string name="title_fragment_homework_done">Complete</string>
     <string name="delete">Delete</string>
     <string name="snackbar_homework_deleted">Task deleted</string>
     <string name="snackbar_homework_deleted_action">Undo</string>
@@ -572,18 +572,18 @@
     <string name="rating_ask_for_rating">How about rating on the Play Store, then?</string>
     <string name="rating_button_yes">Ok, sure</string>
     <string name="rating_button_no">No</string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_login" translatable="false">Sign in</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
+    <string name="prompt_email" translatable="false">Email</string>
+    <string name="prompt_password" translatable="false">Password (optional)</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
+    <string name="permission_rationale" translatable="false">"Contacts permissions are needed for providing email
         completions."
     </string>
 </resources>
