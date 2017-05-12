@@ -111,7 +111,6 @@
     <string name="fab_homework_text">Tarea</string>
     <string name="feature_MySchool">MySchool</string>
     <string name="feature_ab_weeks">Ciclos semanales</string>
-    <string name="folder_name_timetables" translatable="false"></string>
     <string name="general">General</string>
     <string name="hint_name_subject">Título de la asignatura</string>
     <string name="hint_name_subject_abbrev">Iniciales de la asignatura</string>
@@ -172,7 +171,6 @@
     <string name="new_tt_done_body">Tu horario ha sido creado.</string>
     <string name="next_lesson">Clase siguiente</string>
     <string name="no">No</string>
-    <string name="notifications_pref_never_notify" translatable="false"></string>
     <string name="own_subjects_title">Asignaturas personalizadas?</string>
     <string name="period">Período</string>
     <string name="periods">Períodos</string>
