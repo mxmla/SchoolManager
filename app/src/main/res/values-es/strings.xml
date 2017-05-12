@@ -430,4 +430,5 @@
         <item>Portugal</item>
         <item>Luxemburgo</item>
     </string-array>
+    <string name="own_subjects">Ahora puedes crear asignaturas personalizadas.\nPuedes editar sus nombres también.\n¿Deseas hacerlo?</string>
 </resources>
