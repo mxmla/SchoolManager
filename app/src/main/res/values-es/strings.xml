@@ -301,4 +301,133 @@
     <string name="toast_type_in_subject_name_and_abbreviation">Por favor, escribe el título y la abreviatura de la asignatura.</string>
     <string name="welcome">¡Bienvenidos!</string>
     <string name="yes">sí</string>
+
+
+    <string-array name="activity_titles">
+        <item>Home</item>
+        <item>Horario</item>
+        <item>Tareas</item>
+        <item>MiEscuela</item>
+        <item>Ajustes</item>
+    </string-array>
+    <string-array name="SubjectNames">
+        <item>Matemáticas</item>
+        <item>Física</item>
+        <item>Química</item>
+        <item>Biología</item>
+        <item>Ciencias (combinadas)</item>
+        <item>Alemán</item>
+        <item>Inglés</item>
+        <item>Español</item>
+        <item>Francés</item>
+        <item>Latín</item>
+        <item>Griego</item>
+        <item>Historia</item>
+        <item>Geographía</item>
+        <item>Política</item>
+        <item>Religión</item>
+        <item>Música</item>
+        <item>Artes</item>
+        <item>Deportes</item>
+        <item>Clase de proyectos</item>
+    </string-array>
+    <string-array name="SubjectAbbreviations">
+        <item>Mat</item>
+        <item>Fís</item>
+        <item>Quí</item>
+        <item>Bio</item>
+        <item>Cie</item>
+        <item>Ale</item>
+        <item>Ing</item>
+        <item>Esp</item>
+        <item>Fra</item>
+        <item>Lat</item>
+        <item>Gri</item>
+        <item>His</item>
+        <item>Geo</item>
+        <item>Pol</item>
+        <item>Rel</item>
+        <item>Mús</item>
+        <item>Art</item>
+        <item>Dep</item>
+        <item>Pro</item>
+    </string-array>
+    <string-array name="DayAbbreviations">
+        <item>Lun</item>
+        <item>Mar</item>
+        <item>Mie</item>
+        <item>Jue</item>
+        <item>Vie</item>
+        <item>Sab</item>
+        <item>Dom</item>
+    </string-array>
+    <string-array name="DayNames">
+        <item>Lunes</item>
+        <item>Martes</item>
+        <item>Miércoles</item>
+        <item>Jueves</item>
+        <item>Viernes</item>
+        <item>Sábado</item>
+        <item>Domingo</item>
+    </string-array>
+    <string-array name="PeriodNumbers">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+    <string-array name="date_spinner_weeks">
+        <item>En 1 semana</item>
+        <item>En 2 semanas</item>
+        <item>En 3 semanas</item>
+        <item>En 4 semanas</item>
+        <item>En 5 semanas</item>
+        <item>En 6 semanas</item>
+        <item>En 7 semanas</item>
+        <item>En 8 semanas</item>
+        <item>En 9 semanas</item>
+        <item>En 10 semanas</item>
+    </string-array>
+    <string-array name="my_school_countries">
+        <item>-- Por favor, seleccione --</item>
+        <item>Estados Unidos</item>
+        <item>Alemania</item>
+        <item>Ghana</item>
+        <item>Reino Unido</item>
+        <item>Reino de Arabia Saudita</item>
+        <item>Malasia</item>
+        <item>Nigeria</item>
+        <item>Austria</item>
+        <item>Filipinas</item>
+        <item>Sudáfrica</item>
+        <item>Indonesia</item>
+        <item>Noruega</item>
+        <item>India</item>
+        <item>Perú</item>
+        <item>Australia</item>
+        <item>Nueva Zelanda</item>
+        <item>Madagascar</item>
+        <item>Finlandia</item>
+        <item>Finlandia</item>
+        <item>Brasil</item>
+        <item>Egipto</item>
+        <item>Bielorrusia</item>
+        <item>Rumania</item>
+        <item>Emiratos Árabes Unidos</item>
+        <item>Irlanda</item>
+        <item>Méjico</item>
+        <item>Suiza</item>
+        <item>Marruecos</item>
+        <item>Dinamarca</item>
+        <item>Portugal</item>
+        <item>Luxemburgo</item>
+    </string-array>
 </resources>
