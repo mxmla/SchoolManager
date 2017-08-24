@@ -394,34 +394,47 @@ public class TimetableFragment extends Fragment {
 		Thread loadTimetables = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				for (int i1 = currentAB + 1; i1 < allABs.length; i1++){
-					final float[] constantsThen = timetable_constants(i1);
-					final int[] dayRangeThen = getDayRange(constantsThen);
-					final RelativeLayout days = rl_days(constantsThen, dayRangeThen);
-					final RelativeLayout tt = rl_timetable(i1, constantsThen, dayRangeThen);
 
+				if (allABs.length == 1){
 					getActivity().runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
-							vaDays.addView(days);
-							vaTimetable.addView(tt);
+							vaDays.addView(rl_days(constantsNow, dayRange));
+							vaTimetable.addView(rl_timetable(currentAB, constantsNow, dayRange));
 						}
 					});
-				}
 
-				for (int i2 = 0; i2 < currentAB; i2++){
-					final float[] constantsThen = timetable_constants(i2);
-					final int[] dayRangeThen = getDayRange(constantsThen);
-					final RelativeLayout days = rl_days(constantsThen,dayRangeThen);
-					final RelativeLayout tt = rl_timetable(i2, constantsThen, dayRangeThen);
+				} else {
 
-					getActivity().runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							vaDays.addView(days);
-							vaTimetable.addView(tt);
-						}
-					});
+					for (int i1 = currentAB + 1; i1 < allABs.length; i1++) {
+						final float[] constantsThen = timetable_constants(i1);
+						final int[] dayRangeThen = getDayRange(constantsThen);
+						final RelativeLayout days = rl_days(constantsThen, dayRangeThen);
+						final RelativeLayout tt = rl_timetable(i1, constantsThen, dayRangeThen);
+
+						getActivity().runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								vaDays.addView(days);
+								vaTimetable.addView(tt);
+							}
+						});
+					}
+
+					for (int i2 = 0; i2 < currentAB; i2++) {
+						final float[] constantsThen = timetable_constants(i2);
+						final int[] dayRangeThen = getDayRange(constantsThen);
+						final RelativeLayout days = rl_days(constantsThen, dayRangeThen);
+						final RelativeLayout tt = rl_timetable(i2, constantsThen, dayRangeThen);
+
+						getActivity().runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								vaDays.addView(days);
+								vaTimetable.addView(tt);
+							}
+						});
+					}
 				}
 
 				getActivity().runOnUiThread(new Runnable() {
