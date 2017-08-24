@@ -438,7 +438,7 @@ public class TimetableFragment extends Fragment {
 	}
 
 	private float[] timetable_constants(int ABint){
-		final String thisAB = allABs[ABint];
+		final String thisAB = (ABint < allABs.length) ? allABs[ABint] : allABs[0];
 		final String[] tt_attributes = DataStorageHandler.TimetableAttributes(getActivity(), ttFolder, thisAB);
 
 		// Get earliest day
